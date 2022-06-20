@@ -37,6 +37,7 @@ dependencies:
 
   # Stacked Architecture Dependencies
   stacked: ^2.3.12
+  stacked_services: ^0.8.26
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   # Stacked Architecture Dependencies
+  build_runner: ^2.1.11
   stacked_generator: ^0.7.9
 
 

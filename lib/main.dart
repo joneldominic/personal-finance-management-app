@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
+import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import 'app/app.router.dart';
 
 void main() {
   setupLocator();

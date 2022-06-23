@@ -1,0 +1,209 @@
+name: Flutter CI
+
+on:
+  push: 
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch: # to manually run this workflow
+
+# env:
+#   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
+#   FLUTTER_VERSION: '3.0.1'
+#   XCODE_VERSION: '13.4'
+#   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
+#   ANDROID_PACKAGE_NAME: 'com.daniilshumko.woeios'
+#   PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
+
+jobs:
+  code-analysis-and-testing:
+    if: false
+    name: Code analysis and testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: "stable" # ${{ env.FLUTTER_CHANNEL }}
+        # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
+
+    - name: Get pub dependencies
+      run: flutter pub get
+
+    - name: Flutter analyze
+      run: flutter analyze
+
+    - name: Flutter test
+      run: flutter test
+
+
+  # android:
+  #   if: false
+  #   name: Android CI/CD
+  #   needs: code-analysis-and-testing
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v3
+    
+  #   - name: Prepare key.jks & key.properties files
+  #     env:
+  #       KEYSTORE_FILE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+  #       KEY_PROPERTIES_FILE: ${{ secrets.KEY_PROPERTIES_FILE }}
+  #     run: |
+  #       echo "Convert key base64 string to a file"
+  #       echo "$KEYSTORE_FILE_BASE64" >> key.jks.base64
+  #       base64 --decode key.jks.base64 > key.jks
+
+  #       echo "Convert key.properties secret string to a file"
+  #       echo "$KEY_PROPERTIES_FILE" >> key.properties
+  #     working-directory: 'android/'
+     
+  #   - name: Set up Flutter
+  #     uses: subosito/flutter-action@v2
+  #     with:
+  #       channel: ${{ env.FLUTTER_CHANNEL }}
+  #       # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
+    
+  #   - name: Flutter doctor
+  #     run: flutter doctor # this is an optional step and can be removed
+    
+  #   - name: Build AAB
+  #     run: |
+  #       flutter build appbundle --release
+
+  #       echo "Removing signing files for extra security"
+  #       rm android/key.*
+    
+  #   - name: Upload AAB artifact
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: release-aab
+  #       path: ${{ env.PATH_TO_AAB }}
+
+  #   - name: Upload to Play Store
+  #     run: |
+  #       fastlane supply --aab ${{ env.PATH_TO_AAB }} --json_key_data '${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}' --package_name '${{ env.ANDROID_PACKAGE_NAME }}' --track 'internal'
+
+
+  # ios:
+  #   name: iOS CI/CD
+  #   # needs: code-analysis-and-testing
+  #   runs-on: macos-12
+  #   timeout-minutes: 30
+  #   steps:  
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v3
+    
+  #   - name: Set up Xcode ${{ env.XCODE_VERSION }}
+  #     uses: maxim-lobanov/setup-xcode@v1
+  #     with:
+  #       xcode-version: ${{ env.XCODE_VERSION }}
+
+  #   - name: Prepare code signing
+  #     env:
+  #       FS_KEYCHAIN_PASS: ${{ secrets.FS_KEYCHAIN_PASS }}
+  #       FS_P12_FILE: ${{ secrets.FS_P12_FILE }}
+  #       FS_P12_PASS: ${{ secrets.FS_P12_PASS }}
+  #       FS_PROV_FILE: ${{ secrets.FS_PROV_FILE }}
+  #     run: |
+  #       echo "Convert base64 strings to files"
+  #       echo "$FS_PROV_FILE" >> prov.temp.txt
+  #       echo "$FS_P12_FILE ">> cert.temp.txt
+  #       base64 --decode prov.temp.txt > prov.temp.mobileprovision
+  #       base64 --decode cert.temp.txt > cert.temp.p12
+
+  #       echo "Copy provisioning file to the correct locations"
+  #       mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+  #       cp prov.temp.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/prov.mobileprovision
+
+  #       echo "Create a new keychain & import p12 certificate"
+  #       security create-keychain -p "$FS_KEYCHAIN_PASS" build.keychain
+  #       security import cert.temp.p12 -t agg -k ~/Library/Keychains/build.keychain -P "$FS_P12_PASS" -A
+
+  #       echo "Set new keychain as a default"
+  #       security list-keychains -s ~/Library/Keychains/build.keychain
+  #       security default-keychain -s ~/Library/Keychains/build.keychain
+  #       security unlock-keychain -p "$FS_KEYCHAIN_PASS" ~/Library/Keychains/build.keychain
+  #       security set-key-partition-list -S apple-tool:,apple: -s -k "$FS_KEYCHAIN_PASS" ~/Library/Keychains/build.keychain
+
+  #       echo "Clean up temp files"
+  #       rm *.temp.*
+
+  #   - name: Set up Flutter
+  #     uses: subosito/flutter-action@v2
+  #     with:
+  #       channel: ${{ env.FLUTTER_CHANNEL }}
+  #       # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
+    
+  #   - name: Flutter doctor
+  #     run: flutter doctor # this is an optional step and can be removed
+
+  #   - name: Build IPA
+  #     env:
+  #       FS_KEYCHAIN_PASS: ${{ secrets.FS_KEYCHAIN_PASS }}
+  #     run: |
+  #       echo "Unlocking keychain"
+  #       security unlock-keychain -p "$FS_KEYCHAIN_PASS" ~/Library/Keychains/build.keychain
+
+  #       # Important, just in case the build takes longer than the default 300s timeout
+  #       # Otherwise the build will freeze at signing the frameworks if the keychain is locked
+  #       echo "Increasing keychain auto lock timeout"
+  #       security set-keychain-settings -lut 1800 ~/Library/Keychains/build.keychain
+
+  #       flutter build ipa --release
+
+  #       echo "Locking keychain"
+  #       security lock-keychain ~/Library/Keychains/build.keychain
+
+  #   - name: Upload IPA artifact
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: release-ipa
+  #       path: ${{ env.PATH_TO_IPA }}
+
+  #   - name: Publishing app to TestFlight
+  #     env:
+  #       IOS_API_ISSUER_ID: ${{ secrets.IOS_API_ISSUER_ID }}
+  #       IOS_API_KEY_ID: ${{ secrets.IOS_API_KEY_ID }}
+  #       PATH_TO_IPA: ${{ env.PATH_TO_IPA }}
+  #     run: |
+  #       xcrun altool --upload-app -t ios -f $PATH_TO_IPA --apiKey "$IOS_API_KEY_ID" --apiIssuer "$IOS_API_ISSUER_ID"
+
+
+  # web:
+  #   if: false
+  #   name: Web CI/CD
+  #   needs: code-analysis-and-testing
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v3
+
+  #   - name: Set up Flutter
+  #     uses: subosito/flutter-action@v2
+  #     with:
+  #       channel: ${{ env.FLUTTER_CHANNEL }}
+  #       # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
+    
+  #   - name: Flutter doctor
+  #     run: flutter doctor # this is an optional step and can be removed
+    
+  #   - name: Build web
+  #     run: flutter build web --release
+    
+  #   - name: Upload web artifact 
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: release-web
+  #       path: build/web/

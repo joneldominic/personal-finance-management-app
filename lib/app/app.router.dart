@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../ui/details/details_view.dart';
-import '../ui/home/home_view.dart';
-import '../ui/startup/startup_view.dart';
+import '../ui/views/details/details_view.dart';
+import '../ui/views/home/home_view.dart';
+import '../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startUpView = '/';

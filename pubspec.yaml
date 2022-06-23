@@ -39,6 +39,10 @@ dependencies:
   stacked: ^2.3.12
   stacked_services: ^0.8.26
 
+  # Custom Dependencies
+  freezed_annotation: ^2.0.3
+  json_serializable: ^6.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,6 +57,9 @@ dev_dependencies:
   # Stacked Architecture Dependencies
   build_runner: ^2.1.11
   stacked_generator: ^0.7.9
+
+  # Custom Dependencies
+  freezed: ^2.0.3+1
 
 
 # For information on the generic Dart part of this file, see the

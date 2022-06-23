@@ -21,7 +21,7 @@ on:
 
 jobs:
   code-analysis-and-testing:
-    if: false
+    if: true # Control flag for running code analysis and testing job
     name: Code analysis and testing
     runs-on: ubuntu-latest
     timeout-minutes: 30

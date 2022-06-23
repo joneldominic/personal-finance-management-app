@@ -34,6 +34,9 @@ jobs:
       with:
         channel: "stable" # ${{ env.FLUTTER_CHANNEL }}
         # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
+    
+    - name: Flutter doctor
+      run: flutter doctor
 
     - name: Get pub dependencies
       run: flutter pub get

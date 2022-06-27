@@ -42,6 +42,7 @@ dependencies:
   # Custom Dependencies
   freezed_annotation: ^2.0.3
   json_serializable: ^6.2.0
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:

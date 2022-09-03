@@ -1,6 +1,7 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
+import 'package:personal_finance_management_app/services/theme_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -10,18 +11,30 @@ import 'package:stacked_services/stacked_services.dart';
 
 class StartUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _themeService = locator<ThemeService>();
+  final _logger = getLogger("StartUpViewModel");
 
-  String title = '';
+  String title = 'Jonel';
 
   void doSomething() {
-    final logger = getLogger("StartUpViewModel");
-    logger.v("Verbose log", "test");
-    logger.d("Debug log");
-    logger.i("Info log");
-    logger.w("Warning log");
-    logger.e("Error log");
-    logger.wtf("What a terrible failure log");
+    _logger.v("Verbose log", "test");
+    _logger.d("Debug log");
+    _logger.i("Info log");
+    _logger.w("Warning log");
+    _logger.e("Error log");
+    _logger.wtf("What a terrible failure log");
 
     _navigationService.navigateTo(Routes.homeView);
+  }
+
+  bool getThemeMode() {
+    _logger.i(_themeService.isLightTheme);
+    return _themeService.isLightTheme;
+  }
+
+  void toggleTheme(bool _) {
+    _themeService.toggleTheme();
+    title = _themeService.isLightTheme ? "Light" : "Dark";
+    notifyListeners();
   }
 }

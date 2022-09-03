@@ -20,7 +20,19 @@ class StartUpView extends StatelessWidget {
           onPressed: model.doSomething,
         ),
         body: Center(
-          child: Text(model.title),
+          child: Column(
+            children: [
+              Text(model.title),
+              Switch(
+                onChanged: model.toggleTheme,
+                value: model.getThemeMode(),
+                activeColor: Colors.blue,
+                activeTrackColor: Colors.yellow,
+                inactiveThumbColor: Colors.redAccent,
+                inactiveTrackColor: Colors.orange,
+              )
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => StartUpViewModel(),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 void main() {
+  Logger.level = Level.verbose;
   setupLocator();
   runApp(const MyApp());
 }

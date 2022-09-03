@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:stacked/stacked.dart';
 
 import 'startup_viewmodel.dart';
@@ -14,6 +15,8 @@ class StartUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customTheme = Theme.of(context).extension<CustomTheme>()!;
+
     return ViewModelBuilder<StartUpViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -26,9 +29,9 @@ class StartUpView extends StatelessWidget {
               Switch(
                 onChanged: model.toggleTheme,
                 value: model.getThemeMode(),
-                activeColor: Colors.blue,
+                activeColor: customTheme.test,
                 activeTrackColor: Colors.yellow,
-                inactiveThumbColor: Colors.redAccent,
+                inactiveThumbColor: customTheme.test,
                 inactiveTrackColor: Colors.orange,
               )
             ],

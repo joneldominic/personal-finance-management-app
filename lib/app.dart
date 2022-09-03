@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:personal_finance_management_app/services/theme_service.dart';
+import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class PersonalFinanceManagementApp extends StatelessWidget {
   const PersonalFinanceManagementApp({Key? key}) : super(key: key);
-
-  // TODO: Check flutter_custom_theme_example, and integrate with temp
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +15,17 @@ class PersonalFinanceManagementApp extends StatelessWidget {
       viewModelBuilder: () => PersonalFinanceManagementAppViewModel(),
       builder: (context, model, child) => MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+        theme: ThemeData.light().copyWith(
+          backgroundColor: Colors.white,
+          extensions: <ThemeExtension<dynamic>>[
+            CustomTheme.light,
+          ],
         ),
-        darkTheme: ThemeData(
-          primarySwatch: Colors.brown,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+        darkTheme: ThemeData.dark().copyWith(
+          backgroundColor: Colors.black,
+          extensions: <ThemeExtension<dynamic>>[
+            CustomTheme.dark,
+          ],
         ),
         themeMode: model.getThemeMode(),
         navigatorKey: StackedService.navigatorKey,

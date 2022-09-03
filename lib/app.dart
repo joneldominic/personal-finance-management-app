@@ -8,26 +8,13 @@ import 'package:stacked_services/stacked_services.dart';
 class PersonalFinanceManagementApp extends StatelessWidget {
   const PersonalFinanceManagementApp({Key? key}) : super(key: key);
 
-/*   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      navigatorKey: StackedService.navigatorKey,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-    );
-  } */
+  // TODO: Check flutter_custom_theme_example, and integrate with temp
 
   @override
   Widget build(BuildContext context) {
-    // Using the reactive constructor gives you the traditional ViewModel
-    // binding which will execute the builder again when notifyListeners is called.
     return ViewModelBuilder<PersonalFinanceManagementAppViewModel>.reactive(
       viewModelBuilder: () => PersonalFinanceManagementAppViewModel(),
-      builder: (context, viewModel, child) => MaterialApp(
+      builder: (context, model, child) => MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -37,7 +24,7 @@ class PersonalFinanceManagementApp extends StatelessWidget {
           primarySwatch: Colors.brown,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        themeMode: viewModel.getThemeMode(),
+        themeMode: model.getThemeMode(),
         navigatorKey: StackedService.navigatorKey,
         onGenerateRoute: StackedRouter().onGenerateRoute,
       ),

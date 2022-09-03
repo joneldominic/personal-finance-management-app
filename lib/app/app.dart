@@ -10,7 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
   CupertinoRoute(page: DetailsView),
 ], dependencies: [
   LazySingleton(classType: NavigationService)
-])
+], logger: StackedLogger())
 class AppSetup {
   /** Serves no purpose besides having an annotation attached to it */
 }

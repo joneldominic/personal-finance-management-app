@@ -1,4 +1,5 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
+import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,6 +14,14 @@ class StartUpViewModel extends BaseViewModel {
   String title = '';
 
   void doSomething() {
+    final logger = getLogger("StartUpViewModel");
+    logger.v("Verbose log", "test");
+    logger.d("Debug log");
+    logger.i("Info log");
+    logger.w("Warning log");
+    logger.e("Error log");
+    logger.wtf("What a terrible failure log");
+
     _navigationService.navigateTo(Routes.homeView);
   }
 }

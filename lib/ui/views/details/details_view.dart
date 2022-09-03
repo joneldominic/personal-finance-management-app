@@ -13,8 +13,6 @@ class DetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(name),
-    );
+    return Text(name);
   }
 }

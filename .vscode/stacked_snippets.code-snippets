@@ -1,0 +1,117 @@
+{
+  "Freezed model": {
+    "prefix": "frz",
+    "body": [
+      "@freezed",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1} {",
+      "  factory ${1}({",
+      "    @required ${2:String id},",
+      "  }) = _${1};",
+      "}"
+    ],
+    "description": "Freezed model"
+  },
+  "Freezed model Json": {
+    "prefix": "frzjs",
+    "body": [
+      "@freezed",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1} {",
+      "  factory ${1}({",
+      "    @required ${2:String id},",
+      "  }) = _${1};",
+      "",
+      "factory ${1}.fromJson(Map<String, dynamic> json) => ",
+      "_$${1}FromJson(json);",
+      "}"
+    ],
+    "description": "Freezed model with Json"
+  },
+  "Stacked View": {
+    "prefix": "stkv",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:stacked/stacked.dart';",
+      "",
+      "class ${1} extends StatelessWidget {",
+      " const ${1}({Key? key}) : super(key: key);",
+      "",
+      " @override",
+      " Widget build(BuildContext context) {",
+      "   return ViewModelBuilder<${1}Model>.reactive(",
+      "     builder: (context, model, child) => Scaffold(),",
+      "     viewModelBuilder: () => ${1}Model(),",
+      "   );",
+      " }",
+      "}"
+    ],
+    "description": "Stacked View"
+  },
+  "Stacked BaseViewModel": {
+    "prefix": "stkbvm",
+    "body": [
+      "import 'package:stacked/stacked.dart';",
+      "",
+      "class ${1}Model extends BaseViewModel {}",
+    ],
+    "description": "Stacked BaseViewModel"
+  },
+  "Mock Registration": {
+    "prefix": "testr",
+    "body": [
+      "${1} getAndRegister${1}() {",
+      " _removeRegistrationIfExists<${1}>();",
+      " final service = Mock${1}();",
+      " locator.registerSingleton<${1}>(service);",
+      " return service;",
+      "}"
+    ],
+    "description": "Creating a Mock Registration Function"
+  },
+  "Main Test Suite Setup": {
+    "prefix": "testm",
+    "body": [
+      "import 'package:flutter_test/flutter_test.dart';",
+      "",
+      "void main() {",
+      " group('${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} -', (){",
+      "",
+      " });",
+      "}"
+    ],
+    "description": "Main Test Suite Setup"
+  },
+  "Main Test Suite Setup with Services": {
+    "prefix": "testmr",
+    "body": [
+      "import 'package:flutter_test/flutter_test.dart';",
+      "",
+      "void main() {",
+      " group('${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} -', (){",
+      "  setUp(() => registerServices());",
+      "  tearDown(() => unregisterServices());",
+      " });",
+      "}"
+    ],
+    "description": "Main Test Suite Setup with Services"
+  },
+  "Test Group Setup": {
+    "prefix": "testg",
+    "description": "Creates a Test group with a test",
+    "body": [
+      "group('${1} -', () {",
+      " test('${2}', () {",
+      "",
+      " });",
+      "});",
+    ]
+  },
+  "Single Test Setup": {
+    "prefix": "tests",
+    "description": "Creates a single test",
+    "body": [
+      " test('${1}', () {",
+      "",
+      " });",
+    ]
+  },
+}

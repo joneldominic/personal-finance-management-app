@@ -15,6 +15,7 @@ class PersonalFinanceManagementApp extends StatelessWidget {
       viewModelBuilder: () => PersonalFinanceManagementAppViewModel(),
       builder: (context, model, child) => MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: CustomTheme.light.scaffoldBackgroundColor,
           extensions: <ThemeExtension<dynamic>>[

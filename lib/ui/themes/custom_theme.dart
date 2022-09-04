@@ -13,6 +13,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.primaryTextColor,
     required this.customGreen,
     required this.customGrey,
+    required this.customLightGrey,
   });
 
   final Color? success;
@@ -25,6 +26,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? primaryTextColor;
   final Color? customGreen;
   final Color? customGrey;
+  final Color? customLightGrey;
 
   @override
   CustomTheme copyWith({
@@ -38,6 +40,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? primaryTextColor,
     Color? customGreen,
     Color? customGrey,
+    Color? customLightGrey,
   }) {
     return CustomTheme(
       success: success ?? this.success,
@@ -52,6 +55,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       primaryTextColor: primaryTextColor ?? this.primaryTextColor,
       customGreen: customGreen ?? this.customGreen,
       customGrey: customGrey ?? this.customGrey,
+      customLightGrey: customLightGrey ?? this.customLightGrey,
     );
   }
 
@@ -74,6 +78,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       primaryTextColor: Color.lerp(primaryTextColor, other.primaryTextColor, t),
       customGreen: Color.lerp(customGreen, other.customGreen, t),
       customGrey: Color.lerp(customGrey, other.customGrey, t),
+      customLightGrey: Color.lerp(customLightGrey, other.customLightGrey, t),
     );
   }
 
@@ -89,6 +94,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'primaryTextColor: $primaryTextColor, '
       'customGreen: $customGreen, '
       'customGrey: $customGrey, '
+      'customLightGrey: $customLightGrey, '
       ')';
 
   /// ****************************************************************
@@ -104,7 +110,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     primaryAccent: Color(0xfff03b8a),
     primaryTextColor: Colors.black,
     customGreen: Color(0xff74fe07),
-    customGrey: Color(0xff6A6A6A),
+    customGrey: Color(0xff6a6a6a),
+    customLightGrey: Color(0xff6a6a6a),
   );
 
   /// ****************************************************************
@@ -120,6 +127,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     primaryAccent: Color(0xfff03b8a),
     primaryTextColor: Colors.white,
     customGreen: Color(0xff74fe07),
-    customGrey: Color(0xff6A6A6A),
+    customGrey: Color(0xff6a6a6a),
+    customLightGrey: Color(0xffc0c0c0),
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class MainAppBar extends StatelessWidget with PreferredSizeWidget {
   const MainAppBar({
@@ -10,8 +11,11 @@ class MainAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customTheme = Theme.of(context).extension<CustomTheme>()!;
+
     return AppBar(
       automaticallyImplyLeading: false,
+      backgroundColor: customTheme.appBarBackgroundColor,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [

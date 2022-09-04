@@ -16,13 +16,13 @@ class PersonalFinanceManagementApp extends StatelessWidget {
       builder: (context, model, child) => MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData.light().copyWith(
-          backgroundColor: Colors.white,
+          scaffoldBackgroundColor: CustomTheme.light.scaffoldBackgroundColor,
           extensions: <ThemeExtension<dynamic>>[
             CustomTheme.light,
           ],
         ),
         darkTheme: ThemeData.dark().copyWith(
-          backgroundColor: Colors.black,
+          scaffoldBackgroundColor: CustomTheme.dark.scaffoldBackgroundColor,
           extensions: <ThemeExtension<dynamic>>[
             CustomTheme.dark,
           ],

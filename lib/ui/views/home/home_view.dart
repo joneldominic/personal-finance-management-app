@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
         appBar: const MainAppBar(),
         body: Center(
             child: Container(
-          color: Colors.red,
+          color: Color(0xff424242),
           height: 100,
           width: 100,
         )),

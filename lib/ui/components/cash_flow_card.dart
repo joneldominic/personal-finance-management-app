@@ -21,8 +21,8 @@ class CashFlowCard extends StatelessWidget {
             ListTile(
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Cash Flow',
                     style: TextStyle(
                       fontSize: 16,
@@ -33,6 +33,7 @@ class CashFlowCard extends StatelessWidget {
                     'Last 30 Days',
                     style: TextStyle(
                       fontSize: 12,
+                      color: customTheme.customLightGrey,
                       fontWeight: FontWeight.w500,
                     ),
                   )

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/ui/components/accounts_card.dart';
+import 'package:personal_finance_management_app/ui/components/cash_flow_card.dart';
+import 'package:personal_finance_management_app/ui/components/main_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/recent_transactions_card.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
@@ -15,18 +19,26 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
+      viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, child) => Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: model.doSomething,
         ),
-        body: Center(
-            child: Container(
-          color: Colors.red,
-          height: 100,
-          width: 100,
-        )),
+        appBar: const MainAppBar(),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 80),
+            child: Column(
+              children: const [
+                AccountsCard(),
+                CashFlowCard(),
+                RecentTransactionsCard(),
+              ],
+            ),
+          ),
+        ),
       ),
-      viewModelBuilder: () => HomeViewModel(),
     );
   }
 }

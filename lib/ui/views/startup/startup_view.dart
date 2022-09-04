@@ -29,9 +29,9 @@ class StartUpView extends StatelessWidget {
               Switch(
                 onChanged: model.toggleTheme,
                 value: model.getThemeMode(),
-                activeColor: customTheme.test,
+                activeColor: customTheme.scaffoldBackgroundColor,
                 activeTrackColor: Colors.yellow,
-                inactiveThumbColor: customTheme.test,
+                inactiveThumbColor: customTheme.scaffoldBackgroundColor,
                 inactiveTrackColor: Colors.orange,
               )
             ],

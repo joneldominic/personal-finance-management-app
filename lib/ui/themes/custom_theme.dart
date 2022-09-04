@@ -9,6 +9,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.danger,
     required this.scaffoldBackgroundColor,
     required this.appBarBackgroundColor,
+    required this.primaryAccent,
   });
 
   final Color? success;
@@ -17,6 +18,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? danger;
   final Color? scaffoldBackgroundColor;
   final Color? appBarBackgroundColor;
+  final Color? primaryAccent;
 
   @override
   CustomTheme copyWith({
@@ -26,6 +28,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? danger,
     Color? scaffoldBackgroundColor,
     Color? appBarBackgroundColor,
+    Color? primaryAccent,
   }) {
     return CustomTheme(
       success: success ?? this.success,
@@ -36,6 +39,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
           scaffoldBackgroundColor ?? this.scaffoldBackgroundColor,
       appBarBackgroundColor:
           appBarBackgroundColor ?? this.appBarBackgroundColor,
+      primaryAccent: primaryAccent ?? this.primaryAccent,
     );
   }
 
@@ -54,6 +58,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
           Color.lerp(scaffoldBackgroundColor, other.scaffoldBackgroundColor, t),
       appBarBackgroundColor:
           Color.lerp(appBarBackgroundColor, other.appBarBackgroundColor, t),
+      primaryAccent: Color.lerp(primaryAccent, other.primaryAccent, t),
     );
   }
 
@@ -65,6 +70,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'danger: $danger, '
       'scaffoldBackgroundColor: $scaffoldBackgroundColor, '
       'appBarBackgroundColor: $appBarBackgroundColor, '
+      'primaryAccent: $primaryAccent, '
       ')';
 
   /// ****************************************************************
@@ -76,7 +82,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     warning: Color(0xffffc107),
     danger: Color(0xffdc3545),
     scaffoldBackgroundColor: Color(0xffd3d3d3),
-    appBarBackgroundColor: Color(0xff2F2F2F),
+    appBarBackgroundColor: Colors.blue,
+    primaryAccent: Color(0xfff03b8a),
   );
 
   /// ****************************************************************
@@ -89,5 +96,6 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     danger: Color(0xffe74c3c),
     scaffoldBackgroundColor: Color(0xff1d1d1d),
     appBarBackgroundColor: Color(0xff2F2F2F),
+    primaryAccent: Color(0xfff03b8a),
   );
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
+import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/components/main_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/transaction_item.dart';
+import 'package:personal_finance_management_app/ui/components/transactions.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
 import 'package:stacked/stacked.dart';
@@ -35,7 +38,8 @@ class MainView extends StatelessWidget {
           items: _getBottomNavItems(customTheme),
           currentIndex: model.currentIndex,
           selectedItemColor: customTheme.primaryAccent,
-          unselectedItemColor: customTheme.customLightGrey,
+          unselectedItemColor: Colors.white,
+          backgroundColor: customTheme.appBarBackgroundColor,
           showSelectedLabels: false,
           showUnselectedLabels: false,
           onTap: model.setIndex,
@@ -64,9 +68,7 @@ class MainView extends StatelessWidget {
   Widget _getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return const Text(
-          'Index 0: Transactions',
-        );
+        return const Transactions();
       case 1:
         return const HomeView();
       case 2:

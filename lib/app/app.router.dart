@@ -12,16 +12,16 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../ui/views/details/details_view.dart';
-import '../ui/views/home/home_view.dart';
+import '../ui/views/main/main_view.dart';
 import '../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startUpView = '/';
-  static const String homeView = '/home-view';
+  static const String mainView = '/main-view';
   static const String detailsView = '/details-view';
   static const all = <String>{
     startUpView,
-    homeView,
+    mainView,
     detailsView,
   };
 }
@@ -31,7 +31,7 @@ class StackedRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.startUpView, page: StartUpView),
-    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.detailsView, page: DetailsView),
   ];
   @override
@@ -43,9 +43,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    HomeView: (data) {
+    MainView: (data) {
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => const HomeView(),
+        builder: (context) => const MainView(),
         settings: data,
       );
     },
@@ -96,7 +96,7 @@ extension NavigatorStateExtension on NavigationService {
     );
   }
 
-  Future<dynamic> navigateToHomeView({
+  Future<dynamic> navigateToMainView({
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -104,7 +104,7 @@ extension NavigatorStateExtension on NavigationService {
         transition,
   }) async {
     return navigateTo(
-      Routes.homeView,
+      Routes.mainView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

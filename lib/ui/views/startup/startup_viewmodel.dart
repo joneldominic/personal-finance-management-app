@@ -24,7 +24,7 @@ class StartUpViewModel extends BaseViewModel {
     _logger.e("Error log");
     _logger.wtf("What a terrible failure log");
 
-    _navigationService.navigateTo(Routes.homeView);
+    _navigationService.navigateTo(Routes.mainView);
   }
 
   bool getThemeMode() {

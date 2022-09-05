@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
-import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/components/main_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/transaction_item.dart';
 import 'package:personal_finance_management_app/ui/components/transactions.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';

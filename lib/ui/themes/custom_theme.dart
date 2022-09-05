@@ -14,6 +14,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.customGreen,
     required this.customGrey,
     required this.customLightGrey,
+    required this.contrastBackgroundColor,
   });
 
   final Color? success;
@@ -27,6 +28,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? customGreen;
   final Color? customGrey;
   final Color? customLightGrey;
+  final Color? contrastBackgroundColor;
 
   @override
   CustomTheme copyWith({
@@ -41,6 +43,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? customGreen,
     Color? customGrey,
     Color? customLightGrey,
+    Color? contrastBackgroundColor,
   }) {
     return CustomTheme(
       success: success ?? this.success,
@@ -56,6 +59,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       customGreen: customGreen ?? this.customGreen,
       customGrey: customGrey ?? this.customGrey,
       customLightGrey: customLightGrey ?? this.customLightGrey,
+      contrastBackgroundColor:
+          contrastBackgroundColor ?? this.contrastBackgroundColor,
     );
   }
 
@@ -79,6 +84,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       customGreen: Color.lerp(customGreen, other.customGreen, t),
       customGrey: Color.lerp(customGrey, other.customGrey, t),
       customLightGrey: Color.lerp(customLightGrey, other.customLightGrey, t),
+      contrastBackgroundColor:
+          Color.lerp(contrastBackgroundColor, other.contrastBackgroundColor, t),
     );
   }
 
@@ -95,6 +102,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'customGreen: $customGreen, '
       'customGrey: $customGrey, '
       'customLightGrey: $customLightGrey, '
+      'contrastBackgroundColor: $contrastBackgroundColor, '
       ')';
 
   /// ****************************************************************
@@ -112,6 +120,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     customGreen: Color(0xff74fe07),
     customGrey: Color(0xff6a6a6a),
     customLightGrey: Color(0xff6a6a6a),
+    contrastBackgroundColor: Colors.white,
   );
 
   /// ****************************************************************
@@ -129,5 +138,6 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     customGreen: Color(0xff74fe07),
     customGrey: Color(0xff6a6a6a),
     customLightGrey: Color(0xffc0c0c0),
+    contrastBackgroundColor: Color(0xff424242),
   );
 }

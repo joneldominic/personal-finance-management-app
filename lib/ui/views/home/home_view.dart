@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/ui/components/accounts_card.dart';
+import 'package:personal_finance_management_app/ui/views/accounts_card/accounts_card_view.dart';
 import 'package:personal_finance_management_app/ui/components/cash_flow_card.dart';
 import 'package:personal_finance_management_app/ui/components/recent_transactions_card.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
-import 'package:personal_finance_management_app/ui/components/transaction_item.dart';
+import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class RecentTransactionsCard extends StatelessWidget {
@@ -49,7 +49,7 @@ class RecentTransactionsCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            const TransactionItem(
+            const TransactionListItem(
               description: "Birthday",
               accountName: "Cash",
               amount: "PHP 5,000.00",
@@ -57,7 +57,7 @@ class RecentTransactionsCard extends StatelessWidget {
               timeStamp: "Today",
             ),
             const Divider(),
-            const TransactionItem(
+            const TransactionListItem(
               description: "Badminton Tournament Registration",
               accountName: "Cash",
               amount: "PHP 800.00",
@@ -65,7 +65,7 @@ class RecentTransactionsCard extends StatelessWidget {
               timeStamp: "Sept. 2, 2022",
             ),
             const Divider(),
-            const TransactionItem(
+            const TransactionListItem(
               description: "FullScale Salary",
               accountName: "BPI",
               amount: "PHP 60,000.00",
@@ -73,7 +73,7 @@ class RecentTransactionsCard extends StatelessWidget {
               timeStamp: "Aug. 30, 2022",
             ),
             const Divider(),
-            const TransactionItem(
+            const TransactionListItem(
               description: "Grocery",
               accountName: "Cash",
               amount: "PHP 2,000.00",

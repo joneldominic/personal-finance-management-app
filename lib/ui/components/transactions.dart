@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
-import 'package:personal_finance_management_app/ui/components/transaction_item.dart';
+import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class Transactions extends StatelessWidget {
@@ -94,7 +94,7 @@ class Transactions extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: descriptions.length,
         itemBuilder: (BuildContext context, int index) {
-          return TransactionItem(
+          return TransactionListItem(
             description: descriptions[index],
             accountName: accountNames[index],
             amount: amounts[index],

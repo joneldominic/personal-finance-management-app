@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../ui/views/account_settings/account_settings_view.dart';
+import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/details/details_view.dart';
 import '../ui/views/main/main_view.dart';
 import '../ui/views/startup/startup_view.dart';

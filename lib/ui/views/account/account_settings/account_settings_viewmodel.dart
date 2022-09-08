@@ -7,9 +7,9 @@ import 'package:stacked_services/stacked_services.dart';
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
 
-class AccountsCardViewModel extends BaseViewModel {
+class AccountSettingsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void navigateToAccountSettings() =>
-      _navigationService.navigateTo(Routes.accountSettingsView);
+  void navigateToNewAccount() =>
+      print("TODO: navigate to new account / pop-up dialog");
 }

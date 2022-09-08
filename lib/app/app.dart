@@ -1,5 +1,5 @@
 import 'package:personal_finance_management_app/services/theme_service.dart';
-import 'package:personal_finance_management_app/ui/views/account_settings/account_settings_view.dart';
+import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_view.dart';
 import 'package:personal_finance_management_app/ui/views/details/details_view.dart';
 import 'package:personal_finance_management_app/ui/views/main/main_view.dart';
 import 'package:personal_finance_management_app/ui/views/startup/startup_view.dart';

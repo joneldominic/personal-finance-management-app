@@ -15,6 +15,8 @@ class AccountThumbnail extends StatelessWidget {
   final Color? color;
   final bool isAddAccount;
 
+  // TODO: wrap components with GestureDetector
+
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;

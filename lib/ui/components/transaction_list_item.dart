@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
-class TransactionItem extends StatelessWidget {
-  const TransactionItem({
+class TransactionListItem extends StatelessWidget {
+  const TransactionListItem({
     Key? key,
     this.description,
     this.accountName,

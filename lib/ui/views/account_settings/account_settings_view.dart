@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 // View: Shows the UI to the user.
@@ -14,15 +15,80 @@ class AccountSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
+    final List<Color> colors = <Color>[
+      Colors.green,
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.red,
+      Colors.blue,
+    ];
+
+    final List<String> accountNames = <String>[
+      'Cash',
+      'GCash',
+      'BPI',
+      'Cash',
+      'GCash',
+      'BPI',
+      'Cash',
+      'GCash',
+      'BPI',
+      'Cash',
+      'GCash',
+      'BPI',
+    ];
+
+    final List<String> amounts = <String>[
+      "PHP 5,000.00",
+      "PHP 800.00",
+      "PHP 60,000.00",
+      "PHP 5,000.00",
+      "PHP 800.00",
+      "PHP 60,000.00",
+      "PHP 5,000.00",
+      "PHP 800.00",
+      "PHP 60,000.00",
+      "PHP 5,000.00",
+      "PHP 800.00",
+      "PHP 60,000.00",
+    ];
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: customTheme.primaryAccent,
+        foregroundColor: Colors.white,
         onPressed: () {},
+        icon: const Icon(Icons.add),
+        label: const Text("Add Account"),
       ),
       appBar: AppBar(
         backgroundColor: customTheme.appBarBackgroundColor,
         title: const Text("Account Settings"),
       ),
-      body: const Text("Account Settings View"),
+      body: Container(
+        color: customTheme.contrastBackgroundColor,
+        child: ListView.separated(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
+          physics: const BouncingScrollPhysics(),
+          itemCount: accountNames.length,
+          itemBuilder: (BuildContext context, int index) {
+            return AccountListItem(
+              accountName: accountNames[index],
+              color: colors[index],
+              amount: amounts[index],
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+        ),
+      ),
     );
   }
 }

@@ -68,7 +68,7 @@ class AccountSettingsView extends StatelessWidget {
               floatingActionButton: FloatingActionButton.extended(
                 backgroundColor: customTheme.primaryAccent,
                 foregroundColor: Colors.white,
-                onPressed: model.navigateToNewAccount,
+                onPressed: model.navigateToAccountDetails,
                 icon: const Icon(Icons.add),
                 label: const Text("Add Account"),
               ),

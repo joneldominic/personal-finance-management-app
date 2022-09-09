@@ -10,6 +10,6 @@ import 'package:stacked_services/stacked_services.dart';
 class AccountSettingsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void navigateToNewAccount() =>
-      print("TODO: navigate to new account / pop-up dialog");
+  void navigateToAccountDetails() =>
+      _navigationService.navigateTo(Routes.accountDetailsView);
 }

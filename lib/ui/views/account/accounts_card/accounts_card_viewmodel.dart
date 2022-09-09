@@ -13,6 +13,6 @@ class AccountsCardViewModel extends BaseViewModel {
   void navigateToAccountSettings() =>
       _navigationService.navigateTo(Routes.accountSettingsView);
 
-  void navigateToNewAccount() =>
-      print("TODO: navigate to new account / pop-up dialog");
+  void navigateToAccountDetails() =>
+      _navigationService.navigateTo(Routes.accountDetailsView);
 }

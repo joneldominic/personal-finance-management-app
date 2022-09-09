@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../ui/views/account/account_details/account_details_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/details/details_view.dart';
 import '../ui/views/main/main_view.dart';
@@ -20,11 +21,13 @@ class Routes {
   static const String startUpView = '/';
   static const String mainView = '/main-view';
   static const String accountSettingsView = '/account-settings-view';
+  static const String accountDetailsView = '/account-details-view';
   static const String detailsView = '/details-view';
   static const all = <String>{
     startUpView,
     mainView,
     accountSettingsView,
+    accountDetailsView,
     detailsView,
   };
 }
@@ -36,6 +39,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.startUpView, page: StartUpView),
     RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.accountSettingsView, page: AccountSettingsView),
+    RouteDef(Routes.accountDetailsView, page: AccountDetailsView),
     RouteDef(Routes.detailsView, page: DetailsView),
   ];
   @override
@@ -54,8 +58,17 @@ class StackedRouter extends RouterBase {
       );
     },
     AccountSettingsView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return CupertinoPageRoute<dynamic>(
         builder: (context) => const AccountSettingsView(),
+        settings: data,
+      );
+    },
+    AccountDetailsView: (data) {
+      var args = data.getArgs<AccountDetailsViewArguments>(
+        orElse: () => AccountDetailsViewArguments(),
+      );
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => AccountDetailsView(key: args.key),
         settings: data,
       );
     },
@@ -77,6 +90,12 @@ class StackedRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// AccountDetailsView arguments holder class
+class AccountDetailsViewArguments {
+  final Key? key;
+  AccountDetailsViewArguments({this.key});
+}
 
 /// DetailsView arguments holder class
 class DetailsViewArguments {
@@ -131,6 +150,24 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.accountSettingsView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToAccountDetailsView({
+    Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.accountDetailsView,
+      arguments: AccountDetailsViewArguments(key: key),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

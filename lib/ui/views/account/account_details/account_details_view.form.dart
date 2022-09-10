@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 const String AccountNameValueKey = 'accountName';
 const String CurrencyValueKey = 'currency';
 const String BalanceValueKey = 'balance';
+const String NewBalanceValueKey = 'newBalance';
 const String ColorValueKey = 'color';
 
 final Map<String, String> CurrencyValueToTitleMap = {
@@ -78,6 +79,7 @@ final Map<String, String? Function(String?)?>
     _AccountDetailsViewTextValidations = {
   AccountNameValueKey: null,
   BalanceValueKey: null,
+  NewBalanceValueKey: null,
 };
 
 mixin $AccountDetailsView on StatelessWidget {
@@ -85,8 +87,11 @@ mixin $AccountDetailsView on StatelessWidget {
       _getFormTextEditingController(AccountNameValueKey);
   TextEditingController get balanceController =>
       _getFormTextEditingController(BalanceValueKey);
+  TextEditingController get newBalanceController =>
+      _getFormTextEditingController(NewBalanceValueKey);
   FocusNode get accountNameFocusNode => _getFormFocusNode(AccountNameValueKey);
   FocusNode get balanceFocusNode => _getFormFocusNode(BalanceValueKey);
+  FocusNode get newBalanceFocusNode => _getFormFocusNode(NewBalanceValueKey);
 
   TextEditingController _getFormTextEditingController(String key,
       {String? initialValue}) {
@@ -111,6 +116,7 @@ mixin $AccountDetailsView on StatelessWidget {
   void listenToFormUpdated(FormViewModel model) {
     accountNameController.addListener(() => _updateFormData(model));
     balanceController.addListener(() => _updateFormData(model));
+    newBalanceController.addListener(() => _updateFormData(model));
   }
 
   final bool _autoTextFieldValidation = true;
@@ -126,6 +132,7 @@ mixin $AccountDetailsView on StatelessWidget {
         ..addAll({
           AccountNameValueKey: accountNameController.text,
           BalanceValueKey: balanceController.text,
+          NewBalanceValueKey: newBalanceController.text,
         }),
     );
     if (_autoTextFieldValidation || forceValidate) {
@@ -138,6 +145,7 @@ mixin $AccountDetailsView on StatelessWidget {
       model.setValidationMessages({
         AccountNameValueKey: _getValidationMessage(AccountNameValueKey),
         BalanceValueKey: _getValidationMessage(BalanceValueKey),
+        NewBalanceValueKey: _getValidationMessage(NewBalanceValueKey),
       });
 
   /// Returns the validation message for the given key
@@ -172,11 +180,14 @@ extension ValueProperties on FormViewModel {
       this.formValueMap[AccountNameValueKey] as String?;
   String? get currencyValue => this.formValueMap[CurrencyValueKey] as String?;
   String? get balanceValue => this.formValueMap[BalanceValueKey] as String?;
+  String? get newBalanceValue =>
+      this.formValueMap[NewBalanceValueKey] as String?;
   String? get colorValue => this.formValueMap[ColorValueKey] as String?;
 
   bool get hasAccountName => this.formValueMap.containsKey(AccountNameValueKey);
   bool get hasCurrency => this.formValueMap.containsKey(CurrencyValueKey);
   bool get hasBalance => this.formValueMap.containsKey(BalanceValueKey);
+  bool get hasNewBalance => this.formValueMap.containsKey(NewBalanceValueKey);
   bool get hasColor => this.formValueMap.containsKey(ColorValueKey);
 
   bool get hasAccountNameValidationMessage =>
@@ -185,6 +196,8 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[CurrencyValueKey]?.isNotEmpty ?? false;
   bool get hasBalanceValidationMessage =>
       this.fieldsValidationMessages[BalanceValueKey]?.isNotEmpty ?? false;
+  bool get hasNewBalanceValidationMessage =>
+      this.fieldsValidationMessages[NewBalanceValueKey]?.isNotEmpty ?? false;
   bool get hasColorValidationMessage =>
       this.fieldsValidationMessages[ColorValueKey]?.isNotEmpty ?? false;
 
@@ -194,6 +207,8 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[CurrencyValueKey];
   String? get balanceValidationMessage =>
       this.fieldsValidationMessages[BalanceValueKey];
+  String? get newBalanceValidationMessage =>
+      this.fieldsValidationMessages[NewBalanceValueKey];
   String? get colorValidationMessage =>
       this.fieldsValidationMessages[ColorValueKey];
 }
@@ -213,6 +228,8 @@ extension Methods on FormViewModel {
       this.fieldsValidationMessages[CurrencyValueKey] = validationMessage;
   setBalanceValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[BalanceValueKey] = validationMessage;
+  setNewBalanceValidationMessage(String? validationMessage) =>
+      this.fieldsValidationMessages[NewBalanceValueKey] = validationMessage;
   setColorValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[ColorValueKey] = validationMessage;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -20,33 +21,45 @@ import 'package:stacked/stacked_annotations.dart';
     items: currencyStaticDropdownItems,
   ),
   FormTextField(initialValue: '', name: 'balance'),
+  FormTextField(initialValue: '', name: 'newBalance'),
   FormDropdownField(
     name: 'color',
     items: colorStaticDropdownItems,
   ),
 ])
 class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
-  AccountDetailsView({Key? key}) : super(key: key);
+  AccountDetailsView({
+    Key? key,
+    this.isAddAccount = true,
+  }) : super(key: key);
 
-  // TODO: Wrap with scrollable
+  final bool isAddAccount;
+
   // TODO: Breakdown components into builders
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    return ViewModelBuilder<AccountDetailsViewModel>.nonReactive(
+    final appBarTitle = isAddAccount ? "New Account" : "Edit Account";
+    final actionButtonTooltip =
+        isAddAccount ? "Save New Account" : "Save Changes";
+    final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
+
+    return ViewModelBuilder<AccountDetailsViewModel>.reactive(
       viewModelBuilder: () => AccountDetailsViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
         model.initForm(
-            accountNameController: accountNameController,
-            balanceController: balanceController);
+          accountNameController: accountNameController,
+          balanceController: balanceController,
+          newBalanceController: newBalanceController,
+        );
       },
       onDispose: (_) => disposeForm(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: customTheme.appBarBackgroundColor,
-          title: const Text("New Account"),
+          title: Text(appBarTitle),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: model.popCurrentView,
@@ -54,88 +67,158 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.save),
-              tooltip:
-                  'Save New Account', // TODO: Conditionally render message for update
+              tooltip: actionButtonTooltip,
               onPressed: () {},
             ),
           ],
         ),
-        body: Container(
-          padding: const EdgeInsets.all(8.0),
-          color: customTheme.contrastBackgroundColor,
-          child: Column(
-            children: [
-              TextField(
-                key: const ValueKey(AccountNameValueKey),
-                decoration: const InputDecoration(labelText: 'Account Name'),
-                controller: accountNameController,
-              ),
-              DropdownButtonFormField(
-                key: const ValueKey(CurrencyValueKey),
-                value: model.currencyValue,
-                items: CurrencyValueToTitleMap.keys
-                    .map(
-                      (value) => DropdownMenuItem<String>(
-                        key: ValueKey('$value key'),
-                        value: value,
-                        child: Text(CurrencyValueToTitleMap[value]!),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (String? value) {},
-              ),
-              TextField(
-                key: const ValueKey(BalanceValueKey),
-                decoration: const InputDecoration(
-                    labelText:
-                        'Initial Balance'), // TODO: Conditionally render message for update
-
-                controller: balanceController,
-                keyboardType: TextInputType
-                    .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
-              ),
-              DropdownButtonFormField(
-                key: const ValueKey(ColorValueKey),
-                value: model.colorValue,
-                menuMaxHeight:
-                    screenHeightPercentage(context, percentage: 0.30),
-                borderRadius: BorderRadius.circular(5),
-                decoration: const InputDecoration(
-                  label: Text("Color"),
+        backgroundColor: customTheme.contrastBackgroundColor,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 50),
+            child: Column(
+              children: [
+                TextField(
+                  key: const ValueKey(AccountNameValueKey),
+                  decoration: const InputDecoration(labelText: 'Account Name'),
+                  controller: accountNameController,
                 ),
-                selectedItemBuilder: (context) =>
-                    ColorValueToTitleMap.keys.map<Widget>((value) {
-                  return Container(
-                    height: 30,
-                    width: screenWidth(context) - 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Color(
-                        int.parse(ColorValueToTitleMap[value]!),
+                DropdownButtonFormField(
+                  key: const ValueKey(CurrencyValueKey),
+                  value: model.currencyValue,
+                  items: CurrencyValueToTitleMap.keys
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                          key: ValueKey('$value key'),
+                          value: value,
+                          child: Text(CurrencyValueToTitleMap[value]!),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (String? value) {},
+                ),
+                TextField(
+                  readOnly: !isAddAccount,
+                  key: const ValueKey(BalanceValueKey),
+                  decoration: InputDecoration(
+                    labelText: balanceFieldLabel,
+                    suffixIcon: isAddAccount
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.edit),
+                            color: customTheme.primaryTextColor,
+                            onPressed: () =>
+                                model.setNewBalanceFormVisibility(true),
+                          ),
+                  ),
+                  controller: balanceController,
+                  keyboardType: TextInputType
+                      .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
+                ),
+                if (!isAddAccount && model.newBalanceFormIsVisible) ...[
+                  verticalSpaceRegular,
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(5), // if you need this
+                      side: BorderSide(
+                        color: customTheme.customLightGrey!,
+                        width: 1.5,
                       ),
                     ),
-                  );
-                }).toList(),
-                items: ColorValueToTitleMap.keys
-                    .map(
-                      (value) => DropdownMenuItem<String>(
-                        key: ValueKey('$value key'),
-                        value: value,
-                        child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Color(
-                              int.parse(ColorValueToTitleMap[value]!),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(children: [
+                        Row(children: [
+                          const Expanded(child: Text("New Balance")),
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            iconSize: 22,
+                            onPressed: () =>
+                                model.setNewBalanceFormVisibility(false),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.check),
+                            iconSize: 22,
+                            onPressed: () {
+                              print("Save Changes");
+                            },
+                          ),
+                        ]),
+                        TextField(
+                          key: const ValueKey(NewBalanceValueKey),
+                          controller: newBalanceController,
+                          keyboardType: TextInputType
+                              .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
+                        ),
+                        verticalSpaceSmall,
+                        RadioListTile<BalanceUpdateType>(
+                          title: const Text(
+                            'Record changes as Transaction (diff amount)',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          value: BalanceUpdateType.withRecord,
+                          groupValue: model.balanceUpdateType,
+                          onChanged: model.setBalanceUpdateType,
+                        ),
+                        RadioListTile<BalanceUpdateType>(
+                          title: const Text(
+                            'Update balance without a transaction',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          value: BalanceUpdateType.withoutRecord,
+                          groupValue: model.balanceUpdateType,
+                          onChanged: model.setBalanceUpdateType,
+                        ),
+                      ]),
+                    ),
+                  ),
+                  verticalSpaceTiny,
+                ],
+                DropdownButtonFormField(
+                  key: const ValueKey(ColorValueKey),
+                  value: model.colorValue,
+                  menuMaxHeight:
+                      screenHeightPercentage(context, percentage: 0.30),
+                  borderRadius: BorderRadius.circular(5),
+                  decoration: const InputDecoration(
+                    label: Text("Color"),
+                  ),
+                  selectedItemBuilder: (context) =>
+                      ColorValueToTitleMap.keys.map<Widget>((value) {
+                    return Container(
+                      height: 30,
+                      width: screenWidth(context) - 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(
+                          int.parse(ColorValueToTitleMap[value]!),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  items: ColorValueToTitleMap.keys
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                          key: ValueKey('$value key'),
+                          value: value,
+                          child: Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Color(
+                                int.parse(ColorValueToTitleMap[value]!),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (String? value) => model.setColor(value!),
-              ),
-            ],
+                      )
+                      .toList(),
+                  onChanged: (String? value) => model.setColor(value!),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -10,6 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 class AccountSettingsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void navigateToAccountDetails() =>
-      _navigationService.navigateTo(Routes.accountDetailsView);
+  void navigateToAccountDetails({bool isAddAccount = true}) =>
+      _navigationService.navigateToAccountDetailsView(
+          isAddAccount: isAddAccount);
 }

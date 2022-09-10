@@ -68,7 +68,10 @@ class StackedRouter extends RouterBase {
         orElse: () => AccountDetailsViewArguments(),
       );
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => AccountDetailsView(key: args.key),
+        builder: (context) => AccountDetailsView(
+          key: args.key,
+          isAddAccount: args.isAddAccount,
+        ),
         settings: data,
       );
     },
@@ -94,7 +97,8 @@ class StackedRouter extends RouterBase {
 /// AccountDetailsView arguments holder class
 class AccountDetailsViewArguments {
   final Key? key;
-  AccountDetailsViewArguments({this.key});
+  final bool isAddAccount;
+  AccountDetailsViewArguments({this.key, this.isAddAccount = true});
 }
 
 /// DetailsView arguments holder class
@@ -159,6 +163,7 @@ extension NavigatorStateExtension on NavigationService {
 
   Future<dynamic> navigateToAccountDetailsView({
     Key? key,
+    bool isAddAccount = true,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -167,7 +172,8 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.accountDetailsView,
-      arguments: AccountDetailsViewArguments(key: key),
+      arguments:
+          AccountDetailsViewArguments(key: key, isAddAccount: isAddAccount),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_details/account_details_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,25 +12,42 @@ import 'package:stacked_services/stacked_services.dart';
 
 class AccountDetailsViewModel extends FormViewModel {
   final _logger = getLogger("AccountDetailsViewModel");
-
   final _navigationService = locator<NavigationService>();
+
+  TextEditingController? _balanceController;
+  TextEditingController? _newBalanceController;
+
+  BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
+  bool newBalanceFormIsVisible = false;
 
   void initForm({
     required TextEditingController accountNameController,
     required TextEditingController balanceController,
+    required TextEditingController newBalanceController,
   }) {
-    // TODO: initialize data here
-    // setColor('0xff74fe07');
+    setColor('0xFFFF4081');
     setCurrency('PHP');
+
+    _balanceController = balanceController;
+    _newBalanceController = newBalanceController;
+
     accountNameController.text = "Cash";
     balanceController.text = "1,000.00";
   }
 
   void popCurrentView() => _navigationService.popRepeated(1);
 
-  @override
-  void setFormStatus() {
-    // TODO: implement setFormStatus
-    _logger.i('Set form value with data: $formValueMap');
+  void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
+    balanceUpdateType = newBalanceUpdateType!;
+    notifyListeners();
   }
+
+  void setNewBalanceFormVisibility(bool isVisible) {
+    newBalanceFormIsVisible = isVisible;
+    _newBalanceController!.text = _balanceController!.text;
+    notifyListeners();
+  }
+
+  @override
+  void setFormStatus() {}
 }

@@ -19,7 +19,7 @@ class AccountDetailsViewModel extends FormViewModel {
     required TextEditingController balanceController,
   }) {
     // TODO: initialize data here
-    setColor('0xff74fe07');
+    // setColor('0xff74fe07');
     setCurrency('PHP');
     accountNameController.text = "Cash";
     balanceController.text = "1,000.00";

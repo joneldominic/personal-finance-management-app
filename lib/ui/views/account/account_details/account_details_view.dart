@@ -28,7 +28,6 @@ import 'package:stacked/stacked_annotations.dart';
 class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
   AccountDetailsView({Key? key}) : super(key: key);
 
-  // TODO: Decoration and theming (Backgroundcolor, Focus Colors)
   // TODO: Wrap with scrollable
   // TODO: Breakdown components into builders
   @override
@@ -61,8 +60,9 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
             ),
           ],
         ),
-        body: Padding(
+        body: Container(
           padding: const EdgeInsets.all(8.0),
+          color: customTheme.contrastBackgroundColor,
           child: Column(
             children: [
               TextField(
@@ -97,23 +97,16 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
               DropdownButtonFormField(
                 key: const ValueKey(ColorValueKey),
                 value: model.colorValue,
+                menuMaxHeight:
+                    screenHeightPercentage(context, percentage: 0.30),
+                borderRadius: BorderRadius.circular(5),
                 decoration: const InputDecoration(
                   label: Text("Color"),
-                  // enabledBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.blue, width: 2),
-                  //   borderRadius: BorderRadius.circular(20),
-                  // ),
-                  // border: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.blue, width: 2),
-                  //   borderRadius: BorderRadius.circular(20),
-                  // ),
-                  // filled: true,
-                  // fillColor: Colors.blueAccent,
                 ),
                 selectedItemBuilder: (context) =>
                     ColorValueToTitleMap.keys.map<Widget>((value) {
                   return Container(
-                    height: 20,
+                    height: 30,
                     width: screenWidth(context) - 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -129,7 +122,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                         key: ValueKey('$value key'),
                         value: value,
                         child: Container(
-                          height: 20,
+                          height: 30,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: Color(

@@ -1,0 +1,1 @@
+enum BalanceUpdateType { withRecord, withoutRecord }

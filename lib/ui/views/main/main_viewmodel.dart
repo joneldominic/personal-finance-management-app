@@ -13,4 +13,8 @@ class MainViewModel extends IndexTrackingViewModel {
     _navigationService.navigateTo(Routes.detailsView,
         arguments: DetailsViewArguments(name: "Joneeeeeel"));
   }
+
+  void navigateToTransactionDetails() {
+    _navigationService.navigateToTransactionDetailsView();
+  }
 }

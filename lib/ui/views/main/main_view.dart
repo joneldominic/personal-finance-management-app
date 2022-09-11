@@ -34,7 +34,7 @@ class MainView extends StatelessWidget {
               ? MainFloatingActionButton(
                   icon: const Icon(Icons.add),
                   label: "Add Transaction",
-                  onPressed: model.doSomething,
+                  onPressed: model.navigateToTransactionDetails,
                 )
               : null,
           appBar: const MainAppBar(),

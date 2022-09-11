@@ -205,3 +205,18 @@ const List<StaticDropdownItem> currencyStaticDropdownItems = [
     value: 'USD',
   ),
 ];
+
+const List<StaticDropdownItem> transactionTypeStaticDropdownItems = [
+  StaticDropdownItem(
+    title: 'Income',
+    value: 'income',
+  ),
+  StaticDropdownItem(
+    title: 'Expense',
+    value: 'expense',
+  ),
+  StaticDropdownItem(
+    title: 'Transfer',
+    value: 'transfer',
+  ),
+];

@@ -27,25 +27,30 @@ class MainView extends StatelessWidget {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
       onModelReady: (model) => model.setIndex(defaultViewIndex),
-      builder: (context, model, child) => Scaffold(
-        floatingActionButton: MainFloatingActionButton(
-          icon: const Icon(Icons.add),
-          label: "Add Transaction",
-          onPressed: model.doSomething,
-        ),
-        appBar: const MainAppBar(),
-        body: _getViewForIndex(model.currentIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          items: _getBottomNavItems(customTheme),
-          currentIndex: model.currentIndex,
-          selectedItemColor: customTheme.primaryAccent,
-          unselectedItemColor: Colors.white,
-          backgroundColor: customTheme.appBarBackgroundColor,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          onTap: model.setIndex,
-        ),
-      ),
+      builder: (context, model, child) {
+        final bool showFloatingActionButton = model.currentIndex != 2;
+        return Scaffold(
+          floatingActionButton: showFloatingActionButton
+              ? MainFloatingActionButton(
+                  icon: const Icon(Icons.add),
+                  label: "Add Transaction",
+                  onPressed: model.doSomething,
+                )
+              : null,
+          appBar: const MainAppBar(),
+          body: _getViewForIndex(model.currentIndex),
+          bottomNavigationBar: BottomNavigationBar(
+            items: _getBottomNavItems(customTheme),
+            currentIndex: model.currentIndex,
+            selectedItemColor: customTheme.primaryAccent,
+            unselectedItemColor: Colors.white,
+            backgroundColor: customTheme.appBarBackgroundColor,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            onTap: model.setIndex,
+          ),
+        );
+      },
     );
   }
 

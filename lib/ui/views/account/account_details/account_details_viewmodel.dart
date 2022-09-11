@@ -27,6 +27,9 @@ class AccountDetailsViewModel extends FormViewModel {
     required TextEditingController balanceController,
     required TextEditingController newBalanceController,
   }) {
+    _logger.i(
+        'initForm | argument: {accountNameController: $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}');
+
     setColor('0xFFFF4081');
     setCurrency('PHP');
 
@@ -37,25 +40,32 @@ class AccountDetailsViewModel extends FormViewModel {
     balanceController.text = "1,000.00";
   }
 
-  void popCurrentView() => _navigationService.popRepeated(1);
+  void popCurrentView() {
+    _logger.i('popCurrentView | argument: NONE');
+    _navigationService.popRepeated(1);
+  }
 
   void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
+    _logger.i('setBalanceUpdateType | argument: $newBalanceUpdateType');
     balanceUpdateType = newBalanceUpdateType!;
     notifyListeners();
   }
 
   void setNewBalanceFormVisibility(bool isVisible) {
+    _logger.i('setNewBalanceFormVisibility | argument: $isVisible');
     newBalanceFormIsVisible = isVisible;
     _newBalanceController!.text = _balanceController!.text;
     notifyListeners();
   }
 
   void setIsExcludeFromAnalysis(bool isExcluded) {
+    _logger.i('setIsExcludeFromAnalysis | argument: $isExcluded');
     isExcludeFromAnalysis = isExcluded;
     notifyListeners();
   }
 
   void setIsArchivedAccount(bool isArchived) {
+    _logger.i('setIsArchivedAccount | argument: $isArchived');
     isArchivedAccount = isArchived;
     notifyListeners();
   }

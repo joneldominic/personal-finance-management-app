@@ -159,12 +159,14 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                             value: BalanceUpdateType.withRecord,
                             groupValue: model.balanceUpdateType,
                             onChanged: model.setBalanceUpdateType,
+                            theme: customTheme,
                           ),
                           _buildRadioListTile(
                             title: 'Update balance without a Transaction',
                             value: BalanceUpdateType.withoutRecord,
                             groupValue: model.balanceUpdateType,
                             onChanged: model.setBalanceUpdateType,
+                            theme: customTheme,
                           ),
                         ],
                       ),
@@ -252,17 +254,18 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
     required String title,
     required BalanceUpdateType value,
     required BalanceUpdateType groupValue,
+    required CustomTheme theme,
     required void Function(BalanceUpdateType?)? onChanged,
   }) {
     return RadioListTile<BalanceUpdateType>(
-      title: Text(
-        title,
-        style: const TextStyle(fontSize: 14),
-      ),
-      value: value,
-      groupValue: groupValue,
-      onChanged: onChanged,
-    );
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 14),
+        ),
+        value: value,
+        groupValue: groupValue,
+        onChanged: onChanged,
+        activeColor: theme.activeControlColor);
   }
 
   SwitchListTile _buildSwitchListTile({
@@ -275,7 +278,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
       title: Text(title),
       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
       visualDensity: VisualDensity.compact,
-      activeColor: theme.activeSwitchColor,
+      activeColor: theme.activeControlColor,
       activeTrackColor: theme.activeSwitchTrackColor,
       value: value,
       onChanged: onChanged,

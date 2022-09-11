@@ -15,7 +15,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.customGrey,
     required this.customLightGrey,
     required this.contrastBackgroundColor,
-    required this.activeSwitchColor,
+    required this.activeControlColor,
     required this.activeSwitchTrackColor,
   });
 
@@ -31,7 +31,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? customGrey;
   final Color? customLightGrey;
   final Color? contrastBackgroundColor;
-  final Color? activeSwitchColor;
+  final Color? activeControlColor;
   final Color? activeSwitchTrackColor;
 
   @override
@@ -48,7 +48,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? customGrey,
     Color? customLightGrey,
     Color? contrastBackgroundColor,
-    Color? activeSwitchColor,
+    Color? activeControlColor,
     Color? activeSwitchTrackColor,
   }) {
     return CustomTheme(
@@ -67,7 +67,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       customLightGrey: customLightGrey ?? this.customLightGrey,
       contrastBackgroundColor:
           contrastBackgroundColor ?? this.contrastBackgroundColor,
-      activeSwitchColor: activeSwitchColor ?? this.activeSwitchColor,
+      activeControlColor: activeControlColor ?? this.activeControlColor,
       activeSwitchTrackColor:
           activeSwitchTrackColor ?? this.activeSwitchTrackColor,
     );
@@ -95,8 +95,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       customLightGrey: Color.lerp(customLightGrey, other.customLightGrey, t),
       contrastBackgroundColor:
           Color.lerp(contrastBackgroundColor, other.contrastBackgroundColor, t),
-      activeSwitchColor:
-          Color.lerp(activeSwitchColor, other.activeSwitchColor, t),
+      activeControlColor:
+          Color.lerp(activeControlColor, other.activeControlColor, t),
       activeSwitchTrackColor:
           Color.lerp(activeSwitchTrackColor, other.activeSwitchTrackColor, t),
     );
@@ -116,7 +116,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'customGrey: $customGrey, '
       'customLightGrey: $customLightGrey, '
       'contrastBackgroundColor: $contrastBackgroundColor, '
-      'activeSwitchColor: $activeSwitchColor, '
+      'activeControlColor: $activeControlColor, '
       'activeSwitchTrackColor: $activeSwitchTrackColor, '
       ')';
 
@@ -136,7 +136,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     customGrey: Color(0xff6a6a6a),
     customLightGrey: Color(0xff6a6a6a),
     contrastBackgroundColor: Colors.white,
-    activeSwitchColor: Colors.blue,
+    activeControlColor: Colors.blue,
     activeSwitchTrackColor: Color(0xff90CAF9),
   );
 
@@ -156,7 +156,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     customGrey: Color(0xff6a6a6a),
     customLightGrey: Color(0xffc0c0c0),
     contrastBackgroundColor: Color(0xff424242),
-    activeSwitchColor: Color(0xff1E88E5),
+    activeControlColor: Color(0xff1E88E5),
     activeSwitchTrackColor: Color(0xff64B5F6),
   );
 }

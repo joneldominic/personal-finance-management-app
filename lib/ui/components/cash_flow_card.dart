@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class CashFlowCard extends StatelessWidget {
@@ -75,7 +76,7 @@ class CashFlowCard extends StatelessWidget {
                     "PHP 49,125.51",
                     1.0,
                   ),
-                  const SizedBox(height: 10),
+                  verticalSpaceSmall,
                   _buildCashFlowBar(
                     customTheme,
                     TransactionType.expense,
@@ -127,7 +128,7 @@ class CashFlowCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 5),
+        verticalSpaceTiny,
         ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(5)),
           child: LinearProgressIndicator(

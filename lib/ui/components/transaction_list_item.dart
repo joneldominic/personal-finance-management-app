@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class TransactionListItem extends StatelessWidget {
@@ -32,7 +33,7 @@ class TransactionListItem extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        const SizedBox(width: 10),
+        verticalSpaceSmall,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

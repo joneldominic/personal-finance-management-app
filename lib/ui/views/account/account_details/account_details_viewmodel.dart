@@ -19,6 +19,8 @@ class AccountDetailsViewModel extends FormViewModel {
 
   BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
   bool newBalanceFormIsVisible = false;
+  bool isExcludeFromAnalysis = false;
+  bool isArchivedAccount = false;
 
   void initForm({
     required TextEditingController accountNameController,
@@ -45,6 +47,16 @@ class AccountDetailsViewModel extends FormViewModel {
   void setNewBalanceFormVisibility(bool isVisible) {
     newBalanceFormIsVisible = isVisible;
     _newBalanceController!.text = _balanceController!.text;
+    notifyListeners();
+  }
+
+  void setIsExcludeFromAnalysis(bool isExcluded) {
+    isExcludeFromAnalysis = isExcluded;
+    notifyListeners();
+  }
+
+  void setIsArchivedAccount(bool isArchived) {
+    isArchivedAccount = isArchived;
     notifyListeners();
   }
 

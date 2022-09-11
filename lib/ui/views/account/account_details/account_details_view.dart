@@ -76,7 +76,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 50),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
             child: Column(
               children: [
                 TextField(
@@ -155,7 +155,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                         verticalSpaceSmall,
                         RadioListTile<BalanceUpdateType>(
                           title: const Text(
-                            'Record changes as Transaction (diff amount)',
+                            'Record changes with a Transaction (diff amount)',
                             style: TextStyle(fontSize: 14),
                           ),
                           value: BalanceUpdateType.withRecord,
@@ -164,7 +164,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                         ),
                         RadioListTile<BalanceUpdateType>(
                           title: const Text(
-                            'Update balance without a transaction',
+                            'Update balance without a Transaction',
                             style: TextStyle(fontSize: 14),
                           ),
                           value: BalanceUpdateType.withoutRecord,
@@ -189,7 +189,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                       ColorValueToTitleMap.keys.map<Widget>((value) {
                     return Container(
                       height: 30,
-                      width: screenWidth(context) - 40,
+                      width: screenWidth(context) - 45,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Color(
@@ -217,6 +217,39 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                       .toList(),
                   onChanged: (String? value) => model.setColor(value!),
                 ),
+                verticalSpaceSmallPlus,
+                SwitchListTile(
+                  title: const Text('Exclude from Analysis'),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                  visualDensity: VisualDensity.compact,
+                  activeColor: customTheme.activeSwitchColor,
+                  activeTrackColor: customTheme.activeSwitchTrackColor,
+                  value: model.isExcludeFromAnalysis,
+                  onChanged: model.setIsExcludeFromAnalysis,
+                ),
+                if (!isAddAccount) ...[
+                  SwitchListTile(
+                    title: const Text('Archive Account'),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    visualDensity: VisualDensity.compact,
+                    activeColor: customTheme.activeSwitchColor,
+                    activeTrackColor: customTheme.activeSwitchTrackColor,
+                    value: model.isArchivedAccount,
+                    onChanged: model.setIsArchivedAccount,
+                  ),
+                  verticalSpaceRegular,
+                  SizedBox(
+                    width: screenWidth(context) - 30,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 18),
+                        primary: Colors.red,
+                      ),
+                      onPressed: () {},
+                      child: const Text('Delete Account'),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

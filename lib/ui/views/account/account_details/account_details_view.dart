@@ -231,9 +231,11 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                   SizedBox(
                     width: screenWidth(context) - 30,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 18),
-                        primary: Colors.red,
+                      style: ButtonStyle(
+                        textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 18),
+                        ),
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
                       onPressed: () {},
                       child: const Text('Delete Account'),

@@ -12,4 +12,7 @@ class AccountsCardViewModel extends BaseViewModel {
 
   void navigateToAccountSettings() =>
       _navigationService.navigateTo(Routes.accountSettingsView);
+
+  void navigateToAccountDetails() =>
+      _navigationService.navigateTo(Routes.accountDetailsView);
 }

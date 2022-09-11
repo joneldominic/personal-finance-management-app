@@ -14,15 +14,19 @@ class StartUpViewModel extends BaseViewModel {
   final _themeService = locator<ThemeService>();
   final _logger = getLogger("StartUpViewModel");
 
+  // Info Log - on every public function call with the following format: (functionName | arguments: test)
+  // Warning Log - warn when expected value is not present or incorrect format
+  // Error Log - Log the reason not the exception
+
   String title = 'Jonel';
 
   void doSomething() {
-    _logger.v("Verbose log", "test");
-    _logger.d("Debug log");
-    _logger.i("Info log");
-    _logger.w("Warning log");
-    _logger.e("Error log");
-    _logger.wtf("What a terrible failure log");
+    // _logger.v("Verbose log", "test");
+    // _logger.d("Debug log");
+    // _logger.i("Info log");
+    // _logger.w("Warning log");
+    // _logger.e("Error log");
+    // _logger.wtf("What a terrible failure log");
 
     _navigationService.navigateTo(Routes.mainView);
   }

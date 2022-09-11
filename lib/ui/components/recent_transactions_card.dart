@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
@@ -48,7 +49,7 @@ class RecentTransactionsCard extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 15),
+            verticalSpaceSmallPlus,
             const TransactionListItem(
               description: "Birthday",
               accountName: "Cash",
@@ -80,7 +81,7 @@ class RecentTransactionsCard extends StatelessWidget {
               transactionType: TransactionType.expense,
               timeStamp: "Aug. 24, 2022",
             ),
-            const SizedBox(height: 30),
+            horizontalSpaceMediumPlus,
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

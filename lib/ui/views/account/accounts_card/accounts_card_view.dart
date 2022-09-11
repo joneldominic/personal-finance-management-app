@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_thumbnail.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
-import 'package:personal_finance_management_app/ui/views/accounts_card/accounts_card_viewmodel.dart';
+import 'package:personal_finance_management_app/ui/views/account/accounts_card/accounts_card_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class AccountsCard extends StatelessWidget {
@@ -46,38 +46,41 @@ class AccountsCard extends StatelessWidget {
               mainAxisSpacing: 10,
               crossAxisCount: 3,
               childAspectRatio: 2.22,
-              children: const <Widget>[
-                AccountThumbnail(
+              children: <Widget>[
+                const AccountThumbnail(
                   label: "Cash",
                   amount: "PHP 1,500.00",
                   color: Colors.red,
                 ),
-                AccountThumbnail(
+                const AccountThumbnail(
                   label: "BPI",
                   amount: "PHP 2,000.00",
                   color: Colors.amber,
                 ),
-                AccountThumbnail(
+                const AccountThumbnail(
                   label: "GCash",
                   amount: "PHP 5,155.00",
                   color: Colors.blue,
                 ),
-                AccountThumbnail(
+                const AccountThumbnail(
                   label: "CIMB",
                   amount: "PHP 2,202.00",
                   color: Colors.green,
                 ),
-                AccountThumbnail(
+                const AccountThumbnail(
                   label: "Dummy Account A",
                   amount: "PHP 5,202.00",
                   color: Colors.brown,
                 ),
-                AccountThumbnail(
+                const AccountThumbnail(
                   label: "Account B",
                   amount: "PHP 5,202.00",
                   color: Colors.deepPurple,
                 ),
-                AccountThumbnail(isAddAccount: true),
+                GestureDetector(
+                  onTap: model.navigateToAccountDetails,
+                  child: const AccountThumbnail(isAddAccount: true),
+                ),
               ],
             ),
           ],

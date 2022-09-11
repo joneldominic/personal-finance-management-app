@@ -141,9 +141,7 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                             IconButton(
                               icon: const Icon(Icons.check),
                               iconSize: 22,
-                              onPressed: () {
-                                print("Save Changes");
-                              },
+                              onPressed: () {},
                             ),
                           ]),
                           TextField(

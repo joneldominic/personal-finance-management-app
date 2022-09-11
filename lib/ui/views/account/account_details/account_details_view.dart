@@ -35,7 +35,6 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
 
   final bool isAddAccount;
 
-  // TODO: Breakdown components into builders
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
@@ -129,49 +128,46 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Column(children: [
-                        Row(children: [
-                          const Expanded(child: Text("New Balance")),
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            iconSize: 22,
-                            onPressed: () =>
-                                model.setNewBalanceFormVisibility(false),
+                      child: Column(
+                        children: [
+                          Row(children: [
+                            const Expanded(child: Text("New Balance")),
+                            IconButton(
+                              icon: const Icon(Icons.close),
+                              iconSize: 22,
+                              onPressed: () =>
+                                  model.setNewBalanceFormVisibility(false),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.check),
+                              iconSize: 22,
+                              onPressed: () {
+                                print("Save Changes");
+                              },
+                            ),
+                          ]),
+                          TextField(
+                            key: const ValueKey(NewBalanceValueKey),
+                            controller: newBalanceController,
+                            keyboardType: TextInputType
+                                .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.check),
-                            iconSize: 22,
-                            onPressed: () {
-                              print("Save Changes");
-                            },
+                          verticalSpaceSmall,
+                          _buildRadioListTile(
+                            title:
+                                'Record changes with a Transaction (diff amount)',
+                            value: BalanceUpdateType.withRecord,
+                            groupValue: model.balanceUpdateType,
+                            onChanged: model.setBalanceUpdateType,
                           ),
-                        ]),
-                        TextField(
-                          key: const ValueKey(NewBalanceValueKey),
-                          controller: newBalanceController,
-                          keyboardType: TextInputType
-                              .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
-                        ),
-                        verticalSpaceSmall,
-                        RadioListTile<BalanceUpdateType>(
-                          title: const Text(
-                            'Record changes with a Transaction (diff amount)',
-                            style: TextStyle(fontSize: 14),
+                          _buildRadioListTile(
+                            title: 'Update balance without a Transaction',
+                            value: BalanceUpdateType.withoutRecord,
+                            groupValue: model.balanceUpdateType,
+                            onChanged: model.setBalanceUpdateType,
                           ),
-                          value: BalanceUpdateType.withRecord,
-                          groupValue: model.balanceUpdateType,
-                          onChanged: model.setBalanceUpdateType,
-                        ),
-                        RadioListTile<BalanceUpdateType>(
-                          title: const Text(
-                            'Update balance without a Transaction',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          value: BalanceUpdateType.withoutRecord,
-                          groupValue: model.balanceUpdateType,
-                          onChanged: model.setBalanceUpdateType,
-                        ),
-                      ]),
+                        ],
+                      ),
                     ),
                   ),
                   verticalSpaceTiny,
@@ -218,24 +214,18 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
                   onChanged: (String? value) => model.setColor(value!),
                 ),
                 verticalSpaceSmallPlus,
-                SwitchListTile(
-                  title: const Text('Exclude from Analysis'),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                  visualDensity: VisualDensity.compact,
-                  activeColor: customTheme.activeSwitchColor,
-                  activeTrackColor: customTheme.activeSwitchTrackColor,
+                _buildSwitchListTile(
+                  title: 'Exclude from Analysis',
                   value: model.isExcludeFromAnalysis,
                   onChanged: model.setIsExcludeFromAnalysis,
+                  theme: customTheme,
                 ),
                 if (!isAddAccount) ...[
-                  SwitchListTile(
-                    title: const Text('Archive Account'),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                    visualDensity: VisualDensity.compact,
-                    activeColor: customTheme.activeSwitchColor,
-                    activeTrackColor: customTheme.activeSwitchTrackColor,
+                  _buildSwitchListTile(
+                    title: 'Archive Account',
                     value: model.isArchivedAccount,
                     onChanged: model.setIsArchivedAccount,
+                    theme: customTheme,
                   ),
                   verticalSpaceRegular,
                   SizedBox(
@@ -255,6 +245,40 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
           ),
         ),
       ),
+    );
+  }
+
+  RadioListTile<BalanceUpdateType> _buildRadioListTile({
+    required String title,
+    required BalanceUpdateType value,
+    required BalanceUpdateType groupValue,
+    required void Function(BalanceUpdateType?)? onChanged,
+  }) {
+    return RadioListTile<BalanceUpdateType>(
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 14),
+      ),
+      value: value,
+      groupValue: groupValue,
+      onChanged: onChanged,
+    );
+  }
+
+  SwitchListTile _buildSwitchListTile({
+    required String title,
+    required bool value,
+    required CustomTheme theme,
+    required void Function(bool)? onChanged,
+  }) {
+    return SwitchListTile(
+      title: Text(title),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+      visualDensity: VisualDensity.compact,
+      activeColor: theme.activeSwitchColor,
+      activeTrackColor: theme.activeSwitchTrackColor,
+      value: value,
+      onChanged: onChanged,
     );
   }
 }

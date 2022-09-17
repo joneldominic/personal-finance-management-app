@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
-import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -44,6 +43,11 @@ class TransactionDetailViewModel extends FormViewModel {
     timeController.text = time;
   }
 
+  void popCurrentView() {
+    _logger.i('popCurrentView | argument: NONE');
+    _navigationService.popRepeated(1);
+  }
+
   void setTransactionDate(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -70,47 +74,6 @@ class TransactionDetailViewModel extends FormViewModel {
           now.month, now.day, selectedTime.hour, selectedTime.minute));
       timeController.text = time;
     }
-  }
-
-  // --------------------------------------------------------------------
-  // TODO: Remove unnecessary codes
-
-  TextEditingController? _newBalanceController;
-
-  BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
-  bool newBalanceFormIsVisible = false;
-  bool isExcludeFromAnalysis = false;
-  bool isArchivedAccount = false;
-
-  // TODO: Initialize date and time
-
-  void popCurrentView() {
-    _logger.i('popCurrentView | argument: NONE');
-    _navigationService.popRepeated(1);
-  }
-
-  void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
-    _logger.i('setBalanceUpdateType | argument: $newBalanceUpdateType');
-    balanceUpdateType = newBalanceUpdateType!;
-    notifyListeners();
-  }
-
-  void setNewBalanceFormVisibility(bool isVisible) {
-    _logger.i('setNewBalanceFormVisibility | argument: $isVisible');
-    newBalanceFormIsVisible = isVisible;
-    notifyListeners();
-  }
-
-  void setIsExcludeFromAnalysis(bool isExcluded) {
-    _logger.i('setIsExcludeFromAnalysis | argument: $isExcluded');
-    isExcludeFromAnalysis = isExcluded;
-    notifyListeners();
-  }
-
-  void setIsArchivedAccount(bool isArchived) {
-    _logger.i('setIsArchivedAccount | argument: $isArchived');
-    isArchivedAccount = isArchived;
-    notifyListeners();
   }
 
   @override

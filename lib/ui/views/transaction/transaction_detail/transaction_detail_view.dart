@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
+import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_viewmodel.dart';
@@ -168,6 +170,13 @@ class TransactionDetailView extends StatelessWidget
                   minLines: 3,
                   maxLines: 5,
                 ),
+                if (!isAddTransaction) ...[
+                  verticalSpaceRegular,
+                  DeleteButton(
+                    label: 'Delete Transaction',
+                    onPressed: () {},
+                  ),
+                ]
               ],
             ),
           ),

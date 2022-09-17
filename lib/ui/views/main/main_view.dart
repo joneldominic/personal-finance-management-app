@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
 import 'package:personal_finance_management_app/ui/components/main_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
-import 'package:personal_finance_management_app/ui/components/transactions.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
+import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_viewmodel.dart';
@@ -34,7 +34,7 @@ class MainView extends StatelessWidget {
               ? MainFloatingActionButton(
                   icon: const Icon(Icons.add),
                   label: "Add Transaction",
-                  onPressed: model.navigateToTransactionDetails,
+                  onPressed: model.navigateToTransactionDetail,
                 )
               : null,
           appBar: const MainAppBar(),
@@ -74,7 +74,7 @@ class MainView extends StatelessWidget {
   Widget _getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return const Transactions();
+        return const TransactionListView();
       case 1:
         return const HomeView();
       case 2:

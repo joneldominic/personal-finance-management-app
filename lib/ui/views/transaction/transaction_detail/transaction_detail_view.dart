@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
-import 'package:personal_finance_management_app/ui/views/transaction/transaction_details/transaction_details_view.form.dart';
-import 'package:personal_finance_management_app/ui/views/transaction/transaction_details/transaction_details_viewmodel.dart';
+import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
+import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -28,9 +28,9 @@ import 'package:stacked/stacked_annotations.dart';
   ),
   FormTextField(initialValue: '', name: 'notes'),
 ])
-class TransactionDetailsView extends StatelessWidget
-    with $TransactionDetailsView {
-  TransactionDetailsView({
+class TransactionDetailView extends StatelessWidget
+    with $TransactionDetailView {
+  TransactionDetailView({
     Key? key,
     this.isAddTransaction = true,
   }) : super(key: key);
@@ -42,12 +42,12 @@ class TransactionDetailsView extends StatelessWidget
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final appBarTitle =
-        isAddTransaction ? "New Transaction" : "Transaction Details";
+        isAddTransaction ? "New Transaction" : "Transaction Detail";
     final actionButtonTooltip =
         isAddTransaction ? "Save Transaction" : "Save Changes";
 
-    return ViewModelBuilder<TransactionDetailsViewModel>.reactive(
-      viewModelBuilder: () => TransactionDetailsViewModel(),
+    return ViewModelBuilder<TransactionDetailViewModel>.reactive(
+      viewModelBuilder: () => TransactionDetailViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
         model.initForm();

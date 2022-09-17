@@ -71,18 +71,18 @@ final Map<String, String> ColorValueToTitleMap = {
 };
 
 final Map<String, TextEditingController>
-    _AccountDetailsViewTextEditingControllers = {};
+    _AccountDetailViewTextEditingControllers = {};
 
-final Map<String, FocusNode> _AccountDetailsViewFocusNodes = {};
+final Map<String, FocusNode> _AccountDetailViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?>
-    _AccountDetailsViewTextValidations = {
+    _AccountDetailViewTextValidations = {
   AccountNameValueKey: null,
   BalanceValueKey: null,
   NewBalanceValueKey: null,
 };
 
-mixin $AccountDetailsView on StatelessWidget {
+mixin $AccountDetailView on StatelessWidget {
   TextEditingController get accountNameController =>
       _getFormTextEditingController(AccountNameValueKey);
   TextEditingController get balanceController =>
@@ -95,20 +95,20 @@ mixin $AccountDetailsView on StatelessWidget {
 
   TextEditingController _getFormTextEditingController(String key,
       {String? initialValue}) {
-    if (_AccountDetailsViewTextEditingControllers.containsKey(key)) {
-      return _AccountDetailsViewTextEditingControllers[key]!;
+    if (_AccountDetailViewTextEditingControllers.containsKey(key)) {
+      return _AccountDetailViewTextEditingControllers[key]!;
     }
-    _AccountDetailsViewTextEditingControllers[key] =
+    _AccountDetailViewTextEditingControllers[key] =
         TextEditingController(text: initialValue);
-    return _AccountDetailsViewTextEditingControllers[key]!;
+    return _AccountDetailViewTextEditingControllers[key]!;
   }
 
   FocusNode _getFormFocusNode(String key) {
-    if (_AccountDetailsViewFocusNodes.containsKey(key)) {
-      return _AccountDetailsViewFocusNodes[key]!;
+    if (_AccountDetailViewFocusNodes.containsKey(key)) {
+      return _AccountDetailViewFocusNodes[key]!;
     }
-    _AccountDetailsViewFocusNodes[key] = FocusNode();
-    return _AccountDetailsViewFocusNodes[key]!;
+    _AccountDetailViewFocusNodes[key] = FocusNode();
+    return _AccountDetailViewFocusNodes[key]!;
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -150,10 +150,10 @@ mixin $AccountDetailsView on StatelessWidget {
 
   /// Returns the validation message for the given key
   String? _getValidationMessage(String key) {
-    final validatorForKey = _AccountDetailsViewTextValidations[key];
+    final validatorForKey = _AccountDetailViewTextValidations[key];
     if (validatorForKey == null) return null;
     String? validationMessageForKey =
-        validatorForKey(_AccountDetailsViewTextEditingControllers[key]!.text);
+        validatorForKey(_AccountDetailViewTextEditingControllers[key]!.text);
     return validationMessageForKey;
   }
 
@@ -161,15 +161,15 @@ mixin $AccountDetailsView on StatelessWidget {
   void disposeForm() {
     // The dispose function for a TextEditingController sets all listeners to null
 
-    for (var controller in _AccountDetailsViewTextEditingControllers.values) {
+    for (var controller in _AccountDetailViewTextEditingControllers.values) {
       controller.dispose();
     }
-    for (var focusNode in _AccountDetailsViewFocusNodes.values) {
+    for (var focusNode in _AccountDetailViewFocusNodes.values) {
       focusNode.dispose();
     }
 
-    _AccountDetailsViewTextEditingControllers.clear();
-    _AccountDetailsViewFocusNodes.clear();
+    _AccountDetailViewTextEditingControllers.clear();
+    _AccountDetailViewFocusNodes.clear();
   }
 }
 

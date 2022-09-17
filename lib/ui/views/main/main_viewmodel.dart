@@ -14,7 +14,7 @@ class MainViewModel extends IndexTrackingViewModel {
         arguments: DetailsViewArguments(name: "Joneeeeeel"));
   }
 
-  void navigateToTransactionDetails() {
-    _navigationService.navigateToTransactionDetailsView();
+  void navigateToTransactionDetail() {
+    _navigationService.navigateToTransactionDetailView();
   }
 }

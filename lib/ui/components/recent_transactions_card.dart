@@ -50,36 +50,40 @@ class RecentTransactionsCard extends StatelessWidget {
               ],
             ),
             verticalSpaceSmallPlus,
-            const TransactionListItem(
+            TransactionListItem(
               description: "Birthday",
               accountName: "Cash",
               amount: "PHP 5,000.00",
               transactionType: TransactionType.expense,
               timeStamp: "Today",
+              onTap: () {},
             ),
             const Divider(),
-            const TransactionListItem(
+            TransactionListItem(
               description: "Badminton Tournament Registration",
               accountName: "Cash",
               amount: "PHP 800.00",
               transactionType: TransactionType.expense,
               timeStamp: "Sept. 2, 2022",
+              onTap: () {},
             ),
             const Divider(),
-            const TransactionListItem(
+            TransactionListItem(
               description: "FullScale Salary",
               accountName: "BPI",
               amount: "PHP 60,000.00",
               transactionType: TransactionType.income,
               timeStamp: "Aug. 30, 2022",
+              onTap: () {},
             ),
             const Divider(),
-            const TransactionListItem(
+            TransactionListItem(
               description: "Grocery",
               accountName: "Cash",
               amount: "PHP 2,000.00",
               transactionType: TransactionType.expense,
               timeStamp: "Aug. 24, 2022",
+              onTap: () {},
             ),
             horizontalSpaceMediumPlus,
             Row(

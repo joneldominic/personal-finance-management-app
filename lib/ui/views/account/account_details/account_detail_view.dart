@@ -3,8 +3,8 @@ import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
-import 'package:personal_finance_management_app/ui/views/account/account_details/account_details_view.form.dart';
-import 'package:personal_finance_management_app/ui/views/account/account_details/account_details_viewmodel.dart';
+import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_view.form.dart';
+import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -27,8 +27,8 @@ import 'package:stacked/stacked_annotations.dart';
     items: colorStaticDropdownItems,
   ),
 ])
-class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
-  AccountDetailsView({
+class AccountDetailView extends StatelessWidget with $AccountDetailView {
+  AccountDetailView({
     Key? key,
     this.isAddAccount = true,
   }) : super(key: key);
@@ -44,8 +44,8 @@ class AccountDetailsView extends StatelessWidget with $AccountDetailsView {
         isAddAccount ? "Save New Account" : "Save Changes";
     final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
 
-    return ViewModelBuilder<AccountDetailsViewModel>.reactive(
-      viewModelBuilder: () => AccountDetailsViewModel(),
+    return ViewModelBuilder<AccountDetailViewModel>.reactive(
+      viewModelBuilder: () => AccountDetailViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
         model.initForm(

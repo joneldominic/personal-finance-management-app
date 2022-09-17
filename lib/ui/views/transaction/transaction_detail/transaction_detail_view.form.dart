@@ -24,17 +24,17 @@ final Map<String, String> TransactionTypeValueToTitleMap = {
 final Map<String, String> CategoryValueToTitleMap = {};
 
 final Map<String, TextEditingController>
-    _TransactionDetailsViewTextEditingControllers = {};
+    _TransactionDetailViewTextEditingControllers = {};
 
-final Map<String, FocusNode> _TransactionDetailsViewFocusNodes = {};
+final Map<String, FocusNode> _TransactionDetailViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?>
-    _TransactionDetailsViewTextValidations = {
+    _TransactionDetailViewTextValidations = {
   AmountValueKey: null,
   NotesValueKey: null,
 };
 
-mixin $TransactionDetailsView on StatelessWidget {
+mixin $TransactionDetailView on StatelessWidget {
   TextEditingController get amountController =>
       _getFormTextEditingController(AmountValueKey);
   TextEditingController get notesController =>
@@ -44,20 +44,20 @@ mixin $TransactionDetailsView on StatelessWidget {
 
   TextEditingController _getFormTextEditingController(String key,
       {String? initialValue}) {
-    if (_TransactionDetailsViewTextEditingControllers.containsKey(key)) {
-      return _TransactionDetailsViewTextEditingControllers[key]!;
+    if (_TransactionDetailViewTextEditingControllers.containsKey(key)) {
+      return _TransactionDetailViewTextEditingControllers[key]!;
     }
-    _TransactionDetailsViewTextEditingControllers[key] =
+    _TransactionDetailViewTextEditingControllers[key] =
         TextEditingController(text: initialValue);
-    return _TransactionDetailsViewTextEditingControllers[key]!;
+    return _TransactionDetailViewTextEditingControllers[key]!;
   }
 
   FocusNode _getFormFocusNode(String key) {
-    if (_TransactionDetailsViewFocusNodes.containsKey(key)) {
-      return _TransactionDetailsViewFocusNodes[key]!;
+    if (_TransactionDetailViewFocusNodes.containsKey(key)) {
+      return _TransactionDetailViewFocusNodes[key]!;
     }
-    _TransactionDetailsViewFocusNodes[key] = FocusNode();
-    return _TransactionDetailsViewFocusNodes[key]!;
+    _TransactionDetailViewFocusNodes[key] = FocusNode();
+    return _TransactionDetailViewFocusNodes[key]!;
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -96,10 +96,10 @@ mixin $TransactionDetailsView on StatelessWidget {
 
   /// Returns the validation message for the given key
   String? _getValidationMessage(String key) {
-    final validatorForKey = _TransactionDetailsViewTextValidations[key];
+    final validatorForKey = _TransactionDetailViewTextValidations[key];
     if (validatorForKey == null) return null;
     String? validationMessageForKey = validatorForKey(
-        _TransactionDetailsViewTextEditingControllers[key]!.text);
+        _TransactionDetailViewTextEditingControllers[key]!.text);
     return validationMessageForKey;
   }
 
@@ -108,15 +108,15 @@ mixin $TransactionDetailsView on StatelessWidget {
     // The dispose function for a TextEditingController sets all listeners to null
 
     for (var controller
-        in _TransactionDetailsViewTextEditingControllers.values) {
+        in _TransactionDetailViewTextEditingControllers.values) {
       controller.dispose();
     }
-    for (var focusNode in _TransactionDetailsViewFocusNodes.values) {
+    for (var focusNode in _TransactionDetailViewFocusNodes.values) {
       focusNode.dispose();
     }
 
-    _TransactionDetailsViewTextEditingControllers.clear();
-    _TransactionDetailsViewFocusNodes.clear();
+    _TransactionDetailViewTextEditingControllers.clear();
+    _TransactionDetailViewFocusNodes.clear();
   }
 }
 

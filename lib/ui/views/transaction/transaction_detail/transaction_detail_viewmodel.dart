@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
-import 'package:personal_finance_management_app/ui/views/transaction/transaction_details/transaction_details_view.form.dart';
+import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,8 +11,8 @@ import 'package:stacked_services/stacked_services.dart';
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
 
-class TransactionDetailsViewModel extends FormViewModel {
-  final _logger = getLogger("AccountDetailsViewModel");
+class TransactionDetailViewModel extends FormViewModel {
+  final _logger = getLogger("TransactionDetailViewModel");
   final _navigationService = locator<NavigationService>();
 
   final TextEditingController dateController = TextEditingController();

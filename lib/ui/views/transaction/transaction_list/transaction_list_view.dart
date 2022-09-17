@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
-class Transactions extends StatelessWidget {
-  const Transactions({
+class TransactionListView extends StatelessWidget {
+  const TransactionListView({
     Key? key,
   }) : super(key: key);
 
@@ -87,22 +89,27 @@ class Transactions extends StatelessWidget {
       "Aug. 24, 2022",
     ];
 
-    return Container(
-      color: customTheme.contrastBackgroundColor,
-      child: ListView.separated(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 90),
-        physics: const BouncingScrollPhysics(),
-        itemCount: descriptions.length,
-        itemBuilder: (BuildContext context, int index) {
-          return TransactionListItem(
-            description: descriptions[index],
-            accountName: accountNames[index],
-            amount: amounts[index],
-            transactionType: transactionTypes[index],
-            timeStamp: timeStamps[index],
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+    return ViewModelBuilder<TransactionListViewModel>.nonReactive(
+      viewModelBuilder: () => TransactionListViewModel(),
+      builder: (context, model, child) => Container(
+        color: customTheme.contrastBackgroundColor,
+        child: ListView.separated(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 90),
+          physics: const BouncingScrollPhysics(),
+          itemCount: descriptions.length,
+          itemBuilder: (BuildContext context, int index) {
+            return TransactionListItem(
+              description: descriptions[index],
+              accountName: accountNames[index],
+              amount: amounts[index],
+              transactionType: transactionTypes[index],
+              timeStamp: timeStamps[index],
+              onTap: model.navigateToTransactionDetailEditMode,
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+        ),
       ),
     );
   }

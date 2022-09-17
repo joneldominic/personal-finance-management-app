@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
-import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class TransactionListItem extends StatelessWidget {
@@ -25,78 +24,69 @@ class TransactionListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+    return ListTile(
       onTap: onTap,
-      child: Row(
+      contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+      leading: const CircleAvatar(
+        radius: 18,
+        backgroundColor: Colors.blue,
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CircleAvatar(
-            radius: 18,
-            backgroundColor: Colors.blue,
-            child: Icon(
-              Icons.monetization_on_outlined,
-              color: Colors.black,
+          Text(
+            description ?? "",
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          verticalSpaceSmall,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Text(
+            accountName ?? "",
+            style: TextStyle(
+              fontSize: 12,
+              color: customTheme.customLightGrey,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+      trailing: FittedBox(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Row(
               children: [
                 Text(
-                  description ?? "",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  accountName ?? "",
+                  amount ?? "",
                   style: TextStyle(
                     fontSize: 12,
-                    color: customTheme.customLightGrey,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    amount ?? "",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: transactionType == TransactionType.expense
-                          ? customTheme.danger
-                          : customTheme.success,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Icon(
-                    transactionType == TransactionType.expense
-                        ? Icons.arrow_drop_down
-                        : Icons.arrow_drop_up,
                     color: transactionType == TransactionType.expense
                         ? customTheme.danger
                         : customTheme.success,
+                    fontWeight: FontWeight.w500,
                   ),
-                ],
-              ),
-              Text(
-                timeStamp ?? "",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: customTheme.customLightGrey,
-                  fontWeight: FontWeight.w500,
                 ),
+                Icon(
+                  transactionType == TransactionType.expense
+                      ? Icons.arrow_drop_down
+                      : Icons.arrow_drop_up,
+                  color: transactionType == TransactionType.expense
+                      ? customTheme.danger
+                      : customTheme.success,
+                ),
+              ],
+            ),
+            Text(
+              timeStamp ?? "",
+              style: TextStyle(
+                fontSize: 12,
+                color: customTheme.customLightGrey,
+                fontWeight: FontWeight.w500,
               ),
-            ],
-          )
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

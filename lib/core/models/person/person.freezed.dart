@@ -119,7 +119,8 @@ class __$$_PersonCopyWithImpl<$Res> extends _$PersonCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_Person extends _Person {
   const _$_Person(
       {required this.id, required this.name, this.age = 0, this.gender})

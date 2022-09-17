@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
+import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_viewmodel.dart';
 import 'package:stacked/stacked.dart';
@@ -65,12 +66,10 @@ class AccountSettingsView extends StatelessWidget {
     return ViewModelBuilder<AccountSettingsViewModel>.nonReactive(
         viewModelBuilder: () => AccountSettingsViewModel(),
         builder: (context, model, child) => Scaffold(
-              floatingActionButton: FloatingActionButton.extended(
-                backgroundColor: customTheme.primaryAccent,
-                foregroundColor: Colors.white,
-                onPressed: model.navigateToAccountDetails,
+              floatingActionButton: MainFloatingActionButton(
                 icon: const Icon(Icons.add),
-                label: const Text("Add Account"),
+                label: "Add Account",
+                onPressed: model.navigateToAccountDetails,
               ),
               appBar: AppBar(
                 backgroundColor: customTheme.appBarBackgroundColor,

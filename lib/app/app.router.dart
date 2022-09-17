@@ -11,23 +11,26 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../ui/views/account/account_details/account_details_view.dart';
+import '../ui/views/account/account_details/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/details/details_view.dart';
 import '../ui/views/main/main_view.dart';
 import '../ui/views/startup/startup_view.dart';
+import '../ui/views/transaction/transaction_detail/transaction_detail_view.dart';
 
 class Routes {
   static const String startUpView = '/';
   static const String mainView = '/main-view';
   static const String accountSettingsView = '/account-settings-view';
-  static const String accountDetailsView = '/account-details-view';
+  static const String accountDetailView = '/account-detail-view';
+  static const String transactionDetailView = '/transaction-detail-view';
   static const String detailsView = '/details-view';
   static const all = <String>{
     startUpView,
     mainView,
     accountSettingsView,
-    accountDetailsView,
+    accountDetailView,
+    transactionDetailView,
     detailsView,
   };
 }
@@ -39,7 +42,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.startUpView, page: StartUpView),
     RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.accountSettingsView, page: AccountSettingsView),
-    RouteDef(Routes.accountDetailsView, page: AccountDetailsView),
+    RouteDef(Routes.accountDetailView, page: AccountDetailView),
+    RouteDef(Routes.transactionDetailView, page: TransactionDetailView),
     RouteDef(Routes.detailsView, page: DetailsView),
   ];
   @override
@@ -63,14 +67,26 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    AccountDetailsView: (data) {
-      var args = data.getArgs<AccountDetailsViewArguments>(
-        orElse: () => AccountDetailsViewArguments(),
+    AccountDetailView: (data) {
+      var args = data.getArgs<AccountDetailViewArguments>(
+        orElse: () => AccountDetailViewArguments(),
       );
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => AccountDetailsView(
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AccountDetailView(
           key: args.key,
           isAddAccount: args.isAddAccount,
+        ),
+        settings: data,
+      );
+    },
+    TransactionDetailView: (data) {
+      var args = data.getArgs<TransactionDetailViewArguments>(
+        orElse: () => TransactionDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => TransactionDetailView(
+          key: args.key,
+          isAddTransaction: args.isAddTransaction,
         ),
         settings: data,
       );
@@ -94,11 +110,18 @@ class StackedRouter extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
-/// AccountDetailsView arguments holder class
-class AccountDetailsViewArguments {
+/// AccountDetailView arguments holder class
+class AccountDetailViewArguments {
   final Key? key;
   final bool isAddAccount;
-  AccountDetailsViewArguments({this.key, this.isAddAccount = true});
+  AccountDetailViewArguments({this.key, this.isAddAccount = true});
+}
+
+/// TransactionDetailView arguments holder class
+class TransactionDetailViewArguments {
+  final Key? key;
+  final bool isAddTransaction;
+  TransactionDetailViewArguments({this.key, this.isAddTransaction = true});
 }
 
 /// DetailsView arguments holder class
@@ -161,7 +184,7 @@ extension NavigatorStateExtension on NavigationService {
     );
   }
 
-  Future<dynamic> navigateToAccountDetailsView({
+  Future<dynamic> navigateToAccountDetailView({
     Key? key,
     bool isAddAccount = true,
     int? routerId,
@@ -171,9 +194,29 @@ extension NavigatorStateExtension on NavigationService {
         transition,
   }) async {
     return navigateTo(
-      Routes.accountDetailsView,
+      Routes.accountDetailView,
       arguments:
-          AccountDetailsViewArguments(key: key, isAddAccount: isAddAccount),
+          AccountDetailViewArguments(key: key, isAddAccount: isAddAccount),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToTransactionDetailView({
+    Key? key,
+    bool isAddTransaction = true,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.transactionDetailView,
+      arguments: TransactionDetailViewArguments(
+          key: key, isAddTransaction: isAddTransaction),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

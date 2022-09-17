@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
-import 'package:personal_finance_management_app/ui/views/account/account_details/account_details_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_details/transaction_details_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,8 +15,34 @@ class TransactionDetailsViewModel extends FormViewModel {
   final _logger = getLogger("AccountDetailsViewModel");
   final _navigationService = locator<NavigationService>();
 
-  TextEditingController dateController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
+
+  final List<String> dummyAccounts = ["Cash", "GCash", "BPI"];
+  final List<String> dummyCategory = [
+    "Foods",
+    "Shopping",
+    "Transportation",
+    "House Bills"
+  ];
+
+  void initForm() {
+    _logger.i('initForm | argument: NONE');
+
+    initDateTimeFields();
+
+    setAccountName(dummyAccounts[0]);
+    setCategory(dummyCategory[0]);
+  }
+
+  void initDateTimeFields() {
+    final DateTime now = DateTime.now();
+    final String date = DateFormat('MMM dd, yyyy').format(now);
+    final String time = DateFormat('hh:mm a').format(now);
+
+    dateController.text = date;
+    timeController.text = time;
+  }
 
   void setTransactionDate(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
@@ -27,23 +53,22 @@ class TransactionDetailsViewModel extends FormViewModel {
     );
 
     if (selectedDate != null) {
-      // TODO: Improve Date Formatting
-      dateController.text =
-          '${selectedDate.month}/${selectedDate.day}/${selectedDate.year}';
+      dateController.text = DateFormat('MMM dd, yyyy').format(selectedDate);
     }
   }
 
   void setTransactionTime(BuildContext context) async {
     final DateTime now = DateTime.now();
 
-    TimeOfDay? selectedTime = await showTimePicker(
+    final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay(hour: now.hour, minute: now.minute),
     );
 
     if (selectedTime != null) {
-      // TODO: Improve Time Formatting
-      timeController.text = '${selectedTime.hour}:${selectedTime.minute}';
+      final String time = DateFormat('hh:mm a').format(DateTime(now.year,
+          now.month, now.day, selectedTime.hour, selectedTime.minute));
+      timeController.text = time;
     }
   }
 
@@ -58,22 +83,6 @@ class TransactionDetailsViewModel extends FormViewModel {
   bool isArchivedAccount = false;
 
   // TODO: Initialize date and time
-  void initForm({
-    required TextEditingController accountNameController,
-    required TextEditingController balanceController,
-    required TextEditingController newBalanceController,
-  }) {
-    _logger.i(
-        'initForm | argument: {accountNameController: $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}');
-
-    setColor('0xFFFF4081');
-    setCurrency('PHP');
-
-    _newBalanceController = newBalanceController;
-
-    accountNameController.text = "Cash";
-    balanceController.text = "1,000.00";
-  }
 
   void popCurrentView() {
     _logger.i('popCurrentView | argument: NONE');

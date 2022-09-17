@@ -15,6 +15,7 @@ const String AmountValueKey = 'amount';
 const String CategoryValueKey = 'category';
 const String NotesValueKey = 'notes';
 
+final Map<String, String> AccountNameValueToTitleMap = {};
 final Map<String, String> TransactionTypeValueToTitleMap = {
   'income': 'Income',
   'expense': 'Expense',
@@ -29,19 +30,15 @@ final Map<String, FocusNode> _TransactionDetailsViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?>
     _TransactionDetailsViewTextValidations = {
-  AccountNameValueKey: null,
   AmountValueKey: null,
   NotesValueKey: null,
 };
 
 mixin $TransactionDetailsView on StatelessWidget {
-  TextEditingController get accountNameController =>
-      _getFormTextEditingController(AccountNameValueKey);
   TextEditingController get amountController =>
       _getFormTextEditingController(AmountValueKey);
   TextEditingController get notesController =>
       _getFormTextEditingController(NotesValueKey);
-  FocusNode get accountNameFocusNode => _getFormFocusNode(AccountNameValueKey);
   FocusNode get amountFocusNode => _getFormFocusNode(AmountValueKey);
   FocusNode get notesFocusNode => _getFormFocusNode(NotesValueKey);
 
@@ -66,7 +63,6 @@ mixin $TransactionDetailsView on StatelessWidget {
   /// Registers a listener on every generated controller that calls [model.setData()]
   /// with the latest textController values
   void listenToFormUpdated(FormViewModel model) {
-    accountNameController.addListener(() => _updateFormData(model));
     amountController.addListener(() => _updateFormData(model));
     notesController.addListener(() => _updateFormData(model));
   }
@@ -82,7 +78,6 @@ mixin $TransactionDetailsView on StatelessWidget {
     model.setData(
       model.formValueMap
         ..addAll({
-          AccountNameValueKey: accountNameController.text,
           AmountValueKey: amountController.text,
           NotesValueKey: notesController.text,
         }),
@@ -95,7 +90,6 @@ mixin $TransactionDetailsView on StatelessWidget {
   /// Updates the fieldsValidationMessages on the FormViewModel
   void _updateValidationData(FormViewModel model) =>
       model.setValidationMessages({
-        AccountNameValueKey: _getValidationMessage(AccountNameValueKey),
         AmountValueKey: _getValidationMessage(AmountValueKey),
         NotesValueKey: _getValidationMessage(NotesValueKey),
       });
@@ -169,6 +163,10 @@ extension ValueProperties on FormViewModel {
 }
 
 extension Methods on FormViewModel {
+  void setAccountName(String accountName) {
+    this.setData(this.formValueMap..addAll({AccountNameValueKey: accountName}));
+  }
+
   void setTransactionType(String transactionType) {
     this.setData(
         this.formValueMap..addAll({TransactionTypeValueKey: transactionType}));

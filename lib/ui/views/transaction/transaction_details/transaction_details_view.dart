@@ -15,7 +15,10 @@ import 'package:stacked/stacked_annotations.dart';
 // it's just a UI representation.
 
 @FormView(fields: [
-  FormTextField(initialValue: '', name: 'accountName'),
+  FormDropdownField(
+    name: 'accountName',
+    items: [],
+  ),
   FormDropdownField(
     name: 'transactionType',
     items: transactionTypeStaticDropdownItems,
@@ -49,11 +52,7 @@ class TransactionDetailsView extends StatelessWidget
       viewModelBuilder: () => TransactionDetailsViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
-        // model.initForm(
-        //   accountNameController: accountNameController,
-        //   balanceController: balanceController,
-        //   newBalanceController: newBalanceController,
-        // );
+        model.initForm();
       },
       onDispose: (_) => disposeForm(),
       builder: (context, model, child) => Scaffold(
@@ -79,10 +78,22 @@ class TransactionDetailsView extends StatelessWidget
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
             child: Column(
               children: [
-                TextField(
+                DropdownButtonFormField(
                   key: const ValueKey(AccountNameValueKey),
-                  decoration: const InputDecoration(labelText: 'Account Name'),
-                  controller: accountNameController,
+                  value: model.accountNameValue,
+                  decoration: const InputDecoration(
+                    label: Text("Account Name"),
+                  ),
+                  items: model.dummyAccounts
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                          key: ValueKey('$value key'),
+                          value: value,
+                          child: Text(value),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (String? value) {},
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(TransactionTypeValueKey),
@@ -110,17 +121,16 @@ class TransactionDetailsView extends StatelessWidget
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(CategoryValueKey),
-                  // value: model.currencyValue,
+                  value: model.categoryValue,
                   decoration: const InputDecoration(
-                    label: Text("Budget Category"),
+                    label: Text("Category"),
                   ),
-                  items: TransactionTypeValueToTitleMap.keys
+                  items: model.dummyCategory
                       .map(
-                        // TODO: Fetch from dummy category list
                         (value) => DropdownMenuItem<String>(
                           key: ValueKey('$value key'),
                           value: value,
-                          child: Text(TransactionTypeValueToTitleMap[value]!),
+                          child: Text(value),
                         ),
                       )
                       .toList(),

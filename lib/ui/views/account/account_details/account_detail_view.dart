@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_viewmodel.dart';
@@ -228,18 +229,9 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                     theme: customTheme,
                   ),
                   verticalSpaceRegular,
-                  SizedBox(
-                    width: screenWidth(context) - 30,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        textStyle: MaterialStateProperty.all(
-                          const TextStyle(fontSize: 18),
-                        ),
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                      ),
-                      onPressed: () {},
-                      child: const Text('Delete Account'),
-                    ),
+                  DeleteButton(
+                    label: 'Delete Account',
+                    onPressed: () {},
                   ),
                 ],
               ],

@@ -26,7 +26,7 @@ class SettingsView extends StatelessWidget {
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.fromLTRB(6, 6, 6, 15),
                 child: Column(
                   children: [
                     _buildCard(
@@ -55,7 +55,7 @@ class SettingsView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    verticalSpaceTiny,
+                    verticalSpaceVeryTiny,
                     _buildCard(
                       children: [
                         _buildListTile(
@@ -78,7 +78,7 @@ class SettingsView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    verticalSpaceTiny,
+                    verticalSpaceVeryTiny,
                     _buildCard(
                       children: [
                         SwitchListTile(
@@ -102,7 +102,7 @@ class SettingsView extends StatelessWidget {
                         )
                       ],
                     ),
-                    verticalSpaceTiny,
+                    verticalSpaceVeryTiny,
                     _buildCard(
                       children: [
                         _buildListTile(

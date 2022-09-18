@@ -61,7 +61,7 @@ class SettingsView extends StatelessWidget {
                         _buildListTile(
                           iconData: Icons.account_balance_rounded,
                           title: 'Accounts',
-                          onPressed: () {},
+                          onPressed: model.navigateToAccountSettings,
                           theme: customTheme,
                         ),
                         _buildListTile(

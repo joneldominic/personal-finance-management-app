@@ -11,8 +11,8 @@ class AccountsCardViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   void navigateToAccountSettings() =>
-      _navigationService.navigateTo(Routes.accountSettingsView);
+      _navigationService.navigateToAccountSettingsView();
 
-  void navigateToAccountDetails() =>
-      _navigationService.navigateTo(Routes.accountDetailView);
+  void navigateToAccountDetail() =>
+      _navigationService.navigateToAccountDetailView();
 }

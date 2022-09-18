@@ -78,7 +78,7 @@ class AccountsCard extends StatelessWidget {
                   color: Colors.deepPurple,
                 ),
                 GestureDetector(
-                  onTap: model.navigateToAccountDetails,
+                  onTap: model.navigateToAccountDetail,
                   child: const AccountThumbnail(isAddAccount: true),
                 ),
               ],

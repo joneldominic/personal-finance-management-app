@@ -31,7 +31,7 @@ class MainAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       actions: <Widget>[
         IconButton(
-          icon: const Icon(Icons.person),
+          icon: const Icon(Icons.person_rounded),
           tooltip: 'Go to Profile',
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(

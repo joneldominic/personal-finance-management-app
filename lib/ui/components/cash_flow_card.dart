@@ -41,7 +41,7 @@ class CashFlowCard extends StatelessWidget {
                 ],
               ),
               trailing: Icon(
-                Icons.more_vert_outlined,
+                Icons.more_vert_rounded,
                 size: 18,
                 color: customTheme.primaryTextColor,
               ),
@@ -59,7 +59,7 @@ class CashFlowCard extends StatelessWidget {
                     ),
                   ),
                   Icon(
-                    Icons.arrow_drop_up,
+                    Icons.arrow_drop_up_rounded,
                     size: 32,
                     color: customTheme.success,
                   )

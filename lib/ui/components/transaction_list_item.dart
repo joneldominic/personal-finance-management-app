@@ -69,8 +69,8 @@ class TransactionListItem extends StatelessWidget {
                 ),
                 Icon(
                   transactionType == TransactionType.expense
-                      ? Icons.arrow_drop_down
-                      : Icons.arrow_drop_up,
+                      ? Icons.arrow_drop_down_rounded
+                      : Icons.arrow_drop_up_rounded,
                   color: transactionType == TransactionType.expense
                       ? customTheme.danger
                       : customTheme.success,

@@ -47,7 +47,7 @@ class AccountListItem extends StatelessWidget {
       ),
       trailing: IconButton(
         icon: Icon(
-          Icons.edit,
+          Icons.edit_rounded,
           size: 18,
           color: customTheme.primaryTextColor,
         ),

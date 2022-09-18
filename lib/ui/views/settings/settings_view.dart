@@ -38,7 +38,7 @@ class SettingsView extends StatelessWidget {
                             radius: 22,
                             backgroundColor: customTheme.avatarBackgroundColor,
                             child: Icon(
-                              Icons.person,
+                              Icons.person_rounded,
                               color: customTheme.settingsIconColor,
                             ),
                           ),

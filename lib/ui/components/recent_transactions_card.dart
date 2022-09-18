@@ -41,7 +41,7 @@ class RecentTransactionsCard extends StatelessWidget {
                       ),
                     ),
                     Icon(
-                      Icons.more_vert_outlined,
+                      Icons.more_vert_rounded,
                       size: 18,
                       color: customTheme.primaryTextColor,
                     ),

@@ -44,7 +44,7 @@ class AccountThumbnail extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  Icons.add_circle_outline_outlined,
+                  Icons.add_circle_outline_rounded,
                   color: Colors.white,
                 )
               ],

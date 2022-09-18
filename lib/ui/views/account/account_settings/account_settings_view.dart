@@ -67,7 +67,7 @@ class AccountSettingsView extends StatelessWidget {
         viewModelBuilder: () => AccountSettingsViewModel(),
         builder: (context, model, child) => Scaffold(
               floatingActionButton: MainFloatingActionButton(
-                icon: const Icon(Icons.add),
+                icon: const Icon(Icons.add_rounded),
                 label: "Add Account",
                 onPressed: model.navigateToAccountDetails,
               ),

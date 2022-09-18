@@ -33,7 +33,7 @@ class MainView extends StatelessWidget {
         return Scaffold(
           floatingActionButton: showFloatingActionButton
               ? MainFloatingActionButton(
-                  icon: const Icon(Icons.add),
+                  icon: const Icon(Icons.add_rounded),
                   label: "Add Transaction",
                   onPressed: model.navigateToTransactionDetail,
                 )
@@ -63,11 +63,11 @@ class MainView extends StatelessWidget {
         label: 'Transactions',
       ),
       const BottomNavigationBarItem(
-        icon: Icon(Icons.home),
+        icon: Icon(Icons.home_rounded),
         label: 'Home',
       ),
       const BottomNavigationBarItem(
-        icon: Icon(Icons.settings),
+        icon: Icon(Icons.settings_rounded),
         label: 'Settings',
       ),
     ];

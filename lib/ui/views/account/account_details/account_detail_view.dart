@@ -61,12 +61,12 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
           backgroundColor: customTheme.appBarBackgroundColor,
           title: Text(appBarTitle),
           leading: IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.close_rounded),
             onPressed: model.popCurrentView,
           ),
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.save),
+              icon: const Icon(Icons.save_rounded),
               tooltip: actionButtonTooltip,
               onPressed: () {},
             ),
@@ -106,7 +106,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                     suffixIcon: isAddAccount
                         ? null
                         : IconButton(
-                            icon: const Icon(Icons.edit),
+                            icon: const Icon(Icons.edit_rounded),
                             color: customTheme.primaryTextColor,
                             onPressed: () =>
                                 model.setNewBalanceFormVisibility(true),
@@ -134,13 +134,13 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                           Row(children: [
                             const Expanded(child: Text("New Balance")),
                             IconButton(
-                              icon: const Icon(Icons.close),
+                              icon: const Icon(Icons.close_rounded),
                               iconSize: 22,
                               onPressed: () =>
                                   model.setNewBalanceFormVisibility(false),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.check),
+                              icon: const Icon(Icons.check_rounded),
                               iconSize: 22,
                               onPressed: () {},
                             ),

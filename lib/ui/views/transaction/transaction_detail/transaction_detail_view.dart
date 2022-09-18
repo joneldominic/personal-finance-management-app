@@ -60,12 +60,12 @@ class TransactionDetailView extends StatelessWidget
           backgroundColor: customTheme.appBarBackgroundColor,
           title: Text(appBarTitle),
           leading: IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.close_rounded),
             onPressed: model.popCurrentView,
           ),
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.save),
+              icon: const Icon(Icons.save_rounded),
               tooltip: actionButtonTooltip,
               onPressed: () {},
             ),
@@ -143,7 +143,7 @@ class TransactionDetailView extends StatelessWidget
                   decoration: InputDecoration(
                     labelText: 'Date',
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.edit),
+                      icon: const Icon(Icons.edit_rounded),
                       color: customTheme.primaryTextColor,
                       onPressed: () => model.setTransactionDate(context),
                     ),
@@ -156,7 +156,7 @@ class TransactionDetailView extends StatelessWidget
                   decoration: InputDecoration(
                     labelText: 'Time',
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.edit),
+                      icon: const Icon(Icons.edit_rounded),
                       color: customTheme.primaryTextColor,
                       onPressed: () => model.setTransactionTime(context),
                     ),

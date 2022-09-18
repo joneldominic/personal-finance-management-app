@@ -38,7 +38,8 @@ class MainView extends StatelessWidget {
                   onPressed: model.navigateToTransactionDetail,
                 )
               : null,
-          appBar: const MainAppBar(),
+          appBar:
+              const MainAppBar(), // TODO: Set AppBar title correctly, depending on page
           body: _getViewForIndex(model.currentIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: _getBottomNavItems(customTheme),

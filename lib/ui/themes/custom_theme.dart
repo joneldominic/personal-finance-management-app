@@ -17,6 +17,9 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.contrastBackgroundColor,
     required this.activeControlColor,
     required this.activeSwitchTrackColor,
+    required this.avatarBackgroundColor,
+    required this.settingsIconColor,
+    required this.actionButtonColor,
   });
 
   final Color? success;
@@ -33,6 +36,9 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? contrastBackgroundColor;
   final Color? activeControlColor;
   final Color? activeSwitchTrackColor;
+  final Color? avatarBackgroundColor;
+  final Color? settingsIconColor;
+  final Color? actionButtonColor;
 
   @override
   CustomTheme copyWith({
@@ -50,6 +56,9 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? contrastBackgroundColor,
     Color? activeControlColor,
     Color? activeSwitchTrackColor,
+    Color? avatarBackgroundColor,
+    Color? settingsIconColor,
+    Color? actionButtonColor,
   }) {
     return CustomTheme(
       success: success ?? this.success,
@@ -70,6 +79,10 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       activeControlColor: activeControlColor ?? this.activeControlColor,
       activeSwitchTrackColor:
           activeSwitchTrackColor ?? this.activeSwitchTrackColor,
+      avatarBackgroundColor:
+          avatarBackgroundColor ?? this.avatarBackgroundColor,
+      settingsIconColor: settingsIconColor ?? this.settingsIconColor,
+      actionButtonColor: actionButtonColor ?? this.actionButtonColor,
     );
   }
 
@@ -99,6 +112,12 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
           Color.lerp(activeControlColor, other.activeControlColor, t),
       activeSwitchTrackColor:
           Color.lerp(activeSwitchTrackColor, other.activeSwitchTrackColor, t),
+      avatarBackgroundColor:
+          Color.lerp(avatarBackgroundColor, other.avatarBackgroundColor, t),
+      settingsIconColor:
+          Color.lerp(settingsIconColor, other.settingsIconColor, t),
+      actionButtonColor:
+          Color.lerp(actionButtonColor, other.actionButtonColor, t),
     );
   }
 
@@ -118,6 +137,9 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'contrastBackgroundColor: $contrastBackgroundColor, '
       'activeControlColor: $activeControlColor, '
       'activeSwitchTrackColor: $activeSwitchTrackColor, '
+      'avatarBackgroundColor: $avatarBackgroundColor, '
+      'settingsIconColor: $settingsIconColor, '
+      'actionButtonColor: $actionButtonColor, '
       ')';
 
   /// ****************************************************************
@@ -138,6 +160,9 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     contrastBackgroundColor: Colors.white,
     activeControlColor: Colors.blue,
     activeSwitchTrackColor: Color(0xff90CAF9),
+    avatarBackgroundColor: Color(0xffD3D3D3),
+    settingsIconColor: Color(0xff4285F4),
+    actionButtonColor: Color(0xff333333),
   );
 
   /// ****************************************************************
@@ -158,5 +183,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     contrastBackgroundColor: Color(0xff424242),
     activeControlColor: Color(0xff1E88E5),
     activeSwitchTrackColor: Color(0xff64B5F6),
+    avatarBackgroundColor: Color(0xff333333),
+    settingsIconColor: Color(0xff4285F4),
+    actionButtonColor: Colors.white,
   );
 }

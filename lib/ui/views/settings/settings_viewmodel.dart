@@ -11,9 +11,9 @@ class SettingsViewModel extends BaseViewModel {
   final _themeService = locator<ThemeService>();
   final _logger = getLogger("SettingsViewModel");
 
-  bool getIsThemeModeIsLight() {
+  bool getIsThemeModeIsDark() {
     _logger.i(_themeService.isLightTheme);
-    return _themeService.isLightTheme;
+    return _themeService.isDarkTheme;
   }
 
   void toggleTheme(bool _) {

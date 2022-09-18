@@ -83,19 +83,17 @@ class SettingsView extends StatelessWidget {
                       children: [
                         SwitchListTile(
                           title: const Text(
-                            'Theme',
+                            'Dark Mode',
                             style: heading4Style,
                           ),
                           secondary: SizedBox(
                             width: 44,
                             child: Icon(
-                              model.getIsThemeModeIsLight()
-                                  ? Icons.light_mode_rounded
-                                  : Icons.dark_mode_rounded,
+                              Icons.dark_mode_rounded,
                               color: customTheme.settingsIconColor,
                             ),
                           ),
-                          value: model.getIsThemeModeIsLight(),
+                          value: model.getIsThemeModeIsDark(),
                           onChanged: model.toggleTheme,
                           activeColor: customTheme.activeControlColor,
                           activeTrackColor: customTheme.activeSwitchTrackColor,

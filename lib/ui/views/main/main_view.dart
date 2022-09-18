@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
-import 'package:personal_finance_management_app/ui/components/main_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
@@ -38,8 +38,7 @@ class MainView extends StatelessWidget {
                   onPressed: model.navigateToTransactionDetail,
                 )
               : null,
-          appBar:
-              const MainAppBar(), // TODO: Set AppBar title correctly, depending on page
+          appBar: _getAppBarForIndex(model.currentIndex),
           body: _getViewForIndex(model.currentIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: _getBottomNavItems(customTheme),
@@ -73,6 +72,19 @@ class MainView extends StatelessWidget {
     ];
   }
 
+  PreferredSizeWidget _getAppBarForIndex(int index) {
+    switch (index) {
+      case 0:
+        return const CustomAppBar(title: Text("Transactions"));
+      case 1:
+        return _buildHomeAppBar();
+      case 2:
+        return const CustomAppBar(title: Text("Settings"));
+      default:
+        throw NullThrownError();
+    }
+  }
+
   Widget _getViewForIndex(int index) {
     switch (index) {
       case 0:
@@ -84,5 +96,31 @@ class MainView extends StatelessWidget {
       default:
         throw NullThrownError();
     }
+  }
+
+  CustomAppBar _buildHomeAppBar() {
+    return CustomAppBar(
+      automaticallyImplyLeading: false,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text(
+            "PHP 160,120.00",
+            style: TextStyle(fontSize: 16),
+          ),
+          Text(
+            "Overall Balance",
+            style: TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.person_rounded),
+          tooltip: 'Go to Profile',
+          onPressed: () {},
+        ),
+      ],
+    );
   }
 }

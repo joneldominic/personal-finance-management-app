@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_view.form.dart';
@@ -57,14 +58,13 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
       },
       onDispose: (_) => disposeForm(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: customTheme.appBarBackgroundColor,
+        appBar: CustomAppBar(
           title: Text(appBarTitle),
           leading: IconButton(
             icon: const Icon(Icons.close_rounded),
             onPressed: model.popCurrentView,
           ),
-          actions: <Widget>[
+          actions: [
             IconButton(
               icon: const Icon(Icons.save_rounded),
               tooltip: actionButtonTooltip,

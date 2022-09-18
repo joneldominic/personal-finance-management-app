@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
+import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_viewmodel.dart';
@@ -71,9 +72,8 @@ class AccountSettingsView extends StatelessWidget {
                 label: "Add Account",
                 onPressed: model.navigateToAccountDetails,
               ),
-              appBar: AppBar(
-                backgroundColor: customTheme.appBarBackgroundColor,
-                title: const Text("Account Settings"),
+              appBar: const CustomAppBar(
+                title: Text("Account Settings"),
               ),
               body: Container(
                 color: customTheme.contrastBackgroundColor,

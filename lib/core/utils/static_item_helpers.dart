@@ -220,3 +220,18 @@ const List<StaticDropdownItem> transactionTypeStaticDropdownItems = [
     value: 'transfer',
   ),
 ];
+
+const List<StaticDropdownItem> categoryNatureStaticDropdownItems = [
+  StaticDropdownItem(
+    title: 'None',
+    value: 'None',
+  ),
+  StaticDropdownItem(
+    title: 'Need',
+    value: 'Need',
+  ),
+  StaticDropdownItem(
+    title: 'Want',
+    value: 'Want',
+  ),
+];

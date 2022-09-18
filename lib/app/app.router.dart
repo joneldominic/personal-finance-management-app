@@ -13,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../ui/views/account/account_detail/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
+import '../ui/views/category/category_detail/category_detail_view.dart';
 import '../ui/views/category/category_list/category_list_view.dart';
 import '../ui/views/main/main_view.dart';
 import '../ui/views/transaction/transaction_detail/transaction_detail_view.dart';
@@ -23,12 +24,14 @@ class Routes {
   static const String accountDetailView = '/account-detail-view';
   static const String transactionDetailView = '/transaction-detail-view';
   static const String categoryListView = '/category-list-view';
+  static const String categoryDetailView = '/category-detail-view';
   static const all = <String>{
     mainView,
     accountSettingsView,
     accountDetailView,
     transactionDetailView,
     categoryListView,
+    categoryDetailView,
   };
 }
 
@@ -41,6 +44,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.accountDetailView, page: AccountDetailView),
     RouteDef(Routes.transactionDetailView, page: TransactionDetailView),
     RouteDef(Routes.categoryListView, page: CategoryListView),
+    RouteDef(Routes.categoryDetailView, page: CategoryDetailView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -87,6 +91,18 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    CategoryDetailView: (data) {
+      var args = data.getArgs<CategoryDetailViewArguments>(
+        orElse: () => CategoryDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CategoryDetailView(
+          key: args.key,
+          isAddCategory: args.isAddCategory,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -106,6 +122,13 @@ class TransactionDetailViewArguments {
   final Key? key;
   final bool isAddTransaction;
   TransactionDetailViewArguments({this.key, this.isAddTransaction = true});
+}
+
+/// CategoryDetailView arguments holder class
+class CategoryDetailViewArguments {
+  final Key? key;
+  final bool isAddCategory;
+  CategoryDetailViewArguments({this.key, this.isAddCategory = true});
 }
 
 /// ************************************************************************
@@ -194,6 +217,26 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.categoryListView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToCategoryDetailView({
+    Key? key,
+    bool isAddCategory = true,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.categoryDetailView,
+      arguments:
+          CategoryDetailViewArguments(key: key, isAddCategory: isAddCategory),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

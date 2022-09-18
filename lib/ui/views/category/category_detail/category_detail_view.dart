@@ -43,17 +43,12 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
     final appBarTitle = isAddCategory ? "New Category" : "Edit Category";
     final actionButtonTooltip =
         isAddCategory ? "Save New Category" : "Save Changes";
-    final balanceFieldLabel = isAddCategory ? "Initial Balance" : "Balance";
 
     return ViewModelBuilder<CategoryDetailViewModel>.reactive(
       viewModelBuilder: () => CategoryDetailViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
-        // model.initForm(
-        //   accountNameController: accountNameController,
-        //   balanceController: balanceController,
-        //   newBalanceController: newBalanceController,
-        // );
+        model.initForm();
       },
       onDispose: (_) => disposeForm(),
       builder: (context, model, child) => Scaffold(
@@ -123,24 +118,6 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
         ),
       ),
     );
-  }
-
-  RadioListTile<BalanceUpdateType> _buildRadioListTile({
-    required String title,
-    required BalanceUpdateType value,
-    required BalanceUpdateType groupValue,
-    required CustomTheme theme,
-    required void Function(BalanceUpdateType?)? onChanged,
-  }) {
-    return RadioListTile<BalanceUpdateType>(
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 14),
-        ),
-        value: value,
-        groupValue: groupValue,
-        onChanged: onChanged,
-        activeColor: theme.activeControlColor);
   }
 
   SwitchListTile _buildSwitchListTile({

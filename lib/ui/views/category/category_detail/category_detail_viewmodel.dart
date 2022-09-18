@@ -14,29 +14,13 @@ class CategoryDetailViewModel extends FormViewModel {
   final _logger = getLogger("CategoryDetailViewModel");
   final _navigationService = locator<NavigationService>();
 
-  TextEditingController? _balanceController;
-  TextEditingController? _newBalanceController;
+  bool categoryIsVisible = true;
 
-  BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
-  bool categoryIsVisible = false;
-
-  void initForm({
-    required TextEditingController accountNameController,
-    required TextEditingController balanceController,
-    required TextEditingController newBalanceController,
-  }) {
-    _logger.i(
-        'initForm | argument: {accountNameController: $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}');
+  void initForm() {
+    _logger.i('initForm | argument: NONE');
 
     setColor('0xFFFF4081');
-    // setCategoryNature(categoryNature) // TODO: Set to None Initially
-
-    // TODO: Set and Init Controllers
-    _balanceController = balanceController;
-    _newBalanceController = newBalanceController;
-
-    accountNameController.text = "Cash";
-    balanceController.text = "1,000.00";
+    setCategoryNature(CategoryNatureValueToTitleMap['None']!);
   }
 
   void popCurrentView() {

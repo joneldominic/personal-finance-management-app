@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
 import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
@@ -174,46 +175,11 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                   ),
                   verticalSpaceTiny,
                 ],
-                DropdownButtonFormField(
+                CustomColorPicker(
                   key: const ValueKey(ColorValueKey),
                   value: model.colorValue,
-                  menuMaxHeight:
-                      screenHeightPercentage(context, percentage: 0.30),
-                  borderRadius: BorderRadius.circular(5),
-                  decoration: const InputDecoration(
-                    label: Text("Color"),
-                  ),
-                  selectedItemBuilder: (context) =>
-                      ColorValueToTitleMap.keys.map<Widget>((value) {
-                    return Container(
-                      height: 30,
-                      width: screenWidth(context) - 45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(
-                          int.parse(ColorValueToTitleMap[value]!),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  items: ColorValueToTitleMap.keys
-                      .map(
-                        (value) => DropdownMenuItem<String>(
-                          key: ValueKey('$value key'),
-                          value: value,
-                          child: Container(
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Color(
-                                int.parse(ColorValueToTitleMap[value]!),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (String? value) => model.setColor(value!),
+                  colorValueToTitleMap: ColorValueToTitleMap,
+                  onPressed: (String? value) => model.setColor(value!),
                 ),
                 verticalSpaceSmallPlus,
                 _buildSwitchListTile(

@@ -65,35 +65,36 @@ class AccountSettingsView extends StatelessWidget {
     ];
 
     return ViewModelBuilder<AccountSettingsViewModel>.nonReactive(
-        viewModelBuilder: () => AccountSettingsViewModel(),
-        builder: (context, model, child) => Scaffold(
-              floatingActionButton: CustomFloatingActionButton(
-                icon: const Icon(Icons.add_rounded),
-                label: "Add Account",
-                onPressed: model.navigateToAccountDetails,
-              ),
-              appBar: const CustomAppBar(
-                title: Text("Account Settings"),
-              ),
-              body: Container(
-                color: customTheme.contrastBackgroundColor,
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: accountNames.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AccountListItem(
-                      accountName: accountNames[index],
-                      color: colors[index],
-                      amount: amounts[index],
-                      onPressed: () =>
-                          model.navigateToAccountDetails(isAddAccount: false),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                ),
-              ),
-            ));
+      viewModelBuilder: () => AccountSettingsViewModel(),
+      builder: (context, model, child) => Scaffold(
+        floatingActionButton: CustomFloatingActionButton(
+          icon: const Icon(Icons.add_rounded),
+          label: "Add Account",
+          onPressed: model.navigateToAccountDetails,
+        ),
+        appBar: const CustomAppBar(
+          title: Text("Account Settings"),
+        ),
+        body: Container(
+          color: customTheme.contrastBackgroundColor,
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
+            physics: const BouncingScrollPhysics(),
+            itemCount: accountNames.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AccountListItem(
+                accountName: accountNames[index],
+                color: colors[index],
+                amount: amounts[index],
+                onPressed: () =>
+                    model.navigateToAccountDetails(isAddAccount: false),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,46 +1,49 @@
 import 'package:flutter/cupertino.dart';
 
-// TODO: Apply this styling on necessary TextStyles
-// Text Styles
-
-// To make it clear which weight we are using, we'll define the weight even for regular
-// fonts
-const TextStyle heading1Style = TextStyle(
-  fontSize: 34,
-  fontWeight: FontWeight.w400,
-);
-
-const TextStyle heading2Style = TextStyle(
-  fontSize: 28,
-  fontWeight: FontWeight.w600,
-);
-
-const TextStyle heading3Style = TextStyle(
-  fontSize: 24,
-  fontWeight: FontWeight.w600,
-);
-
+/// **************************************************************
+/// Theme Text Styles
+/// **************************************************************
 const TextStyle heading4Style = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
 
-const TextStyle headlineStyle = TextStyle(
-  fontSize: 30,
-  fontWeight: FontWeight.w700,
-);
-
-const TextStyle bodyStyle = TextStyle(
+const TextStyle cardTitleStyle = TextStyle(
   fontSize: 16,
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
 );
 
-const TextStyle subheadingStyle = TextStyle(
-  fontSize: 20,
-  fontWeight: FontWeight.w400,
-);
-
-const TextStyle captionStyle = TextStyle(
+const TextStyle cardSubTitleStyle = TextStyle(
   fontSize: 12,
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
+);
+
+const TextStyle listItemTitleStyle = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+);
+
+const TextStyle listItemSubTitleStyle = TextStyle(
+  fontSize: 12,
+  fontWeight: FontWeight.w500,
+);
+
+/// **************************************************************
+/// Other Text Styles
+/// **************************************************************
+
+const TextStyle fontSize18 = TextStyle(
+  fontSize: 18,
+);
+
+const TextStyle fontSize16 = TextStyle(
+  fontSize: 16,
+);
+
+const TextStyle fontSize14 = TextStyle(
+  fontSize: 14,
+);
+
+const TextStyle fontSize12 = TextStyle(
+  fontSize: 12,
 );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
+import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
 import 'package:personal_finance_management_app/ui/views/settings/settings_view.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_view.dart';
@@ -104,14 +106,8 @@ class MainView extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          Text(
-            "PHP 160,120.00",
-            style: TextStyle(fontSize: 16),
-          ),
-          Text(
-            "Overall Balance",
-            style: TextStyle(fontSize: 12),
-          ),
+          Text("PHP 160,120.00", style: fontSize16),
+          Text("Overall Balance", style: fontSize12),
         ],
       ),
       actions: <Widget>[

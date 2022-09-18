@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 import 'package:personal_finance_management_app/ui/views/settings/settings_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -42,9 +43,8 @@ class SettingsView extends StatelessWidget {
                               color: customTheme.settingsIconColor,
                             ),
                           ),
-                          title: const Text(
-                            'Jonel Dominic Tapang',
-                            style: heading4Style,
+                          title: const ThemeText.heading4(
+                            "Jonel Dominic Tapang",
                           ),
                           trailing: IconButton(
                             iconSize: 28,
@@ -82,9 +82,8 @@ class SettingsView extends StatelessWidget {
                     _buildCard(
                       children: [
                         SwitchListTile(
-                          title: const Text(
+                          title: const ThemeText.heading4(
                             'Dark Mode',
-                            style: heading4Style,
                           ),
                           secondary: SizedBox(
                             width: 44,
@@ -138,10 +137,7 @@ class SettingsView extends StatelessWidget {
           color: theme.settingsIconColor,
         ),
       ),
-      title: Text(
-        title,
-        style: heading4Style,
-      ),
+      title: ThemeText.heading4(title),
       trailing: IconButton(
         iconSize: 28,
         color: theme.actionButtonColor,

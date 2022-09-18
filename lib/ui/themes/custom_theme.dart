@@ -20,6 +20,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.avatarBackgroundColor,
     required this.settingsIconColor,
     required this.actionButtonColor,
+    required this.subTitleColor,
   });
 
   final Color? success;
@@ -39,6 +40,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? avatarBackgroundColor;
   final Color? settingsIconColor;
   final Color? actionButtonColor;
+  final Color? subTitleColor;
 
   @override
   CustomTheme copyWith({
@@ -59,6 +61,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? avatarBackgroundColor,
     Color? settingsIconColor,
     Color? actionButtonColor,
+    Color? subTitleColor,
   }) {
     return CustomTheme(
       success: success ?? this.success,
@@ -83,6 +86,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
           avatarBackgroundColor ?? this.avatarBackgroundColor,
       settingsIconColor: settingsIconColor ?? this.settingsIconColor,
       actionButtonColor: actionButtonColor ?? this.actionButtonColor,
+      subTitleColor: subTitleColor ?? this.subTitleColor,
     );
   }
 
@@ -118,6 +122,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
           Color.lerp(settingsIconColor, other.settingsIconColor, t),
       actionButtonColor:
           Color.lerp(actionButtonColor, other.actionButtonColor, t),
+      subTitleColor: Color.lerp(subTitleColor, other.subTitleColor, t),
     );
   }
 
@@ -140,6 +145,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'avatarBackgroundColor: $avatarBackgroundColor, '
       'settingsIconColor: $settingsIconColor, '
       'actionButtonColor: $actionButtonColor, '
+      'subTitleColor: $subTitleColor, '
       ')';
 
   /// ****************************************************************
@@ -163,6 +169,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     avatarBackgroundColor: Color(0xffD3D3D3),
     settingsIconColor: Color(0xff4285F4),
     actionButtonColor: Color(0xff333333),
+    subTitleColor: Color(0xff6a6a6a),
   );
 
   /// ****************************************************************
@@ -186,5 +193,6 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     avatarBackgroundColor: Color(0xff333333),
     settingsIconColor: Color(0xff4285F4),
     actionButtonColor: Colors.white,
+    subTitleColor: Color(0xffc0c0c0),
   );
 }

@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/core/enums/transaction_type.dart
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class RecentTransactionsCard extends StatelessWidget {
   const RecentTransactionsCard({
@@ -22,22 +23,9 @@ class RecentTransactionsCard extends StatelessWidget {
             contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Recent Transactions',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  'Last 30 Days',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: customTheme.customLightGrey,
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
+              children: const [
+                ThemeText.cardTitle("Recent Transactions"),
+                ThemeText.cardSubTitle('Last 30 Days'),
               ],
             ),
             trailing: IconButton(
@@ -90,13 +78,9 @@ class RecentTransactionsCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
+                    ThemeText.listItemSubTitle(
                       'SHOW MORE',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: customTheme.primaryAccent,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      color: customTheme.primaryAccent,
                     ),
                   ],
                 )

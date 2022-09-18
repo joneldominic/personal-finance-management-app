@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 
 class DeleteButton extends StatelessWidget {
@@ -17,9 +18,7 @@ class DeleteButton extends StatelessWidget {
       width: screenWidth(context) - 30,
       child: ElevatedButton(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(fontSize: 18),
-          ),
+          textStyle: MaterialStateProperty.all(fontSize18),
           backgroundColor: MaterialStateProperty.all(Colors.red),
         ),
         onPressed: onPressed,

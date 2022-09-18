@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class TransactionListItem extends StatelessWidget {
   const TransactionListItem({
@@ -34,21 +35,8 @@ class TransactionListItem extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            description ?? "",
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            accountName ?? "",
-            style: TextStyle(
-              fontSize: 12,
-              color: customTheme.customLightGrey,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          ThemeText.listItemTitle(description ?? ''),
+          ThemeText.listItemSubTitle(accountName ?? ''),
         ],
       ),
       trailing: FittedBox(
@@ -57,15 +45,11 @@ class TransactionListItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  amount ?? "",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: transactionType == TransactionType.expense
-                        ? customTheme.danger
-                        : customTheme.success,
-                    fontWeight: FontWeight.w500,
-                  ),
+                ThemeText.listItemSubTitle(
+                  amount ?? '',
+                  color: transactionType == TransactionType.expense
+                      ? customTheme.danger
+                      : customTheme.success,
                 ),
                 Icon(
                   transactionType == TransactionType.expense
@@ -77,14 +61,7 @@ class TransactionListItem extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-              timeStamp ?? "",
-              style: TextStyle(
-                fontSize: 12,
-                color: customTheme.customLightGrey,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            ThemeText.listItemSubTitle(timeStamp ?? ''),
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class AccountListItem extends StatelessWidget {
   const AccountListItem({
@@ -28,21 +30,8 @@ class AccountListItem extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            accountName ?? '',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            amount ?? "",
-            style: TextStyle(
-              fontSize: 12,
-              color: customTheme.customLightGrey,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          ThemeText.listItemTitle(accountName ?? ''),
+          ThemeText.listItemSubTitle(amount ?? ''),
         ],
       ),
       trailing: IconButton(

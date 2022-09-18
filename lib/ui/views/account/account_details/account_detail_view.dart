@@ -107,7 +107,8 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                         ? null
                         : IconButton(
                             icon: const Icon(Icons.edit_rounded),
-                            color: customTheme.primaryTextColor,
+                            iconSize: 20,
+                            color: customTheme.actionButtonColor,
                             onPressed: () =>
                                 model.setNewBalanceFormVisibility(true),
                           ),
@@ -135,13 +136,13 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                             const Expanded(child: Text("New Balance")),
                             IconButton(
                               icon: const Icon(Icons.close_rounded),
-                              iconSize: 22,
+                              iconSize: 20,
                               onPressed: () =>
                                   model.setNewBalanceFormVisibility(false),
                             ),
                             IconButton(
                               icon: const Icon(Icons.check_rounded),
-                              iconSize: 22,
+                              iconSize: 20,
                               onPressed: () {},
                             ),
                           ]),

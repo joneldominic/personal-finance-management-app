@@ -32,8 +32,8 @@ class AccountsCard extends StatelessWidget {
               trailing: IconButton(
                 icon: Icon(
                   Icons.settings_rounded,
-                  size: 18,
-                  color: customTheme.primaryTextColor,
+                  size: 20,
+                  color: customTheme.actionButtonColor,
                 ),
                 onPressed: model.navigateToAccountSettings,
               ),

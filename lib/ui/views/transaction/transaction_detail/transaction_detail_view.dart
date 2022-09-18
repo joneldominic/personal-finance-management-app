@@ -144,7 +144,8 @@ class TransactionDetailView extends StatelessWidget
                     labelText: 'Date',
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.edit_rounded),
-                      color: customTheme.primaryTextColor,
+                      iconSize: 20,
+                      color: customTheme.actionButtonColor,
                       onPressed: () => model.setTransactionDate(context),
                     ),
                   ),
@@ -157,7 +158,8 @@ class TransactionDetailView extends StatelessWidget
                     labelText: 'Time',
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.edit_rounded),
-                      color: customTheme.primaryTextColor,
+                      iconSize: 20,
+                      color: customTheme.actionButtonColor,
                       onPressed: () => model.setTransactionTime(context),
                     ),
                   ),

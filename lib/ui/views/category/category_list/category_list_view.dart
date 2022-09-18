@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
-import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
 import 'package:personal_finance_management_app/ui/components/category_list_item.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';

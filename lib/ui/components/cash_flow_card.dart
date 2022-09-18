@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class CashFlowCard extends StatelessWidget {
   const CashFlowCard({
@@ -20,30 +21,19 @@ class CashFlowCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
+              contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Cash Flow',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    'Last 30 Days',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: customTheme.customLightGrey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
+                children: const [
+                  ThemeText.cardTitle("Cash Flow"),
+                  ThemeText.cardSubTitle('Last 30 Days'),
                 ],
               ),
-              trailing: Icon(
-                Icons.more_vert_outlined,
-                size: 18,
-                color: customTheme.primaryTextColor,
+              trailing: IconButton(
+                icon: const Icon(Icons.more_vert_rounded),
+                iconSize: 20,
+                color: customTheme.actionButtonColor,
+                onPressed: () {},
               ),
             ),
             Padding(
@@ -59,7 +49,7 @@ class CashFlowCard extends StatelessWidget {
                     ),
                   ),
                   Icon(
-                    Icons.arrow_drop_up,
+                    Icons.arrow_drop_up_rounded,
                     size: 32,
                     color: customTheme.success,
                   )
@@ -110,21 +100,13 @@ class CashFlowCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            ThemeText.listItemTitle(
               label,
-              style: TextStyle(
-                fontSize: 14,
-                color: customTheme.primaryTextColor,
-                fontWeight: FontWeight.w500,
-              ),
+              color: customTheme.primaryTextColor,
             ),
-            Text(
+            ThemeText.listItemTitle(
               amount,
-              style: TextStyle(
-                fontSize: 14,
-                color: customTheme.primaryTextColor,
-                fontWeight: FontWeight.w500,
-              ),
+              color: customTheme.primaryTextColor,
             ),
           ],
         ),

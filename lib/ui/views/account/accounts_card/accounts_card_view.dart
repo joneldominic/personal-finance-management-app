@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_thumbnail.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 import 'package:personal_finance_management_app/ui/views/account/accounts_card/accounts_card_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -22,19 +23,13 @@ class AccountsCard extends StatelessWidget {
           children: <Widget>[
             ListTile(
               contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-              title: const Text(
-                'Accounts',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              title: const ThemeText.cardTitle("Accounts"),
               trailing: IconButton(
                 icon: Icon(
-                  Icons.settings,
-                  size: 18,
-                  color: customTheme.primaryTextColor,
+                  Icons.settings_rounded,
+                  color: customTheme.actionButtonColor,
                 ),
+                iconSize: 20,
                 onPressed: model.navigateToAccountSettings,
               ),
             ),
@@ -78,7 +73,7 @@ class AccountsCard extends StatelessWidget {
                   color: Colors.deepPurple,
                 ),
                 GestureDetector(
-                  onTap: model.navigateToAccountDetails,
+                  onTap: model.navigateToAccountDetail,
                   child: const AccountThumbnail(isAddAccount: true),
                 ),
               ],

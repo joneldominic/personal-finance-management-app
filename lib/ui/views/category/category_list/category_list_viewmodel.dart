@@ -7,11 +7,10 @@ import 'package:stacked_services/stacked_services.dart';
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
 
-class HomeViewModel extends BaseViewModel {
+class CategoryListViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void doSomething() {
-    _navigationService.navigateTo(Routes.detailsView,
-        arguments: DetailsViewArguments(name: "Joneeeeeel"));
-  }
+  void navigateToCategoryDetail({bool isAddCategory = true}) =>
+      _navigationService.navigateToCategoryDetailView(
+          isAddCategory: isAddCategory);
 }

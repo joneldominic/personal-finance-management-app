@@ -11,27 +11,27 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../ui/views/account/account_details/account_detail_view.dart';
+import '../ui/views/account/account_detail/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
-import '../ui/views/details/details_view.dart';
+import '../ui/views/category/category_detail/category_detail_view.dart';
+import '../ui/views/category/category_list/category_list_view.dart';
 import '../ui/views/main/main_view.dart';
-import '../ui/views/startup/startup_view.dart';
 import '../ui/views/transaction/transaction_detail/transaction_detail_view.dart';
 
 class Routes {
-  static const String startUpView = '/';
-  static const String mainView = '/main-view';
+  static const String mainView = '/';
   static const String accountSettingsView = '/account-settings-view';
   static const String accountDetailView = '/account-detail-view';
   static const String transactionDetailView = '/transaction-detail-view';
-  static const String detailsView = '/details-view';
+  static const String categoryListView = '/category-list-view';
+  static const String categoryDetailView = '/category-detail-view';
   static const all = <String>{
-    startUpView,
     mainView,
     accountSettingsView,
     accountDetailView,
     transactionDetailView,
-    detailsView,
+    categoryListView,
+    categoryDetailView,
   };
 }
 
@@ -39,22 +39,16 @@ class StackedRouter extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.startUpView, page: StartUpView),
     RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.accountSettingsView, page: AccountSettingsView),
     RouteDef(Routes.accountDetailView, page: AccountDetailView),
     RouteDef(Routes.transactionDetailView, page: TransactionDetailView),
-    RouteDef(Routes.detailsView, page: DetailsView),
+    RouteDef(Routes.categoryListView, page: CategoryListView),
+    RouteDef(Routes.categoryDetailView, page: CategoryDetailView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
-    StartUpView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const StartUpView(),
-        settings: data,
-      );
-    },
     MainView: (data) {
       return CupertinoPageRoute<dynamic>(
         builder: (context) => const MainView(),
@@ -91,14 +85,20 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    DetailsView: (data) {
-      var args = data.getArgs<DetailsViewArguments>(
-        orElse: () => DetailsViewArguments(),
-      );
+    CategoryListView: (data) {
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => DetailsView(
+        builder: (context) => const CategoryListView(),
+        settings: data,
+      );
+    },
+    CategoryDetailView: (data) {
+      var args = data.getArgs<CategoryDetailViewArguments>(
+        orElse: () => CategoryDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CategoryDetailView(
           key: args.key,
-          name: args.name,
+          isAddCategory: args.isAddCategory,
         ),
         settings: data,
       );
@@ -124,11 +124,11 @@ class TransactionDetailViewArguments {
   TransactionDetailViewArguments({this.key, this.isAddTransaction = true});
 }
 
-/// DetailsView arguments holder class
-class DetailsViewArguments {
+/// CategoryDetailView arguments holder class
+class CategoryDetailViewArguments {
   final Key? key;
-  final String name;
-  DetailsViewArguments({this.key, this.name = ''});
+  final bool isAddCategory;
+  CategoryDetailViewArguments({this.key, this.isAddCategory = true});
 }
 
 /// ************************************************************************
@@ -136,22 +136,6 @@ class DetailsViewArguments {
 /// *************************************************************************
 
 extension NavigatorStateExtension on NavigationService {
-  Future<dynamic> navigateToStartUpView({
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo(
-      Routes.startUpView,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
   Future<dynamic> navigateToMainView({
     int? routerId,
     bool preventDuplicates = true,
@@ -224,9 +208,7 @@ extension NavigatorStateExtension on NavigationService {
     );
   }
 
-  Future<dynamic> navigateToDetailsView({
-    Key? key,
-    String name = '',
+  Future<dynamic> navigateToCategoryListView({
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -234,8 +216,27 @@ extension NavigatorStateExtension on NavigationService {
         transition,
   }) async {
     return navigateTo(
-      Routes.detailsView,
-      arguments: DetailsViewArguments(key: key, name: name),
+      Routes.categoryListView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToCategoryDetailView({
+    Key? key,
+    bool isAddCategory = true,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.categoryDetailView,
+      arguments:
+          CategoryDetailViewArguments(key: key, isAddCategory: isAddCategory),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

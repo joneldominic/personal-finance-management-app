@@ -1,19 +1,22 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:personal_finance_management_app/core/enums/category_nature.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
-class AccountListItem extends StatelessWidget {
-  const AccountListItem({
+class CategoryListItem extends StatelessWidget {
+  const CategoryListItem({
     Key? key,
-    this.accountName,
-    this.color,
-    this.amount,
+    required this.categoryName,
+    required this.color,
+    required this.categoryNature,
     required this.onPressed,
   }) : super(key: key);
 
-  final String? accountName;
-  final Color? color;
-  final String? amount;
+  final String categoryName;
+  final Color color;
+  final CategoryNature categoryNature;
   final void Function() onPressed;
 
   @override
@@ -29,8 +32,12 @@ class AccountListItem extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ThemeText.listItemTitle(accountName ?? ''),
-          ThemeText.listItemSubTitle(amount ?? ''),
+          ThemeText.listItemTitle(categoryName),
+          ThemeText.listItemSubTitle(
+            toBeginningOfSentenceCase(
+              EnumToString.convertToString(categoryNature),
+            )!,
+          ),
         ],
       ),
       trailing: IconButton(

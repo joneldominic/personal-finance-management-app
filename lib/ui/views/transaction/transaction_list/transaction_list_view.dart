@@ -94,7 +94,7 @@ class TransactionListView extends StatelessWidget {
       builder: (context, model, child) => Container(
         color: customTheme.contrastBackgroundColor,
         child: ListView.separated(
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 90),
+          padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
           physics: const BouncingScrollPhysics(),
           itemCount: descriptions.length,
           itemBuilder: (BuildContext context, int index) {

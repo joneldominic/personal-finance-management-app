@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
-import 'package:personal_finance_management_app/ui/components/main_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
+import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
+import 'package:personal_finance_management_app/ui/views/settings/settings_view.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_view.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,13 +32,13 @@ class MainView extends StatelessWidget {
         final bool showFloatingActionButton = model.currentIndex != 2;
         return Scaffold(
           floatingActionButton: showFloatingActionButton
-              ? MainFloatingActionButton(
-                  icon: const Icon(Icons.add),
+              ? CustomFloatingActionButton(
+                  icon: const Icon(Icons.add_rounded),
                   label: "Add Transaction",
                   onPressed: model.navigateToTransactionDetail,
                 )
               : null,
-          appBar: const MainAppBar(),
+          appBar: _getAppBarForIndex(model.currentIndex),
           body: _getViewForIndex(model.currentIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: _getBottomNavItems(customTheme),
@@ -61,14 +62,27 @@ class MainView extends StatelessWidget {
         label: 'Transactions',
       ),
       const BottomNavigationBarItem(
-        icon: Icon(Icons.home),
+        icon: Icon(Icons.home_rounded),
         label: 'Home',
       ),
       const BottomNavigationBarItem(
-        icon: Icon(Icons.settings),
+        icon: Icon(Icons.settings_rounded),
         label: 'Settings',
       ),
     ];
+  }
+
+  PreferredSizeWidget _getAppBarForIndex(int index) {
+    switch (index) {
+      case 0:
+        return const CustomAppBar(title: Text("Transactions"));
+      case 1:
+        return _buildHomeAppBar();
+      case 2:
+        return const CustomAppBar(title: Text("Settings"));
+      default:
+        throw NullThrownError();
+    }
   }
 
   Widget _getViewForIndex(int index) {
@@ -78,11 +92,35 @@ class MainView extends StatelessWidget {
       case 1:
         return const HomeView();
       case 2:
-        return const Text(
-          'Index 2: Settings',
-        );
+        return const SettingsView();
       default:
         throw NullThrownError();
     }
+  }
+
+  CustomAppBar _buildHomeAppBar() {
+    return CustomAppBar(
+      automaticallyImplyLeading: false,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text("PHP 160,120.00",
+              style: TextStyle(
+                fontSize: 16,
+              )),
+          Text("Overall Balance",
+              style: TextStyle(
+                fontSize: 12,
+              )),
+        ],
+      ),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.person_rounded),
+          tooltip: 'Go to Profile',
+          onPressed: () {},
+        ),
+      ],
+    );
   }
 }

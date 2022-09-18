@@ -9,11 +9,6 @@ import 'package:stacked_services/stacked_services.dart';
 class MainViewModel extends IndexTrackingViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void doSomething() {
-    _navigationService.navigateTo(Routes.detailsView,
-        arguments: DetailsViewArguments(name: "Joneeeeeel"));
-  }
-
   void navigateToTransactionDetail() {
     _navigationService.navigateToTransactionDetailView();
   }

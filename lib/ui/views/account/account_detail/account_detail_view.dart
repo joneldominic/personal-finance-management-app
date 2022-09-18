@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
 import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
-import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_view.form.dart';
-import 'package:personal_finance_management_app/ui/views/account/account_details/account_detail_viewmodel.dart';
+import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
+import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -57,16 +59,15 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
       },
       onDispose: (_) => disposeForm(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: customTheme.appBarBackgroundColor,
+        appBar: CustomAppBar(
           title: Text(appBarTitle),
           leading: IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.close_rounded),
             onPressed: model.popCurrentView,
           ),
-          actions: <Widget>[
+          actions: [
             IconButton(
-              icon: const Icon(Icons.save),
+              icon: const Icon(Icons.save_rounded),
               tooltip: actionButtonTooltip,
               onPressed: () {},
             ),
@@ -106,8 +107,9 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                     suffixIcon: isAddAccount
                         ? null
                         : IconButton(
-                            icon: const Icon(Icons.edit),
-                            color: customTheme.primaryTextColor,
+                            icon: const Icon(Icons.edit_rounded),
+                            iconSize: 20,
+                            color: customTheme.actionButtonColor,
                             onPressed: () =>
                                 model.setNewBalanceFormVisibility(true),
                           ),
@@ -134,14 +136,14 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                           Row(children: [
                             const Expanded(child: Text("New Balance")),
                             IconButton(
-                              icon: const Icon(Icons.close),
-                              iconSize: 22,
+                              icon: const Icon(Icons.close_rounded),
+                              iconSize: 20,
                               onPressed: () =>
                                   model.setNewBalanceFormVisibility(false),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.check),
-                              iconSize: 22,
+                              icon: const Icon(Icons.check_rounded),
+                              iconSize: 20,
                               onPressed: () {},
                             ),
                           ]),
@@ -173,46 +175,11 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                   ),
                   verticalSpaceTiny,
                 ],
-                DropdownButtonFormField(
+                CustomColorPicker(
                   key: const ValueKey(ColorValueKey),
                   value: model.colorValue,
-                  menuMaxHeight:
-                      screenHeightPercentage(context, percentage: 0.30),
-                  borderRadius: BorderRadius.circular(5),
-                  decoration: const InputDecoration(
-                    label: Text("Color"),
-                  ),
-                  selectedItemBuilder: (context) =>
-                      ColorValueToTitleMap.keys.map<Widget>((value) {
-                    return Container(
-                      height: 30,
-                      width: screenWidth(context) - 45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(
-                          int.parse(ColorValueToTitleMap[value]!),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  items: ColorValueToTitleMap.keys
-                      .map(
-                        (value) => DropdownMenuItem<String>(
-                          key: ValueKey('$value key'),
-                          value: value,
-                          child: Container(
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Color(
-                                int.parse(ColorValueToTitleMap[value]!),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (String? value) => model.setColor(value!),
+                  colorValueToTitleMap: ColorValueToTitleMap,
+                  onPressed: (String? value) => model.setColor(value!),
                 ),
                 verticalSpaceSmallPlus,
                 _buildSwitchListTile(
@@ -252,7 +219,9 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
     return RadioListTile<BalanceUpdateType>(
         title: Text(
           title,
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(
+            fontSize: 14,
+          ),
         ),
         value: value,
         groupValue: groupValue,

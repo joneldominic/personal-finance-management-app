@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
-import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
+import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
+import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_viewmodel.dart';
 import 'package:stacked/stacked.dart';
@@ -64,36 +65,36 @@ class AccountSettingsView extends StatelessWidget {
     ];
 
     return ViewModelBuilder<AccountSettingsViewModel>.nonReactive(
-        viewModelBuilder: () => AccountSettingsViewModel(),
-        builder: (context, model, child) => Scaffold(
-              floatingActionButton: MainFloatingActionButton(
-                icon: const Icon(Icons.add),
-                label: "Add Account",
-                onPressed: model.navigateToAccountDetails,
-              ),
-              appBar: AppBar(
-                backgroundColor: customTheme.appBarBackgroundColor,
-                title: const Text("Account Settings"),
-              ),
-              body: Container(
-                color: customTheme.contrastBackgroundColor,
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: accountNames.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AccountListItem(
-                      accountName: accountNames[index],
-                      color: colors[index],
-                      amount: amounts[index],
-                      onEditPressed: () =>
-                          model.navigateToAccountDetails(isAddAccount: false),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                ),
-              ),
-            ));
+      viewModelBuilder: () => AccountSettingsViewModel(),
+      builder: (context, model, child) => Scaffold(
+        floatingActionButton: CustomFloatingActionButton(
+          icon: const Icon(Icons.add_rounded),
+          label: "Add Account",
+          onPressed: model.navigateToAccountDetail,
+        ),
+        appBar: const CustomAppBar(
+          title: Text("Account Settings"),
+        ),
+        body: Container(
+          color: customTheme.contrastBackgroundColor,
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
+            physics: const BouncingScrollPhysics(),
+            itemCount: accountNames.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AccountListItem(
+                accountName: accountNames[index],
+                color: colors[index],
+                amount: amounts[index],
+                onPressed: () =>
+                    model.navigateToAccountDetail(isAddAccount: false),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -15,18 +15,15 @@ import '../ui/views/account/account_details/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/details/details_view.dart';
 import '../ui/views/main/main_view.dart';
-import '../ui/views/startup/startup_view.dart';
 import '../ui/views/transaction/transaction_detail/transaction_detail_view.dart';
 
 class Routes {
-  static const String startUpView = '/';
-  static const String mainView = '/main-view';
+  static const String mainView = '/';
   static const String accountSettingsView = '/account-settings-view';
   static const String accountDetailView = '/account-detail-view';
   static const String transactionDetailView = '/transaction-detail-view';
   static const String detailsView = '/details-view';
   static const all = <String>{
-    startUpView,
     mainView,
     accountSettingsView,
     accountDetailView,
@@ -39,7 +36,6 @@ class StackedRouter extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.startUpView, page: StartUpView),
     RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.accountSettingsView, page: AccountSettingsView),
     RouteDef(Routes.accountDetailView, page: AccountDetailView),
@@ -49,12 +45,6 @@ class StackedRouter extends RouterBase {
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
-    StartUpView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const StartUpView(),
-        settings: data,
-      );
-    },
     MainView: (data) {
       return CupertinoPageRoute<dynamic>(
         builder: (context) => const MainView(),
@@ -136,22 +126,6 @@ class DetailsViewArguments {
 /// *************************************************************************
 
 extension NavigatorStateExtension on NavigationService {
-  Future<dynamic> navigateToStartUpView({
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo(
-      Routes.startUpView,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
   Future<dynamic> navigateToMainView({
     int? routerId,
     bool preventDuplicates = true,

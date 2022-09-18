@@ -20,6 +20,7 @@ class CashFlowCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
+              contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,10 +41,11 @@ class CashFlowCard extends StatelessWidget {
                   )
                 ],
               ),
-              trailing: Icon(
-                Icons.more_vert_rounded,
-                size: 18,
-                color: customTheme.primaryTextColor,
+              trailing: IconButton(
+                icon: const Icon(Icons.more_vert_rounded),
+                iconSize: 20,
+                color: customTheme.actionButtonColor,
+                onPressed: () {},
               ),
             ),
             Padding(

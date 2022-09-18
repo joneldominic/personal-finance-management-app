@@ -27,23 +27,3 @@ const TextStyle listItemSubTitleStyle = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w500,
 );
-
-/// **************************************************************
-/// Other Text Styles
-/// **************************************************************
-
-const TextStyle fontSize18 = TextStyle(
-  fontSize: 18,
-);
-
-const TextStyle fontSize16 = TextStyle(
-  fontSize: 16,
-);
-
-const TextStyle fontSize14 = TextStyle(
-  fontSize: 14,
-);
-
-const TextStyle fontSize12 = TextStyle(
-  fontSize: 12,
-);

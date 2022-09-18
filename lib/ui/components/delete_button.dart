@@ -18,7 +18,11 @@ class DeleteButton extends StatelessWidget {
       width: screenWidth(context) - 30,
       child: ElevatedButton(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(fontSize18),
+          textStyle: MaterialStateProperty.all(
+            const TextStyle(
+              fontSize: 18,
+            ),
+          ),
           backgroundColor: MaterialStateProperty.all(Colors.red),
         ),
         onPressed: onPressed,

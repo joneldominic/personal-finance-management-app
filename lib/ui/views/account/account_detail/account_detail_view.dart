@@ -220,7 +220,9 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
     return RadioListTile<BalanceUpdateType>(
         title: Text(
           title,
-          style: fontSize14,
+          style: const TextStyle(
+            fontSize: 14,
+          ),
         ),
         value: value,
         groupValue: groupValue,

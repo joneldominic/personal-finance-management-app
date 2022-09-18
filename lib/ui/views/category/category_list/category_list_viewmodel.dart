@@ -8,9 +8,9 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class CategoryListViewModel extends BaseViewModel {
-  // final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigationService>();
 
-  // void navigateToAccountDetails({bool isAddAccount = true}) =>
-  //     _navigationService.navigateToAccountDetailView(
-  //         isAddAccount: isAddAccount);
+  void navigateToCategoryDetail({bool isAddCategory = true}) =>
+      _navigationService.navigateToCategoryDetailView(
+          isAddCategory: isAddCategory);
 }

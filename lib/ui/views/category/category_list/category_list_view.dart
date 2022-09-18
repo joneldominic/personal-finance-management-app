@@ -4,7 +4,7 @@ import 'package:personal_finance_management_app/ui/components/category_list_item
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
-import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_viewmodel.dart';
+import 'package:personal_finance_management_app/ui/views/category/category_list/category_list_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 // View: Shows the UI to the user.
@@ -65,14 +65,13 @@ class CategoryListView extends StatelessWidget {
       CategoryNature.none,
     ];
 
-    return ViewModelBuilder<AccountSettingsViewModel>.nonReactive(
-        viewModelBuilder: () => AccountSettingsViewModel(),
+    return ViewModelBuilder<CategoryListViewModel>.nonReactive(
+        viewModelBuilder: () => CategoryListViewModel(),
         builder: (context, model, child) => Scaffold(
               floatingActionButton: CustomFloatingActionButton(
                 icon: const Icon(Icons.add_rounded),
                 label: "Add Category",
-                onPressed: model
-                    .navigateToAccountDetails, // TODO: Redirect to Category Detail, Add Mode
+                onPressed: model.navigateToCategoryDetail,
               ),
               appBar: const CustomAppBar(
                 title: Text("Categories"),
@@ -85,13 +84,12 @@ class CategoryListView extends StatelessWidget {
                   itemCount: categoryNames.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CategoryListItem(
-                        categoryName: categoryNames[index],
-                        categoryNature: categoryNatures[index],
-                        color: colors[index],
-                        onPressed: () =>
-                            {} // TODO: Redirect to Category Detail, Edit Mode
-                        // model.navigateToAccountDetails(isAddAccount: false),
-                        );
+                      categoryName: categoryNames[index],
+                      categoryNature: categoryNatures[index],
+                      color: colors[index],
+                      onPressed: () =>
+                          model.navigateToCategoryDetail(isAddCategory: false),
+                    );
                   },
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),

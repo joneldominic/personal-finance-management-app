@@ -7,13 +7,13 @@ class AccountListItem extends StatelessWidget {
     this.accountName,
     this.color,
     this.amount,
-    required this.onEditPressed,
+    required this.onPressed,
   }) : super(key: key);
 
   final String? accountName;
   final Color? color;
   final String? amount;
-  final void Function() onEditPressed;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class AccountListItem extends StatelessWidget {
           size: 20,
           color: customTheme.actionButtonColor,
         ),
-        onPressed: onEditPressed,
+        onPressed: onPressed,
       ),
     );
   }

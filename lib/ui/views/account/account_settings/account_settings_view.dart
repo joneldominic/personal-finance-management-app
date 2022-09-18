@@ -86,7 +86,7 @@ class AccountSettingsView extends StatelessWidget {
                       accountName: accountNames[index],
                       color: colors[index],
                       amount: amounts[index],
-                      onEditPressed: () =>
+                      onPressed: () =>
                           model.navigateToAccountDetails(isAddAccount: false),
                     );
                   },

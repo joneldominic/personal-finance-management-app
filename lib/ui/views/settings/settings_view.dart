@@ -67,7 +67,7 @@ class SettingsView extends StatelessWidget {
                         _buildListTile(
                           iconData: Icons.category_rounded,
                           title: 'Categories',
-                          onPressed: () {},
+                          onPressed: model.navigateToCategoryList,
                           theme: customTheme,
                         ),
                         _buildListTile(

@@ -13,7 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../ui/views/account/account_details/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
-import '../ui/views/details/details_view.dart';
+import '../ui/views/category/category_list/category_list_view.dart';
 import '../ui/views/main/main_view.dart';
 import '../ui/views/transaction/transaction_detail/transaction_detail_view.dart';
 
@@ -22,13 +22,13 @@ class Routes {
   static const String accountSettingsView = '/account-settings-view';
   static const String accountDetailView = '/account-detail-view';
   static const String transactionDetailView = '/transaction-detail-view';
-  static const String detailsView = '/details-view';
+  static const String categoryListView = '/category-list-view';
   static const all = <String>{
     mainView,
     accountSettingsView,
     accountDetailView,
     transactionDetailView,
-    detailsView,
+    categoryListView,
   };
 }
 
@@ -40,7 +40,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.accountSettingsView, page: AccountSettingsView),
     RouteDef(Routes.accountDetailView, page: AccountDetailView),
     RouteDef(Routes.transactionDetailView, page: TransactionDetailView),
-    RouteDef(Routes.detailsView, page: DetailsView),
+    RouteDef(Routes.categoryListView, page: CategoryListView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -81,15 +81,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    DetailsView: (data) {
-      var args = data.getArgs<DetailsViewArguments>(
-        orElse: () => DetailsViewArguments(),
-      );
+    CategoryListView: (data) {
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => DetailsView(
-          key: args.key,
-          name: args.name,
-        ),
+        builder: (context) => const CategoryListView(),
         settings: data,
       );
     },
@@ -112,13 +106,6 @@ class TransactionDetailViewArguments {
   final Key? key;
   final bool isAddTransaction;
   TransactionDetailViewArguments({this.key, this.isAddTransaction = true});
-}
-
-/// DetailsView arguments holder class
-class DetailsViewArguments {
-  final Key? key;
-  final String name;
-  DetailsViewArguments({this.key, this.name = ''});
 }
 
 /// ************************************************************************
@@ -198,9 +185,7 @@ extension NavigatorStateExtension on NavigationService {
     );
   }
 
-  Future<dynamic> navigateToDetailsView({
-    Key? key,
-    String name = '',
+  Future<dynamic> navigateToCategoryListView({
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -208,8 +193,7 @@ extension NavigatorStateExtension on NavigationService {
         transition,
   }) async {
     return navigateTo(
-      Routes.detailsView,
-      arguments: DetailsViewArguments(key: key, name: name),
+      Routes.categoryListView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

@@ -27,4 +27,7 @@ class SettingsViewModel extends BaseViewModel {
 
   void navigateToAccountSettings() =>
       _navigationService.navigateToAccountSettingsView();
+
+  void navigateToCategoryList() =>
+      _navigationService.navigateToCategoryListView();
 }

@@ -6,7 +6,6 @@ part of 'person.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-// ignore: non_constant_identifier_names
 _$_Person _$$_PersonFromJson(Map<String, dynamic> json) => _$_Person(
       id: json['id'] as int,
       name: json['name'] as String,
@@ -14,7 +13,6 @@ _$_Person _$$_PersonFromJson(Map<String, dynamic> json) => _$_Person(
       gender: $enumDecodeNullable(_$GenderEnumMap, json['gender']),
     );
 
-// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_PersonToJson(_$_Person instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

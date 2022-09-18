@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
-class MainFloatingActionButton extends StatelessWidget {
-  const MainFloatingActionButton({
+class CustomFloatingActionButton extends StatelessWidget {
+  const CustomFloatingActionButton({
     Key? key,
     required this.icon,
     required this.label,

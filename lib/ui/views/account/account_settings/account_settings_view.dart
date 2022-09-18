@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
+import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_viewmodel.dart';
 import 'package:stacked/stacked.dart';
@@ -67,7 +67,7 @@ class AccountSettingsView extends StatelessWidget {
     return ViewModelBuilder<AccountSettingsViewModel>.nonReactive(
         viewModelBuilder: () => AccountSettingsViewModel(),
         builder: (context, model, child) => Scaffold(
-              floatingActionButton: MainFloatingActionButton(
+              floatingActionButton: CustomFloatingActionButton(
                 icon: const Icon(Icons.add_rounded),
                 label: "Add Account",
                 onPressed: model.navigateToAccountDetails,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/main_floating_action_button.dart';
+import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
 import 'package:personal_finance_management_app/ui/views/settings/settings_view.dart';
@@ -32,7 +32,7 @@ class MainView extends StatelessWidget {
         final bool showFloatingActionButton = model.currentIndex != 2;
         return Scaffold(
           floatingActionButton: showFloatingActionButton
-              ? MainFloatingActionButton(
+              ? CustomFloatingActionButton(
                   icon: const Icon(Icons.add_rounded),
                   label: "Add Transaction",
                   onPressed: model.navigateToTransactionDetail,

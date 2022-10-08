@@ -1,6 +1,9 @@
+import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:stacked/stacked.dart';
 
 class ThemeService with ReactiveServiceMixin {
+  final _logger = getLogger('ThemeService');
+
   ThemeService() {
     listenToReactiveValues([_isLightTheme]);
   }
@@ -12,5 +15,6 @@ class ThemeService with ReactiveServiceMixin {
 
   void toggleTheme() {
     _isLightTheme.value = !_isLightTheme.value;
+    _logger.i('{isLightTheme: ${_isLightTheme.value}}');
   }
 }

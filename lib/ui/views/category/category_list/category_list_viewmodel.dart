@@ -1,4 +1,5 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
+import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,9 +9,13 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class CategoryListViewModel extends BaseViewModel {
+  final _logger = getLogger('CategoryListViewModel');
   final _navigationService = locator<NavigationService>();
 
-  void navigateToCategoryDetail({bool isAddCategory = true}) =>
-      _navigationService.navigateToCategoryDetailView(
-          isAddCategory: isAddCategory);
+  void navigateToCategoryDetail({bool isAddCategory = true}) {
+    _logger.i('argument: {isAddCategory: $isAddCategory}');
+    _navigationService.navigateToCategoryDetailView(
+      isAddCategory: isAddCategory,
+    );
+  }
 }

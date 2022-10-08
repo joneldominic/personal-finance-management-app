@@ -12,7 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class AccountSettingsViewModel extends StreamViewModel<List<Account>> {
-  final _logger = getLogger("AccountSettingsViewModel");
+  final _logger = getLogger('AccountSettingsViewModel');
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
 
@@ -23,11 +23,13 @@ class AccountSettingsViewModel extends StreamViewModel<List<Account>> {
 
   @override
   void onData(List<Account>? data) {
-    _logger.i("accounts | ${data?.itemsToString()}");
+    _logger.i('argument: ${data?.itemsToString()}');
     accounts = data ?? [];
     notifyListeners();
   }
 
-  void navigateToAccountDetail({bool isAddAccount = true}) => _navigationService
-      .navigateToAccountDetailView(isAddAccount: isAddAccount);
+  void navigateToAccountDetail({bool isAddAccount = true}) {
+    _logger.i('argument: {isAddAccount: $isAddAccount}');
+    _navigationService.navigateToAccountDetailView(isAddAccount: isAddAccount);
+  }
 }

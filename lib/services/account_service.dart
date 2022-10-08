@@ -1,20 +1,25 @@
+import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao_impl.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/repositories/account_repository.dart';
 import 'package:stacked/stacked.dart';
 
 class AccountService with ReactiveServiceMixin {
+  final _logger = getLogger('AccountService');
   final _accountRepository = AccountRepository(accountDao: AccountDaoImpl());
 
   Future<Account> createAccount(Account account) async {
+    _logger.i('argument: $account');
     return _accountRepository.createAccount(account);
   }
 
   Future<List<Account>> getAccounts() async {
+    _logger.i('argument: NONE');
     return _accountRepository.getAccounts();
   }
 
   Stream<List<Account>> accountCollectionStream() async* {
+    _logger.i('argument: NONE');
     yield* _accountRepository.accountCollectionStream();
   }
 }

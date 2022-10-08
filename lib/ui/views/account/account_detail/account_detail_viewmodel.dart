@@ -13,7 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class AccountDetailViewModel extends FormViewModel {
-  final _logger = getLogger("AccountDetailViewModel");
+  final _logger = getLogger('AccountDetailViewModel');
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
 
@@ -32,51 +32,51 @@ class AccountDetailViewModel extends FormViewModel {
     required TextEditingController newBalanceController,
   }) {
     _logger.i(
-        'initForm | argument: {accountNameController: $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}');
+      'argument: {accountNameController: $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}',
+    );
 
     setColor('0xFFFF4081');
     setCurrency('PHP');
-
     _accountNameController = accountNameController;
     _balanceController = balanceController;
     _newBalanceController = newBalanceController;
 
-    accountNameController.text = "Cash";
-    balanceController.text = "1000.00";
+    accountNameController.text = 'Cash';
+    balanceController.text = '1000.00';
   }
 
   void popCurrentView() {
-    _logger.i('popCurrentView | argument: NONE');
+    _logger.i('argument: NONE | Navigation Pop: 1');
     _navigationService.popRepeated(1);
   }
 
   void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
-    _logger.i('setBalanceUpdateType | argument: $newBalanceUpdateType');
+    _logger.i('argument: $newBalanceUpdateType');
     balanceUpdateType = newBalanceUpdateType!;
     notifyListeners();
   }
 
   void setNewBalanceFormVisibility(bool isVisible) {
-    _logger.i('setNewBalanceFormVisibility | argument: $isVisible');
+    _logger.i('argument: $isVisible');
     newBalanceFormIsVisible = isVisible;
     _newBalanceController!.text = _balanceController!.text;
     notifyListeners();
   }
 
   void setIsExcludeFromAnalysis(bool isExcluded) {
-    _logger.i('setIsExcludeFromAnalysis | argument: $isExcluded');
+    _logger.i('argument: $isExcluded');
     isExcludeFromAnalysis = isExcluded;
     notifyListeners();
   }
 
   void setIsArchivedAccount(bool isArchived) {
-    _logger.i('setIsArchivedAccount | argument: $isArchived');
+    _logger.i('argument: $isArchived');
     isArchivedAccount = isArchived;
     notifyListeners();
   }
 
   void saveAccount(bool isAddAccount) async {
-    _logger.i('saveAccount | argument: $isAddAccount');
+    _logger.i('argument: $isAddAccount');
 
     final newAccount = Account(
       name: _accountNameController!.text,
@@ -88,8 +88,9 @@ class AccountDetailViewModel extends FormViewModel {
     );
 
     final addedAccount = await _accountService.createAccount(newAccount);
-    _logger.i('Account Saved Successfully | account: $addedAccount');
+    _logger.i('Account Saved Successfully: $addedAccount');
 
+    _logger.i('Navigation Pop: 1');
     _navigationService.popRepeated(1);
   }
 

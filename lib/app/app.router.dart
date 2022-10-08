@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../data/models/account/account.dart';
 import '../ui/views/account/account_detail/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/category/category_detail/category_detail_view.dart';
@@ -68,7 +69,7 @@ class StackedRouter extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => AccountDetailView(
           key: args.key,
-          isAddAccount: args.isAddAccount,
+          account: args.account,
         ),
         settings: data,
       );
@@ -113,8 +114,8 @@ class StackedRouter extends RouterBase {
 /// AccountDetailView arguments holder class
 class AccountDetailViewArguments {
   final Key? key;
-  final bool isAddAccount;
-  AccountDetailViewArguments({this.key, this.isAddAccount = true});
+  final Account? account;
+  AccountDetailViewArguments({this.key, this.account});
 }
 
 /// TransactionDetailView arguments holder class
@@ -170,7 +171,7 @@ extension NavigatorStateExtension on NavigationService {
 
   Future<dynamic> navigateToAccountDetailView({
     Key? key,
-    bool isAddAccount = true,
+    Account? account,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -179,8 +180,7 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.accountDetailView,
-      arguments:
-          AccountDetailViewArguments(key: key, isAddAccount: isAddAccount),
+      arguments: AccountDetailViewArguments(key: key, account: account),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

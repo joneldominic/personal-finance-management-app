@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
 import 'package:personal_finance_management_app/ui/components/delete_button.dart';
@@ -33,25 +34,26 @@ import 'package:stacked/stacked_annotations.dart';
 class AccountDetailView extends StatelessWidget with $AccountDetailView {
   AccountDetailView({
     Key? key,
-    this.isAddAccount = true,
+    this.account,
   }) : super(key: key);
 
-  final bool isAddAccount;
+  final Account? account;
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    final appBarTitle = isAddAccount ? "New Account" : "Edit Account";
+    final appBarTitle = account == null ? "New Account" : "Edit Account";
     final actionButtonTooltip =
-        isAddAccount ? "Save New Account" : "Save Changes";
-    final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
+        account == null ? "Save New Account" : "Save Changes";
+    final balanceFieldLabel = account == null ? "Initial Balance" : "Balance";
 
     return ViewModelBuilder<AccountDetailViewModel>.reactive(
       viewModelBuilder: () => AccountDetailViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
         model.initForm(
+          account: account,
           accountNameController: accountNameController,
           balanceController: balanceController,
           newBalanceController: newBalanceController,
@@ -69,7 +71,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             IconButton(
               icon: const Icon(Icons.save_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: () => model.saveAccount(isAddAccount),
+              onPressed: () => model.saveAccount(account),
             ),
           ],
         ),
@@ -100,11 +102,11 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                   onChanged: (String? value) {},
                 ),
                 TextField(
-                  readOnly: !isAddAccount,
+                  readOnly: account != null,
                   key: const ValueKey(BalanceValueKey),
                   decoration: InputDecoration(
                     labelText: balanceFieldLabel,
-                    suffixIcon: isAddAccount
+                    suffixIcon: account == null
                         ? null
                         : IconButton(
                             icon: const Icon(Icons.edit_rounded),
@@ -118,7 +120,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                   keyboardType: TextInputType
                       .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
                 ),
-                if (!isAddAccount && model.newBalanceFormIsVisible) ...[
+                if (account != null && model.newBalanceFormIsVisible) ...[
                   verticalSpaceRegular,
                   Card(
                     shape: RoundedRectangleBorder(
@@ -188,7 +190,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                   onChanged: model.setIsExcludeFromAnalysis,
                   theme: customTheme,
                 ),
-                if (!isAddAccount) ...[
+                if (account != null) ...[
                   _buildSwitchListTile(
                     title: 'Archive Account',
                     value: model.isArchivedAccount,

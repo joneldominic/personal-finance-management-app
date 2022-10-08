@@ -28,8 +28,8 @@ class AccountSettingsViewModel extends StreamViewModel<List<Account>> {
     notifyListeners();
   }
 
-  void navigateToAccountDetail({bool isAddAccount = true}) {
-    _logger.i('argument: {isAddAccount: $isAddAccount}');
-    _navigationService.navigateToAccountDetailView(isAddAccount: isAddAccount);
+  void navigateToAccountDetail(Account? account) {
+    _logger.i('argument: $account');
+    _navigationService.navigateToAccountDetailView(account: account);
   }
 }

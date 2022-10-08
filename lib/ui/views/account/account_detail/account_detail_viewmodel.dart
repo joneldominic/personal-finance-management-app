@@ -27,22 +27,25 @@ class AccountDetailViewModel extends FormViewModel {
   bool isArchivedAccount = false;
 
   void initForm({
+    required Account? account,
     required TextEditingController accountNameController,
     required TextEditingController balanceController,
     required TextEditingController newBalanceController,
   }) {
     _logger.i(
-      'argument: {accountNameController: $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}',
+      'argument: {accountNameController: $account, $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}',
     );
 
-    setColor('0xFFFF4081');
-    setCurrency('PHP');
     _accountNameController = accountNameController;
     _balanceController = balanceController;
     _newBalanceController = newBalanceController;
 
-    accountNameController.text = 'Cash';
-    balanceController.text = '1000.00';
+    setColor(account?.color ?? '0xFFFF4081');
+    setCurrency(account?.currency ?? 'PHP');
+    accountNameController.text = account?.name ?? 'Cash';
+    balanceController.text = account?.balance.toString() ?? '0';
+    isExcludeFromAnalysis = account?.isExcludedFromAnalysis ?? false;
+    isArchivedAccount = account?.isArchived ?? false;
   }
 
   void popCurrentView() {
@@ -75,8 +78,8 @@ class AccountDetailViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  void saveAccount(bool isAddAccount) async {
-    _logger.i('argument: $isAddAccount');
+  void saveAccount(Account? account) async {
+    _logger.i('argument: $account');
 
     final newAccount = Account(
       name: _accountNameController!.text,

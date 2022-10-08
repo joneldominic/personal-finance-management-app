@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
-import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';

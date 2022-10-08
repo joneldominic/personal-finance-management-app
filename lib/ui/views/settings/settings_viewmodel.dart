@@ -10,24 +10,28 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class SettingsViewModel extends BaseViewModel {
+  final _logger = getLogger('SettingsViewModel');
   final _themeService = locator<ThemeService>();
   final _navigationService = locator<NavigationService>();
 
-  final _logger = getLogger("SettingsViewModel");
-
   bool getIsThemeModeIsDark() {
-    _logger.i(_themeService.isLightTheme);
+    _logger.i('argument: NONE');
     return _themeService.isDarkTheme;
   }
 
-  void toggleTheme(bool _) {
+  void toggleTheme(bool value) {
+    _logger.i('argument: $value');
     _themeService.toggleTheme();
     notifyListeners();
   }
 
-  void navigateToAccountSettings() =>
-      _navigationService.navigateToAccountSettingsView();
+  void navigateToAccountSettings() {
+    _logger.i('argument: NONE');
+    _navigationService.navigateToAccountSettingsView();
+  }
 
-  void navigateToCategoryList() =>
-      _navigationService.navigateToCategoryListView();
+  void navigateToCategoryList() {
+    _logger.i('argument: NONE');
+    _navigationService.navigateToCategoryListView();
+  }
 }

@@ -11,22 +11,22 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class TransactionDetailViewModel extends FormViewModel {
-  final _logger = getLogger("TransactionDetailViewModel");
+  final _logger = getLogger('TransactionDetailViewModel');
   final _navigationService = locator<NavigationService>();
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
-  final List<String> dummyAccounts = ["Cash", "GCash", "BPI"];
+  final List<String> dummyAccounts = ['Cash', 'GCash', 'BPI'];
   final List<String> dummyCategory = [
-    "Foods",
-    "Shopping",
-    "Transportation",
-    "House Bills"
+    'Foods',
+    'Shopping',
+    'Transportation',
+    'House Bills'
   ];
 
   void initForm() {
-    _logger.i('initForm | argument: NONE');
+    _logger.i('argument: NONE');
 
     initDateTimeFields();
 
@@ -35,6 +35,8 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   void initDateTimeFields() {
+    _logger.i('argument: NONE');
+
     final DateTime now = DateTime.now();
     final String date = DateFormat('MMM dd, yyyy').format(now);
     final String time = DateFormat('hh:mm a').format(now);
@@ -44,11 +46,13 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   void popCurrentView() {
-    _logger.i('popCurrentView | argument: NONE');
+    _logger.i('argument: NONE | Navigation Pop: 1');
     _navigationService.popRepeated(1);
   }
 
   void setTransactionDate(BuildContext context) async {
+    _logger.i('argument: $context');
+
     final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -62,6 +66,8 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   void setTransactionTime(BuildContext context) async {
+    _logger.i('argument: $context');
+
     final DateTime now = DateTime.now();
 
     final TimeOfDay? selectedTime = await showTimePicker(

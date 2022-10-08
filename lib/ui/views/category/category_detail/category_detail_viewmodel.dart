@@ -9,25 +9,25 @@ import 'package:stacked_services/stacked_services.dart';
 // It does this by making use of the services
 
 class CategoryDetailViewModel extends FormViewModel {
-  final _logger = getLogger("CategoryDetailViewModel");
+  final _logger = getLogger('CategoryDetailViewModel');
   final _navigationService = locator<NavigationService>();
 
   bool categoryIsVisible = true;
 
   void initForm() {
-    _logger.i('initForm | argument: NONE');
+    _logger.i('argument: NONE');
 
     setColor('0xFFFF4081');
     setCategoryNature(CategoryNatureValueToTitleMap['None']!);
   }
 
   void popCurrentView() {
-    _logger.i('popCurrentView | argument: NONE');
+    _logger.i('argument: NONE | Navigation Pop: 1');
     _navigationService.popRepeated(1);
   }
 
   void setCategoryVisibility(bool isVisible) {
-    _logger.i('setCategoryVisibility | argument: $isVisible');
+    _logger.i('argument: $isVisible');
     categoryIsVisible = isVisible;
     notifyListeners();
   }

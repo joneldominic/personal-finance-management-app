@@ -19,52 +19,7 @@ class AccountSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    final List<Color> colors = <Color>[
-      Colors.green,
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.red,
-      Colors.blue,
-    ];
-
-    final List<String> accountNames = <String>[
-      'Cash',
-      'GCash',
-      'BPI',
-      'Cash',
-      'GCash',
-      'BPI',
-      'Cash',
-      'GCash',
-      'BPI',
-      'Cash',
-      'GCash',
-      'BPI',
-    ];
-
-    final List<String> amounts = <String>[
-      "PHP 5,000.00",
-      "PHP 800.00",
-      "PHP 60,000.00",
-      "PHP 5,000.00",
-      "PHP 800.00",
-      "PHP 60,000.00",
-      "PHP 5,000.00",
-      "PHP 800.00",
-      "PHP 60,000.00",
-      "PHP 5,000.00",
-      "PHP 800.00",
-      "PHP 60,000.00",
-    ];
-
-    return ViewModelBuilder<AccountSettingsViewModel>.nonReactive(
+    return ViewModelBuilder<AccountSettingsViewModel>.reactive(
       viewModelBuilder: () => AccountSettingsViewModel(),
       builder: (context, model, child) => Scaffold(
         floatingActionButton: CustomFloatingActionButton(
@@ -77,22 +32,26 @@ class AccountSettingsView extends StatelessWidget {
         ),
         body: Container(
           color: customTheme.contrastBackgroundColor,
-          child: ListView.separated(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
-            physics: const BouncingScrollPhysics(),
-            itemCount: accountNames.length,
-            itemBuilder: (BuildContext context, int index) {
-              return AccountListItem(
-                accountName: accountNames[index],
-                color: colors[index],
-                amount: amounts[index],
-                onPressed: () =>
-                    model.navigateToAccountDetail(isAddAccount: false),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-          ),
+          child: !model.isBusy
+              ? ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: model.accounts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return AccountListItem(
+                      accountName: model.accounts[index].name,
+                      color: Color(
+                        int.parse(model.accounts[index].color!),
+                      ),
+                      amount: model.accounts[index].balance.toString(),
+                      onPressed: () =>
+                          model.navigateToAccountDetail(isAddAccount: false),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                )
+              : const Center(child: CircularProgressIndicator()),
         ),
       ),
     );

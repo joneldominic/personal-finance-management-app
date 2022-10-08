@@ -1,3 +1,4 @@
+import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:personal_finance_management_app/services/theme_service.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_settings/account_settings_view.dart';
@@ -17,7 +18,8 @@ import 'package:stacked_services/stacked_services.dart';
   MaterialRoute(page: CategoryDetailView),
 ], dependencies: [
   LazySingleton(classType: NavigationService),
-  LazySingleton(classType: ThemeService)
+  LazySingleton(classType: ThemeService),
+  LazySingleton(classType: AccountService),
 ], logger: StackedLogger())
 class AppSetup {
   /** Serves no purpose besides having an annotation attached to it */

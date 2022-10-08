@@ -69,7 +69,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             IconButton(
               icon: const Icon(Icons.save_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: () {},
+              onPressed: () => model.saveAccount(isAddAccount),
             ),
           ],
         ),

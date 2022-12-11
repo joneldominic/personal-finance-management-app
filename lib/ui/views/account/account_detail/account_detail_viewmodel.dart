@@ -92,6 +92,13 @@ class AccountDetailViewModel extends FormViewModel {
 
     final addedAccount = await _accountService.createAccount(newAccount);
     _logger.i('Account Saved Successfully: $addedAccount');
+  void deleteAccount(Account account) async {
+    final deletedId = await _accountService.deleteAccount(account.id);
+
+    if (deletedId == -1) {
+      _logger.e("Account Deletion Failed!");
+      // TODO: Handle failure (Toast/Snackbar)
+    }
 
     _logger.i('Navigation Pop: 1');
     _navigationService.popRepeated(1);

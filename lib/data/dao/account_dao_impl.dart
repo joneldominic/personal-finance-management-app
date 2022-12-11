@@ -20,12 +20,6 @@ class AccountDaoImpl extends AccountDao {
   }
 
   @override
-  Future<Id> deleteAccount(Id id) {
-    // TODO: implement deleteAccount
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Account> getAccountById(Id id) {
     // TODO: implement getAccountById
     throw UnimplementedError();
@@ -44,17 +38,29 @@ class AccountDaoImpl extends AccountDao {
   }
 
   @override
-  Future<Account> updateAccount(Id id) {
-    // TODO: implement updateAccount
-    throw UnimplementedError();
+  Future<Account> updateAccount(Account account) async {
+    Isar isar = await _db;
+
+    final updatedAccount = await isar.writeTxn(() async {
+      final accountCollection = isar.accounts;
+      await accountCollection.put(account);
+      return account;
+    });
+
+    return updatedAccount;
   }
 
-  /* 
-    Stream<void> userChanged = isar.users.watchLazy();
-userChanged.listen(() {
-  print('A User changed');
-});
-   */
+  @override
+  Future<Id> deleteAccount(Id id) async {
+    Isar isar = await _db;
+
+    final isDeleted = await isar.writeTxn(() async {
+      final accountCollection = isar.accounts;
+      return await accountCollection.delete(id);
+    });
+
+    return isDeleted ? id : -1;
+  }
 
   @override
   Stream<List<Account>> accountCollectionStream() async* {

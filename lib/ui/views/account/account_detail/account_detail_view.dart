@@ -5,7 +5,6 @@ import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
-import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_viewmodel.dart';
@@ -68,8 +67,15 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             onPressed: model.popCurrentView,
           ),
           actions: [
+            if (account != null) ...[
+              IconButton(
+                icon: const Icon(Icons.delete_rounded),
+                tooltip: actionButtonTooltip,
+                onPressed: () => model.deleteAccount(account!),
+              ),
+            ],
             IconButton(
-              icon: const Icon(Icons.save_rounded),
+              icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
               onPressed: () => model.saveAccount(account),
             ),
@@ -99,7 +105,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) {},
+                  onChanged: (String? value) => model.setCurrency(value!),
                 ),
                 TextField(
                   readOnly: account != null,
@@ -196,11 +202,6 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                     value: model.isArchivedAccount,
                     onChanged: model.setIsArchivedAccount,
                     theme: customTheme,
-                  ),
-                  verticalSpaceRegular,
-                  DeleteButton(
-                    label: 'Delete Account',
-                    onPressed: () {},
                   ),
                 ],
               ],

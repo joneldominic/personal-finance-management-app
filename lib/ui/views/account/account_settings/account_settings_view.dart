@@ -31,9 +31,10 @@ class AccountSettingsView extends StatelessWidget {
           title: Text("Account Settings"),
         ),
         body: Container(
-          color: customTheme.contrastBackgroundColor, 
+          color: customTheme.contrastBackgroundColor,
           child: !model.isBusy
               ? ListView.separated(
+                  // TODO: Add handling for empty list
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
                   physics: const BouncingScrollPhysics(),
                   itemCount: model.accounts.length,
@@ -43,6 +44,7 @@ class AccountSettingsView extends StatelessWidget {
                       color: Color(
                         int.parse(model.accounts[index].color!),
                       ),
+                      currency: model.accounts[index].currency,
                       amount: model.accounts[index].balance.toString(),
                       onPressed: () =>
                           model.navigateToAccountDetail(model.accounts[index]),

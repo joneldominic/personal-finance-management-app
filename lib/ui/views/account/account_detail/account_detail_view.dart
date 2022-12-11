@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
@@ -105,7 +106,8 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) => model.setCurrency(value!),
+                  onChanged: (String? value) =>
+                      model.setAccountCurrency(value!),
                 ),
                 TextField(
                   readOnly: account != null,
@@ -123,8 +125,8 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                           ),
                   ),
                   controller: balanceController,
-                  keyboardType: TextInputType
-                      .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [model.currencyInputFormatter!],
                 ),
                 if (account != null && model.newBalanceFormIsVisible) ...[
                   verticalSpaceRegular,
@@ -158,8 +160,8 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                           TextField(
                             key: const ValueKey(NewBalanceValueKey),
                             controller: newBalanceController,
-                            keyboardType: TextInputType
-                                .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [model.currencyInputFormatter!],
                           ),
                           verticalSpaceSmall,
                           _buildRadioListTile(

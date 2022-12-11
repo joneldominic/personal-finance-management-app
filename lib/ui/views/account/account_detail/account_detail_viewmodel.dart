@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/account_enum.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
@@ -20,6 +21,8 @@ class AccountDetailViewModel extends FormViewModel {
   TextEditingController? _accountNameController;
   TextEditingController? _balanceController;
   TextEditingController? _newBalanceController;
+
+  CurrencyInputFormatter? currencyInputFormatter;
 
   BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
   bool newBalanceFormIsVisible = false;
@@ -42,8 +45,11 @@ class AccountDetailViewModel extends FormViewModel {
 
     setColor(account?.color ?? '0xFFFF4081');
     setCurrency(account?.currency ?? 'PHP');
+    currencyInputFormatter =
+        CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
     accountNameController.text = account?.name ?? 'Cash';
-    balanceController.text = account?.balance.toString() ?? '0';
+    balanceController.text =
+        currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
     isExcludeFromAnalysis = account?.isExcludedFromAnalysis ?? false;
     isArchivedAccount = account?.isArchived ?? false;
   }
@@ -78,13 +84,22 @@ class AccountDetailViewModel extends FormViewModel {
     notifyListeners();
   }
 
+  void setAccountCurrency(String currency) {
+    setCurrency(currency);
+    currencyInputFormatter = CurrencyInputFormatter(symbol: currency);
+    _balanceController!.text =
+        currencyInputFormatter!.reformat(_balanceController!.text);
+  }
+
   void saveAccount(Account? account) async {
     _logger.i('argument: $account');
 
+    final balance =
+        _balanceController!.text.replaceAll(RegExp(r'[^0-9-.]+'), '');
     final newAccount = Account(
       name: _accountNameController!.text,
       currency: currencyValue,
-      balance: double.parse(_balanceController!.text),
+      balance: double.parse(balance),
       color: colorValue,
       isExcludedFromAnalysis: isExcludeFromAnalysis,
       isArchived: isArchivedAccount,

@@ -90,8 +90,19 @@ class AccountDetailViewModel extends FormViewModel {
       isArchived: isArchivedAccount,
     );
 
-    final addedAccount = await _accountService.createAccount(newAccount);
-    _logger.i('Account Saved Successfully: $addedAccount');
+    if (account != null) {
+      newAccount.id = account.id;
+      final updatedAccount = await _accountService.updateAccount(newAccount);
+      _logger.i('Account Updated Successfully: $updatedAccount');
+    } else {
+      final addedAccount = await _accountService.createAccount(newAccount);
+      _logger.i('Account Saved Successfully: $addedAccount');
+    }
+
+    _logger.i('Navigation Pop: 1');
+    _navigationService.popRepeated(1);
+  }
+
   void deleteAccount(Account account) async {
     final deletedId = await _accountService.deleteAccount(account.id);
 

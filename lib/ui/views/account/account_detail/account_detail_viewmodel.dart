@@ -82,7 +82,13 @@ class AccountDetailViewModel extends FormViewModel {
   void saveAccount(Account? account) async {
     _logger.i('argument: $account');
 
-    // TODO: Add validation, show error message if empty
+    if (_accountNameController!.text.trim().isEmpty) {
+      _logger.w("Account name cannot be empty");
+      setAccountNameValidationMessage("Please fill-in account name");
+      handleShowSnackbar(message: accountNameValidationMessage!);
+      notifyListeners();
+      return;
+    }
 
     final balance = double.parse(
       _balanceController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),

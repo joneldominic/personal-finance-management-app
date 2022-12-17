@@ -88,9 +88,13 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             child: Column(
               children: [
                 TextField(
-                  // TODO: Add validation (should not be empty)
                   key: const ValueKey(AccountNameValueKey),
-                  decoration: const InputDecoration(labelText: 'Account Name'),
+                  decoration: InputDecoration(
+                    labelText: 'Account Name',
+                    errorText: model.hasAccountNameValidationMessage
+                        ? model.accountNameValidationMessage
+                        : null,
+                  ),
                   controller: accountNameController,
                 ),
                 DropdownButtonFormField(

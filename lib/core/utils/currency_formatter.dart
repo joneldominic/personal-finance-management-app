@@ -5,6 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/core/utils/text_manipulation_utils.dart';
 
+String doubleToCurrencyFormatter({
+  required String currency,
+  required double value,
+}) =>
+    NumberFormat.currency(
+      locale: "en_PH",
+      symbol: "$currency ",
+      decimalDigits: 2,
+    ).format(value);
+
 class CurrencyInputFormatter extends TextInputFormatter {
   final int decimalPlaces;
   final bool allowNegative;
@@ -54,7 +64,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
           // filter negative sign in the middle
           // this will also remove redundant negative signs
           if ('-'.allMatches(filteredString).length >= 1) {
-            print(filteredString);
             filteredString = (filteredString.startsWith('-') ? '-' : '') +
                 filteredString.replaceAll('-', '');
           }

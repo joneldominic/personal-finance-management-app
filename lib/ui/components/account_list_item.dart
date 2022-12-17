@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
@@ -34,11 +34,9 @@ class AccountListItem extends StatelessWidget {
         children: [
           ThemeText.listItemTitle(accountName ?? ''),
           ThemeText.listItemSubTitle(
-            NumberFormat.currency(
-              locale: "en_PH",
-              symbol: "${currency ?? "PHP"} ",
-              decimalDigits: 2,
-            ).format(double.parse(amount ?? '0')),
+            doubleToCurrencyFormatter(
+                currency: currency ?? "PHP",
+                value: double.parse(amount ?? '0')),
           ),
         ],
       ),

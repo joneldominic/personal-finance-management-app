@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
-import 'package:personal_finance_management_app/core/enums/account_enum.dart';
+import 'package:personal_finance_management_app/core/enums/balance_update_type.dart';
+import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
@@ -17,15 +18,16 @@ class AccountDetailViewModel extends FormViewModel {
   final _logger = getLogger('AccountDetailViewModel');
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
+  final _dialogService = locator<DialogService>();
 
   TextEditingController? _accountNameController;
   TextEditingController? _balanceController;
-  TextEditingController? _newBalanceController;
+  // TextEditingController? _newBalanceController;
 
   CurrencyInputFormatter? currencyInputFormatter;
 
   BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
-  bool newBalanceFormIsVisible = false;
+  // bool newBalanceFormIsVisible = false;
   bool isExcludeFromAnalysis = false;
   bool isArchivedAccount = false;
 
@@ -41,13 +43,13 @@ class AccountDetailViewModel extends FormViewModel {
 
     _accountNameController = accountNameController;
     _balanceController = balanceController;
-    _newBalanceController = newBalanceController;
+    // _newBalanceController = newBalanceController;
 
     setColor(account?.color ?? '0xFFFF4081');
     setCurrency(account?.currency ?? 'PHP');
     currencyInputFormatter =
         CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
-    accountNameController.text = account?.name ?? 'Cash';
+    accountNameController.text = account?.name ?? '';
     balanceController.text =
         currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
     isExcludeFromAnalysis = account?.isExcludedFromAnalysis ?? false;
@@ -59,18 +61,18 @@ class AccountDetailViewModel extends FormViewModel {
     _navigationService.popRepeated(1);
   }
 
-  void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
-    _logger.i('argument: $newBalanceUpdateType');
-    balanceUpdateType = newBalanceUpdateType!;
-    notifyListeners();
-  }
+  // void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
+  //   _logger.i('argument: $newBalanceUpdateType');
+  //   balanceUpdateType = newBalanceUpdateType!;
+  //   notifyListeners();
+  // }
 
-  void setNewBalanceFormVisibility(bool isVisible) {
-    _logger.i('argument: $isVisible');
-    newBalanceFormIsVisible = isVisible;
-    _newBalanceController!.text = _balanceController!.text;
-    notifyListeners();
-  }
+  // void setNewBalanceFormVisibility(bool isVisible) {
+  //   _logger.i('argument: $isVisible');
+  //   newBalanceFormIsVisible = isVisible;
+  //   _newBalanceController!.text = _balanceController!.text;
+  //   notifyListeners();
+  // }
 
   void setIsExcludeFromAnalysis(bool isExcluded) {
     _logger.i('argument: $isExcluded');
@@ -94,12 +96,38 @@ class AccountDetailViewModel extends FormViewModel {
   void saveAccount(Account? account) async {
     _logger.i('argument: $account');
 
-    final balance =
-        _balanceController!.text.replaceAll(RegExp(r'[^0-9-.]+'), '');
+    // TODO: Add validation, show error message if empty
+
+    final balance = double.parse(
+      _balanceController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
+    );
+
+    if (account != null && account.balance != balance) {
+      _logger.i("Showing BalanceConfirmationDialog");
+      final balanceDiff = doubleToCurrencyFormatter(
+        currency: account.currency ?? "PHP",
+        value: (account.balance! - balance) * -1,
+      );
+      final response = await _dialogService.showCustomDialog(
+          variant: DialogType.balanceUpdateConfirmation, data: balanceDiff);
+
+      if (response == null) {
+        _logger.w("Save Account Cancelled");
+        return;
+      }
+
+      if (response.confirmed) {
+        // TODO: Create a transaction record
+        _logger.e("Should create a transaction record");
+      }
+
+      _logger.i("BalanceConfirmationDialog Closed");
+    }
+
     final newAccount = Account(
       name: _accountNameController!.text,
       currency: currencyValue,
-      balance: double.parse(balance),
+      balance: balance,
       color: colorValue,
       isExcludedFromAnalysis: isExcludeFromAnalysis,
       isArchived: isArchivedAccount,
@@ -119,6 +147,8 @@ class AccountDetailViewModel extends FormViewModel {
   }
 
   void deleteAccount(Account account) async {
+    // TODO: Add confirmation dialog
+
     final deletedId = await _accountService.deleteAccount(account.id);
 
     if (deletedId == -1) {

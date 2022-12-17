@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/components/account_thumbnail.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
@@ -14,7 +15,7 @@ class AccountsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    return ViewModelBuilder<AccountsCardViewModel>.nonReactive(
+    return ViewModelBuilder<AccountsCardViewModel>.reactive(
       viewModelBuilder: () => AccountsCardViewModel(),
       builder: (context, model, child) => Card(
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
@@ -33,50 +34,40 @@ class AccountsCard extends StatelessWidget {
                 onPressed: model.navigateToAccountSettings,
               ),
             ),
-            GridView.count(
-              shrinkWrap: true,
-              primary: false,
+            Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 3,
-              childAspectRatio: 2.22,
-              children: <Widget>[
-                const AccountThumbnail(
-                  label: "Cash",
-                  amount: "PHP 1,500.00",
-                  color: Colors.red,
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 2.22,
                 ),
-                const AccountThumbnail(
-                  label: "BPI",
-                  amount: "PHP 2,000.00",
-                  color: Colors.amber,
-                ),
-                const AccountThumbnail(
-                  label: "GCash",
-                  amount: "PHP 5,155.00",
-                  color: Colors.blue,
-                ),
-                const AccountThumbnail(
-                  label: "CIMB",
-                  amount: "PHP 2,202.00",
-                  color: Colors.green,
-                ),
-                const AccountThumbnail(
-                  label: "Dummy Account A",
-                  amount: "PHP 5,202.00",
-                  color: Colors.brown,
-                ),
-                const AccountThumbnail(
-                  label: "Account B",
-                  amount: "PHP 5,202.00",
-                  color: Colors.deepPurple,
-                ),
-                GestureDetector(
-                  onTap: model.navigateToAccountDetail,
-                  child: const AccountThumbnail(isAddAccount: true),
-                ),
-              ],
+                itemCount: model.accounts.length + 1,
+                itemBuilder: (context, index) {
+                  if (index > model.accounts.length - 1) {
+                    return GestureDetector(
+                      onTap: model.navigateToAccountDetail,
+                      child: const AccountThumbnail(isAddAccount: true),
+                    );
+                  }
+
+                  return AccountThumbnail(
+                    label: model.accounts[index].name,
+                    amount: doubleToCurrencyFormatter(
+                      currency: model.accounts[index].currency ?? "PHP",
+                      value: model.accounts[index].balance!,
+                    ),
+                    color: Color(
+                      int.parse(
+                        model.accounts[index].color!,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -24,12 +24,10 @@ class AccountDetailViewModel extends FormViewModel {
 
   TextEditingController? _accountNameController;
   TextEditingController? _balanceController;
-  // TextEditingController? _newBalanceController;
 
   CurrencyInputFormatter? currencyInputFormatter;
 
   BalanceUpdateType balanceUpdateType = BalanceUpdateType.withRecord;
-  // bool newBalanceFormIsVisible = false;
   bool isExcludeFromAnalysis = false;
   bool isArchivedAccount = false;
 
@@ -45,7 +43,6 @@ class AccountDetailViewModel extends FormViewModel {
 
     _accountNameController = accountNameController;
     _balanceController = balanceController;
-    // _newBalanceController = newBalanceController;
 
     setColor(account?.color ?? '0xFFFF4081');
     setCurrency(account?.currency ?? 'PHP');

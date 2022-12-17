@@ -61,19 +61,6 @@ class AccountDetailViewModel extends FormViewModel {
     _navigationService.popRepeated(1);
   }
 
-  // void setBalanceUpdateType(BalanceUpdateType? newBalanceUpdateType) {
-  //   _logger.i('argument: $newBalanceUpdateType');
-  //   balanceUpdateType = newBalanceUpdateType!;
-  //   notifyListeners();
-  // }
-
-  // void setNewBalanceFormVisibility(bool isVisible) {
-  //   _logger.i('argument: $isVisible');
-  //   newBalanceFormIsVisible = isVisible;
-  //   _newBalanceController!.text = _balanceController!.text;
-  //   notifyListeners();
-  // }
-
   void setIsExcludeFromAnalysis(bool isExcluded) {
     _logger.i('argument: $isExcluded');
     isExcludeFromAnalysis = isExcluded;

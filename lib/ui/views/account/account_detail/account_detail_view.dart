@@ -109,81 +109,14 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                       model.setAccountCurrency(value!),
                 ),
                 TextField(
-                  // readOnly: account != null,
                   key: const ValueKey(BalanceValueKey),
                   decoration: InputDecoration(
                     labelText: balanceFieldLabel,
-                    // suffixIcon: account == null
-                    //     ? null
-                    //     : IconButton(
-                    //         icon: const Icon(Icons.edit_rounded),
-                    //         iconSize: 20,
-                    //         color: customTheme.actionButtonColor,
-                    //         onPressed: () =>
-                    //             model.setNewBalanceFormVisibility(true),
-                    //       ),
                   ),
                   controller: balanceController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [model.currencyInputFormatter!],
                 ),
-                // if (account != null && model.newBalanceFormIsVisible) ...[
-                //   verticalSpaceRegular,
-                //   Card(
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius:
-                //           BorderRadius.circular(5), // if you need this
-                //       side: BorderSide(
-                //         color: customTheme.customLightGrey!,
-                //         width: 1.5,
-                //       ),
-                //     ),
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(10),
-                //       child: Column(
-                //         children: [
-                //           Row(children: [
-                //             const Expanded(child: Text("New Balance")),
-                //             IconButton(
-                //               icon: const Icon(Icons.close_rounded),
-                //               iconSize: 20,
-                //               onPressed: () =>
-                //                   model.setNewBalanceFormVisibility(false),
-                //             ),
-                //             IconButton(
-                //               icon: const Icon(Icons.check_rounded),
-                //               iconSize: 20,
-                //               onPressed: () {},
-                //             ),
-                //           ]),
-                //           TextField(
-                //             key: const ValueKey(NewBalanceValueKey),
-                //             controller: newBalanceController,
-                //             keyboardType: TextInputType.number,
-                //             inputFormatters: [model.currencyInputFormatter!],
-                //           ),
-                //           verticalSpaceSmall,
-                //           _buildRadioListTile(
-                //             title:
-                //                 'Record changes with a Transaction (diff amount)',
-                //             value: BalanceUpdateType.withRecord,
-                //             groupValue: model.balanceUpdateType,
-                //             onChanged: model.setBalanceUpdateType,
-                //             theme: customTheme,
-                //           ),
-                //           _buildRadioListTile(
-                //             title: 'Update balance without a Transaction',
-                //             value: BalanceUpdateType.withoutRecord,
-                //             groupValue: model.balanceUpdateType,
-                //             onChanged: model.setBalanceUpdateType,
-                //             theme: customTheme,
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                //   verticalSpaceTiny,
-                // ],
                 CustomColorPicker(
                   key: const ValueKey(ColorValueKey),
                   value: model.colorValue,
@@ -212,26 +145,6 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
       ),
     );
   }
-
-  // RadioListTile<BalanceUpdateType> _buildRadioListTile({
-  //   required String title,
-  //   required BalanceUpdateType value,
-  //   required BalanceUpdateType groupValue,
-  //   required CustomTheme theme,
-  //   required void Function(BalanceUpdateType?)? onChanged,
-  // }) {
-  //   return RadioListTile<BalanceUpdateType>(
-  //       title: Text(
-  //         title,
-  //         style: const TextStyle(
-  //           fontSize: 14,
-  //         ),
-  //       ),
-  //       value: value,
-  //       groupValue: groupValue,
-  //       onChanged: onChanged,
-  //       activeColor: theme.activeControlColor);
-  // }
 
   SwitchListTile _buildSwitchListTile({
     required String title,

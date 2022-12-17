@@ -4,9 +4,8 @@
 // StackedLocatorGenerator
 // **************************************************************************
 
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, depend_on_referenced_packages
 
-// ignore: depend_on_referenced_packages
 import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -23,6 +22,8 @@ Future<void> setupLocator(
 
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
+  locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => AccountService());
 }

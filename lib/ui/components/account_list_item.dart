@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
@@ -7,12 +8,14 @@ class AccountListItem extends StatelessWidget {
     Key? key,
     this.accountName,
     this.color,
+    this.currency,
     this.amount,
     required this.onPressed,
   }) : super(key: key);
 
   final String? accountName;
   final Color? color;
+  final String? currency;
   final String? amount;
   final void Function() onPressed;
 
@@ -30,7 +33,11 @@ class AccountListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ThemeText.listItemTitle(accountName ?? ''),
-          ThemeText.listItemSubTitle(amount ?? ''),
+          ThemeText.listItemSubTitle(
+            doubleToCurrencyFormatter(
+                currency: currency ?? "PHP",
+                value: double.parse(amount ?? '0')),
+          ),
         ],
       ),
       trailing: IconButton(

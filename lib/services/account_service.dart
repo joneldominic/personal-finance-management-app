@@ -1,3 +1,4 @@
+import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao_impl.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
@@ -11,6 +12,16 @@ class AccountService with ReactiveServiceMixin {
   Future<Account> createAccount(Account account) async {
     _logger.i('argument: $account');
     return _accountRepository.createAccount(account);
+  }
+
+  Future<Account> updateAccount(Account account) async {
+    _logger.i('argument: $account');
+    return _accountRepository.updateAccount(account);
+  }
+
+  Future<Id> deleteAccount(Id id) async {
+    _logger.i('argument: $id');
+    return _accountRepository.deleteAccount(id);
   }
 
   Future<List<Account>> getAccounts() async {

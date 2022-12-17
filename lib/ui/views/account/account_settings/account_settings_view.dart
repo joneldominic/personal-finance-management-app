@@ -25,7 +25,7 @@ class AccountSettingsView extends StatelessWidget {
         floatingActionButton: CustomFloatingActionButton(
           icon: const Icon(Icons.add_rounded),
           label: "Add Account",
-          onPressed: model.navigateToAccountDetail,
+          onPressed: () => model.navigateToAccountDetail(null),
         ),
         appBar: const CustomAppBar(
           title: Text("Account Settings"),
@@ -34,6 +34,7 @@ class AccountSettingsView extends StatelessWidget {
           color: customTheme.contrastBackgroundColor,
           child: !model.isBusy
               ? ListView.separated(
+                  // TODO: Add handling for empty list
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
                   physics: const BouncingScrollPhysics(),
                   itemCount: model.accounts.length,
@@ -43,9 +44,10 @@ class AccountSettingsView extends StatelessWidget {
                       color: Color(
                         int.parse(model.accounts[index].color!),
                       ),
+                      currency: model.accounts[index].currency,
                       amount: model.accounts[index].balance.toString(),
                       onPressed: () =>
-                          model.navigateToAccountDetail(isAddAccount: false),
+                          model.navigateToAccountDetail(model.accounts[index]),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) =>

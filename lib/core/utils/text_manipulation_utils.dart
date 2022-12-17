@@ -35,14 +35,14 @@ TextEditingValue textManipulation(
   /// count number of original input character in new string
   int inputCount = 0;
 
-  bool _isUserInput(String s) {
+  bool isUserInput(String s) {
     if (textInputFormatter == null) return originalUserInput.contains(s);
     return newValue.text.contains(s);
   }
 
   for (int i = 0; i < newText.length && inputCount < selectionIndex; i++) {
     final character = newText[i];
-    if (_isUserInput(character)) {
+    if (isUserInput(character)) {
       inputCount++;
     } else {
       insertCount++;
@@ -58,7 +58,7 @@ TextEditingValue textManipulation(
   /// characters when cursor stands right after inserted characters
   if (selectionIndex - 1 >= 0 &&
       selectionIndex - 1 < newText.length &&
-      !_isUserInput(newText[selectionIndex - 1])) {
+      !isUserInput(newText[selectionIndex - 1])) {
     selectionIndex--;
   }
   // print('inputCount: $inputCount');
@@ -74,7 +74,7 @@ TextEditingValue textManipulationV2(
   TextEditingValue oldValue,
   TextEditingValue newValue, {
   TextInputFormatter? textInputFormatter,
-  String formatPattern(String filteredString)?,
+  String Function(String filteredString)? formatPattern,
 }) {
   /// remove all invalid characters
   newValue = textInputFormatter != null

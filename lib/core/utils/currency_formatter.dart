@@ -63,6 +63,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
         if (allowNegative) {
           // filter negative sign in the middle
           // this will also remove redundant negative signs
+          // ignore: prefer_is_empty
           if ('-'.allMatches(filteredString).length >= 1) {
             filteredString = (filteredString.startsWith('-') ? '-' : '') +
                 filteredString.replaceAll('-', '');

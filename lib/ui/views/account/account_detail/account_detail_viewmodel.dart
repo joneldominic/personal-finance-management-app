@@ -134,13 +134,21 @@ class AccountDetailViewModel extends FormViewModel {
   }
 
   void deleteAccount(Account account) async {
-    // TODO: Add confirmation dialog
+    final response = await _dialogService.showCustomDialog(
+        variant: DialogType.deleteConfirmation, data: account.name);
+
+    if (response == null || !response.confirmed) {
+      _logger.w("Delete Account Cancelled");
+      return;
+    }
 
     final deletedId = await _accountService.deleteAccount(account.id);
+    // TODO: Delete related transactions as well
 
     if (deletedId == -1) {
       _logger.e("Account Deletion Failed!");
       // TODO: Handle failure (Toast/Snackbar)
+      return;
     }
 
     _logger.i('Navigation Pop: 1');

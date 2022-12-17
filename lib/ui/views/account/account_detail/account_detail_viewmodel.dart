@@ -43,14 +43,19 @@ class AccountDetailViewModel extends FormViewModel {
     _accountNameController = accountNameController;
     _balanceController = balanceController;
 
-    setColor(account?.color ?? '0xFF00B0FF');
+    accountNameController.text = account?.name ?? '';
+
     setCurrency(account?.currency ?? 'PHP');
+
     currencyInputFormatter =
         CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
-    accountNameController.text = account?.name ?? '';
     balanceController.text =
         currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
+
+    setColor(account?.color ?? '0xFF00B0FF');
+
     isExcludeFromAnalysis = account?.isExcludedFromAnalysis ?? false;
+
     isArchivedAccount = account?.isArchived ?? false;
   }
 

@@ -35,10 +35,9 @@ class AccountDetailViewModel extends FormViewModel {
     required Account? account,
     required TextEditingController accountNameController,
     required TextEditingController balanceController,
-    required TextEditingController newBalanceController,
   }) {
     _logger.i(
-      'argument: {accountNameController: $account, $accountNameController, balanceController: $balanceController, newBalanceController: $newBalanceController}',
+      'argument: {accountNameController: $account, $accountNameController, balanceController: $balanceController}',
     );
 
     _accountNameController = accountNameController;

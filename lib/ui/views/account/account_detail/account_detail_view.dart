@@ -23,7 +23,6 @@ import 'package:stacked/stacked_annotations.dart';
     items: currencyStaticDropdownItems,
   ),
   FormTextField(initialValue: '', name: 'balance'),
-  FormTextField(initialValue: '', name: 'newBalance'),
   FormDropdownField(
     name: 'color',
     items: colorStaticDropdownItems,
@@ -54,7 +53,6 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
           account: account,
           accountNameController: accountNameController,
           balanceController: balanceController,
-          newBalanceController: newBalanceController,
         );
       },
       onDispose: (_) => disposeForm(),

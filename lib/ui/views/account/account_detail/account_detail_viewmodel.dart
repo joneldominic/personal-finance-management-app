@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/balance_update_type.dart';
 import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
+import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
@@ -19,6 +20,7 @@ class AccountDetailViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
   final _dialogService = locator<DialogService>();
+  final _snackbarService = locator<SnackbarService>();
 
   TextEditingController? _accountNameController;
   TextEditingController? _balanceController;
@@ -147,12 +149,21 @@ class AccountDetailViewModel extends FormViewModel {
 
     if (deletedId == -1) {
       _logger.e("Account Deletion Failed!");
-      // TODO: Handle failure (Toast/Snackbar)
+      handleShowSnackbar(message: "Can't delete account. Please try again.");
       return;
     }
 
     _logger.i('Navigation Pop: 1');
     _navigationService.popRepeated(1);
+  }
+
+  void handleShowSnackbar({required String message}) {
+    _snackbarService.showCustomSnackBar(
+      variant: SnackbarType.main,
+      message: message,
+      duration: const Duration(seconds: 2),
+      onTap: () {},
+    );
   }
 
   @override

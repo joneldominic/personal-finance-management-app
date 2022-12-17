@@ -23,6 +23,7 @@ Future<void> setupLocator(
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => AccountService());
 }

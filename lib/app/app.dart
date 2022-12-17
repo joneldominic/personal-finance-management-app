@@ -19,6 +19,7 @@ import 'package:stacked_services/stacked_services.dart';
 ], dependencies: [
   LazySingleton(classType: NavigationService),
   LazySingleton(classType: DialogService),
+  LazySingleton(classType: SnackbarService),
   LazySingleton(classType: ThemeService),
   LazySingleton(classType: AccountService),
 ], logger: StackedLogger())

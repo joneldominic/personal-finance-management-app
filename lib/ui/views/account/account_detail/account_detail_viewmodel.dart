@@ -44,7 +44,7 @@ class AccountDetailViewModel extends FormViewModel {
     _accountNameController = accountNameController;
     _balanceController = balanceController;
 
-    setColor(account?.color ?? '0xFFFF4081');
+    setColor(account?.color ?? '0xFF00B0FF');
     setCurrency(account?.currency ?? 'PHP');
     currencyInputFormatter =
         CurrencyInputFormatter(symbol: account?.currency ?? "PHP");

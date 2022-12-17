@@ -1,1 +1,1 @@
-enum DialogType { balanceUpdateConfirmation }
+enum DialogType { balanceUpdateConfirmation, deleteConfirmation }

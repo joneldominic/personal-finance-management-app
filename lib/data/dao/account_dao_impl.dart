@@ -10,8 +10,8 @@ class AccountDaoImpl extends AccountDao {
   Future<Account> createAccount(Account account) async {
     Isar isar = await _db;
 
+    final accountCollection = isar.accounts;
     final createdAccount = await isar.writeTxn(() async {
-      final accountCollection = isar.accounts;
       final id = await accountCollection.put(account);
       return await accountCollection.get(id);
     });
@@ -29,8 +29,8 @@ class AccountDaoImpl extends AccountDao {
   Future<List<Account>> getAccounts() async {
     Isar isar = await _db;
 
+    final accountCollection = isar.accounts;
     final createdAccount = await isar.writeTxn(() async {
-      final accountCollection = isar.accounts;
       return await accountCollection.where().findAll();
     });
 
@@ -41,8 +41,8 @@ class AccountDaoImpl extends AccountDao {
   Future<Account> updateAccount(Account account) async {
     Isar isar = await _db;
 
+    final accountCollection = isar.accounts;
     final updatedAccount = await isar.writeTxn(() async {
-      final accountCollection = isar.accounts;
       await accountCollection.put(account);
       return account;
     });
@@ -54,8 +54,8 @@ class AccountDaoImpl extends AccountDao {
   Future<Id> deleteAccount(Id id) async {
     Isar isar = await _db;
 
+    final accountCollection = isar.accounts;
     final isDeleted = await isar.writeTxn(() async {
-      final accountCollection = isar.accounts;
       return await accountCollection.delete(id);
     });
 
@@ -65,7 +65,9 @@ class AccountDaoImpl extends AccountDao {
   @override
   Stream<List<Account>> accountCollectionStream() async* {
     Isar isar = await _db;
-    Query<Account> accountsQuery = isar.accounts.where().build();
+
+    final accountCollection = isar.accounts;
+    Query<Account> accountsQuery = accountCollection.where().build();
 
     yield* accountsQuery.watch(fireImmediately: true);
   }

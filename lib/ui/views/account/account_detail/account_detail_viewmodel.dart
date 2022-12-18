@@ -41,14 +41,13 @@ class AccountDetailViewModel extends FormViewModel {
     );
 
     _accountNameController = accountNameController;
-    _balanceController = balanceController;
-
     accountNameController.text = account?.name ?? '';
 
     setCurrency(account?.currency ?? 'PHP');
 
     currencyInputFormatter =
         CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
+    _balanceController = balanceController;
     balanceController.text =
         currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
 

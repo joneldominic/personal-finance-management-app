@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/extensions/list_extension.dart';
+import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,11 +17,19 @@ import 'package:stacked_services/stacked_services.dart';
 class TransactionDetailViewModel extends FormViewModel {
   final _logger = getLogger('TransactionDetailViewModel');
   final _navigationService = locator<NavigationService>();
+  final _accountService = locator<AccountService>();
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
-  final List<String> dummyAccounts = ['Cash', 'GCash', 'BPI'];
+  CurrencyInputFormatter currencyInputFormatter =
+      CurrencyInputFormatter(symbol: "PHP");
+  TextEditingController? _amountController;
+  TextEditingController? _notesController;
+
+  String get emptyAccountErrorMessage =>
+      "No account available. Please create one";
+
   final List<String> dummyCategory = [
     'Foods',
     'Shopping',
@@ -25,18 +37,48 @@ class TransactionDetailViewModel extends FormViewModel {
     'House Bills'
   ];
 
-  void initForm() {
-    _logger.i('argument: NONE');
+  List<Account> accounts = [];
+
+  void initForm({
+    required TextEditingController amountController,
+    required TextEditingController notesController,
+  }) async {
+    _logger.i(
+      'argument: {amountController: $amountController, notesController: $notesController',
+    );
+
+    await initData();
+
+    setAccountId(accounts.isNotEmpty ? accounts[0].id.toString() : "");
+
+    setTransactionType('expense');
+
+    currencyInputFormatter = CurrencyInputFormatter(
+      symbol: accounts.isNotEmpty ? accounts[0].currency! : "PHP",
+    );
+    _amountController = amountController;
+    amountController.text = currencyInputFormatter.reformat('0');
+
+    setCategory(dummyCategory[0]); // TODO: Implement category data
 
     initDateTimeFields();
 
-    setAccountName(dummyAccounts[0]);
-    setCategory(dummyCategory[0]);
+    _notesController = notesController;
+    notesController.text = ''; // TODO: handle update mode
+  }
+
+  Future<void> initData() async {
+    _logger.i('argument: NONE');
+    accounts = await _accountService.getAccounts();
+    _logger.i('accounts: ${accounts.itemsToString()}');
+
+    // TODO: Add all data fetching here
   }
 
   void initDateTimeFields() {
     _logger.i('argument: NONE');
 
+    // TODO: Handle date time on edit
     final DateTime now = DateTime.now();
     final String date = DateFormat('MMM dd, yyyy').format(now);
     final String time = DateFormat('hh:mm a').format(now);
@@ -48,6 +90,16 @@ class TransactionDetailViewModel extends FormViewModel {
   void popCurrentView() {
     _logger.i('argument: NONE | Navigation Pop: 1');
     _navigationService.popRepeated(1);
+  }
+
+  void handleAccountChange(String accountId) {
+    Account account = accounts.firstWhere(
+      (acc) => acc.id == int.parse(accountId),
+    );
+    setAccountId(account.id.toString());
+    currencyInputFormatter = CurrencyInputFormatter(symbol: account.currency!);
+    _amountController!.text =
+        currencyInputFormatter.reformat(_amountController!.text);
   }
 
   void setTransactionDate(BuildContext context) async {
@@ -80,6 +132,31 @@ class TransactionDetailViewModel extends FormViewModel {
           now.month, now.day, selectedTime.hour, selectedTime.minute));
       timeController.text = time;
     }
+  }
+
+  void saveTransaction() {
+    _logger.i('argument: NONE');
+
+    // TODO: Handle error message if not valid
+
+    _logger.e("accountIdValue: $accountIdValue");
+    _logger.e("transactionTypeValue: $transactionTypeValue");
+    _logger.e("amount: ${double.parse(
+      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
+    )}");
+    _logger.e("category: $categoryValue");
+    _logger.e("date: ${dateController.text}");
+    _logger.e("time: ${timeController.text}");
+    _logger.e("notes: ${_notesController!.text}");
+
+    DateTime tmpDate = DateFormat("MMM dd, yyyy - hh:mm a")
+        .parse("${dateController.text} - ${timeController.text}");
+    String tmpD = DateFormat('MMM dd, yyyy').format(tmpDate);
+    String tmpT = DateFormat('hh:mm a').format(tmpDate);
+
+    _logger.e("parsed date: $tmpDate");
+    _logger.e("tmpDate: $tmpD");
+    _logger.e("tmpTime: $tmpT");
   }
 
   @override

@@ -53,7 +53,10 @@ class TransactionDetailView extends StatelessWidget
       viewModelBuilder: () => TransactionDetailViewModel(),
       onModelReady: (model) {
         listenToFormUpdated(model);
-        model.initForm();
+        model.initForm(
+          amountController: amountController,
+          notesController: notesController,
+        );
       },
       onDispose: (_) => disposeForm(),
       builder: (context, model, child) => Scaffold(
@@ -65,9 +68,9 @@ class TransactionDetailView extends StatelessWidget
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.save_rounded),
+              icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: () {},
+              onPressed: () => model.saveTransaction(),
             ),
           ],
         ),
@@ -79,25 +82,29 @@ class TransactionDetailView extends StatelessWidget
             child: Column(
               children: [
                 DropdownButtonFormField(
-                  key: const ValueKey(AccountNameValueKey),
-                  value: model.accountNameValue,
-                  decoration: const InputDecoration(
-                    label: Text("Account Name"),
+                  key: const ValueKey(AccountIdValueKey),
+                  value: model.accountIdValue,
+                  decoration: InputDecoration(
+                    label: const Text("Account Name"),
+                    errorText: model.accounts.isEmpty
+                        ? model.emptyAccountErrorMessage
+                        : null,
                   ),
-                  items: model.dummyAccounts
+                  items: model.accounts
                       .map(
-                        (value) => DropdownMenuItem<String>(
-                          key: ValueKey('$value key'),
-                          value: value,
-                          child: Text(value),
+                        (account) => DropdownMenuItem<String>(
+                          key: ValueKey('${account.id} key'),
+                          value: account.id.toString(),
+                          child: Text(account.name ?? ""),
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) {},
+                  onChanged: (String? value) =>
+                      model.handleAccountChange(value!),
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(TransactionTypeValueKey),
-                  // value: model.currencyValue,
+                  value: model.transactionTypeValue,
                   decoration: const InputDecoration(
                     label: Text("Transaction Type"),
                   ),
@@ -110,14 +117,15 @@ class TransactionDetailView extends StatelessWidget
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) {},
+                  onChanged: (String? value) =>
+                      model.setTransactionType(value!),
                 ),
                 TextField(
                   key: const ValueKey(AmountValueKey),
                   decoration: const InputDecoration(labelText: "Amount"),
                   controller: amountController,
-                  keyboardType: TextInputType
-                      .number, // TODO: Improve filter (don't allow multiple period); Improve formatting with comma
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [model.currencyInputFormatter],
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(CategoryValueKey),
@@ -134,16 +142,17 @@ class TransactionDetailView extends StatelessWidget
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) {},
+                  onChanged: (String? value) => model.setCategory(value!),
                 ),
                 TextField(
                   readOnly: true,
                   key: const ValueKey("date"),
                   controller: model.dateController,
+                  onTap: () => model.setTransactionDate(context),
                   decoration: InputDecoration(
                     labelText: 'Date',
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.edit_rounded),
+                      icon: const Icon(Icons.arrow_drop_down_sharp),
                       iconSize: 20,
                       color: customTheme.actionButtonColor,
                       onPressed: () => model.setTransactionDate(context),
@@ -154,10 +163,11 @@ class TransactionDetailView extends StatelessWidget
                   readOnly: true,
                   key: const ValueKey("time"),
                   controller: model.timeController,
+                  onTap: () => model.setTransactionTime(context),
                   decoration: InputDecoration(
                     labelText: 'Time',
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.edit_rounded),
+                      icon: const Icon(Icons.arrow_drop_down_sharp),
                       iconSize: 20,
                       color: customTheme.actionButtonColor,
                       onPressed: () => model.setTransactionTime(context),
@@ -172,6 +182,7 @@ class TransactionDetailView extends StatelessWidget
                   minLines: 3,
                   maxLines: 5,
                 ),
+                // TODO: Move delete into AppBar action button
                 if (!isAddTransaction) ...[
                   verticalSpaceRegular,
                   DeleteButton(

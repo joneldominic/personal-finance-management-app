@@ -4,13 +4,14 @@
 // StackedLocatorGenerator
 // **************************************************************************
 
-// ignore_for_file: public_member_api_docs, depend_on_referenced_packages
+// ignore_for_file: public_member_api_docs
 
 import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../services/account_service.dart';
 import '../services/theme_service.dart';
+import '../services/transaction_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -26,4 +27,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => AccountService());
+  locator.registerLazySingleton(() => TransactionService());
 }

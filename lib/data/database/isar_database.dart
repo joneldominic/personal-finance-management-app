@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 
 class IsarDatabase {
@@ -26,7 +27,7 @@ class IsarDatabase {
     final appDocumentDir = await getApplicationDocumentsDirectory();
 
     final isar = await Isar.open(
-      [AccountSchema],
+      [AccountSchema, TransactionSchema],
       directory: appDocumentDir.path,
       inspector: true,
       name: "pfmapp_db",

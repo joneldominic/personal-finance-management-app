@@ -5,6 +5,7 @@ import 'package:personal_finance_management_app/data/models/account/account.dart
 
 class AccountDaoImpl extends AccountDao {
   Future<Isar> get _db async => await IsarDatabase.instance.database;
+  // TODO: Add logger
 
   @override
   Future<Account> createAccount(Account account) async {

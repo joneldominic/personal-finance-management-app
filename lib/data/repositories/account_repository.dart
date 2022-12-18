@@ -4,6 +4,7 @@ import 'package:personal_finance_management_app/data/models/account/account.dart
 
 class AccountRepository {
   final AccountDao accountDao;
+  // TODO: Add logger
 
   AccountRepository({required this.accountDao});
 

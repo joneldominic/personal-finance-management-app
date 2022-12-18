@@ -18,3 +18,6 @@ samples, guidance on mobile development, and a full API reference.
 ## Frequently used commands
 - Running Build Runner -
 `flutter pub run build_runner build --delete-conflicting-outputs`
+
+## Note for Isar
+- Don't forget to add schema into IsarDatabase

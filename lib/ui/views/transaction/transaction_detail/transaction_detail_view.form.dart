@@ -9,13 +9,13 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-const String AccountNameValueKey = 'accountName';
+const String AccountIdValueKey = 'accountId';
 const String TransactionTypeValueKey = 'transactionType';
 const String AmountValueKey = 'amount';
 const String CategoryValueKey = 'category';
 const String NotesValueKey = 'notes';
 
-final Map<String, String> AccountNameValueToTitleMap = {};
+final Map<String, String> AccountIdValueToTitleMap = {};
 final Map<String, String> TransactionTypeValueToTitleMap = {
   'income': 'Income',
   'expense': 'Expense',
@@ -123,23 +123,22 @@ mixin $TransactionDetailView on StatelessWidget {
 extension ValueProperties on FormViewModel {
   bool get isFormValid =>
       this.fieldsValidationMessages.values.every((element) => element == null);
-  String? get accountNameValue =>
-      this.formValueMap[AccountNameValueKey] as String?;
+  String? get accountIdValue => this.formValueMap[AccountIdValueKey] as String?;
   String? get transactionTypeValue =>
       this.formValueMap[TransactionTypeValueKey] as String?;
   String? get amountValue => this.formValueMap[AmountValueKey] as String?;
   String? get categoryValue => this.formValueMap[CategoryValueKey] as String?;
   String? get notesValue => this.formValueMap[NotesValueKey] as String?;
 
-  bool get hasAccountName => this.formValueMap.containsKey(AccountNameValueKey);
+  bool get hasAccountId => this.formValueMap.containsKey(AccountIdValueKey);
   bool get hasTransactionType =>
       this.formValueMap.containsKey(TransactionTypeValueKey);
   bool get hasAmount => this.formValueMap.containsKey(AmountValueKey);
   bool get hasCategory => this.formValueMap.containsKey(CategoryValueKey);
   bool get hasNotes => this.formValueMap.containsKey(NotesValueKey);
 
-  bool get hasAccountNameValidationMessage =>
-      this.fieldsValidationMessages[AccountNameValueKey]?.isNotEmpty ?? false;
+  bool get hasAccountIdValidationMessage =>
+      this.fieldsValidationMessages[AccountIdValueKey]?.isNotEmpty ?? false;
   bool get hasTransactionTypeValidationMessage =>
       this.fieldsValidationMessages[TransactionTypeValueKey]?.isNotEmpty ??
       false;
@@ -150,8 +149,8 @@ extension ValueProperties on FormViewModel {
   bool get hasNotesValidationMessage =>
       this.fieldsValidationMessages[NotesValueKey]?.isNotEmpty ?? false;
 
-  String? get accountNameValidationMessage =>
-      this.fieldsValidationMessages[AccountNameValueKey];
+  String? get accountIdValidationMessage =>
+      this.fieldsValidationMessages[AccountIdValueKey];
   String? get transactionTypeValidationMessage =>
       this.fieldsValidationMessages[TransactionTypeValueKey];
   String? get amountValidationMessage =>
@@ -163,8 +162,8 @@ extension ValueProperties on FormViewModel {
 }
 
 extension Methods on FormViewModel {
-  void setAccountName(String accountName) {
-    this.setData(this.formValueMap..addAll({AccountNameValueKey: accountName}));
+  void setAccountId(String accountId) {
+    this.setData(this.formValueMap..addAll({AccountIdValueKey: accountId}));
   }
 
   void setTransactionType(String transactionType) {
@@ -176,8 +175,8 @@ extension Methods on FormViewModel {
     this.setData(this.formValueMap..addAll({CategoryValueKey: category}));
   }
 
-  setAccountNameValidationMessage(String? validationMessage) =>
-      this.fieldsValidationMessages[AccountNameValueKey] = validationMessage;
+  setAccountIdValidationMessage(String? validationMessage) =>
+      this.fieldsValidationMessages[AccountIdValueKey] = validationMessage;
   setTransactionTypeValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[TransactionTypeValueKey] =
           validationMessage;

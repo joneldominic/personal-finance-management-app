@@ -17,7 +17,7 @@ import 'package:stacked/stacked_annotations.dart';
 
 @FormView(fields: [
   FormDropdownField(
-    name: 'accountName',
+    name: 'accountId',
     items: [],
   ),
   FormDropdownField(

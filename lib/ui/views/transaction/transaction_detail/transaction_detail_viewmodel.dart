@@ -4,8 +4,10 @@ import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/extensions/list_extension.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
+import 'package:personal_finance_management_app/services/transaction_service.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -18,6 +20,7 @@ class TransactionDetailViewModel extends FormViewModel {
   final _logger = getLogger('TransactionDetailViewModel');
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
+  final _transactionService = locator<TransactionService>();
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
@@ -157,6 +160,24 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.e("parsed date: $tmpDate");
     _logger.e("tmpDate: $tmpD");
     _logger.e("tmpTime: $tmpT");
+
+    final amount = double.parse(
+      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
+    );
+
+    final date = DateFormat("MMM dd, yyyy - hh:mm a")
+        .parse("${dateController.text} - ${timeController.text}");
+
+    final newTransaction = Transaction(
+      accountId: int.parse(accountIdValue!),
+      transactionType: transactionTypeValue,
+      amount: amount,
+      category: categoryValue,
+      date: date,
+      notes: _notesController!.text,
+    );
+
+    _transactionService.createTransaction(newTransaction);
   }
 
   @override

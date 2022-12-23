@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
@@ -21,6 +22,7 @@ class TransactionDetailViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
   final _transactionService = locator<TransactionService>();
+  final _snackbarService = locator<SnackbarService>();
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
@@ -105,6 +107,25 @@ class TransactionDetailViewModel extends FormViewModel {
         currencyInputFormatter.reformat(_amountController!.text);
   }
 
+  void handleTransactionTypeChange(String transactionType) {
+    setTransactionType(transactionType);
+
+    double amount = double.parse(
+      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
+    );
+
+    if (transactionType == "expense") {
+      amount = amount.abs() * -1;
+    } else if (transactionType == "income") {
+      amount = amount.abs();
+    }
+
+    _amountController!.text =
+        currencyInputFormatter.reformat(amount.toString());
+
+    // TODO: Show Transfer distination if type is transfer
+  }
+
   void setTransactionDate(BuildContext context) async {
     _logger.i('argument: $context');
 
@@ -140,7 +161,14 @@ class TransactionDetailViewModel extends FormViewModel {
   void saveTransaction() {
     _logger.i('argument: NONE');
 
-    // TODO: Handle error message if not valid
+    final amount = double.parse(
+      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
+    );
+
+    if (amount == 0) {
+      handleShowSnackbar(message: "Please enter an amount not equal to zero");
+      return;
+    }
 
     _logger.e("accountIdValue: $accountIdValue");
     _logger.e("transactionTypeValue: $transactionTypeValue");
@@ -161,12 +189,12 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.e("tmpDate: $tmpD");
     _logger.e("tmpTime: $tmpT");
 
-    final amount = double.parse(
-      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
-    );
-
     final date = DateFormat("MMM dd, yyyy - hh:mm a")
         .parse("${dateController.text} - ${timeController.text}");
+
+    // TODO: Pop view on save
+
+    // TODO: Handle if 0 -> show snackbar
 
     final newTransaction = Transaction(
       accountId: int.parse(accountIdValue!),
@@ -178,6 +206,19 @@ class TransactionDetailViewModel extends FormViewModel {
     );
 
     _transactionService.createTransaction(newTransaction);
+    // TODO: Adjust balance as well
+
+    _logger.i('Navigation Pop: 1');
+    _navigationService.popRepeated(1);
+  }
+
+  void handleShowSnackbar({required String message}) {
+    _snackbarService.showCustomSnackBar(
+      variant: SnackbarType.main,
+      message: message,
+      duration: const Duration(seconds: 2),
+      onTap: () {},
+    );
   }
 
   @override

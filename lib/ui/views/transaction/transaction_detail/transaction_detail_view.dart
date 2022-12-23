@@ -118,7 +118,7 @@ class TransactionDetailView extends StatelessWidget
                       )
                       .toList(),
                   onChanged: (String? value) =>
-                      model.setTransactionType(value!),
+                      model.handleTransactionTypeChange(value!),
                 ),
                 TextField(
                   key: const ValueKey(AmountValueKey),

@@ -21,6 +21,7 @@ class CategoryDetailViewModel extends FormViewModel {
   final _snackbarService = locator<SnackbarService>();
 
   Category? _category;
+  
   TextEditingController? _categoryNameController;
   bool categoryIsVisible = true;
 

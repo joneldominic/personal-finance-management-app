@@ -22,6 +22,8 @@ class AccountDetailViewModel extends FormViewModel {
   final _dialogService = locator<DialogService>();
   final _snackbarService = locator<SnackbarService>();
 
+  Account? _account;
+
   TextEditingController? _accountNameController;
   TextEditingController? _balanceController;
 
@@ -39,6 +41,8 @@ class AccountDetailViewModel extends FormViewModel {
     _logger.i(
       'argument: {accountNameController: $account, $accountNameController, balanceController: $balanceController}',
     );
+
+    _account = account;
 
     _accountNameController = accountNameController;
     accountNameController.text = account?.name ?? '';
@@ -58,11 +62,6 @@ class AccountDetailViewModel extends FormViewModel {
     isArchivedAccount = account?.isArchived ?? false;
   }
 
-  void popCurrentView() {
-    _logger.i('argument: NONE | Navigation Pop: 1');
-    _navigationService.popRepeated(1);
-  }
-
   void setIsExcludeFromAnalysis(bool isExcluded) {
     _logger.i('argument: $isExcluded');
     isExcludeFromAnalysis = isExcluded;
@@ -76,14 +75,15 @@ class AccountDetailViewModel extends FormViewModel {
   }
 
   void setAccountCurrency(String currency) {
+    _logger.i('argument: $currency');
     setCurrency(currency);
     currencyInputFormatter = CurrencyInputFormatter(symbol: currency);
     _balanceController!.text =
         currencyInputFormatter!.reformat(_balanceController!.text);
   }
 
-  void saveAccount(Account? account) async {
-    _logger.i('argument: $account');
+  void handleSaveAccount() async {
+    _logger.i('argument: NONE');
 
     if (_accountNameController!.text.trim().isEmpty) {
       _logger.w("Account name cannot be empty");
@@ -97,11 +97,11 @@ class AccountDetailViewModel extends FormViewModel {
       _balanceController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
     );
 
-    if (account != null && account.balance != balance) {
+    if (_account != null && _account!.balance != balance) {
       _logger.i("Showing BalanceConfirmationDialog");
       final balanceDiff = doubleToCurrencyFormatter(
-        currency: account.currency ?? "PHP",
-        value: (account.balance! - balance) * -1,
+        currency: _account!.currency ?? "PHP",
+        value: (_account!.balance! - balance) * -1,
       );
       final response = await _dialogService.showCustomDialog(
           variant: DialogType.balanceUpdateConfirmation, data: balanceDiff);
@@ -128,8 +128,8 @@ class AccountDetailViewModel extends FormViewModel {
       isArchived: isArchivedAccount,
     );
 
-    if (account != null) {
-      newAccount.id = account.id;
+    if (_account != null) {
+      newAccount.id = _account!.id;
       final updatedAccount = await _accountService.updateAccount(newAccount);
       _logger.i('Account Updated Successfully: $updatedAccount');
     } else {
@@ -137,20 +137,20 @@ class AccountDetailViewModel extends FormViewModel {
       _logger.i('Account Saved Successfully: $addedAccount');
     }
 
-    _logger.i('Navigation Pop: 1');
-    _navigationService.popRepeated(1);
+    popCurrentView();
   }
 
-  void deleteAccount(Account account) async {
+  void handleDeleteAccount() async {
+    _logger.i('argument: NONE');
     final response = await _dialogService.showCustomDialog(
-        variant: DialogType.deleteConfirmation, data: account.name);
+        variant: DialogType.deleteConfirmation, data: _account!.name);
 
     if (response == null || !response.confirmed) {
       _logger.w("Delete Account Cancelled");
       return;
     }
 
-    final deletedId = await _accountService.deleteAccount(account.id);
+    final deletedId = await _accountService.deleteAccount(_account!.id);
     // TODO: Delete related transactions as well
 
     if (deletedId == -1) {
@@ -159,11 +159,16 @@ class AccountDetailViewModel extends FormViewModel {
       return;
     }
 
-    _logger.i('Navigation Pop: 1');
+    popCurrentView();
+  }
+
+  void popCurrentView() {
+    _logger.i('argument: NONE | Navigation Pop: 1');
     _navigationService.popRepeated(1);
   }
 
   void handleShowSnackbar({required String message}) {
+    _logger.i('argument: {message: $message}');
     _snackbarService.showCustomSnackBar(
       variant: SnackbarType.main,
       message: message,

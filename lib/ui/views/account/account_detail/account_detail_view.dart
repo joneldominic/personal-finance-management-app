@@ -40,10 +40,11 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    final appBarTitle = account == null ? "New Account" : "Edit Account";
+    final isAddAccount = account == null;
+    final appBarTitle = isAddAccount ? "New Account" : "Edit Account";
     final actionButtonTooltip =
-        account == null ? "Save New Account" : "Save Changes";
-    final balanceFieldLabel = account == null ? "Initial Balance" : "Balance";
+        isAddAccount ? "Save New Account" : "Save Changes";
+    final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
 
     return ViewModelBuilder<AccountDetailViewModel>.reactive(
       viewModelBuilder: () => AccountDetailViewModel(),
@@ -68,13 +69,13 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
               IconButton(
                 icon: const Icon(Icons.delete_rounded),
                 tooltip: actionButtonTooltip,
-                onPressed: () => model.deleteAccount(account!),
+                onPressed: () => model.handleDeleteAccount(),
               ),
             ],
             IconButton(
               icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: () => model.saveAccount(account),
+              onPressed: () => model.handleSaveAccount(),
             ),
           ],
         ),
@@ -97,6 +98,9 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(CurrencyValueKey),
+                  decoration: const InputDecoration(
+                    labelText: 'Currency',
+                  ),
                   value: model.currencyValue,
                   items: CurrencyValueToTitleMap.keys
                       .map(

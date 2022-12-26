@@ -29,15 +29,15 @@ class MainView extends StatelessWidget {
       viewModelBuilder: () => MainViewModel(),
       onModelReady: (model) => model.setIndex(defaultViewIndex),
       builder: (context, model, child) {
-        final bool showFloatingActionButton = model.currentIndex != 2;
         return Scaffold(
-          floatingActionButton: showFloatingActionButton
-              ? CustomFloatingActionButton(
-                  icon: const Icon(Icons.add_rounded),
-                  label: "Add Transaction",
-                  onPressed: model.navigateToTransactionDetail,
-                )
-              : null,
+          floatingActionButton: Visibility(
+            visible: model.currentIndex != 2,
+            child: CustomFloatingActionButton(
+              icon: const Icon(Icons.add_rounded),
+              label: "Add Transaction",
+              onPressed: model.navigateToTransactionDetail,
+            ),
+          ),
           appBar: _getAppBarForIndex(model.currentIndex),
           body: _getViewForIndex(model.currentIndex),
           bottomNavigationBar: BottomNavigationBar(

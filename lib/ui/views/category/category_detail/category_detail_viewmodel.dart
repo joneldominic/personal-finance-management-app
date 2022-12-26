@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
+import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/services/category_service.dart';
@@ -19,6 +20,7 @@ class CategoryDetailViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _categoryService = locator<CategoryService>();
   final _snackbarService = locator<SnackbarService>();
+  final _dialogService = locator<DialogService>();
 
   Category? _category;
 
@@ -82,6 +84,33 @@ class CategoryDetailViewModel extends FormViewModel {
     } else {
       final addedCategory = await _categoryService.createCategory(newCategory);
       _logger.i('Category Saved Successfully: $addedCategory');
+    }
+
+    popCurrentView();
+  }
+
+  void handleDeleteCategory() async {
+    _logger.i('argument: NONE');
+
+    final response = await _dialogService.showCustomDialog(
+      variant: DialogType.deleteConfirmation,
+      data:
+          "Do you really want to delete category ${_category!.name}? All transactions under this category will be categorized as Undefined.",
+    );
+
+    if (response == null || !response.confirmed) {
+      _logger.w("Delete Category Cancelled");
+      return;
+    }
+
+    final deletedId = await _categoryService.deleteCategory(_category!.id);
+    // TODO: Handle transactions that uses the deleted category
+    // Option1: Add a default category: Undefined (Undeleteable)
+
+    if (deletedId == -1) {
+      _logger.e("Category Deletion Failed!");
+      handleShowSnackbar(message: "Can't delete category. Please try again.");
+      return;
     }
 
     popCurrentView();

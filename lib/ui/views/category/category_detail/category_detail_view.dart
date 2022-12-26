@@ -4,7 +4,6 @@ import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
-import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_viewmodel.dart';
@@ -34,7 +33,6 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
     this.category,
   }) : super(key: key);
 
-  // TODO: Maybe we can use category null check instead of flag
   final Category? category;
 
   @override
@@ -68,7 +66,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
               IconButton(
                 icon: const Icon(Icons.delete_rounded),
                 tooltip: actionButtonTooltip,
-                onPressed: () {},
+                onPressed: () => model.handleDeleteCategory(),
               ),
             ],
             IconButton(

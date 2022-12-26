@@ -25,9 +25,17 @@ class CategoryDaoImpl extends CategoryDao {
   }
 
   @override
-  Future<Id> deleteCategory(Id id) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
+  Future<Id> deleteCategory(Id id) async {
+    _logger.i('argument: $id');
+
+    Isar isar = await _db;
+
+    final categoryCollection = isar.categorys;
+    final isDeleted = await isar.writeTxn(() async {
+      return await categoryCollection.delete(id);
+    });
+
+    return isDeleted ? id : -1;
   }
 
   @override

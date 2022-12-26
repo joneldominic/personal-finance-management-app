@@ -14,9 +14,9 @@ const String CategoryNatureValueKey = 'categoryNature';
 const String ColorValueKey = 'color';
 
 final Map<String, String> CategoryNatureValueToTitleMap = {
-  'None': 'None',
-  'Need': 'Need',
-  'Want': 'Want',
+  'none': 'None',
+  'need': 'Need',
+  'want': 'Want',
 };
 final Map<String, String> ColorValueToTitleMap = {
   '0xFFFF4081': '0xFFFF4081',

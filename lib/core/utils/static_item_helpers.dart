@@ -224,14 +224,14 @@ const List<StaticDropdownItem> transactionTypeStaticDropdownItems = [
 const List<StaticDropdownItem> categoryNatureStaticDropdownItems = [
   StaticDropdownItem(
     title: 'None',
-    value: 'None',
+    value: 'none',
   ),
   StaticDropdownItem(
     title: 'Need',
-    value: 'Need',
+    value: 'need',
   ),
   StaticDropdownItem(
     title: 'Want',
-    value: 'Want',
+    value: 'want',
   ),
 ];

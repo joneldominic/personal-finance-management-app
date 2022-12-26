@@ -21,7 +21,7 @@ class CategoryDetailViewModel extends FormViewModel {
   final _snackbarService = locator<SnackbarService>();
 
   Category? _category;
-  
+
   TextEditingController? _categoryNameController;
   bool categoryIsVisible = true;
 
@@ -45,11 +45,6 @@ class CategoryDetailViewModel extends FormViewModel {
     setColor(category?.color ?? '0xFF00B0FF');
 
     categoryIsVisible = category?.isVisible ?? true;
-  }
-
-  void popCurrentView() {
-    _logger.i('argument: NONE | Navigation Pop: 1');
-    _navigationService.popRepeated(1);
   }
 
   void setCategoryVisibility(bool isVisible) {
@@ -89,7 +84,11 @@ class CategoryDetailViewModel extends FormViewModel {
       _logger.i('Category Saved Successfully: $addedCategory');
     }
 
-    _logger.i('Navigation Pop: 1');
+    popCurrentView();
+  }
+
+  void popCurrentView() {
+    _logger.i('argument: NONE | Navigation Pop: 1');
     _navigationService.popRepeated(1);
   }
 

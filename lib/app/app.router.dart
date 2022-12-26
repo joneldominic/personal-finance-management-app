@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../data/models/account/account.dart';
+import '../data/models/category/category.dart';
 import '../ui/views/account/account_detail/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/category/category_detail/category_detail_view.dart';
@@ -99,7 +100,7 @@ class StackedRouter extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => CategoryDetailView(
           key: args.key,
-          isAddCategory: args.isAddCategory,
+          category: args.category,
         ),
         settings: data,
       );
@@ -128,8 +129,8 @@ class TransactionDetailViewArguments {
 /// CategoryDetailView arguments holder class
 class CategoryDetailViewArguments {
   final Key? key;
-  final bool isAddCategory;
-  CategoryDetailViewArguments({this.key, this.isAddCategory = true});
+  final Category? category;
+  CategoryDetailViewArguments({this.key, this.category});
 }
 
 /// ************************************************************************
@@ -226,7 +227,7 @@ extension NavigatorStateExtension on NavigationService {
 
   Future<dynamic> navigateToCategoryDetailView({
     Key? key,
-    bool isAddCategory = true,
+    Category? category,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -235,8 +236,7 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.categoryDetailView,
-      arguments:
-          CategoryDetailViewArguments(key: key, isAddCategory: isAddCategory),
+      arguments: CategoryDetailViewArguments(key: key, category: category),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

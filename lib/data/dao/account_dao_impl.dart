@@ -1,14 +1,18 @@
 import 'package:isar/isar.dart';
+import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 
 class AccountDaoImpl extends AccountDao {
+  final _logger = getLogger('AccountDaoImpl');
+
   Future<Isar> get _db async => await IsarDatabase.instance.database;
-  // TODO: Add logger
 
   @override
   Future<Account> createAccount(Account account) async {
+    _logger.i('argument: $account');
+
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;
@@ -22,12 +26,16 @@ class AccountDaoImpl extends AccountDao {
 
   @override
   Future<Account> getAccountById(Id id) {
+    _logger.i('argument: $id');
+
     // TODO: implement getAccountById
     throw UnimplementedError();
   }
 
   @override
   Future<List<Account>> getAccounts() async {
+    _logger.i('argument: NONE');
+
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;
@@ -40,6 +48,8 @@ class AccountDaoImpl extends AccountDao {
 
   @override
   Future<Account> updateAccount(Account account) async {
+    _logger.i('argument: $account');
+
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;
@@ -53,6 +63,8 @@ class AccountDaoImpl extends AccountDao {
 
   @override
   Future<Id> deleteAccount(Id id) async {
+    _logger.i('argument: $id');
+
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;
@@ -65,6 +77,8 @@ class AccountDaoImpl extends AccountDao {
 
   @override
   Stream<List<Account>> accountCollectionStream() async* {
+    _logger.i('argument: NONE');
+
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;

@@ -10,6 +10,7 @@ import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../services/account_service.dart';
+import '../services/category_service.dart';
 import '../services/theme_service.dart';
 import '../services/transaction_service.dart';
 
@@ -28,4 +29,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => AccountService());
   locator.registerLazySingleton(() => TransactionService());
+  locator.registerLazySingleton(() => CategoryService());
 }

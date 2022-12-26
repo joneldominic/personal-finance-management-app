@@ -142,8 +142,12 @@ class AccountDetailViewModel extends FormViewModel {
 
   void handleDeleteAccount() async {
     _logger.i('argument: NONE');
+
     final response = await _dialogService.showCustomDialog(
-        variant: DialogType.deleteConfirmation, data: _account!.name);
+      variant: DialogType.deleteConfirmation,
+      data:
+          "Do you really want to delete account ${_account!.name}? All transactions under this account will also be deleted.",
+    );
 
     if (response == null || !response.confirmed) {
       _logger.w("Delete Account Cancelled");

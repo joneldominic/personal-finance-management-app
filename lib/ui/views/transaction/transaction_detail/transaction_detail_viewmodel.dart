@@ -212,8 +212,9 @@ class TransactionDetailViewModel extends FormViewModel {
     _transactionService.createTransaction(newTransaction);
     // TODO: Adjust balance as well
 
-    _logger.i('Navigation Pop: 1');
-    _navigationService.popRepeated(1);
+    popCurrentView();
+  }
+
   bool showNegativeAmountPrefix() {
     final amount = double.parse(
       _amountController?.text.replaceAll(RegExp(r'[^0-9-.]+'), '') ?? "0",

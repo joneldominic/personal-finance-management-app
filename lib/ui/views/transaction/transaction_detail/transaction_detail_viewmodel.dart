@@ -27,8 +27,10 @@ class TransactionDetailViewModel extends FormViewModel {
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
-  CurrencyInputFormatter currencyInputFormatter =
-      CurrencyInputFormatter(symbol: "PHP");
+  CurrencyInputFormatter currencyInputFormatter = CurrencyInputFormatter(
+    symbol: "PHP",
+    allowNegative: false,
+  );
   TextEditingController? _amountController;
   TextEditingController? _notesController;
 
@@ -60,6 +62,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     currencyInputFormatter = CurrencyInputFormatter(
       symbol: accounts.isNotEmpty ? accounts[0].currency! : "PHP",
+      allowNegative: false,
     );
     _amountController = amountController;
     amountController.text = currencyInputFormatter.reformat('0');
@@ -102,7 +105,8 @@ class TransactionDetailViewModel extends FormViewModel {
       (acc) => acc.id == int.parse(accountId),
     );
     setAccountId(account.id.toString());
-    currencyInputFormatter = CurrencyInputFormatter(symbol: account.currency!);
+    currencyInputFormatter =
+        CurrencyInputFormatter(symbol: account.currency!, allowNegative: false);
     _amountController!.text =
         currencyInputFormatter.reformat(_amountController!.text);
   }

@@ -168,12 +168,12 @@ class TransactionDetailView extends StatelessWidget
                   decoration: const InputDecoration(
                     label: Text("Category"),
                   ),
-                  items: model.dummyCategory
+                  items: model.categories
                       .map(
-                        (value) => DropdownMenuItem<String>(
-                          key: ValueKey('$value key'),
-                          value: value,
-                          child: Text(value),
+                        (category) => DropdownMenuItem<String>(
+                          key: ValueKey('$category key'),
+                          value: category.id.toString(),
+                          child: Text(category.name ?? ""),
                         ),
                       )
                       .toList(),

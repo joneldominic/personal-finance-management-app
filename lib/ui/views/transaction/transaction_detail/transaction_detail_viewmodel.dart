@@ -7,9 +7,11 @@ import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/extensions/list_extension.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
+import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/services/transaction_service.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
@@ -24,6 +26,7 @@ class TransactionDetailViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
   final _transactionService = locator<TransactionService>();
+  final _categoryService = locator<CategoryService>();
   final _snackbarService = locator<SnackbarService>();
 
   final TextEditingController dateController = TextEditingController();
@@ -38,22 +41,16 @@ class TransactionDetailViewModel extends FormViewModel {
 
   String get emptyAccountErrorMessage => "No account available";
 
-  final List<String> dummyCategory = [
-    'Foods',
-    'Shopping',
-    'Transportation',
-    'House Bills'
-  ];
-
   List<Account> accounts = [];
   List<Account> destinationAccounts = [];
+  List<Category> categories = [];
 
   void initForm({
     required TextEditingController amountController,
     required TextEditingController notesController,
   }) async {
     _logger.i(
-      'argument: {amountController: $amountController, notesController: $notesController',
+      'argument: {amountController: $amountController, notesController: $notesController}',
     );
 
     await initData();
@@ -69,7 +66,7 @@ class TransactionDetailViewModel extends FormViewModel {
     _amountController = amountController;
     amountController.text = currencyInputFormatter.reformat('0');
 
-    setCategory(dummyCategory[0]); // TODO: Implement category data
+    setCategory(categories[0].id.toString()); // TODO: handle update mode
 
     initDateTimeFields();
 
@@ -79,10 +76,12 @@ class TransactionDetailViewModel extends FormViewModel {
 
   Future<void> initData() async {
     _logger.i('argument: NONE');
+
     accounts = await _accountService.getAccounts();
     _logger.i('accounts: ${accounts.itemsToString()}');
 
-    // TODO: Add all data fetching here
+    categories = await _categoryService.getCategories();
+    _logger.i('categories: ${categories.itemsToString()}');
   }
 
   void initDateTimeFields() {
@@ -103,6 +102,8 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   void handleAccountChange(String accountId) {
+    _logger.i('argument: $accountId');
+
     Account account = accounts.firstWhere(
       (acc) => acc.id == int.parse(accountId),
     );
@@ -116,10 +117,13 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   void handleDestinationAccountChange(String accountId) {
+    _logger.i('argument: $accountId');
     setDestinationAccountId(accountId);
   }
 
   void handleTransactionTypeChange(String transactionType) {
+    _logger.i('argument: $transactionType');
+
     setTransactionType(transactionType);
 
     if (transactionType ==
@@ -225,6 +229,8 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   bool showNegativeAmountPrefix() {
+    _logger.i('argument: NONE');
+
     final amount = double.parse(
       _amountController?.text.replaceAll(RegExp(r'[^0-9-.]+'), '') ?? "0",
     );
@@ -238,12 +244,16 @@ class TransactionDetailViewModel extends FormViewModel {
   }
 
   void filterDestinationAccount() {
+    _logger.i('argument: NONE');
+
     destinationAccounts = accounts
         .where((acc) => acc.id != int.parse(accountIdValue ?? '-1'))
         .toList();
   }
 
   void handleShowSnackbar({required String message}) {
+    _logger.i('argument: {message: $message}');
+
     _snackbarService.showCustomSnackBar(
       variant: SnackbarType.main,
       message: message,

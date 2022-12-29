@@ -33,7 +33,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
         );
 
   String reformat(String text) {
-    bool hasOneDecimal = text.contains(RegExp(r"^\d+\.\d{1}$"));
+    bool hasOneDecimal = text.contains(RegExp(r"^-?\d+\.\d{1}$"));
     String newText = hasOneDecimal ? "${text}0" : text;
 
     return formatEditUpdate(

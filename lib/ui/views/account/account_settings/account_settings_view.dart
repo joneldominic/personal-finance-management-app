@@ -32,8 +32,9 @@ class AccountSettingsView extends StatelessWidget {
         ),
         body: Container(
           color: customTheme.contrastBackgroundColor,
-          child: !model.isBusy
-              ? ListView.separated(
+          child: model.isBusy
+              ? const Center(child: CircularProgressIndicator())
+              : ListView.separated(
                   // TODO: Add handling for empty list
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
                   physics: const BouncingScrollPhysics(),
@@ -52,8 +53,7 @@ class AccountSettingsView extends StatelessWidget {
                   },
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),
-                )
-              : const Center(child: CircularProgressIndicator()),
+                ),
         ),
       ),
     );

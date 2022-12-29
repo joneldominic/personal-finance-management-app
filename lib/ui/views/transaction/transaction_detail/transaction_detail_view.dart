@@ -152,7 +152,12 @@ class TransactionDetailView extends StatelessWidget
                 ],
                 TextField(
                   key: const ValueKey(AmountValueKey),
-                  decoration: const InputDecoration(labelText: "Amount"),
+                  decoration: InputDecoration(
+                    labelText: "Amount",
+                    prefix: model.showNegativeAmountPrefix()
+                        ? const Text('-')
+                        : null,
+                  ),
                   controller: amountController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [model.currencyInputFormatter],

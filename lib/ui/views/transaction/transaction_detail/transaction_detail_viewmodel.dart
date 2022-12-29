@@ -210,6 +210,18 @@ class TransactionDetailViewModel extends FormViewModel {
 
     _logger.i('Navigation Pop: 1');
     _navigationService.popRepeated(1);
+  bool showNegativeAmountPrefix() {
+    final amount = double.parse(
+      _amountController?.text.replaceAll(RegExp(r'[^0-9-.]+'), '') ?? "0",
+    );
+
+    if (amount == 0) {
+      return false;
+    }
+
+    return transactionTypeValue ==
+        EnumToString.convertToString(TransactionType.expense);
+  }
   }
 
   void handleShowSnackbar({required String message}) {

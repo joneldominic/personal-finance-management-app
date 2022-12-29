@@ -62,6 +62,7 @@ class TransactionDaoImpl extends TransactionDao {
 
   @override
   Stream<List<Transaction>> transactionCollectionStream() async* {
+    _logger.i('argument: NONE');
     Isar isar = await _db;
 
     final transactionCollection = isar.transactions;

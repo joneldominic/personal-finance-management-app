@@ -30,6 +30,7 @@ class TransactionRepository {
   }
 
   Stream<List<Transaction>> transactionCollectionStream() async* {
+    _logger.i('argument: NONE');
     yield* transactionDao.transactionCollectionStream();
   }
 }

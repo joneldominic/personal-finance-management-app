@@ -13,7 +13,7 @@ const String AccountIdValueKey = 'accountId';
 const String DestinationAccountIdValueKey = 'destinationAccountId';
 const String TransactionTypeValueKey = 'transactionType';
 const String AmountValueKey = 'amount';
-const String CategoryValueKey = 'category';
+const String CategoryIdValueKey = 'categoryId';
 const String NotesValueKey = 'notes';
 
 final Map<String, String> AccountIdValueToTitleMap = {};
@@ -23,7 +23,7 @@ final Map<String, String> TransactionTypeValueToTitleMap = {
   'expense': 'Expense',
   'transfer': 'Transfer',
 };
-final Map<String, String> CategoryValueToTitleMap = {};
+final Map<String, String> CategoryIdValueToTitleMap = {};
 
 final Map<String, TextEditingController>
     _TransactionDetailViewTextEditingControllers = {};
@@ -131,7 +131,8 @@ extension ValueProperties on FormViewModel {
   String? get transactionTypeValue =>
       this.formValueMap[TransactionTypeValueKey] as String?;
   String? get amountValue => this.formValueMap[AmountValueKey] as String?;
-  String? get categoryValue => this.formValueMap[CategoryValueKey] as String?;
+  String? get categoryIdValue =>
+      this.formValueMap[CategoryIdValueKey] as String?;
   String? get notesValue => this.formValueMap[NotesValueKey] as String?;
 
   bool get hasAccountId => this.formValueMap.containsKey(AccountIdValueKey);
@@ -140,7 +141,7 @@ extension ValueProperties on FormViewModel {
   bool get hasTransactionType =>
       this.formValueMap.containsKey(TransactionTypeValueKey);
   bool get hasAmount => this.formValueMap.containsKey(AmountValueKey);
-  bool get hasCategory => this.formValueMap.containsKey(CategoryValueKey);
+  bool get hasCategoryId => this.formValueMap.containsKey(CategoryIdValueKey);
   bool get hasNotes => this.formValueMap.containsKey(NotesValueKey);
 
   bool get hasAccountIdValidationMessage =>
@@ -153,8 +154,8 @@ extension ValueProperties on FormViewModel {
       false;
   bool get hasAmountValidationMessage =>
       this.fieldsValidationMessages[AmountValueKey]?.isNotEmpty ?? false;
-  bool get hasCategoryValidationMessage =>
-      this.fieldsValidationMessages[CategoryValueKey]?.isNotEmpty ?? false;
+  bool get hasCategoryIdValidationMessage =>
+      this.fieldsValidationMessages[CategoryIdValueKey]?.isNotEmpty ?? false;
   bool get hasNotesValidationMessage =>
       this.fieldsValidationMessages[NotesValueKey]?.isNotEmpty ?? false;
 
@@ -166,8 +167,8 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[TransactionTypeValueKey];
   String? get amountValidationMessage =>
       this.fieldsValidationMessages[AmountValueKey];
-  String? get categoryValidationMessage =>
-      this.fieldsValidationMessages[CategoryValueKey];
+  String? get categoryIdValidationMessage =>
+      this.fieldsValidationMessages[CategoryIdValueKey];
   String? get notesValidationMessage =>
       this.fieldsValidationMessages[NotesValueKey];
 }
@@ -187,8 +188,8 @@ extension Methods on FormViewModel {
         this.formValueMap..addAll({TransactionTypeValueKey: transactionType}));
   }
 
-  void setCategory(String category) {
-    this.setData(this.formValueMap..addAll({CategoryValueKey: category}));
+  void setCategoryId(String categoryId) {
+    this.setData(this.formValueMap..addAll({CategoryIdValueKey: categoryId}));
   }
 
   setAccountIdValidationMessage(String? validationMessage) =>
@@ -201,8 +202,8 @@ extension Methods on FormViewModel {
           validationMessage;
   setAmountValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[AmountValueKey] = validationMessage;
-  setCategoryValidationMessage(String? validationMessage) =>
-      this.fieldsValidationMessages[CategoryValueKey] = validationMessage;
+  setCategoryIdValidationMessage(String? validationMessage) =>
+      this.fieldsValidationMessages[CategoryIdValueKey] = validationMessage;
   setNotesValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[NotesValueKey] = validationMessage;
 }

@@ -66,7 +66,7 @@ class TransactionDetailViewModel extends FormViewModel {
     _amountController = amountController;
     amountController.text = currencyInputFormatter.reformat('0');
 
-    setCategory(categories[0].id.toString()); // TODO: handle update mode
+    setCategoryId(categories[0].id.toString()); // TODO: handle update mode
 
     initDateTimeFields();
 
@@ -192,7 +192,7 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.e("accountIdValue: $accountIdValue");
     _logger.e("transactionTypeValue: $transactionTypeValue");
     _logger.e("amount: $amount");
-    _logger.e("category: $categoryValue");
+    _logger.e("category: $categoryIdValue");
     _logger.e("date: ${dateController.text}");
     _logger.e("time: ${timeController.text}");
     _logger.e("notes: ${_notesController!.text}");
@@ -216,7 +216,7 @@ class TransactionDetailViewModel extends FormViewModel {
         transactionTypeValue!,
       ),
       amount: amount,
-      category: categoryValue,
+      categoryId: int.parse(categoryIdValue!),
       date: date,
       notes: _notesController!.text,
     );

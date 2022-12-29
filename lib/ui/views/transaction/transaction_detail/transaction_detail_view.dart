@@ -32,7 +32,7 @@ import 'package:stacked/stacked_annotations.dart';
   ),
   FormTextField(initialValue: '', name: 'amount'),
   FormDropdownField(
-    name: 'category',
+    name: 'categoryId',
     items: [],
   ),
   FormTextField(initialValue: '', name: 'notes'),
@@ -163,8 +163,8 @@ class TransactionDetailView extends StatelessWidget
                   inputFormatters: [model.currencyInputFormatter],
                 ),
                 DropdownButtonFormField(
-                  key: const ValueKey(CategoryValueKey),
-                  value: model.categoryValue,
+                  key: const ValueKey(CategoryIdValueKey),
+                  value: model.categoryIdValue,
                   decoration: const InputDecoration(
                     label: Text("Category"),
                   ),
@@ -177,7 +177,7 @@ class TransactionDetailView extends StatelessWidget
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) => model.setCategory(value!),
+                  onChanged: (String? value) => model.setCategoryId(value!),
                 ),
                 TextField(
                   readOnly: true,

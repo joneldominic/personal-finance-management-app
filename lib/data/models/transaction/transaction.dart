@@ -15,7 +15,7 @@ class Transaction {
 
   double? amount;
 
-  String? category; // TODO: This should be id of category
+  int? categoryId;
 
   DateTime? date;
 
@@ -25,7 +25,7 @@ class Transaction {
     required this.accountId,
     required this.transactionType,
     required this.amount,
-    required this.category,
+    required this.categoryId,
     required this.date,
     required this.notes,
   });
@@ -36,7 +36,7 @@ class Transaction {
       'accountId: $accountId,'
       'transactionType: ${EnumToString.convertToString(transactionType)},'
       'amount: $amount,'
-      'category: $category,'
+      'categoryId: $categoryId,'
       'date: $date,'
       'notes: $notes,'
       ')';

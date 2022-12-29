@@ -30,8 +30,8 @@ class TransactionService with ReactiveServiceMixin {
     return _transactionRepository.getTransactions();
   }
 
-  // Stream<List<Transaction>> accountCollectionStream() async* {
-  //   _logger.i('argument: NONE');
-  //   yield* _transactionRepository.transactionCollectionStream();
-  // }
+  Stream<List<Transaction>> transactionCollectionStream() async* {
+    _logger.i('argument: NONE');
+    yield* _transactionRepository.transactionCollectionStream();
+  }
 }

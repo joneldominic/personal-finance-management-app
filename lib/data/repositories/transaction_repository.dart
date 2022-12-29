@@ -29,7 +29,7 @@ class TransactionRepository {
     return transactionDao.getTransactions();
   }
 
-  // Stream<List<Transaction>> TransactionCollectionStream() async* {
-  //   yield* transactionDao.transactionCollectionStream();
-  // }
+  Stream<List<Transaction>> transactionCollectionStream() async* {
+    yield* transactionDao.transactionCollectionStream();
+  }
 }

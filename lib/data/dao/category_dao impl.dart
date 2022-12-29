@@ -39,9 +39,17 @@ class CategoryDaoImpl extends CategoryDao {
   }
 
   @override
-  Future<List<Category>> getCategories() {
-    // TODO: implement getCategories
-    throw UnimplementedError();
+  Future<List<Category>> getCategories() async {
+    _logger.i('argument: NONE');
+
+    Isar isar = await _db;
+
+    final categoryCollection = isar.categorys;
+    final categories = await isar.writeTxn(() async {
+      return await categoryCollection.where().findAll();
+    });
+
+    return categories;
   }
 
   @override

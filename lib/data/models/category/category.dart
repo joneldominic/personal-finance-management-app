@@ -26,10 +26,10 @@ class Category {
 
   @override
   String toString() => 'Account('
-      'id: $id'
+      'id: $id, '
       'name: $name, '
       'categoryNature: ${EnumToString.convertToString(nature)}, '
       'color: $color, '
-      'isVisible: $isVisible, '
+      'isVisible: $isVisible'
       ')';
 }

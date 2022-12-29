@@ -46,6 +46,7 @@ const TransactionSchema = CollectionSchema(
       id: 5,
       name: r'transactionType',
       type: IsarType.string,
+      enumMap: _TransactiontransactionTypeEnumValueMap,
     )
   },
   estimateSize: _transactionEstimateSize,
@@ -83,7 +84,7 @@ int _transactionEstimateSize(
   {
     final value = object.transactionType;
     if (value != null) {
-      bytesCount += 3 + value.length * 3;
+      bytesCount += 3 + value.name.length * 3;
     }
   }
   return bytesCount;
@@ -100,7 +101,7 @@ void _transactionSerialize(
   writer.writeString(offsets[2], object.category);
   writer.writeDateTime(offsets[3], object.date);
   writer.writeString(offsets[4], object.notes);
-  writer.writeString(offsets[5], object.transactionType);
+  writer.writeString(offsets[5], object.transactionType?.name);
 }
 
 Transaction _transactionDeserialize(
@@ -115,7 +116,8 @@ Transaction _transactionDeserialize(
     category: reader.readStringOrNull(offsets[2]),
     date: reader.readDateTimeOrNull(offsets[3]),
     notes: reader.readStringOrNull(offsets[4]),
-    transactionType: reader.readStringOrNull(offsets[5]),
+    transactionType: _TransactiontransactionTypeValueEnumMap[
+        reader.readStringOrNull(offsets[5])],
   );
   object.id = id;
   return object;
@@ -139,11 +141,23 @@ P _transactionDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (_TransactiontransactionTypeValueEnumMap[
+          reader.readStringOrNull(offset)]) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _TransactiontransactionTypeEnumValueMap = {
+  r'income': r'income',
+  r'expense': r'expense',
+  r'transfer': r'transfer',
+};
+const _TransactiontransactionTypeValueEnumMap = {
+  r'income': TransactionType.income,
+  r'expense': TransactionType.expense,
+  r'transfer': TransactionType.transfer,
+};
 
 Id _transactionGetId(Transaction object) {
   return object.id;
@@ -837,7 +851,7 @@ extension TransactionQueryFilter
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       transactionTypeEqualTo(
-    String? value, {
+    TransactionType? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -851,7 +865,7 @@ extension TransactionQueryFilter
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       transactionTypeGreaterThan(
-    String? value, {
+    TransactionType? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -867,7 +881,7 @@ extension TransactionQueryFilter
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       transactionTypeLessThan(
-    String? value, {
+    TransactionType? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -883,8 +897,8 @@ extension TransactionQueryFilter
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       transactionTypeBetween(
-    String? lower,
-    String? upper, {
+    TransactionType? lower,
+    TransactionType? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1223,7 +1237,7 @@ extension TransactionQueryProperty
     });
   }
 
-  QueryBuilder<Transaction, String?, QQueryOperations>
+  QueryBuilder<Transaction, TransactionType?, QQueryOperations>
       transactionTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'transactionType');

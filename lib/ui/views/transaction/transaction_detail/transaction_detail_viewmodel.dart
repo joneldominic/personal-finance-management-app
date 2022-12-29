@@ -104,10 +104,11 @@ class TransactionDetailViewModel extends FormViewModel {
   void handleAccountChange(String accountId) {
     _logger.i('argument: $accountId');
 
+    setAccountId(accountId);
+
     Account account = accounts.firstWhere(
       (acc) => acc.id == int.parse(accountId),
     );
-    setAccountId(account.id.toString());
     currencyInputFormatter =
         CurrencyInputFormatter(symbol: account.currency!, allowNegative: false);
     _amountController!.text =

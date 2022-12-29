@@ -1,8 +1,10 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
+import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
@@ -45,6 +47,7 @@ class TransactionDetailViewModel extends FormViewModel {
   ];
 
   List<Account> accounts = [];
+  List<Account> destinationAccounts = [];
 
   void initForm({
     required TextEditingController amountController,
@@ -109,25 +112,21 @@ class TransactionDetailViewModel extends FormViewModel {
         CurrencyInputFormatter(symbol: account.currency!, allowNegative: false);
     _amountController!.text =
         currencyInputFormatter.reformat(_amountController!.text);
+
+    filterDestinationAccount();
+  }
+
+  void handleDestinationAccountChange(String accountId) {
+    setDestinationAccountId(accountId);
   }
 
   void handleTransactionTypeChange(String transactionType) {
     setTransactionType(transactionType);
 
-    double amount = double.parse(
-      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
-    );
-
-    if (transactionType == "expense") {
-      amount = amount.abs() * -1;
-    } else if (transactionType == "income") {
-      amount = amount.abs();
+    if (transactionType ==
+        EnumToString.convertToString(TransactionType.transfer)) {
+      filterDestinationAccount();
     }
-
-    _amountController!.text =
-        currencyInputFormatter.reformat(amount.toString());
-
-    // TODO: Show Transfer distination if type is transfer
   }
 
   void setTransactionDate(BuildContext context) async {
@@ -165,20 +164,30 @@ class TransactionDetailViewModel extends FormViewModel {
   void saveTransaction() {
     _logger.i('argument: NONE');
 
-    final amount = double.parse(
+    double amount = double.parse(
       _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
     );
+
+    if (transactionTypeValue ==
+            EnumToString.convertToString(TransactionType.transfer) &&
+        destinationAccountIdValue == null) {
+      handleShowSnackbar(message: "Please select transfer destination account");
+      return;
+    }
 
     if (amount == 0) {
       handleShowSnackbar(message: "Please enter an amount not equal to zero");
       return;
     }
 
+    amount = transactionTypeValue ==
+            EnumToString.convertToString(TransactionType.expense)
+        ? amount.abs() * -1
+        : amount.abs();
+
     _logger.e("accountIdValue: $accountIdValue");
     _logger.e("transactionTypeValue: $transactionTypeValue");
-    _logger.e("amount: ${double.parse(
-      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
-    )}");
+    _logger.e("amount: $amount");
     _logger.e("category: $categoryValue");
     _logger.e("date: ${dateController.text}");
     _logger.e("time: ${timeController.text}");
@@ -196,13 +205,12 @@ class TransactionDetailViewModel extends FormViewModel {
     final date = DateFormat("MMM dd, yyyy - hh:mm a")
         .parse("${dateController.text} - ${timeController.text}");
 
-    // TODO: Pop view on save
-
-    // TODO: Handle if 0 -> show snackbar
-
     final newTransaction = Transaction(
       accountId: int.parse(accountIdValue!),
-      transactionType: transactionTypeValue,
+      transactionType: EnumToString.fromString(
+        TransactionType.values,
+        transactionTypeValue!,
+      ),
       amount: amount,
       category: categoryValue,
       date: date,
@@ -227,6 +235,11 @@ class TransactionDetailViewModel extends FormViewModel {
     return transactionTypeValue ==
         EnumToString.convertToString(TransactionType.expense);
   }
+
+  void filterDestinationAccount() {
+    destinationAccounts = accounts
+        .where((acc) => acc.id != int.parse(accountIdValue ?? '-1'))
+        .toList();
   }
 
   void handleShowSnackbar({required String message}) {

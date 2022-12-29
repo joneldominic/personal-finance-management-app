@@ -1,4 +1,6 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
@@ -18,6 +20,10 @@ import 'package:stacked/stacked_annotations.dart';
 @FormView(fields: [
   FormDropdownField(
     name: 'accountId',
+    items: [],
+  ),
+  FormDropdownField(
+    name: 'destinationAccountId',
     items: [],
   ),
   FormDropdownField(
@@ -120,6 +126,30 @@ class TransactionDetailView extends StatelessWidget
                   onChanged: (String? value) =>
                       model.handleTransactionTypeChange(value!),
                 ),
+                if (model.transactionTypeValue ==
+                    EnumToString.convertToString(TransactionType.transfer)) ...[
+                  DropdownButtonFormField(
+                    key: const ValueKey(DestinationAccountIdValueKey),
+                    value: model.destinationAccountIdValue,
+                    decoration: InputDecoration(
+                      label: const Text("Destination Account"),
+                      errorText: model.accounts.isEmpty
+                          ? model.emptyAccountErrorMessage
+                          : null,
+                    ),
+                    items: model.destinationAccounts
+                        .map(
+                          (account) => DropdownMenuItem<String>(
+                            key: ValueKey('${account.id} key'),
+                            value: account.id.toString(),
+                            child: Text(account.name ?? ""),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (String? value) =>
+                        model.handleDestinationAccountChange(value!),
+                  ),
+                ],
                 TextField(
                   key: const ValueKey(AmountValueKey),
                   decoration: const InputDecoration(labelText: "Amount"),

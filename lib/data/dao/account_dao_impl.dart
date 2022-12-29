@@ -39,11 +39,11 @@ class AccountDaoImpl extends AccountDao {
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;
-    final createdAccount = await isar.writeTxn(() async {
+    final accounts = await isar.writeTxn(() async {
       return await accountCollection.where().findAll();
     });
 
-    return createdAccount;
+    return accounts;
   }
 
   @override

@@ -36,8 +36,7 @@ class TransactionDetailViewModel extends FormViewModel {
   TextEditingController? _amountController;
   TextEditingController? _notesController;
 
-  String get emptyAccountErrorMessage =>
-      "No account available. Please create one";
+  String get emptyAccountErrorMessage => "No account available";
 
   final List<String> dummyCategory = [
     'Foods',
@@ -171,6 +170,7 @@ class TransactionDetailViewModel extends FormViewModel {
     if (transactionTypeValue ==
             EnumToString.convertToString(TransactionType.transfer) &&
         destinationAccountIdValue == null) {
+      // TODO: Try focusing destination account field
       handleShowSnackbar(message: "Please select transfer destination account");
       return;
     }
@@ -219,6 +219,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     _transactionService.createTransaction(newTransaction);
     // TODO: Adjust balance as well
+    // TODO: Create pair transaction for transfer type
 
     popCurrentView();
   }

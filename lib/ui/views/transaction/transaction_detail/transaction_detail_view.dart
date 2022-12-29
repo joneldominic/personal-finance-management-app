@@ -133,7 +133,7 @@ class TransactionDetailView extends StatelessWidget
                     value: model.destinationAccountIdValue,
                     decoration: InputDecoration(
                       label: const Text("Destination Account"),
-                      errorText: model.accounts.isEmpty
+                      errorText: model.destinationAccounts.isEmpty
                           ? model.emptyAccountErrorMessage
                           : null,
                     ),

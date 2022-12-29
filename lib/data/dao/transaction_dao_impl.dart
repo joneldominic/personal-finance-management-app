@@ -14,7 +14,7 @@ class TransactionDaoImpl extends TransactionDao {
     _logger.i('argument: $transaction');
 
     Isar isar = await _db;
-    
+
     final transactionCollection = isar.transactions;
     final createdTransaction = await isar.writeTxn(() async {
       final id = await transactionCollection.put(transaction);
@@ -59,5 +59,15 @@ class TransactionDaoImpl extends TransactionDao {
 
     return Future.error("");
   }
-  // Stream<List<Transaction>> accountCollectionStream();
+
+  @override
+  Stream<List<Transaction>> transactionCollectionStream() async* {
+    Isar isar = await _db;
+
+    final transactionCollection = isar.transactions;
+    Query<Transaction> transactionsQuery =
+        transactionCollection.where().build();
+
+    yield* transactionsQuery.watch(fireImmediately: true);
+  }
 }

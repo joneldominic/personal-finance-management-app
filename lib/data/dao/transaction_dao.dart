@@ -7,5 +7,5 @@ abstract class TransactionDao {
   Future<List<Transaction>> getTransactions();
   Future<Transaction> updateTransaction(Transaction transaction);
   Future<Id> deleteTransaction(Id id);
-  // Stream<List<Transaction>> accountCollectionStream();
+  Stream<List<Transaction>> transactionCollectionStream();
 }

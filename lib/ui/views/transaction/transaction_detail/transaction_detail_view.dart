@@ -85,7 +85,7 @@ class TransactionDetailView extends StatelessWidget
                   key: const ValueKey(AccountIdValueKey),
                   value: model.accountIdValue,
                   decoration: InputDecoration(
-                    label: const Text("Account Name"),
+                    label: const Text("Account"),
                     errorText: model.accounts.isEmpty
                         ? model.emptyAccountErrorMessage
                         : null,

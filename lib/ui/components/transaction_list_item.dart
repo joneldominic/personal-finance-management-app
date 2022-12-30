@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class TransactionListItem extends StatelessWidget {
   const TransactionListItem({
     Key? key,
-    this.description,
+    this.categoryName,
+    this.categoryColor,
     this.accountName,
+    this.accountCurrency,
     this.amount,
     this.transactionType,
     this.timeStamp,
     required this.onTap,
   }) : super(key: key);
 
-  final String? description;
+  final String? categoryName;
+  final String? categoryColor;
   final String? accountName;
-  final String? amount;
+  final String? accountCurrency;
+  final double? amount;
   final TransactionType? transactionType;
-  final String? timeStamp;
+  final DateTime? timeStamp;
   final void Function()? onTap;
 
   @override
@@ -28,14 +34,16 @@ class TransactionListItem extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-      leading: const CircleAvatar(
+      leading: CircleAvatar(
         radius: 18,
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(
+          int.parse(categoryColor ?? '0xFFFFFFFF'),
+        ),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ThemeText.listItemTitle(description ?? ''),
+          ThemeText.listItemTitle(categoryName ?? ''),
           ThemeText.listItemSubTitle(accountName ?? ''),
         ],
       ),
@@ -46,7 +54,10 @@ class TransactionListItem extends StatelessWidget {
             Row(
               children: [
                 ThemeText.listItemSubTitle(
-                  amount ?? '',
+                  doubleToCurrencyFormatter(
+                    currency: accountCurrency ?? "PHP",
+                    value: amount!,
+                  ),
                   color: transactionType == TransactionType.expense
                       ? customTheme.danger
                       : customTheme.success,
@@ -61,7 +72,9 @@ class TransactionListItem extends StatelessWidget {
                 ),
               ],
             ),
-            ThemeText.listItemSubTitle(timeStamp ?? ''),
+            ThemeText.listItemSubTitle(
+              DateFormat('MMM dd, yyyy').format(timeStamp!),
+            ),
           ],
         ),
       ),

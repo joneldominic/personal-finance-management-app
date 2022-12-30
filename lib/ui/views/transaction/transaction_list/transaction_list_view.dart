@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_viewmodel.dart';
@@ -14,102 +13,31 @@ class TransactionListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    final List<String> descriptions = <String>[
-      'Birthday',
-      'Badminton Tournament Registration',
-      'FullScale Salary',
-      'Grocery',
-      'Birthday',
-      'Badminton Tournament Registration',
-      'FullScale Salary',
-      'Grocery',
-      'Birthday',
-      'Badminton Tournament Registration',
-      'FullScale Salary',
-      'Grocery',
-    ];
-
-    final List<String> accountNames = <String>[
-      'Cash',
-      'Cash',
-      'BPI',
-      'Cash',
-      'Cash',
-      'Cash',
-      'BPI',
-      'Cash',
-      'Cash',
-      'Cash',
-      'BPI',
-      'Cash',
-    ];
-
-    final List<String> amounts = <String>[
-      '"PHP 5,000.00"',
-      '"PHP 800.00"',
-      '"PHP 60,000.00"',
-      '"PHP 2,000.00"',
-      '"PHP 5,000.00"',
-      '"PHP 800.00"',
-      '"PHP 60,000.00"',
-      '"PHP 2,000.00"',
-      '"PHP 5,000.00"',
-      '"PHP 800.00"',
-      '"PHP 60,000.00"',
-      '"PHP 2,000.00"',
-    ];
-
-    final List<TransactionType> transactionTypes = <TransactionType>[
-      TransactionType.expense,
-      TransactionType.expense,
-      TransactionType.income,
-      TransactionType.expense,
-      TransactionType.expense,
-      TransactionType.expense,
-      TransactionType.income,
-      TransactionType.expense,
-      TransactionType.expense,
-      TransactionType.expense,
-      TransactionType.income,
-      TransactionType.expense,
-    ];
-
-    final List<String> timeStamps = <String>[
-      "Today",
-      "Sept. 2, 2022",
-      "Aug. 30, 2022",
-      "Aug. 24, 2022",
-      "Today",
-      "Sept. 2, 2022",
-      "Aug. 30, 2022",
-      "Aug. 24, 2022",
-      "Today",
-      "Sept. 2, 2022",
-      "Aug. 30, 2022",
-      "Aug. 24, 2022",
-    ];
-
-    return ViewModelBuilder<TransactionListViewModel>.nonReactive(
+    return ViewModelBuilder<TransactionListViewModel>.reactive(
       viewModelBuilder: () => TransactionListViewModel(),
       builder: (context, model, child) => Container(
         color: customTheme.contrastBackgroundColor,
-        child: ListView.separated(
-          padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
-          physics: const BouncingScrollPhysics(),
-          itemCount: descriptions.length,
-          itemBuilder: (BuildContext context, int index) {
-            return TransactionListItem(
-              description: descriptions[index],
-              accountName: accountNames[index],
-              amount: amounts[index],
-              transactionType: transactionTypes[index],
-              timeStamp: timeStamps[index],
-              onTap: model.navigateToTransactionDetailEditMode,
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-        ),
+        child: !model.streamDataReady
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.separated(
+                padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
+                physics: const BouncingScrollPhysics(),
+                itemCount: model.transactions.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return TransactionListItem(
+                    categoryName: model.transactions[index].categoryName,
+                    categoryColor: model.transactions[index].categoryColor,
+                    accountName: model.transactions[index].accountName,
+                    accountCurrency: model.transactions[index].accountCurrency,
+                    amount: model.transactions[index].amount,
+                    transactionType: model.transactions[index].transactionType,
+                    timeStamp: model.transactions[index].date,
+                    onTap: model.navigateToTransactionDetailEditMode,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+              ),
       ),
     );
   }

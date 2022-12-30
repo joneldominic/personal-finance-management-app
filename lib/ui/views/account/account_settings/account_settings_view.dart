@@ -42,11 +42,9 @@ class AccountSettingsView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return AccountListItem(
                       accountName: model.accounts[index].name,
-                      color: Color(
-                        int.parse(model.accounts[index].color!),
-                      ),
+                      color: model.accounts[index].color!,
                       currency: model.accounts[index].currency,
-                      amount: model.accounts[index].balance.toString(),
+                      amount: model.accounts[index].balance,
                       onPressed: () =>
                           model.navigateToAccountDetail(model.accounts[index]),
                     );

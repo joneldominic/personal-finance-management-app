@@ -14,6 +14,14 @@ class RecentTransactionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
+    // TODO: Handle data here dynamically
+
+    // TODO: Add filter (ex. Last 30 Days)
+
+    // TODO: Handle show more
+
+    // TODO: Implement action button - choose timeframe
+
     return Card(
       margin: const EdgeInsets.fromLTRB(10, 5, 10, 10),
       child: Column(
@@ -40,38 +48,38 @@ class RecentTransactionsCard extends StatelessWidget {
             child: Column(
               children: [
                 TransactionListItem(
-                  description: "Birthday",
+                  categoryName: "Birthday",
                   accountName: "Cash",
-                  amount: "PHP 5,000.00",
+                  amount: 5000,
                   transactionType: TransactionType.expense,
-                  timeStamp: "Today",
+                  timeStamp: DateTime.now(),
                   onTap: () {},
                 ),
                 const Divider(),
                 TransactionListItem(
-                  description: "Badminton Tournament Registration",
+                  categoryName: "Badminton Tournament Registration",
                   accountName: "Cash",
-                  amount: "PHP 800.00",
+                  amount: 800,
                   transactionType: TransactionType.expense,
-                  timeStamp: "Sept. 2, 2022",
+                  timeStamp: DateTime.now(),
                   onTap: () {},
                 ),
                 const Divider(),
                 TransactionListItem(
-                  description: "FullScale Salary",
+                  categoryName: "FullScale Salary",
                   accountName: "BPI",
-                  amount: "PHP 60,000.00",
+                  amount: 0,
                   transactionType: TransactionType.income,
-                  timeStamp: "Aug. 30, 2022",
+                  timeStamp: DateTime.now(),
                   onTap: () {},
                 ),
                 const Divider(),
                 TransactionListItem(
-                  description: "Grocery",
+                  categoryName: "Grocery",
                   accountName: "Cash",
-                  amount: "PHP 2,000.00",
+                  amount: 0,
                   transactionType: TransactionType.expense,
-                  timeStamp: "Aug. 24, 2022",
+                  timeStamp: DateTime.now(),
                   onTap: () {},
                 ),
                 verticalSpaceMedium,

@@ -16,12 +16,18 @@ class Transaction {
   @Enumerated(EnumType.name)
   TransactionType? transactionType;
 
+  @ignore
+  String? accountCurrency;
+
   double? amount;
 
   int? categoryId;
 
   @ignore
   String? categoryName;
+
+  @ignore
+  String? categoryColor;
 
   DateTime? date;
 
@@ -42,9 +48,11 @@ class Transaction {
       'accountId: $accountId, '
       'accountName: $accountName, '
       'transactionType: ${EnumToString.convertToString(transactionType)}, '
+      'accountCurrency: $accountCurrency, '
       'amount: $amount, '
       'categoryId: $categoryId, '
       'categoryName: $categoryName, '
+      'categoryColor: $categoryColor, '
       'date: $date, '
       'notes: $notes'
       ')';

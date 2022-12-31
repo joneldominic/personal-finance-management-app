@@ -61,7 +61,7 @@ class RecentTransactionsView extends StatelessWidget {
                     amount: transaction.amount,
                     transactionType: transaction.transactionType,
                     timeStamp: transaction.date,
-                    onTap: () {},
+                    onTap: () {}, // TODO: Handle on edit/view
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>

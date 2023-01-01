@@ -12,6 +12,10 @@ class ConditionalAsyncWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading ? const CircularProgressIndicator() : child;
+    return isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : child;
   }
 }

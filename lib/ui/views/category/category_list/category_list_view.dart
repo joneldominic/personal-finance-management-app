@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/category_list_item.dart';
+import 'package:personal_finance_management_app/ui/components/conditional_async_wrapper.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -19,6 +20,9 @@ class CategoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
+    // TODO: Add default category (Undefined)
+    // TODO: Add transfer category
+
     return ViewModelBuilder<CategoryListViewModel>.reactive(
       viewModelBuilder: () => CategoryListViewModel(),
       builder: (context, model, child) => Scaffold(
@@ -32,27 +36,28 @@ class CategoryListView extends StatelessWidget {
         ),
         body: Container(
           color: customTheme.contrastBackgroundColor,
-          child: model.isBusy
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: model.categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CategoryListItem(
-                      categoryName: model.categories[index].name!,
-                      categoryNature: model.categories[index].nature!,
-                      color: Color(
-                        int.parse(model.categories[index].color!),
-                      ),
-                      onPressed: () => model.navigateToCategoryDetail(
-                        model.categories[index],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                ),
+          child: ConditionalAsyncWrapper(
+            isLoading: model.isBusy,
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
+              physics: const BouncingScrollPhysics(),
+              itemCount: model.categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                return CategoryListItem(
+                  categoryName: model.categories[index].name!,
+                  categoryNature: model.categories[index].nature!,
+                  color: Color(
+                    int.parse(model.categories[index].color!),
+                  ),
+                  onPressed: () => model.navigateToCategoryDetail(
+                    model.categories[index],
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+            ),
+          ),
         ),
       ),
     );

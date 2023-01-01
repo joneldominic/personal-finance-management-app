@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/ui/components/account_list_item.dart';
+import 'package:personal_finance_management_app/ui/components/conditional_async_wrapper.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -32,26 +33,27 @@ class AccountSettingsView extends StatelessWidget {
         ),
         body: Container(
           color: customTheme.contrastBackgroundColor,
-          child: model.isBusy
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.separated(
-                  // TODO: Add handling for empty list
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: model.accounts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AccountListItem(
-                      accountName: model.accounts[index].name,
-                      color: model.accounts[index].color!,
-                      currency: model.accounts[index].currency,
-                      amount: model.accounts[index].balance,
-                      onPressed: () =>
-                          model.navigateToAccountDetail(model.accounts[index]),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                ),
+          child: ConditionalAsyncWrapper(
+            isLoading: model.isBusy,
+            child: ListView.separated(
+              // TODO: Add handling for empty list
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
+              physics: const BouncingScrollPhysics(),
+              itemCount: model.accounts.length,
+              itemBuilder: (BuildContext context, int index) {
+                return AccountListItem(
+                  accountName: model.accounts[index].name,
+                  color: model.accounts[index].color!,
+                  currency: model.accounts[index].currency,
+                  amount: model.accounts[index].balance,
+                  onPressed: () =>
+                      model.navigateToAccountDetail(model.accounts[index]),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+            ),
+          ),
         ),
       ),
     );

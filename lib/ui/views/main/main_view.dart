@@ -28,6 +28,8 @@ class MainView extends StatelessWidget {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
       onModelReady: (model) => model.setIndex(defaultViewIndex),
+      initialiseSpecialViewModelsOnce: true,
+      fireOnModelReadyOnce: true,
       builder: (context, model, child) {
         return Scaffold(
           floatingActionButton: Visibility(

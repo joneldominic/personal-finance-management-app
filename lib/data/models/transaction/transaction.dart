@@ -16,6 +16,8 @@ class Transaction {
   @Enumerated(EnumType.name)
   TransactionType? transactionType;
 
+  int? destinationAccountId;
+
   @ignore
   String? accountCurrency;
 
@@ -36,6 +38,7 @@ class Transaction {
   Transaction({
     required this.accountId,
     required this.transactionType,
+    this.destinationAccountId,
     required this.amount,
     required this.categoryId,
     required this.date,
@@ -48,6 +51,7 @@ class Transaction {
       'accountId: $accountId, '
       'accountName: $accountName, '
       'transactionType: ${EnumToString.convertToString(transactionType)}, '
+      'destinationAccountId: $destinationAccountId, '
       'accountCurrency: $accountCurrency, '
       'amount: $amount, '
       'categoryId: $categoryId, '

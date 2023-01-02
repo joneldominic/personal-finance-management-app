@@ -37,13 +37,18 @@ const TransactionSchema = CollectionSchema(
       name: r'date',
       type: IsarType.dateTime,
     ),
-    r'notes': PropertySchema(
+    r'destinationAccountId': PropertySchema(
       id: 4,
+      name: r'destinationAccountId',
+      type: IsarType.long,
+    ),
+    r'notes': PropertySchema(
+      id: 5,
       name: r'notes',
       type: IsarType.string,
     ),
     r'transactionType': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'transactionType',
       type: IsarType.string,
       enumMap: _TransactiontransactionTypeEnumValueMap,
@@ -94,8 +99,9 @@ void _transactionSerialize(
   writer.writeDouble(offsets[1], object.amount);
   writer.writeLong(offsets[2], object.categoryId);
   writer.writeDateTime(offsets[3], object.date);
-  writer.writeString(offsets[4], object.notes);
-  writer.writeString(offsets[5], object.transactionType?.name);
+  writer.writeLong(offsets[4], object.destinationAccountId);
+  writer.writeString(offsets[5], object.notes);
+  writer.writeString(offsets[6], object.transactionType?.name);
 }
 
 Transaction _transactionDeserialize(
@@ -109,9 +115,10 @@ Transaction _transactionDeserialize(
     amount: reader.readDoubleOrNull(offsets[1]),
     categoryId: reader.readLongOrNull(offsets[2]),
     date: reader.readDateTimeOrNull(offsets[3]),
-    notes: reader.readStringOrNull(offsets[4]),
+    destinationAccountId: reader.readLongOrNull(offsets[4]),
+    notes: reader.readStringOrNull(offsets[5]),
     transactionType: _TransactiontransactionTypeValueEnumMap[
-        reader.readStringOrNull(offsets[5])],
+        reader.readStringOrNull(offsets[6])],
   );
   object.id = id;
   return object;
@@ -133,8 +140,10 @@ P _transactionDeserializeProp<P>(
     case 3:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
       return (_TransactiontransactionTypeValueEnumMap[
           reader.readStringOrNull(offset)]) as P;
     default:
@@ -536,6 +545,80 @@ extension TransactionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'date',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'destinationAccountId',
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'destinationAccountId',
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'destinationAccountId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'destinationAccountId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'destinationAccountId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'destinationAccountId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -957,6 +1040,20 @@ extension TransactionQuerySortBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      sortByDestinationAccountId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'destinationAccountId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      sortByDestinationAccountIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'destinationAccountId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByNotes() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'notes', Sort.asc);
@@ -1033,6 +1130,20 @@ extension TransactionQuerySortThenBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      thenByDestinationAccountId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'destinationAccountId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      thenByDestinationAccountIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'destinationAccountId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1097,6 +1208,13 @@ extension TransactionQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QDistinct>
+      distinctByDestinationAccountId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'destinationAccountId');
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByNotes(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1142,6 +1260,13 @@ extension TransactionQueryProperty
   QueryBuilder<Transaction, DateTime?, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
+    });
+  }
+
+  QueryBuilder<Transaction, int?, QQueryOperations>
+      destinationAccountIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'destinationAccountId');
     });
   }
 

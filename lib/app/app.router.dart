@@ -13,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../data/models/account/account.dart';
 import '../data/models/category/category.dart';
+import '../data/models/transaction/transaction.dart';
 import '../ui/views/account/account_detail/account_detail_view.dart';
 import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/category/category_detail/category_detail_view.dart';
@@ -82,7 +83,7 @@ class StackedRouter extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => TransactionDetailView(
           key: args.key,
-          isAddTransaction: args.isAddTransaction,
+          transaction: args.transaction,
         ),
         settings: data,
       );
@@ -122,8 +123,8 @@ class AccountDetailViewArguments {
 /// TransactionDetailView arguments holder class
 class TransactionDetailViewArguments {
   final Key? key;
-  final bool isAddTransaction;
-  TransactionDetailViewArguments({this.key, this.isAddTransaction = true});
+  final Transaction? transaction;
+  TransactionDetailViewArguments({this.key, this.transaction});
 }
 
 /// CategoryDetailView arguments holder class
@@ -191,7 +192,7 @@ extension NavigatorStateExtension on NavigationService {
 
   Future<dynamic> navigateToTransactionDetailView({
     Key? key,
-    bool isAddTransaction = true,
+    Transaction? transaction,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -200,8 +201,8 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.transactionDetailView,
-      arguments: TransactionDetailViewArguments(
-          key: key, isAddTransaction: isAddTransaction),
+      arguments:
+          TransactionDetailViewArguments(key: key, transaction: transaction),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

@@ -37,7 +37,8 @@ class TransactionListView extends StatelessWidget {
                 transactionType:
                     mainViewModel.transactions[index].transactionType,
                 timeStamp: mainViewModel.transactions[index].date,
-                onTap: model.navigateToTransactionDetailEditMode,
+                onTap: () => model.navigateToTransactionDetailEditMode(
+                    mainViewModel.transactions[index]),
               );
             },
             separatorBuilder: (BuildContext context, int index) =>

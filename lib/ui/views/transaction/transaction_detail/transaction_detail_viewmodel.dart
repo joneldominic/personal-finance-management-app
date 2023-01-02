@@ -16,6 +16,8 @@ import 'package:personal_finance_management_app/services/transaction_service.dar
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.
@@ -28,6 +30,8 @@ class TransactionDetailViewModel extends FormViewModel {
   final _transactionService = locator<TransactionService>();
   final _categoryService = locator<CategoryService>();
   final _snackbarService = locator<SnackbarService>();
+
+  Transaction? _transaction;
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
@@ -46,32 +50,59 @@ class TransactionDetailViewModel extends FormViewModel {
   List<Category> categories = [];
 
   void initForm({
+    required Transaction? transaction,
     required TextEditingController amountController,
     required TextEditingController notesController,
   }) async {
     _logger.i(
-      'argument: {amountController: $amountController, notesController: $notesController}',
+      'argument: {transaction: $transaction, amountController: $amountController, notesController: $notesController}',
     );
 
+    _transaction = transaction;
+    _logger.e(transaction);
+
     await initData();
+    filterDestinationAccount();
 
-    setAccountId(accounts.isNotEmpty ? accounts[0].id.toString() : "");
+    setAccountId(
+      accounts.isNotEmpty
+          ? transaction?.accountId.toString() ?? accounts[0].id.toString()
+          : "",
+    );
 
-    setTransactionType('expense');
+    setTransactionType(
+      EnumToString.convertToString(
+        transaction?.transactionType ?? TransactionType.expense,
+      ),
+    );
 
+    if (transaction?.transactionType == TransactionType.transfer &&
+        transaction?.destinationAccountId != null) {
+      setDestinationAccountId(transaction!.destinationAccountId.toString());
+    }
+
+    // TODO: Handle if account was already deleted
+    Account? account =
+        accounts.firstWhereOrNull((acc) => acc.id == transaction?.accountId);
     currencyInputFormatter = CurrencyInputFormatter(
-      symbol: accounts.isNotEmpty ? accounts[0].currency! : "PHP",
+      symbol: accounts.isNotEmpty
+          ? account?.currency ?? accounts[0].currency!
+          : "PHP",
       allowNegative: false,
     );
     _amountController = amountController;
     amountController.text = currencyInputFormatter.reformat('0');
 
-    setCategoryId(categories[0].id.toString()); // TODO: handle update mode
+    setCategoryId(
+      categories.isNotEmpty
+          ? transaction?.categoryId.toString() ?? categories[0].id.toString()
+          : '',
+    ); // TODO: handle if category was already deleted
 
-    initDateTimeFields();
+    initDateTimeFields(transaction?.date);
 
     _notesController = notesController;
-    notesController.text = ''; // TODO: handle update mode
+    notesController.text = transaction?.notes ?? '';
   }
 
   Future<void> initData() async {
@@ -84,11 +115,10 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.i('categories: ${categories.itemsToString()}');
   }
 
-  void initDateTimeFields() {
-    _logger.i('argument: NONE');
+  void initDateTimeFields(DateTime? dateTime) {
+    _logger.i('argument: $dateTime');
 
-    // TODO: Handle date time on edit
-    final DateTime now = DateTime.now();
+    final DateTime now = dateTime ?? DateTime.now();
     final String date = DateFormat('MMM dd, yyyy').format(now);
     final String time = DateFormat('hh:mm a').format(now);
 
@@ -138,7 +168,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final DateTime? selectedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _transaction?.date ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2100),
     );
@@ -151,7 +181,7 @@ class TransactionDetailViewModel extends FormViewModel {
   void setTransactionTime(BuildContext context) async {
     _logger.i('argument: $context');
 
-    final DateTime now = DateTime.now();
+    final DateTime now = _transaction?.date ?? DateTime.now();
 
     final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
@@ -192,6 +222,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     _logger.e("accountIdValue: $accountIdValue");
     _logger.e("transactionTypeValue: $transactionTypeValue");
+    _logger.e("destinationAccountIdValue: $destinationAccountIdValue");
     _logger.e("amount: $amount");
     _logger.e("category: $categoryIdValue");
     _logger.e("date: ${dateController.text}");
@@ -212,6 +243,9 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final newTransaction = Transaction(
       accountId: int.parse(accountIdValue!),
+      destinationAccountId: destinationAccountIdValue != null
+          ? int.parse(destinationAccountIdValue!)
+          : null,
       transactionType: EnumToString.fromString(
         TransactionType.values,
         transactionTypeValue!,
@@ -225,6 +259,7 @@ class TransactionDetailViewModel extends FormViewModel {
     _transactionService.createTransaction(newTransaction);
     // TODO: Adjust balance as well
     // TODO: Create pair transaction for transfer type
+    // TODO: Handle update transaction
 
     popCurrentView();
   }

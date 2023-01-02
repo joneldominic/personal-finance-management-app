@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -41,15 +42,16 @@ class TransactionDetailView extends StatelessWidget
     with $TransactionDetailView {
   TransactionDetailView({
     Key? key,
-    this.isAddTransaction = true,
+    this.transaction,
   }) : super(key: key);
 
-  final bool isAddTransaction;
+  final Transaction? transaction;
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
+    final isAddTransaction = transaction == null;
     final appBarTitle =
         isAddTransaction ? "New Transaction" : "Transaction Detail";
     final actionButtonTooltip =
@@ -60,6 +62,7 @@ class TransactionDetailView extends StatelessWidget
       onModelReady: (model) {
         listenToFormUpdated(model);
         model.initForm(
+          transaction: transaction,
           amountController: amountController,
           notesController: notesController,
         );

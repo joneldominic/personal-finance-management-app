@@ -45,14 +45,14 @@ class RecentTransactionsView extends StatelessWidget {
               ),
             ),
             ConditionalAsyncWrapper(
-              isLoading: !model.streamDataReady,
+              isLoading: !mainViewModel.streamDataReady,
               child: ListView.separated(
                 shrinkWrap: true,
                 padding: const EdgeInsets.fromLTRB(7, 10, 7, 0),
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: model.recentTransactions.length,
+                itemCount: mainViewModel.recentTransactions.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final transaction = model.recentTransactions[index];
+                  final transaction = mainViewModel.recentTransactions[index];
                   return TransactionListItem(
                     categoryName: transaction.categoryName,
                     categoryColor: transaction.categoryColor,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
-import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/conditional_async_wrapper.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
+import 'package:personal_finance_management_app/ui/views/main/main_viewmodel.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/recent_transactions/recent_transactions_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,6 +15,7 @@ class RecentTransactionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
+    final mainViewModel = getParentViewModel<MainViewModel>(context);
 
     // TODO: Add filter (ex. Last 30 Days)
 
@@ -77,7 +77,7 @@ class RecentTransactionsView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       InkWell(
-                        onTap: () {}, // TODO: Handle on show more
+                        onTap: () => mainViewModel.setIndex(0),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,

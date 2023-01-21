@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
-import 'package:personal_finance_management_app/data/dao/category_dao%20impl.dart';
+import 'package:personal_finance_management_app/data/dao/category_dao_impl.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/data/repositories/Category_repository.dart';
 import 'package:stacked/stacked.dart';

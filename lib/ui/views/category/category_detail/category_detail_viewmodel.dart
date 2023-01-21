@@ -78,6 +78,8 @@ class CategoryDetailViewModel extends FormViewModel {
 
     if (_category != null) {
       newCategory.id = _category!.id;
+      newCategory.isDefault = _category!.isDefault;
+
       final updatedCategory =
           await _categoryService.updateCategory(newCategory);
       _logger.i('Category Updated Successfully: $updatedCategory');

@@ -40,6 +40,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final isAddCategory = category == null;
+    final isDefaultCategory = !isAddCategory ? category!.isDefault! : false;
     final appBarTitle = isAddCategory ? "New Category" : "Edit Category";
     final actionButtonTooltip =
         isAddCategory ? "Save New Category" : "Save Changes";
@@ -62,7 +63,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
             onPressed: model.popCurrentView,
           ),
           actions: [
-            if (!isAddCategory) ...[
+            if (!isAddCategory && !isDefaultCategory) ...[
               IconButton(
                 icon: const Icon(Icons.delete_rounded),
                 tooltip: actionButtonTooltip,
@@ -86,8 +87,12 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
               children: [
                 TextField(
                   key: const ValueKey(CategoryNameValueKey),
+                  enabled: !isDefaultCategory,
                   decoration: InputDecoration(
                     labelText: 'Category Name',
+                    suffixIcon: isDefaultCategory
+                        ? const Icon(Icons.lock_rounded)
+                        : null,
                     errorText: model.hasCategoryNameValidationMessage
                         ? model.categoryNameValidationMessage
                         : null,
@@ -117,13 +122,15 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
                   colorValueToTitleMap: ColorValueToTitleMap,
                   onPressed: (String? value) => model.setColor(value!),
                 ),
-                verticalSpaceSmallPlus,
-                _buildSwitchListTile(
-                  title: 'Visibility',
-                  value: model.categoryIsVisible,
-                  onChanged: model.setCategoryVisibility,
-                  theme: customTheme,
-                ),
+                if (!isDefaultCategory) ...[
+                  verticalSpaceSmallPlus,
+                  _buildSwitchListTile(
+                    title: 'Visibility',
+                    value: model.categoryIsVisible,
+                    onChanged: model.setCategoryVisibility,
+                    theme: customTheme,
+                  ),
+                ],
               ],
             ),
           ),

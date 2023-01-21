@@ -48,6 +48,7 @@ dependencies:
   # freezed_annotation: ^2.0.3
   # json_serializable: ^6.2.0
   intl: ^0.17.0
+  is_first_run: ^1.0.0
   logger: ^1.1.0
   path_provider: ^2.0.11
 

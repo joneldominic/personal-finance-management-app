@@ -106,7 +106,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     setCategoryId(
       categories.isNotEmpty
-          ? transaction?.categoryId.toString() ?? categories[0].id.toString()
+          ? transaction?.categoryId.toString() ?? categories[1].id.toString()
           : '',
     ); // TODO: handle if category was already deleted
 

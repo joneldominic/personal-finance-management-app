@@ -22,18 +22,23 @@ const CategorySchema = CollectionSchema(
       name: r'color',
       type: IsarType.string,
     ),
-    r'isVisible': PropertySchema(
+    r'isDefault': PropertySchema(
       id: 1,
+      name: r'isDefault',
+      type: IsarType.bool,
+    ),
+    r'isVisible': PropertySchema(
+      id: 2,
       name: r'isVisible',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'name',
       type: IsarType.string,
     ),
     r'nature': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'nature',
       type: IsarType.string,
       enumMap: _CategorynatureEnumValueMap,
@@ -87,9 +92,10 @@ void _categorySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.color);
-  writer.writeBool(offsets[1], object.isVisible);
-  writer.writeString(offsets[2], object.name);
-  writer.writeString(offsets[3], object.nature?.name);
+  writer.writeBool(offsets[1], object.isDefault);
+  writer.writeBool(offsets[2], object.isVisible);
+  writer.writeString(offsets[3], object.name);
+  writer.writeString(offsets[4], object.nature?.name);
 }
 
 Category _categoryDeserialize(
@@ -100,9 +106,10 @@ Category _categoryDeserialize(
 ) {
   final object = Category(
     color: reader.readStringOrNull(offsets[0]),
-    isVisible: reader.readBoolOrNull(offsets[1]),
-    name: reader.readStringOrNull(offsets[2]),
-    nature: _CategorynatureValueEnumMap[reader.readStringOrNull(offsets[3])],
+    isDefault: reader.readBoolOrNull(offsets[1]),
+    isVisible: reader.readBoolOrNull(offsets[2]),
+    name: reader.readStringOrNull(offsets[3]),
+    nature: _CategorynatureValueEnumMap[reader.readStringOrNull(offsets[4])],
   );
   object.id = id;
   return object;
@@ -120,8 +127,10 @@ P _categoryDeserializeProp<P>(
     case 1:
       return (reader.readBoolOrNull(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 3:
+      return (reader.readStringOrNull(offset)) as P;
+    case 4:
       return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)])
           as P;
     default:
@@ -423,6 +432,32 @@ extension CategoryQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isDefault',
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isDefault',
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(
+      bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isDefault',
+        value: value,
       ));
     });
   }
@@ -765,6 +800,18 @@ extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
     });
   }
 
+  QueryBuilder<Category, Category, QAfterSortBy> sortByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterSortBy> sortByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Category, Category, QAfterSortBy> sortByIsVisible() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isVisible', Sort.asc);
@@ -828,6 +875,18 @@ extension CategoryQuerySortThenBy
     });
   }
 
+  QueryBuilder<Category, Category, QAfterSortBy> thenByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterSortBy> thenByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Category, Category, QAfterSortBy> thenByIsVisible() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isVisible', Sort.asc);
@@ -874,6 +933,12 @@ extension CategoryQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Category, Category, QDistinct> distinctByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isDefault');
+    });
+  }
+
   QueryBuilder<Category, Category, QDistinct> distinctByIsVisible() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isVisible');
@@ -906,6 +971,12 @@ extension CategoryQueryProperty
   QueryBuilder<Category, String?, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
+    });
+  }
+
+  QueryBuilder<Category, bool?, QQueryOperations> isDefaultProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isDefault');
     });
   }
 

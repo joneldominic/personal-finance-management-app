@@ -17,11 +17,14 @@ class Category {
 
   bool? isVisible;
 
+  bool? isDefault;
+
   Category({
     required this.name,
     required this.nature,
     required this.color,
     required this.isVisible,
+    this.isDefault = false,
   });
 
   @override
@@ -30,6 +33,7 @@ class Category {
       'name: $name, '
       'categoryNature: ${EnumToString.convertToString(nature)}, '
       'color: $color, '
-      'isVisible: $isVisible'
+      'isVisible: $isVisible, '
+      'isDefault: $isDefault'
       ')';
 }

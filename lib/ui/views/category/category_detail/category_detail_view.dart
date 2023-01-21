@@ -77,6 +77,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
           ],
         ),
         backgroundColor: customTheme.contrastBackgroundColor,
+        // TODO: Handle empty category view
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(

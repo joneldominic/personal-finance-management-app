@@ -79,7 +79,8 @@ class TransactionDetailView extends StatelessWidget
             IconButton(
               icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: () => model.saveTransaction(),
+              onPressed:
+                  model.disableSave ? null : () => model.saveTransaction(),
             ),
           ],
         ),
@@ -149,6 +150,7 @@ class TransactionDetailView extends StatelessWidget
                           ),
                         )
                         .toList(),
+                    focusNode: model.destinationAccountFocusNode,
                     onChanged: (String? value) =>
                         model.handleDestinationAccountChange(value!),
                   ),
@@ -164,12 +166,16 @@ class TransactionDetailView extends StatelessWidget
                   controller: amountController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [model.currencyInputFormatter],
+                  focusNode: model.amountFieldFocusNode,
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(CategoryIdValueKey),
                   value: model.categoryIdValue,
-                  decoration: const InputDecoration(
-                    label: Text("Category"),
+                  decoration: InputDecoration(
+                    label: const Text("Category"),
+                    errorText: model.categories.isEmpty
+                        ? model.emptyCategoryErrorMessage
+                        : null,
                   ),
                   items: model.categories
                       .map(

@@ -36,6 +36,9 @@ class TransactionDetailViewModel extends FormViewModel {
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
+  final FocusNode amountFieldFocusNode = FocusNode();
+  final FocusNode destinationAccountFocusNode = FocusNode();
+
   CurrencyInputFormatter currencyInputFormatter = CurrencyInputFormatter(
     symbol: "PHP",
     allowNegative: false,
@@ -44,6 +47,14 @@ class TransactionDetailViewModel extends FormViewModel {
   TextEditingController? _notesController;
 
   String get emptyAccountErrorMessage => "No account available";
+  String get emptyCategoryErrorMessage => "No category available";
+
+  bool get disableSave =>
+      accounts.isEmpty ||
+      categories.isEmpty ||
+      transactionTypeValue ==
+              EnumToString.convertToString(TransactionType.transfer) &&
+          destinationAccounts.isEmpty;
 
   List<Account> accounts = [];
   List<Account> destinationAccounts = [];
@@ -205,12 +216,13 @@ class TransactionDetailViewModel extends FormViewModel {
     if (transactionTypeValue ==
             EnumToString.convertToString(TransactionType.transfer) &&
         destinationAccountIdValue == null) {
-      // TODO: Try focusing destination account field
+      destinationAccountFocusNode.requestFocus();
       handleShowSnackbar(message: "Please select transfer destination account");
       return;
     }
 
     if (amount == 0) {
+      amountFieldFocusNode.requestFocus();
       handleShowSnackbar(message: "Please enter an amount not equal to zero");
       return;
     }
@@ -296,6 +308,13 @@ class TransactionDetailViewModel extends FormViewModel {
       duration: const Duration(seconds: 2),
       onTap: () {},
     );
+  }
+
+  @override
+  void dispose() {
+    amountFieldFocusNode.dispose();
+    destinationAccountFocusNode.dispose();
+    super.dispose();
   }
 
   @override

@@ -9,9 +9,14 @@ class CategoryRepository {
 
   CategoryRepository({required this.categoryDao});
 
-  Future<Category> createCategory(Category category) async {
+  Future<Category> createCategory(Category category) {
     _logger.i('argument: $category');
     return categoryDao.createCategory(category);
+  }
+
+  Future<List<Category>> createCategories(List<Category> categories) {
+    _logger.i('argument: $categories');
+    return categoryDao.createCategories(categories);
   }
 
   Future<Id> deleteCategory(Id id) {

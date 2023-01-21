@@ -9,22 +9,22 @@ class AccountRepository {
 
   AccountRepository({required this.accountDao});
 
-  Future<Account> createAccount(Account account) async {
+  Future<Account> createAccount(Account account) {
     _logger.i('argument: $account');
     return accountDao.createAccount(account);
   }
 
-  Future<Account> updateAccount(Account account) async {
+  Future<Account> updateAccount(Account account) {
     _logger.i('argument: $account');
     return accountDao.updateAccount(account);
   }
 
-  Future<Id> deleteAccount(Id id) async {
+  Future<Id> deleteAccount(Id id) {
     _logger.i('argument: $id');
     return accountDao.deleteAccount(id);
   }
 
-  Future<List<Account>> getAccounts() async {
+  Future<List<Account>> getAccounts() {
     _logger.i('argument: NONE');
     return accountDao.getAccounts();
   }

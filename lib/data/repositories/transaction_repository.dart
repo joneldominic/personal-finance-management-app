@@ -9,22 +9,22 @@ class TransactionRepository {
 
   TransactionRepository({required this.transactionDao});
 
-  Future<Transaction> createTransaction(Transaction transaction) async {
+  Future<Transaction> createTransaction(Transaction transaction) {
     _logger.i('argument: $transaction');
     return transactionDao.createTransaction(transaction);
   }
 
-  Future<Transaction> updateTransaction(Transaction transaction) async {
+  Future<Transaction> updateTransaction(Transaction transaction) {
     _logger.i('argument: $transaction');
     return transactionDao.updateTransaction(transaction);
   }
 
-  Future<Id> deleteTransaction(Id id) async {
+  Future<Id> deleteTransaction(Id id) {
     _logger.i('argument: $id');
     return transactionDao.deleteTransaction(id);
   }
 
-  Future<List<Transaction>> getTransactions() async {
+  Future<List<Transaction>> getTransactions() {
     _logger.i('argument: NONE');
     return transactionDao.getTransactions();
   }

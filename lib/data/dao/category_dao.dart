@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/data/models/category/category.da
 
 abstract class CategoryDao {
   Future<Category> createCategory(Category category);
+  Future<List<Category>> createCategories(List<Category> categories);
   Future<Category> getCategoryById(Id id);
   Future<List<Category>> getCategories();
   Future<Category> updateCategory(Category category);

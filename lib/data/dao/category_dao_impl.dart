@@ -25,6 +25,22 @@ class CategoryDaoImpl extends CategoryDao {
   }
 
   @override
+  Future<List<Category>> createCategories(List<Category> categories) async {
+    _logger.i('argument: $categories');
+
+    Isar isar = await _db;
+
+    final categoryCollection = isar.categorys;
+
+    final createdCategories = await isar.writeTxn(() async {
+      final ids = await categoryCollection.putAll(categories);
+      return await categoryCollection.getAll(ids);
+    });
+
+    return createdCategories.cast<Category>();
+  }
+
+  @override
   Future<Id> deleteCategory(Id id) async {
     _logger.i('argument: $id');
 

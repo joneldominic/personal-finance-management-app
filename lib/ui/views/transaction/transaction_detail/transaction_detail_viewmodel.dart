@@ -210,7 +210,7 @@ class TransactionDetailViewModel extends FormViewModel {
     }
   }
 
-  void handleSaveTransaction() {
+  void handleSaveTransaction() async {
     _logger.i('argument: NONE');
 
     double amount = parseAmountStringToDouble(_amountController!.text);
@@ -234,24 +234,6 @@ class TransactionDetailViewModel extends FormViewModel {
         ? amount.abs() * -1
         : amount.abs();
 
-    _logger.e("accountIdValue: $accountIdValue");
-    _logger.e("transactionTypeValue: $transactionTypeValue");
-    _logger.e("destinationAccountIdValue: $destinationAccountIdValue");
-    _logger.e("amount: $amount");
-    _logger.e("category: $categoryIdValue");
-    _logger.e("date: ${dateController.text}");
-    _logger.e("time: ${timeController.text}");
-    _logger.e("notes: ${_notesController!.text}");
-
-    DateTime tmpDate = DateFormat("MMM dd, yyyy - hh:mm a")
-        .parse("${dateController.text} - ${timeController.text}");
-    String tmpD = DateFormat('MMM dd, yyyy').format(tmpDate);
-    String tmpT = DateFormat('hh:mm a').format(tmpDate);
-
-    _logger.e("parsed date: $tmpDate");
-    _logger.e("tmpDate: $tmpD");
-    _logger.e("tmpTime: $tmpT");
-
     final date = DateFormat("MMM dd, yyyy - hh:mm a")
         .parse("${dateController.text} - ${timeController.text}");
 
@@ -270,10 +252,19 @@ class TransactionDetailViewModel extends FormViewModel {
       notes: _notesController!.text,
     );
 
-    _transactionService.createTransaction(newTransaction);
+    if (_transaction != null) {
+      newTransaction.id = _transaction!.id;
+      final updatedTransaction =
+          await _transactionService.updateTransaction(newTransaction);
+      _logger.i('Transaction Updated Successfully: $updatedTransaction');
+    } else {
+      final addedTransaction =
+          await _transactionService.createTransaction(newTransaction);
+      _logger.i('Transaction Saved Successfully: $addedTransaction');
+    }
+
     // TODO: Adjust balance as well
     // TODO: Create pair transaction for transfer type
-
     // TODO: Handle update transaction functionality
 
     popCurrentView();

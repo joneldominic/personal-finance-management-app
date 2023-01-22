@@ -5,6 +5,7 @@ import 'package:personal_finance_management_app/core/enums/balance_update_type.d
 import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
+import 'package:personal_finance_management_app/core/utils/string_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
@@ -93,9 +94,7 @@ class AccountDetailViewModel extends FormViewModel {
       return;
     }
 
-    final balance = double.parse(
-      _balanceController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
-    );
+    final balance = parseAmountStringToDouble(_balanceController!.text);
 
     if (_account != null && _account!.balance != balance) {
       _logger.i("Showing BalanceConfirmationDialog");

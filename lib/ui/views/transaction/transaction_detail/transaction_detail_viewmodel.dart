@@ -6,6 +6,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
+import 'package:personal_finance_management_app/core/utils/string_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
@@ -209,9 +210,7 @@ class TransactionDetailViewModel extends FormViewModel {
   void saveTransaction() {
     _logger.i('argument: NONE');
 
-    double amount = double.parse(
-      _amountController!.text.replaceAll(RegExp(r'[^0-9-.]+'), ''),
-    );
+    double amount = parseAmountStringToDouble(_amountController!.text);
 
     if (transactionTypeValue ==
             EnumToString.convertToString(TransactionType.transfer) &&
@@ -279,9 +278,7 @@ class TransactionDetailViewModel extends FormViewModel {
   bool showNegativeAmountPrefix() {
     _logger.i('argument: NONE');
 
-    final amount = double.parse(
-      _amountController?.text.replaceAll(RegExp(r'[^0-9-.]+'), '') ?? "0",
-    );
+    final amount = parseAmountStringToDouble(_amountController?.text ?? "0");
 
     if (amount == 0) {
       return false;

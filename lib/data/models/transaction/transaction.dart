@@ -16,12 +16,34 @@ class Transaction {
   @Enumerated(EnumType.name)
   TransactionType? transactionType;
 
+  // TODO: On Transfer logic
+  /* 
+    On Create Transfer (Cash -> BPI = 500)
+      Create 2 Records with matching UUID
+        Positive record
+          Cash -> BPI = +500
+        Negative record
+          Cash -> BPI = -500
+    On Update Transfer Value
+      Delete other Pair
+      Create 2 new Records with matching UUID
+
+    destinationAccountId -> holds the original destination account id
+    transferId -> unique id for each pair of transaction
+    transferAmount -> basis for amount on display and calculation of transaction types
+   */
+
   int? destinationAccountId;
+
+  String? transferId;
 
   @ignore
   String? accountCurrency;
 
   double? amount;
+
+  @Enumerated(EnumType.name)
+  TransactionType? transferTransactionType;
 
   int? categoryId;
 
@@ -39,11 +61,26 @@ class Transaction {
     required this.accountId,
     required this.transactionType,
     this.destinationAccountId,
+    this.transferId,
+    this.transferTransactionType,
     required this.amount,
     required this.categoryId,
     required this.date,
     required this.notes,
   });
+
+  Transaction.clone(Transaction transaction)
+      : this(
+          accountId: transaction.accountId,
+          transactionType: transaction.transactionType,
+          destinationAccountId: transaction.destinationAccountId,
+          transferId: transaction.transferId,
+          transferTransactionType: transaction.transferTransactionType,
+          amount: transaction.amount,
+          categoryId: transaction.categoryId,
+          date: transaction.date,
+          notes: transaction.notes,
+        );
 
   @override
   String toString() => 'Transaction('
@@ -52,6 +89,8 @@ class Transaction {
       'accountName: $accountName, '
       'transactionType: ${EnumToString.convertToString(transactionType)}, '
       'destinationAccountId: $destinationAccountId, '
+      'transferId: $transferId, '
+      'transferTransactionType: $transferTransactionType, '
       'accountCurrency: $accountCurrency, '
       'amount: $amount, '
       'categoryId: $categoryId, '

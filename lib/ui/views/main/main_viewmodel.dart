@@ -66,8 +66,6 @@ class MainViewModel extends MultipleStreamViewModel {
     }
 
     trxs.sort(((a, b) => b.date!.compareTo(a.date!)));
-
-    _logger.i(trxs);
     return trxs;
   }
 

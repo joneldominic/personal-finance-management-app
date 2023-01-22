@@ -29,6 +29,11 @@ class TransactionRepository {
     return transactionDao.deleteTransaction(id);
   }
 
+  Future<int> deleteTransactionsByTransferId(String transferId) {
+    _logger.i('argument: $transferId');
+    return transactionDao.deleteTransactionsByTransferId(transferId);
+  }
+
   Future<List<Transaction>> getTransactions() {
     _logger.i('argument: NONE');
     return transactionDao.getTransactions();

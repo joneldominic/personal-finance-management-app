@@ -30,6 +30,11 @@ class TransactionService with ReactiveServiceMixin {
     return _transactionRepository.deleteTransaction(id);
   }
 
+  Future<int> deleteTransactionsByTransferId(String transferId) {
+    _logger.i('argument: $transferId');
+    return _transactionRepository.deleteTransactionsByTransferId(transferId);
+  }
+
   Future<List<Transaction>> getTransactions() async {
     _logger.i('argument: NONE');
     return _transactionRepository.getTransactions();

@@ -48,7 +48,15 @@ class TransactionDaoImpl extends TransactionDao {
 
     Isar isar = await _db;
 
-    return Future.error("");
+    // TODO: Implement transfer update logic
+
+    final transactionCollection = isar.transactions;
+    final updatedTransaction = await isar.writeTxn(() async {
+      await transactionCollection.put(transaction);
+      return transaction;
+    });
+
+    return updatedTransaction;
   }
 
   @override

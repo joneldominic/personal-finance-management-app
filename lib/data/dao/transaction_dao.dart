@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/data/models/transaction/transact
 
 abstract class TransactionDao {
   Future<Transaction> createTransaction(Transaction transaction);
+  Future<List<Transaction>> createTransactions(List<Transaction> transactions);
   Future<Transaction> getTransactionById(Id id);
   Future<List<Transaction>> getTransactions();
   Future<Transaction> updateTransaction(Transaction transaction);

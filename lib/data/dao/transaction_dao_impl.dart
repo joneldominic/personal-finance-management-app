@@ -25,6 +25,22 @@ class TransactionDaoImpl extends TransactionDao {
   }
 
   @override
+  Future<List<Transaction>> createTransactions(
+      List<Transaction> transactions) async {
+    _logger.i('argument: $transactions');
+
+    Isar isar = await _db;
+
+    final transactionCollection = isar.transactions;
+    final createdTransactions = await isar.writeTxn(() async {
+      final ids = await transactionCollection.putAll(transactions);
+      return await transactionCollection.getAll(ids);
+    });
+
+    return createdTransactions.cast<Transaction>();
+  }
+
+  @override
   Future<Transaction> getTransactionById(Id id) async {
     _logger.i('argument: $id');
 

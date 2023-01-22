@@ -56,8 +56,12 @@ class TransactionDaoImpl extends TransactionDao {
     _logger.i('argument: $id');
 
     Isar isar = await _db;
+    final transactionCollection = isar.transactions;
+    final isDeleted = await isar.writeTxn(() async {
+      return await transactionCollection.delete(id);
+    });
 
-    return Future.error("");
+    return isDeleted ? id : -1;
   }
 
   @override

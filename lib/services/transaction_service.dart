@@ -15,6 +15,11 @@ class TransactionService with ReactiveServiceMixin {
     return _transactionRepository.createTransaction(transaction);
   }
 
+  Future<List<Transaction>> createTransactions(List<Transaction> transactions) {
+    _logger.i('argument: $transactions');
+    return _transactionRepository.createTransactions(transactions);
+  }
+
   Future<Transaction> updateTransaction(Transaction transaction) async {
     _logger.i('argument: $transaction');
     return _transactionRepository.updateTransaction(transaction);

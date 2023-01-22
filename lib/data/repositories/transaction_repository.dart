@@ -14,6 +14,11 @@ class TransactionRepository {
     return transactionDao.createTransaction(transaction);
   }
 
+  Future<List<Transaction>> createTransactions(List<Transaction> transactions) {
+    _logger.i('argument: $transactions');
+    return transactionDao.createTransactions(transactions);
+  }
+
   Future<Transaction> updateTransaction(Transaction transaction) {
     _logger.i('argument: $transaction');
     return transactionDao.updateTransaction(transaction);

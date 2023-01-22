@@ -35,6 +35,9 @@ class Transaction {
 
   int? destinationAccountId;
 
+  @ignore
+  String? destinationAccountName;
+
   String? transferId;
 
   @ignore

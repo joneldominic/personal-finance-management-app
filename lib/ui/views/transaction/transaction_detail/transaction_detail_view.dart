@@ -183,7 +183,7 @@ class TransactionDetailView extends StatelessWidget
                         ? model.emptyCategoryErrorMessage
                         : null,
                   ),
-                  items: model.categories
+                  items: model.filteredCategories
                       .map(
                         (category) => DropdownMenuItem<String>(
                           key: ValueKey('$category key'),
@@ -192,7 +192,9 @@ class TransactionDetailView extends StatelessWidget
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) => model.setCategoryId(value!),
+                  onChanged: model.disableCategoryField
+                      ? null
+                      : (String? value) => model.setCategoryId(value!),
                 ),
                 TextField(
                   readOnly: true,

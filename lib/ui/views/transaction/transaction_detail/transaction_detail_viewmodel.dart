@@ -25,6 +25,9 @@ import 'package:collection/collection.dart';
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
 
+const transferCategoryIndex = 0;
+const undefinedCategoryIndex = 1;
+
 class TransactionDetailViewModel extends FormViewModel {
   final _logger = getLogger('TransactionDetailViewModel');
   final _navigationService = locator<NavigationService>();
@@ -59,9 +62,14 @@ class TransactionDetailViewModel extends FormViewModel {
               EnumToString.convertToString(TransactionType.transfer) &&
           destinationAccounts.isEmpty;
 
+  bool get disableCategoryField =>
+      transactionTypeValue ==
+      EnumToString.convertToString(TransactionType.transfer);
+
   List<Account> accounts = [];
   List<Account> destinationAccounts = [];
   List<Category> categories = [];
+  List<Category> filteredCategories = [];
 
   void initForm({
     required Transaction? transaction,
@@ -108,9 +116,11 @@ class TransactionDetailViewModel extends FormViewModel {
     amountController.text =
         currencyInputFormatter.reformat(transaction?.amount.toString() ?? '0');
 
+    filterCategories();
     setCategoryId(
       categories.isNotEmpty
-          ? transaction?.categoryId.toString() ?? categories[1].id.toString()
+          ? transaction?.categoryId.toString() ??
+              categories[undefinedCategoryIndex].id.toString()
           : '',
     ); // TODO: handle if category was already deleted
 
@@ -127,6 +137,7 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.i('accounts: ${accounts.itemsToString()}');
 
     categories = await _categoryService.getCategories();
+    filteredCategories = categories;
     _logger.i('categories: ${categories.itemsToString()}');
   }
 
@@ -170,12 +181,18 @@ class TransactionDetailViewModel extends FormViewModel {
   void handleTransactionTypeChange(String transactionType) {
     _logger.i('argument: $transactionType');
 
-    setTransactionType(transactionType);
-
     if (transactionType ==
         EnumToString.convertToString(TransactionType.transfer)) {
+      destinationAccountFocusNode.requestFocus();
       filterDestinationAccount();
+      setCategoryId(categories[transferCategoryIndex].id.toString());
+    } else if (transactionTypeValue ==
+        EnumToString.convertToString(TransactionType.transfer)) {
+      setCategoryId(categories[undefinedCategoryIndex].id.toString());
     }
+
+    setTransactionType(transactionType);
+    filterCategories();
   }
 
   void setTransactionDate(BuildContext context) async {
@@ -312,9 +329,20 @@ class TransactionDetailViewModel extends FormViewModel {
   void filterDestinationAccount() {
     _logger.i('argument: NONE');
 
+    // TODO: Make sure transfer can be done to the same currency only
     destinationAccounts = accounts
         .where((acc) => acc.id != int.parse(accountIdValue ?? '-1'))
         .toList();
+  }
+
+  void filterCategories() {
+    if (transactionTypeValue !=
+        EnumToString.convertToString(TransactionType.transfer)) {
+      // Exclude TRANSFER category when transaction type is not transfer
+      filteredCategories = categories.sublist(1);
+    } else {
+      filteredCategories = categories;
+    }
   }
 
   void handleShowSnackbar({required String message}) {

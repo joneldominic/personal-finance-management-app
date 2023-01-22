@@ -40,7 +40,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final isAddCategory = category == null;
-    final isDefaultCategory = !isAddCategory ? category!.isDefault! : false;
+    final isDefaultCategory = category?.isDefault ?? false;
     final appBarTitle = isAddCategory ? "New Category" : "Edit Category";
     final actionButtonTooltip =
         isAddCategory ? "Save New Category" : "Save Changes";

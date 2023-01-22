@@ -275,18 +275,45 @@ class TransactionDetailViewModel extends FormViewModel {
       notes: _notesController!.text,
     );
 
+    // TODO: Improve this implementation; Maybe move logic into service
     if (_transaction != null) {
-      newTransaction.id = _transaction!.id;
-      final updatedTransaction =
-          await _transactionService.updateTransaction(newTransaction);
-      _logger.i('Transaction Updated Successfully: $updatedTransaction');
+      if (transactionTypeValue ==
+          EnumToString.convertToString(TransactionType.transfer)) {
+        if (_transaction!.transactionType == TransactionType.transfer) {
+          await _transactionService
+              .deleteTransactionsByTransferId(_transaction!.transferId!);
+        } else {
+          await _transactionService.deleteTransaction(_transaction!.id);
+        }
+
+        final transferId = const Uuid().v1();
+
+        newTransaction.transferId = transferId;
+        final pairTransaction = Transaction.clone(newTransaction);
+
+        newTransaction.transferTransactionType = TransactionType.income;
+        pairTransaction.transferTransactionType = TransactionType.expense;
+
+        final addedTransactions = await _transactionService
+            .createTransactions([newTransaction, pairTransaction]);
+        _logger.i('Transactions Updated Successfully: $addedTransactions');
+      } else {
+        if (_transaction!.transactionType == TransactionType.transfer) {
+          await _transactionService
+              .deleteTransactionsByTransferId(_transaction!.transferId!);
+        }
+
+        newTransaction.id = _transaction!.id;
+        final updatedTransaction =
+            await _transactionService.updateTransaction(newTransaction);
+        _logger.i('Transaction Updated Successfully: $updatedTransaction');
+      }
     } else {
       if (transactionTypeValue ==
           EnumToString.convertToString(TransactionType.transfer)) {
         final transferId = const Uuid().v1();
 
         newTransaction.transferId = transferId;
-
         final pairTransaction = Transaction.clone(newTransaction);
 
         newTransaction.transferTransactionType = TransactionType.income;
@@ -322,14 +349,11 @@ class TransactionDetailViewModel extends FormViewModel {
       return;
     }
 
-    final deletedId =
-        await _transactionService.deleteTransaction(_transaction!.id);
-
-    if (deletedId == -1) {
-      _logger.e("Transaction Deletion Failed!");
-      handleShowSnackbar(
-          message: "Can't delete transaction. Please try again.");
-      return;
+    if (_transaction!.transactionType == TransactionType.transfer) {
+      await _transactionService
+          .deleteTransactionsByTransferId(_transaction!.transferId!);
+    } else {
+      await _transactionService.deleteTransaction(_transaction!.id);
     }
 
     popCurrentView();

@@ -57,6 +57,7 @@ class RecentTransactionsView extends StatelessWidget {
                     categoryName: transaction.categoryName,
                     categoryColor: transaction.categoryColor,
                     accountName: transaction.accountName,
+                    destinationAccountName: transaction.destinationAccountName,
                     accountCurrency: transaction.accountCurrency,
                     amount: transaction.amount,
                     transactionType: transaction.transactionType,

@@ -11,6 +11,7 @@ class TransactionListItem extends StatelessWidget {
     required this.categoryName,
     required this.categoryColor,
     required this.accountName,
+    required this.destinationAccountName,
     required this.accountCurrency,
     required this.amount,
     required this.transactionType,
@@ -22,6 +23,7 @@ class TransactionListItem extends StatelessWidget {
   final String? categoryName;
   final String? categoryColor;
   final String? accountName;
+  final String? destinationAccountName;
   final String? accountCurrency;
   final double? amount;
   final TransactionType? transactionType;
@@ -34,6 +36,10 @@ class TransactionListItem extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
     final isExpense =
         (transferTransactionType ?? transactionType) == TransactionType.expense;
+    final accountNameDisplay = transactionType == TransactionType.transfer
+        ? "$accountName ➜ $destinationAccountName"
+        : "$accountName";
+    ;
 
     return ListTile(
       onTap: onTap,
@@ -48,7 +54,7 @@ class TransactionListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ThemeText.listItemTitle(categoryName ?? ''),
-          ThemeText.listItemSubTitle(accountName ?? ''),
+          ThemeText.listItemSubTitle(accountNameDisplay),
         ],
       ),
       trailing: FittedBox(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/components/conditional_async_wrapper.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -33,6 +32,8 @@ class TransactionListView extends StatelessWidget {
                 categoryName: mainViewModel.transactions[index].categoryName,
                 categoryColor: mainViewModel.transactions[index].categoryColor,
                 accountName: mainViewModel.transactions[index].accountName,
+                destinationAccountName:
+                    mainViewModel.transactions[index].destinationAccountName,
                 accountCurrency:
                     mainViewModel.transactions[index].accountCurrency,
                 amount: mainViewModel.transactions[index].amount,

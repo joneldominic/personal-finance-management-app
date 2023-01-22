@@ -9,6 +9,8 @@ import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/services/transaction_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 const String _accountStreamKey = 'account-stream';
 const String _categoryStreamKey = 'category-stream';
@@ -54,12 +56,16 @@ class MainViewModel extends MultipleStreamViewModel {
 
     for (Transaction t in trxs) {
       final account =
-          accounts.firstWhere((account) => account.id == t.accountId!);
+          accounts.firstWhere((account) => account.id == t.accountId);
+
+      final destinationAccount = accounts
+          .firstWhereOrNull((account) => account.id == t.destinationAccountId);
 
       final category =
-          categories.firstWhere((category) => category.id == t.categoryId!);
+          categories.firstWhere((category) => category.id == t.categoryId);
 
       t.accountName = account.name;
+      t.destinationAccountName = destinationAccount?.name;
       t.accountCurrency = account.currency;
       t.categoryName = category.name;
       t.categoryColor = category.color;

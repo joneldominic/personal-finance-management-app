@@ -65,7 +65,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             onPressed: model.popCurrentView,
           ),
           actions: [
-            if (account != null) ...[
+            if (!isAddAccount) ...[
               IconButton(
                 icon: const Icon(Icons.delete_rounded),
                 tooltip: actionButtonTooltip,

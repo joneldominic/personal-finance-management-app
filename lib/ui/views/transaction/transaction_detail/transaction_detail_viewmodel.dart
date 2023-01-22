@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
@@ -31,6 +32,7 @@ class TransactionDetailViewModel extends FormViewModel {
   final _transactionService = locator<TransactionService>();
   final _categoryService = locator<CategoryService>();
   final _snackbarService = locator<SnackbarService>();
+  final _dialogService = locator<DialogService>();
 
   Transaction? _transaction;
 
@@ -103,7 +105,8 @@ class TransactionDetailViewModel extends FormViewModel {
       allowNegative: false,
     );
     _amountController = amountController;
-    amountController.text = currencyInputFormatter.reformat('0');
+    amountController.text =
+        currencyInputFormatter.reformat(transaction?.amount.toString() ?? '0');
 
     setCategoryId(
       categories.isNotEmpty
@@ -207,7 +210,7 @@ class TransactionDetailViewModel extends FormViewModel {
     }
   }
 
-  void saveTransaction() {
+  void handleSaveTransaction() {
     _logger.i('argument: NONE');
 
     double amount = parseAmountStringToDouble(_amountController!.text);
@@ -270,7 +273,34 @@ class TransactionDetailViewModel extends FormViewModel {
     _transactionService.createTransaction(newTransaction);
     // TODO: Adjust balance as well
     // TODO: Create pair transaction for transfer type
-    // TODO: Handle update transaction
+
+    // TODO: Handle update transaction functionality
+
+    popCurrentView();
+  }
+
+  void handleDeleteTransaction() async {
+    _logger.i('argument: NONE');
+
+    final response = await _dialogService.showCustomDialog(
+      variant: DialogType.deleteConfirmation,
+      data: "Do you really want to delete this transaction?",
+    );
+
+    if (response == null || !response.confirmed) {
+      _logger.w("Delete Transaction Cancelled");
+      return;
+    }
+
+    final deletedId =
+        await _transactionService.deleteTransaction(_transaction!.id);
+
+    if (deletedId == -1) {
+      _logger.e("Transaction Deletion Failed!");
+      handleShowSnackbar(
+          message: "Can't delete transaction. Please try again.");
+      return;
+    }
 
     popCurrentView();
   }

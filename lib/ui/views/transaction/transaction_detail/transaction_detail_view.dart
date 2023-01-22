@@ -2,10 +2,8 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
-import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/delete_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_viewmodel.dart';
@@ -76,6 +74,13 @@ class TransactionDetailView extends StatelessWidget
             onPressed: model.popCurrentView,
           ),
           actions: [
+            if (!isAddTransaction) ...[
+              IconButton(
+                icon: const Icon(Icons.delete_rounded),
+                tooltip: actionButtonTooltip,
+                onPressed: model.handleDeleteTransaction,
+              ),
+            ],
             IconButton(
               icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
@@ -227,14 +232,6 @@ class TransactionDetailView extends StatelessWidget
                   minLines: 3,
                   maxLines: 5,
                 ),
-                // TODO: Move delete into AppBar action button
-                if (!isAddTransaction) ...[
-                  verticalSpaceRegular,
-                  DeleteButton(
-                    label: 'Delete Transaction',
-                    onPressed: () {},
-                  ),
-                ]
               ],
             ),
           ),

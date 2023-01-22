@@ -79,8 +79,9 @@ class TransactionDetailView extends StatelessWidget
             IconButton(
               icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
-              onPressed:
-                  model.disableSave ? null : () => model.saveTransaction(),
+              onPressed: model.disableSave
+                  ? null
+                  : () => model.handleSaveTransaction(),
             ),
           ],
         ),

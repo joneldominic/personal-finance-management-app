@@ -89,6 +89,22 @@ class TransactionDaoImpl extends TransactionDao {
   }
 
   @override
+  Future<int> deleteTransactionsByTransferId(String transferId) async {
+    _logger.i('argument: $transferId');
+
+    Isar isar = await _db;
+    final transactionCollection = isar.transactions;
+    final deleteCount = await isar.writeTxn(() async {
+      return await transactionCollection
+          .filter()
+          .transferIdEqualTo(transferId)
+          .deleteAll();
+    });
+
+    return deleteCount;
+  }
+
+  @override
   Stream<List<Transaction>> transactionCollectionStream() async* {
     _logger.i('argument: NONE');
     Isar isar = await _db;

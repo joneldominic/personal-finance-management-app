@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/ui/components/conditional_async_wrapper.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -27,6 +28,7 @@ class TransactionListView extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemCount: mainViewModel.transactions.length,
             itemBuilder: (BuildContext context, int index) {
+              // TODO: Try simplifying this by passing the Transaction object
               return TransactionListItem(
                 categoryName: mainViewModel.transactions[index].categoryName,
                 categoryColor: mainViewModel.transactions[index].categoryColor,
@@ -36,6 +38,8 @@ class TransactionListView extends StatelessWidget {
                 amount: mainViewModel.transactions[index].amount,
                 transactionType:
                     mainViewModel.transactions[index].transactionType,
+                transferTransactionType:
+                    mainViewModel.transactions[index].transferTransactionType,
                 timeStamp: mainViewModel.transactions[index].date,
                 onTap: () => model.navigateToTransactionDetailEditMode(
                     mainViewModel.transactions[index]),

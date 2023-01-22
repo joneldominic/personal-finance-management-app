@@ -8,13 +8,14 @@ import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 class TransactionListItem extends StatelessWidget {
   const TransactionListItem({
     Key? key,
-    this.categoryName,
-    this.categoryColor,
-    this.accountName,
-    this.accountCurrency,
-    this.amount,
-    this.transactionType,
-    this.timeStamp,
+    required this.categoryName,
+    required this.categoryColor,
+    required this.accountName,
+    required this.accountCurrency,
+    required this.amount,
+    required this.transactionType,
+    required this.transferTransactionType,
+    required this.timeStamp,
     required this.onTap,
   }) : super(key: key);
 
@@ -24,12 +25,15 @@ class TransactionListItem extends StatelessWidget {
   final String? accountCurrency;
   final double? amount;
   final TransactionType? transactionType;
+  final TransactionType? transferTransactionType;
   final DateTime? timeStamp;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
+    final isExpense =
+        (transferTransactionType ?? transactionType) == TransactionType.expense;
 
     return ListTile(
       onTap: onTap,
@@ -58,17 +62,13 @@ class TransactionListItem extends StatelessWidget {
                     currency: accountCurrency ?? "PHP",
                     value: amount!,
                   ),
-                  color: transactionType == TransactionType.expense
-                      ? customTheme.danger
-                      : customTheme.success,
+                  color: isExpense ? customTheme.danger : customTheme.success,
                 ),
                 Icon(
-                  transactionType == TransactionType.expense
+                  isExpense
                       ? Icons.arrow_drop_down_rounded
                       : Icons.arrow_drop_up_rounded,
-                  color: transactionType == TransactionType.expense
-                      ? customTheme.danger
-                      : customTheme.success,
+                  color: isExpense ? customTheme.danger : customTheme.success,
                 ),
               ],
             ),

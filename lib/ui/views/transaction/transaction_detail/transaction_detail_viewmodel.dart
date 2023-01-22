@@ -20,6 +20,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
+import 'package:uuid/uuid.dart';
 
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.
@@ -160,7 +161,13 @@ class TransactionDetailViewModel extends FormViewModel {
   void handleAccountChange(String accountId) {
     _logger.i('argument: $accountId');
 
+    if (accountId == destinationAccountIdValue) {
+      filterDestinationAccount(shouldFilter: false);
+      setDestinationAccountId(accountIdValue!);
+    }
+
     setAccountId(accountId);
+    filterDestinationAccount();
 
     Account account = accounts.firstWhere(
       (acc) => acc.id == int.parse(accountId),
@@ -169,8 +176,6 @@ class TransactionDetailViewModel extends FormViewModel {
         CurrencyInputFormatter(symbol: account.currency!, allowNegative: false);
     _amountController!.text =
         currencyInputFormatter.reformat(_amountController!.text);
-
-    filterDestinationAccount();
   }
 
   void handleDestinationAccountChange(String accountId) {
@@ -256,7 +261,8 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final newTransaction = Transaction(
       accountId: int.parse(accountIdValue!),
-      destinationAccountId: destinationAccountIdValue != null
+      destinationAccountId: transactionTypeValue ==
+              EnumToString.convertToString(TransactionType.transfer)
           ? int.parse(destinationAccountIdValue!)
           : null,
       transactionType: EnumToString.fromString(
@@ -275,9 +281,25 @@ class TransactionDetailViewModel extends FormViewModel {
           await _transactionService.updateTransaction(newTransaction);
       _logger.i('Transaction Updated Successfully: $updatedTransaction');
     } else {
-      final addedTransaction =
-          await _transactionService.createTransaction(newTransaction);
-      _logger.i('Transaction Saved Successfully: $addedTransaction');
+      if (transactionTypeValue ==
+          EnumToString.convertToString(TransactionType.transfer)) {
+        final transferId = const Uuid().v1();
+
+        newTransaction.transferId = transferId;
+
+        final pairTransaction = Transaction.clone(newTransaction);
+
+        newTransaction.transferTransactionType = TransactionType.income;
+        pairTransaction.transferTransactionType = TransactionType.expense;
+
+        final addedTransactions = await _transactionService
+            .createTransactions([newTransaction, pairTransaction]);
+        _logger.i('Transactions Saved Successfully: $addedTransactions');
+      } else {
+        final addedTransaction =
+            await _transactionService.createTransaction(newTransaction);
+        _logger.i('Transaction Saved Successfully: $addedTransaction');
+      }
     }
 
     // TODO: Adjust balance as well
@@ -326,8 +348,12 @@ class TransactionDetailViewModel extends FormViewModel {
         EnumToString.convertToString(TransactionType.expense);
   }
 
-  void filterDestinationAccount() {
-    _logger.i('argument: NONE');
+  void filterDestinationAccount({bool shouldFilter = true}) {
+    _logger.i('argument: {shouldFilter: $shouldFilter}');
+
+    if (!shouldFilter) {
+      destinationAccounts = accounts;
+    }
 
     // TODO: Make sure transfer can be done to the same currency only
     destinationAccounts = accounts

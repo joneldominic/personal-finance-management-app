@@ -34,12 +34,14 @@ class SimpleLogPrinter extends LogPrinter {
     var emoji = PrettyPrinter.levelEmojis[event.level];
     var methodName = _getMethodName();
 
-    var methodNameSection = printCallingFunctionName && methodName != null ? ' | $methodName ' : '';
+    var methodNameSection =
+        printCallingFunctionName && methodName != null ? ' | $methodName ' : '';
     var stackLog = event.stackTrace.toString();
     var output =
         '$emoji $className$methodNameSection - ${event.message}${printCallStack ? '\nSTACKTRACE:\n$stackLog' : ''}';
 
-    if (exludeLogsFromClasses.any((excludeClass) => className == excludeClass) ||
+    if (exludeLogsFromClasses
+            .any((excludeClass) => className == excludeClass) ||
         (showOnlyClass != null && className != showOnlyClass)) return [];
 
     final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
@@ -63,8 +65,8 @@ class SimpleLogPrinter extends LogPrinter {
       var currentStack = StackTrace.current;
       var formattedStacktrace = _formatStackTrace(currentStack, 3);
 
-      var realFirstLine =
-          formattedStacktrace?.firstWhere((line) => line.contains(className), orElse: () => "");
+      var realFirstLine = formattedStacktrace
+          ?.firstWhere((line) => line.contains(className), orElse: () => "");
 
       var methodName = realFirstLine?.replaceAll('$className.', '');
       return methodName;

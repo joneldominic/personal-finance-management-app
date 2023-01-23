@@ -38,7 +38,6 @@ class TransactionListItem extends StatelessWidget {
     final accountNameDisplay = transactionType == TransactionType.transfer
         ? "$accountName ➜ $destinationAccountName"
         : "$accountName";
-    ;
 
     return ListTile(
       onTap: onTap,

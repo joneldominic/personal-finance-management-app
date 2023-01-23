@@ -3,7 +3,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
 import 'package:personal_finance_management_app/data/dao/category_dao_impl.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
-import 'package:personal_finance_management_app/data/repositories/Category_repository.dart';
+import 'package:personal_finance_management_app/data/repositories/category_repository.dart';
 import 'package:stacked/stacked.dart';
 
 class CategoryService with ReactiveServiceMixin {

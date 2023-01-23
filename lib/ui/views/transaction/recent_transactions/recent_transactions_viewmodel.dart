@@ -4,7 +4,9 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RecentTransactionsViewModel extends BaseViewModel {
+  // ignore: unused_field
   final _logger = getLogger('TransactionListViewModel');
+  // ignore: unused_field
   final _navigationService = locator<NavigationService>();
 
   // TODO: Handle on item click - edit mode

@@ -20,9 +20,6 @@ class CategoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    // TODO: Add default category (Undefined)
-    // TODO: Add transfer category
-
     return ViewModelBuilder<CategoryListViewModel>.reactive(
       viewModelBuilder: () => CategoryListViewModel(),
       builder: (context, model, child) => Scaffold(

@@ -19,7 +19,7 @@ class RecentTransactionsView extends StatelessWidget {
 
     // TODO: Add filter (ex. Last 30 Days)
 
-    // TODO: Implement action button - choose timeframe
+    // TODO: Implement action button - choose time-frame
 
     return ViewModelBuilder<RecentTransactionsViewModel>.reactive(
       viewModelBuilder: () => RecentTransactionsViewModel(),

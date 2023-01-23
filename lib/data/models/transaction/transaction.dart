@@ -16,23 +16,6 @@ class Transaction {
   @Enumerated(EnumType.name)
   TransactionType? transactionType;
 
-  // TODO: On Transfer logic
-  /* 
-    On Create Transfer (Cash -> BPI = 500)
-      Create 2 Records with matching UUID
-        Positive record
-          Cash -> BPI = +500
-        Negative record
-          Cash -> BPI = -500
-    On Update Transfer Value
-      Delete other Pair
-      Create 2 new Records with matching UUID
-
-    destinationAccountId -> holds the original destination account id
-    transferId -> unique id for each pair of transaction
-    transferAmount -> basis for amount on display and calculation of transaction types
-   */
-
   int? destinationAccountId;
 
   @ignore

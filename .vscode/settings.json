@@ -1,3 +1,9 @@
 {
-  "cSpell.words": []
+  "cSpell.words": [],
+  "dart.lineLength": 100,
+  "[dart]": {
+      "editor.rulers": [
+          100
+      ],
+  }
 }

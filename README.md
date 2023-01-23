@@ -16,8 +16,15 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## Frequently used commands
+
 - Running Build Runner -
-`flutter pub run build_runner build --delete-conflicting-outputs`
+  `flutter pub run build_runner build --delete-conflicting-outputs`
 
 ## Note for Isar
+
 - Don't forget to add schema into IsarDatabase
+
+## Formatting
+
+- Format all files with line length 100
+  `flutter format . -l 100`

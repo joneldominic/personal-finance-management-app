@@ -25,8 +25,7 @@ class TransactionDaoImpl extends TransactionDao {
   }
 
   @override
-  Future<List<Transaction>> createTransactions(
-      List<Transaction> transactions) async {
+  Future<List<Transaction>> createTransactions(List<Transaction> transactions) async {
     _logger.i('argument: $transactions');
 
     Isar isar = await _db;
@@ -95,10 +94,7 @@ class TransactionDaoImpl extends TransactionDao {
     Isar isar = await _db;
     final transactionCollection = isar.transactions;
     final deleteCount = await isar.writeTxn(() async {
-      return await transactionCollection
-          .filter()
-          .transferIdEqualTo(transferId)
-          .deleteAll();
+      return await transactionCollection.filter().transferIdEqualTo(transferId).deleteAll();
     });
 
     return deleteCount;
@@ -110,8 +106,7 @@ class TransactionDaoImpl extends TransactionDao {
     Isar isar = await _db;
 
     final transactionCollection = isar.transactions;
-    Query<Transaction> transactionsQuery =
-        transactionCollection.where().build();
+    Query<Transaction> transactionsQuery = transactionCollection.where().build();
 
     yield* transactionsQuery.watch(fireImmediately: true);
   }

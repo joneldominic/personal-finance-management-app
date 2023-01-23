@@ -32,8 +32,7 @@ class SettingsView extends StatelessWidget {
                     _buildCard(
                       children: [
                         ListTile(
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(15, 15, 0, 15),
+                          contentPadding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
                           leading: CircleAvatar(
                             radius: 22,
                             backgroundColor: customTheme.avatarBackgroundColor,

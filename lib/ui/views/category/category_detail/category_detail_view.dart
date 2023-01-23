@@ -42,8 +42,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
     final isAddCategory = category == null;
     final isDefaultCategory = category?.isDefault ?? false;
     final appBarTitle = isAddCategory ? "New Category" : "Edit Category";
-    final actionButtonTooltip =
-        isAddCategory ? "Save New Category" : "Save Changes";
+    final actionButtonTooltip = isAddCategory ? "Save New Category" : "Save Changes";
 
     return ViewModelBuilder<CategoryDetailViewModel>.reactive(
       viewModelBuilder: () => CategoryDetailViewModel(),
@@ -90,9 +89,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
                   enabled: !isDefaultCategory,
                   decoration: InputDecoration(
                     labelText: 'Category Name',
-                    suffixIcon: isDefaultCategory
-                        ? const Icon(Icons.lock_rounded)
-                        : null,
+                    suffixIcon: isDefaultCategory ? const Icon(Icons.lock_rounded) : null,
                     errorText: model.hasCategoryNameValidationMessage
                         ? model.categoryNameValidationMessage
                         : null,

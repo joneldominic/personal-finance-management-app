@@ -8,8 +8,7 @@ import 'package:stacked/stacked.dart';
 
 class CategoryService with ReactiveServiceMixin {
   final _logger = getLogger('CategoryService');
-  final _categoryRepository =
-      CategoryRepository(categoryDao: CategoryDaoImpl());
+  final _categoryRepository = CategoryRepository(categoryDao: CategoryDaoImpl());
 
   Future<List<Category>> initCategories() {
     _logger.i('argument: NONE');

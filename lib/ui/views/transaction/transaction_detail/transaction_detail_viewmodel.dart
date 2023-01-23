@@ -59,13 +59,11 @@ class TransactionDetailViewModel extends FormViewModel {
   bool get disableSave =>
       accounts.isEmpty ||
       categories.isEmpty ||
-      transactionTypeValue ==
-              EnumToString.convertToString(TransactionType.transfer) &&
+      transactionTypeValue == EnumToString.convertToString(TransactionType.transfer) &&
           destinationAccounts.isEmpty;
 
   bool get disableCategoryField =>
-      transactionTypeValue ==
-      EnumToString.convertToString(TransactionType.transfer);
+      transactionTypeValue == EnumToString.convertToString(TransactionType.transfer);
 
   List<Account> accounts = [];
   List<Account> destinationAccounts = [];
@@ -88,9 +86,7 @@ class TransactionDetailViewModel extends FormViewModel {
     filterDestinationAccount();
 
     setAccountId(
-      accounts.isNotEmpty
-          ? transaction?.accountId.toString() ?? accounts[0].id.toString()
-          : "",
+      accounts.isNotEmpty ? transaction?.accountId.toString() ?? accounts[0].id.toString() : "",
     );
 
     setTransactionType(
@@ -105,23 +101,18 @@ class TransactionDetailViewModel extends FormViewModel {
     }
 
     // TODO: Handle if account was already deleted
-    Account? account =
-        accounts.firstWhereOrNull((acc) => acc.id == transaction?.accountId);
+    Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.accountId);
     currencyInputFormatter = CurrencyInputFormatter(
-      symbol: accounts.isNotEmpty
-          ? account?.currency ?? accounts[0].currency!
-          : "PHP",
+      symbol: accounts.isNotEmpty ? account?.currency ?? accounts[0].currency! : "PHP",
       allowNegative: false,
     );
     _amountController = amountController;
-    amountController.text =
-        currencyInputFormatter.reformat(transaction?.amount.toString() ?? '0');
+    amountController.text = currencyInputFormatter.reformat(transaction?.amount.toString() ?? '0');
 
     filterCategories();
     setCategoryId(
       categories.isNotEmpty
-          ? transaction?.categoryId.toString() ??
-              categories[undefinedCategoryIndex].id.toString()
+          ? transaction?.categoryId.toString() ?? categories[undefinedCategoryIndex].id.toString()
           : '',
     ); // TODO: handle if category was already deleted
 
@@ -174,8 +165,7 @@ class TransactionDetailViewModel extends FormViewModel {
     );
     currencyInputFormatter =
         CurrencyInputFormatter(symbol: account.currency!, allowNegative: false);
-    _amountController!.text =
-        currencyInputFormatter.reformat(_amountController!.text);
+    _amountController!.text = currencyInputFormatter.reformat(_amountController!.text);
   }
 
   void handleDestinationAccountChange(String accountId) {
@@ -186,13 +176,11 @@ class TransactionDetailViewModel extends FormViewModel {
   void handleTransactionTypeChange(String transactionType) {
     _logger.i('argument: $transactionType');
 
-    if (transactionType ==
-        EnumToString.convertToString(TransactionType.transfer)) {
+    if (transactionType == EnumToString.convertToString(TransactionType.transfer)) {
       destinationAccountFocusNode.requestFocus();
       filterDestinationAccount();
       setCategoryId(categories[transferCategoryIndex].id.toString());
-    } else if (transactionTypeValue ==
-        EnumToString.convertToString(TransactionType.transfer)) {
+    } else if (transactionTypeValue == EnumToString.convertToString(TransactionType.transfer)) {
       setCategoryId(categories[undefinedCategoryIndex].id.toString());
     }
 
@@ -226,8 +214,8 @@ class TransactionDetailViewModel extends FormViewModel {
     );
 
     if (selectedTime != null) {
-      final String time = DateFormat('hh:mm a').format(DateTime(now.year,
-          now.month, now.day, selectedTime.hour, selectedTime.minute));
+      final String time = DateFormat('hh:mm a')
+          .format(DateTime(now.year, now.month, now.day, selectedTime.hour, selectedTime.minute));
       timeController.text = time;
     }
   }
@@ -237,8 +225,8 @@ class TransactionDetailViewModel extends FormViewModel {
 
     double amount = parseAmountStringToDouble(_amountController!.text);
 
-    final currTransactionTypeIsTransfer = transactionTypeValue ==
-        EnumToString.convertToString(TransactionType.transfer);
+    final currTransactionTypeIsTransfer =
+        transactionTypeValue == EnumToString.convertToString(TransactionType.transfer);
 
     if (currTransactionTypeIsTransfer && destinationAccountIdValue == null) {
       destinationAccountFocusNode.requestFocus();
@@ -252,8 +240,7 @@ class TransactionDetailViewModel extends FormViewModel {
       return;
     }
 
-    amount = transactionTypeValue ==
-            EnumToString.convertToString(TransactionType.expense)
+    amount = transactionTypeValue == EnumToString.convertToString(TransactionType.expense)
         ? amount.abs() * -1
         : amount.abs();
 
@@ -262,9 +249,8 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final newTransaction = Transaction(
       accountId: int.parse(accountIdValue!),
-      destinationAccountId: currTransactionTypeIsTransfer
-          ? int.parse(destinationAccountIdValue!)
-          : null,
+      destinationAccountId:
+          currTransactionTypeIsTransfer ? int.parse(destinationAccountIdValue!) : null,
       transactionType: EnumToString.fromString(
         TransactionType.values,
         transactionTypeValue!,
@@ -281,34 +267,28 @@ class TransactionDetailViewModel extends FormViewModel {
 
       if (currTransactionTypeIsTransfer) {
         if (oldTransactionTypeIsTransfer) {
-          await _transactionService
-              .deleteTransactionsByTransferId(_transaction!.transferId!);
+          await _transactionService.deleteTransactionsByTransferId(_transaction!.transferId!);
         } else {
           await _transactionService.deleteTransaction(_transaction!.id);
         }
 
-        final updatedTransaction =
-            await _saveTransferTransaction(newTransaction);
+        final updatedTransaction = await _saveTransferTransaction(newTransaction);
         _logger.i('Transactions Updated Successfully: $updatedTransaction');
       } else {
         if (oldTransactionTypeIsTransfer) {
-          await _transactionService
-              .deleteTransactionsByTransferId(_transaction!.transferId!);
+          await _transactionService.deleteTransactionsByTransferId(_transaction!.transferId!);
         }
 
         newTransaction.id = _transaction!.id;
-        final updatedTransaction =
-            await _transactionService.updateTransaction(newTransaction);
+        final updatedTransaction = await _transactionService.updateTransaction(newTransaction);
         _logger.i('Transaction Updated Successfully: $updatedTransaction');
       }
     } else {
       if (currTransactionTypeIsTransfer) {
-        final addedTransactions =
-            await _saveTransferTransaction(newTransaction);
+        final addedTransactions = await _saveTransferTransaction(newTransaction);
         _logger.i('Transactions Saved Successfully: $addedTransactions');
       } else {
-        final addedTransaction =
-            await _transactionService.createTransaction(newTransaction);
+        final addedTransaction = await _transactionService.createTransaction(newTransaction);
         _logger.i('Transaction Saved Successfully: $addedTransaction');
       }
     }
@@ -320,8 +300,7 @@ class TransactionDetailViewModel extends FormViewModel {
     popCurrentView();
   }
 
-  Future<List<Transaction>> _saveTransferTransaction(
-      Transaction newTransaction) async {
+  Future<List<Transaction>> _saveTransferTransaction(Transaction newTransaction) async {
     final transferId = const Uuid().v1();
 
     newTransaction.transferId = transferId;
@@ -330,8 +309,7 @@ class TransactionDetailViewModel extends FormViewModel {
     newTransaction.transferTransactionType = TransactionType.income;
     pairTransaction.transferTransactionType = TransactionType.expense;
 
-    return await _transactionService
-        .createTransactions([newTransaction, pairTransaction]);
+    return await _transactionService.createTransactions([newTransaction, pairTransaction]);
   }
 
   void handleDeleteTransaction() async {
@@ -348,8 +326,7 @@ class TransactionDetailViewModel extends FormViewModel {
     }
 
     if (_transaction!.transactionType == TransactionType.transfer) {
-      await _transactionService
-          .deleteTransactionsByTransferId(_transaction!.transferId!);
+      await _transactionService.deleteTransactionsByTransferId(_transaction!.transferId!);
     } else {
       await _transactionService.deleteTransaction(_transaction!.id);
     }
@@ -366,8 +343,7 @@ class TransactionDetailViewModel extends FormViewModel {
       return false;
     }
 
-    return transactionTypeValue ==
-        EnumToString.convertToString(TransactionType.expense);
+    return transactionTypeValue == EnumToString.convertToString(TransactionType.expense);
   }
 
   void filterDestinationAccount({bool shouldFilter = true}) {
@@ -378,14 +354,12 @@ class TransactionDetailViewModel extends FormViewModel {
     }
 
     // TODO: Make sure transfer can be done to the same currency only
-    destinationAccounts = accounts
-        .where((acc) => acc.id != int.parse(accountIdValue ?? '-1'))
-        .toList();
+    destinationAccounts =
+        accounts.where((acc) => acc.id != int.parse(accountIdValue ?? '-1')).toList();
   }
 
   void filterCategories() {
-    if (transactionTypeValue !=
-        EnumToString.convertToString(TransactionType.transfer)) {
+    if (transactionTypeValue != EnumToString.convertToString(TransactionType.transfer)) {
       // Exclude TRANSFER category when transaction type is not transfer
       filteredCategories = categories.sublist(1);
     } else {

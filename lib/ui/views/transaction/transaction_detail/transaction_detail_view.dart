@@ -36,8 +36,7 @@ import 'package:stacked/stacked_annotations.dart';
   ),
   FormTextField(initialValue: '', name: 'notes'),
 ])
-class TransactionDetailView extends StatelessWidget
-    with $TransactionDetailView {
+class TransactionDetailView extends StatelessWidget with $TransactionDetailView {
   TransactionDetailView({
     Key? key,
     this.transaction,
@@ -50,10 +49,8 @@ class TransactionDetailView extends StatelessWidget
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final isAddTransaction = transaction == null;
-    final appBarTitle =
-        isAddTransaction ? "New Transaction" : "Transaction Detail";
-    final actionButtonTooltip =
-        isAddTransaction ? "Save Transaction" : "Save Changes";
+    final appBarTitle = isAddTransaction ? "New Transaction" : "Transaction Detail";
+    final actionButtonTooltip = isAddTransaction ? "Save Transaction" : "Save Changes";
 
     return ViewModelBuilder<TransactionDetailViewModel>.reactive(
       viewModelBuilder: () => TransactionDetailViewModel(),
@@ -84,9 +81,7 @@ class TransactionDetailView extends StatelessWidget
             IconButton(
               icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: model.disableSave
-                  ? null
-                  : () => model.handleSaveTransaction(),
+              onPressed: model.disableSave ? null : () => model.handleSaveTransaction(),
             ),
           ],
         ),
@@ -102,9 +97,7 @@ class TransactionDetailView extends StatelessWidget
                   value: model.accountIdValue,
                   decoration: InputDecoration(
                     label: const Text("Account"),
-                    errorText: model.accounts.isEmpty
-                        ? model.emptyAccountErrorMessage
-                        : null,
+                    errorText: model.accounts.isEmpty ? model.emptyAccountErrorMessage : null,
                   ),
                   items: model.accounts
                       .map(
@@ -115,8 +108,7 @@ class TransactionDetailView extends StatelessWidget
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) =>
-                      model.handleAccountChange(value!),
+                  onChanged: (String? value) => model.handleAccountChange(value!),
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(TransactionTypeValueKey),
@@ -133,8 +125,7 @@ class TransactionDetailView extends StatelessWidget
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) =>
-                      model.handleTransactionTypeChange(value!),
+                  onChanged: (String? value) => model.handleTransactionTypeChange(value!),
                 ),
                 if (model.transactionTypeValue ==
                     EnumToString.convertToString(TransactionType.transfer)) ...[
@@ -143,9 +134,8 @@ class TransactionDetailView extends StatelessWidget
                     value: model.destinationAccountIdValue,
                     decoration: InputDecoration(
                       label: const Text("Destination Account"),
-                      errorText: model.destinationAccounts.isEmpty
-                          ? model.emptyAccountErrorMessage
-                          : null,
+                      errorText:
+                          model.destinationAccounts.isEmpty ? model.emptyAccountErrorMessage : null,
                     ),
                     items: model.destinationAccounts
                         .map(
@@ -157,17 +147,14 @@ class TransactionDetailView extends StatelessWidget
                         )
                         .toList(),
                     focusNode: model.destinationAccountFocusNode,
-                    onChanged: (String? value) =>
-                        model.handleDestinationAccountChange(value!),
+                    onChanged: (String? value) => model.handleDestinationAccountChange(value!),
                   ),
                 ],
                 TextField(
                   key: const ValueKey(AmountValueKey),
                   decoration: InputDecoration(
                     labelText: "Amount",
-                    prefix: model.showNegativeAmountPrefix()
-                        ? const Text('-')
-                        : null,
+                    prefix: model.showNegativeAmountPrefix() ? const Text('-') : null,
                   ),
                   controller: amountController,
                   keyboardType: TextInputType.number,
@@ -179,9 +166,7 @@ class TransactionDetailView extends StatelessWidget
                   value: model.categoryIdValue,
                   decoration: InputDecoration(
                     label: const Text("Category"),
-                    errorText: model.categories.isEmpty
-                        ? model.emptyCategoryErrorMessage
-                        : null,
+                    errorText: model.categories.isEmpty ? model.emptyCategoryErrorMessage : null,
                   ),
                   items: model.filteredCategories
                       .map(

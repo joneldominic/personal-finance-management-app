@@ -7,8 +7,7 @@ import 'package:stacked/stacked.dart';
 
 class TransactionService with ReactiveServiceMixin {
   final _logger = getLogger('TransactionService');
-  final _transactionRepository =
-      TransactionRepository(transactionDao: TransactionDaoImpl());
+  final _transactionRepository = TransactionRepository(transactionDao: TransactionDaoImpl());
 
   Future<Transaction> createTransaction(Transaction transaction) async {
     _logger.i('argument: $transaction');

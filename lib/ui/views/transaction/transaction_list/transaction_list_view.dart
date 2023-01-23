@@ -32,22 +32,17 @@ class TransactionListView extends StatelessWidget {
                 categoryName: mainViewModel.transactions[index].categoryName,
                 categoryColor: mainViewModel.transactions[index].categoryColor,
                 accountName: mainViewModel.transactions[index].accountName,
-                destinationAccountName:
-                    mainViewModel.transactions[index].destinationAccountName,
-                accountCurrency:
-                    mainViewModel.transactions[index].accountCurrency,
+                destinationAccountName: mainViewModel.transactions[index].destinationAccountName,
+                accountCurrency: mainViewModel.transactions[index].accountCurrency,
                 amount: mainViewModel.transactions[index].amount,
-                transactionType:
-                    mainViewModel.transactions[index].transactionType,
-                transferTransactionType:
-                    mainViewModel.transactions[index].transferTransactionType,
+                transactionType: mainViewModel.transactions[index].transactionType,
+                transferTransactionType: mainViewModel.transactions[index].transferTransactionType,
                 timeStamp: mainViewModel.transactions[index].date,
-                onTap: () => model.navigateToTransactionDetailEditMode(
-                    mainViewModel.transactions[index]),
+                onTap: () =>
+                    model.navigateToTransactionDetailEditMode(mainViewModel.transactions[index]),
               );
             },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
           ),
         ),
       ),

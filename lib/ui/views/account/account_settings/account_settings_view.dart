@@ -46,12 +46,10 @@ class AccountSettingsView extends StatelessWidget {
                   color: model.accounts[index].color!,
                   currency: model.accounts[index].currency,
                   amount: model.accounts[index].balance,
-                  onPressed: () =>
-                      model.navigateToAccountDetail(model.accounts[index]),
+                  onPressed: () => model.navigateToAccountDetail(model.accounts[index]),
                 );
               },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
+              separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),
           ),
         ),

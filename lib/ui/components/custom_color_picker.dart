@@ -23,8 +23,7 @@ class CustomColorPicker extends StatelessWidget {
       decoration: const InputDecoration(
         label: Text("Color"),
       ),
-      selectedItemBuilder: (context) =>
-          colorValueToTitleMap.keys.map<Widget>((value) {
+      selectedItemBuilder: (context) => colorValueToTitleMap.keys.map<Widget>((value) {
         return Container(
           height: 30,
           width: screenWidth(context) - 45,

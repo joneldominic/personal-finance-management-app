@@ -36,12 +36,10 @@ class MainViewModel extends MultipleStreamViewModel {
 
   @override
   Map<String, StreamData> get streamsMap => {
-        _accountStreamKey: StreamData<List<Account>>(
-            _accountService.accountCollectionStream()),
-        _categoryStreamKey: StreamData<List<Category>>(
-            _categoryService.categoryCollectionStream()),
-        _transactionStreamKey: StreamData<List<Transaction>>(
-            _transactionService.transactionCollectionStream()),
+        _accountStreamKey: StreamData<List<Account>>(_accountService.accountCollectionStream()),
+        _categoryStreamKey: StreamData<List<Category>>(_categoryService.categoryCollectionStream()),
+        _transactionStreamKey:
+            StreamData<List<Transaction>>(_transactionService.transactionCollectionStream()),
       };
 
   bool get accountsReady => dataReady(_accountStreamKey);
@@ -55,14 +53,12 @@ class MainViewModel extends MultipleStreamViewModel {
     List<Transaction> trxs = dataMap![_transactionStreamKey] ?? [];
 
     for (Transaction t in trxs) {
-      final account =
-          accounts.firstWhere((account) => account.id == t.accountId);
+      final account = accounts.firstWhere((account) => account.id == t.accountId);
 
-      final destinationAccount = accounts
-          .firstWhereOrNull((account) => account.id == t.destinationAccountId);
+      final destinationAccount =
+          accounts.firstWhereOrNull((account) => account.id == t.destinationAccountId);
 
-      final category =
-          categories.firstWhere((category) => category.id == t.categoryId);
+      final category = categories.firstWhere((category) => category.id == t.categoryId);
 
       t.accountName = account.name;
       t.destinationAccountName = destinationAccount?.name;
@@ -75,8 +71,7 @@ class MainViewModel extends MultipleStreamViewModel {
     return trxs;
   }
 
-  bool get streamDataReady =>
-      accountsReady && categoriesReady && transactionsReady;
+  bool get streamDataReady => accountsReady && categoriesReady && transactionsReady;
 
   List<Transaction> get recentTransactions {
     final endIndex = transactions.isEmpty

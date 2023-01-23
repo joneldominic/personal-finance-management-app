@@ -54,8 +54,7 @@ class CategoryListView extends StatelessWidget {
                   ),
                 );
               },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
+              separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),
           ),
         ),

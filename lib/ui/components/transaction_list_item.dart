@@ -34,8 +34,7 @@ class TransactionListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
-    final isExpense =
-        (transferTransactionType ?? transactionType) == TransactionType.expense;
+    final isExpense = (transferTransactionType ?? transactionType) == TransactionType.expense;
     final accountNameDisplay = transactionType == TransactionType.transfer
         ? "$accountName ➜ $destinationAccountName"
         : "$accountName";
@@ -71,9 +70,7 @@ class TransactionListItem extends StatelessWidget {
                   color: isExpense ? customTheme.danger : customTheme.success,
                 ),
                 Icon(
-                  isExpense
-                      ? Icons.arrow_drop_down_rounded
-                      : Icons.arrow_drop_up_rounded,
+                  isExpense ? Icons.arrow_drop_down_rounded : Icons.arrow_drop_up_rounded,
                   color: isExpense ? customTheme.danger : customTheme.success,
                 ),
               ],

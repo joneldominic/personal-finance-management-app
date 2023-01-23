@@ -88,12 +88,9 @@ class CashFlowCard extends StatelessWidget {
     String amount,
     double value,
   ) {
-    final label =
-        transactionType == TransactionType.income ? "Income" : "Expenses";
+    final label = transactionType == TransactionType.income ? "Income" : "Expenses";
 
-    final color = transactionType == TransactionType.income
-        ? customTheme.customGreen
-        : Colors.red;
+    final color = transactionType == TransactionType.income ? customTheme.customGreen : Colors.red;
 
     return Column(
       children: [

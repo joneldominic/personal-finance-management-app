@@ -49,8 +49,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
   }
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return textManipulation(
       oldValue,
       newValue,
@@ -65,8 +64,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
           // this will also remove redundant negative signs
           // ignore: prefer_is_empty
           if ('-'.allMatches(filteredString).length >= 1) {
-            filteredString = (filteredString.startsWith('-') ? '-' : '') +
-                filteredString.replaceAll('-', '');
+            filteredString =
+                (filteredString.startsWith('-') ? '-' : '') + filteredString.replaceAll('-', '');
           }
         }
 
@@ -80,8 +79,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
         // Fix the -0+ and similar issues
         if (allowNegative) {
-          if (filteredString == '-' ||
-              RegExp(r'-0?0+$').hasMatch(filteredString)) {
+          if (filteredString == '-' || RegExp(r'-0?0+$').hasMatch(filteredString)) {
             return '-';
           }
         }

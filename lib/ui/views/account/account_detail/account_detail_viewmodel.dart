@@ -50,11 +50,9 @@ class AccountDetailViewModel extends FormViewModel {
 
     setCurrency(account?.currency ?? 'PHP');
 
-    currencyInputFormatter =
-        CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
+    currencyInputFormatter = CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
     _balanceController = balanceController;
-    balanceController.text =
-        currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
+    balanceController.text = currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
 
     setColor(account?.color ?? '0xFF00B0FF');
 
@@ -79,8 +77,7 @@ class AccountDetailViewModel extends FormViewModel {
     _logger.i('argument: $currency');
     setCurrency(currency);
     currencyInputFormatter = CurrencyInputFormatter(symbol: currency);
-    _balanceController!.text =
-        currencyInputFormatter!.reformat(_balanceController!.text);
+    _balanceController!.text = currencyInputFormatter!.reformat(_balanceController!.text);
   }
 
   void handleSaveAccount() async {

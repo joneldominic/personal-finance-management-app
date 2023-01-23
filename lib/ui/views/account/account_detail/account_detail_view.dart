@@ -42,8 +42,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
 
     final isAddAccount = account == null;
     final appBarTitle = isAddAccount ? "New Account" : "Edit Account";
-    final actionButtonTooltip =
-        isAddAccount ? "Save New Account" : "Save Changes";
+    final actionButtonTooltip = isAddAccount ? "Save New Account" : "Save Changes";
     final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
 
     return ViewModelBuilder<AccountDetailViewModel>.reactive(
@@ -111,8 +110,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) =>
-                      model.setAccountCurrency(value!),
+                  onChanged: (String? value) => model.setAccountCurrency(value!),
                 ),
                 TextField(
                   key: const ValueKey(BalanceValueKey),

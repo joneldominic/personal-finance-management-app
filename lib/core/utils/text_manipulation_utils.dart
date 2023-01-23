@@ -22,8 +22,7 @@ TextEditingValue textManipulation(
   int selectionIndex = newValue.selection.end;
 
   /// format original string, this step would add some separator characters
-  final newText =
-      formatPattern != null ? formatPattern(newValue.text) : newValue.text;
+  final newText = formatPattern != null ? formatPattern(newValue.text) : newValue.text;
 
   if (newText == newValue.text) {
     return newValue;
@@ -82,8 +81,7 @@ TextEditingValue textManipulationV2(
       : newValue;
 
   /// format original string, this step would add some separator characters
-  final newText =
-      formatPattern != null ? formatPattern(newValue.text) : newValue.text;
+  final newText = formatPattern != null ? formatPattern(newValue.text) : newValue.text;
 
   if (newText == newValue.text) {
     return newValue;

@@ -66,6 +66,5 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_themeService];
 
-  ThemeMode getThemeMode() =>
-      _themeService.isLightTheme ? ThemeMode.light : ThemeMode.dark;
+  ThemeMode getThemeMode() => _themeService.isLightTheme ? ThemeMode.light : ThemeMode.dark;
 }

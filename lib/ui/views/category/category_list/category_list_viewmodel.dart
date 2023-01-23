@@ -19,8 +19,7 @@ class CategoryListViewModel extends StreamViewModel<List<Category>> {
   List<Category> categories = [];
 
   @override
-  Stream<List<Category>> get stream =>
-      _categoryService.categoryCollectionStream();
+  Stream<List<Category>> get stream => _categoryService.categoryCollectionStream();
 
   @override
   void onData(List<Category>? data) {

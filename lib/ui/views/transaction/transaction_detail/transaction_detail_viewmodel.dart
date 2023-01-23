@@ -237,9 +237,10 @@ class TransactionDetailViewModel extends FormViewModel {
 
     double amount = parseAmountStringToDouble(_amountController!.text);
 
-    if (transactionTypeValue ==
-            EnumToString.convertToString(TransactionType.transfer) &&
-        destinationAccountIdValue == null) {
+    final currTransactionTypeIsTransfer = transactionTypeValue ==
+        EnumToString.convertToString(TransactionType.transfer);
+
+    if (currTransactionTypeIsTransfer && destinationAccountIdValue == null) {
       destinationAccountFocusNode.requestFocus();
       handleShowSnackbar(message: "Please select transfer destination account");
       return;
@@ -261,8 +262,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final newTransaction = Transaction(
       accountId: int.parse(accountIdValue!),
-      destinationAccountId: transactionTypeValue ==
-              EnumToString.convertToString(TransactionType.transfer)
+      destinationAccountId: currTransactionTypeIsTransfer
           ? int.parse(destinationAccountIdValue!)
           : null,
       transactionType: EnumToString.fromString(
@@ -275,30 +275,23 @@ class TransactionDetailViewModel extends FormViewModel {
       notes: _notesController!.text,
     );
 
-    // TODO: Improve this implementation; Maybe move logic into service
     if (_transaction != null) {
-      if (transactionTypeValue ==
-          EnumToString.convertToString(TransactionType.transfer)) {
-        if (_transaction!.transactionType == TransactionType.transfer) {
+      final oldTransactionTypeIsTransfer =
+          _transaction!.transactionType == TransactionType.transfer;
+
+      if (currTransactionTypeIsTransfer) {
+        if (oldTransactionTypeIsTransfer) {
           await _transactionService
               .deleteTransactionsByTransferId(_transaction!.transferId!);
         } else {
           await _transactionService.deleteTransaction(_transaction!.id);
         }
 
-        final transferId = const Uuid().v1();
-
-        newTransaction.transferId = transferId;
-        final pairTransaction = Transaction.clone(newTransaction);
-
-        newTransaction.transferTransactionType = TransactionType.income;
-        pairTransaction.transferTransactionType = TransactionType.expense;
-
-        final addedTransactions = await _transactionService
-            .createTransactions([newTransaction, pairTransaction]);
-        _logger.i('Transactions Updated Successfully: $addedTransactions');
+        final updatedTransaction =
+            await _saveTransferTransaction(newTransaction);
+        _logger.i('Transactions Updated Successfully: $updatedTransaction');
       } else {
-        if (_transaction!.transactionType == TransactionType.transfer) {
+        if (oldTransactionTypeIsTransfer) {
           await _transactionService
               .deleteTransactionsByTransferId(_transaction!.transferId!);
         }
@@ -309,18 +302,9 @@ class TransactionDetailViewModel extends FormViewModel {
         _logger.i('Transaction Updated Successfully: $updatedTransaction');
       }
     } else {
-      if (transactionTypeValue ==
-          EnumToString.convertToString(TransactionType.transfer)) {
-        final transferId = const Uuid().v1();
-
-        newTransaction.transferId = transferId;
-        final pairTransaction = Transaction.clone(newTransaction);
-
-        newTransaction.transferTransactionType = TransactionType.income;
-        pairTransaction.transferTransactionType = TransactionType.expense;
-
-        final addedTransactions = await _transactionService
-            .createTransactions([newTransaction, pairTransaction]);
+      if (currTransactionTypeIsTransfer) {
+        final addedTransactions =
+            await _saveTransferTransaction(newTransaction);
         _logger.i('Transactions Saved Successfully: $addedTransactions');
       } else {
         final addedTransaction =
@@ -334,6 +318,20 @@ class TransactionDetailViewModel extends FormViewModel {
     // TODO: Handle update transaction functionality
 
     popCurrentView();
+  }
+
+  Future<List<Transaction>> _saveTransferTransaction(
+      Transaction newTransaction) async {
+    final transferId = const Uuid().v1();
+
+    newTransaction.transferId = transferId;
+    final pairTransaction = Transaction.clone(newTransaction);
+
+    newTransaction.transferTransactionType = TransactionType.income;
+    pairTransaction.transferTransactionType = TransactionType.expense;
+
+    return await _transactionService
+        .createTransactions([newTransaction, pairTransaction]);
   }
 
   void handleDeleteTransaction() async {

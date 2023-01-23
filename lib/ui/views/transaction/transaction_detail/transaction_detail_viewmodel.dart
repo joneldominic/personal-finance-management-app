@@ -294,8 +294,6 @@ class TransactionDetailViewModel extends FormViewModel {
     }
 
     // TODO: Adjust balance as well
-    // TODO: Create pair transaction for transfer type
-    // TODO: Handle update transaction functionality
 
     popCurrentView();
   }

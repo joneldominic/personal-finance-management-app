@@ -23,7 +23,6 @@ import 'package:stacked/stacked_annotations.dart';
     items: currencyStaticDropdownItems,
   ),
   FormTextField(initialValue: '', name: 'balance'),
-  FormTextField(initialValue: '', name: 'newBalance'),
   FormDropdownField(
     name: 'color',
     items: colorStaticDropdownItems,
@@ -41,10 +40,10 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    final appBarTitle = account == null ? "New Account" : "Edit Account";
-    final actionButtonTooltip =
-        account == null ? "Save New Account" : "Save Changes";
-    final balanceFieldLabel = account == null ? "Initial Balance" : "Balance";
+    final isAddAccount = account == null;
+    final appBarTitle = isAddAccount ? "New Account" : "Edit Account";
+    final actionButtonTooltip = isAddAccount ? "Save New Account" : "Save Changes";
+    final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
 
     return ViewModelBuilder<AccountDetailViewModel>.reactive(
       viewModelBuilder: () => AccountDetailViewModel(),
@@ -54,7 +53,6 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
           account: account,
           accountNameController: accountNameController,
           balanceController: balanceController,
-          newBalanceController: newBalanceController,
         );
       },
       onDispose: (_) => disposeForm(),
@@ -66,17 +64,17 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             onPressed: model.popCurrentView,
           ),
           actions: [
-            if (account != null) ...[
+            if (!isAddAccount) ...[
               IconButton(
                 icon: const Icon(Icons.delete_rounded),
                 tooltip: actionButtonTooltip,
-                onPressed: () => model.deleteAccount(account!),
+                onPressed: () => model.handleDeleteAccount(),
               ),
             ],
             IconButton(
               icon: const Icon(Icons.check_rounded),
               tooltip: actionButtonTooltip,
-              onPressed: () => model.saveAccount(account),
+              onPressed: () => model.handleSaveAccount(),
             ),
           ],
         ),
@@ -99,6 +97,9 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                 ),
                 DropdownButtonFormField(
                   key: const ValueKey(CurrencyValueKey),
+                  decoration: const InputDecoration(
+                    labelText: 'Currency',
+                  ),
                   value: model.currencyValue,
                   items: CurrencyValueToTitleMap.keys
                       .map(
@@ -109,8 +110,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) =>
-                      model.setAccountCurrency(value!),
+                  onChanged: (String? value) => model.setAccountCurrency(value!),
                 ),
                 TextField(
                   key: const ValueKey(BalanceValueKey),

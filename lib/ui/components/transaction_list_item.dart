@@ -1,42 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class TransactionListItem extends StatelessWidget {
   const TransactionListItem({
     Key? key,
-    this.description,
-    this.accountName,
-    this.amount,
-    this.transactionType,
-    this.timeStamp,
+    required this.categoryName,
+    required this.categoryColor,
+    required this.accountName,
+    required this.destinationAccountName,
+    required this.accountCurrency,
+    required this.amount,
+    required this.transactionType,
+    required this.transferTransactionType,
+    required this.timeStamp,
     required this.onTap,
   }) : super(key: key);
 
-  final String? description;
+  final String? categoryName;
+  final String? categoryColor;
   final String? accountName;
-  final String? amount;
+  final String? destinationAccountName;
+  final String? accountCurrency;
+  final double? amount;
   final TransactionType? transactionType;
-  final String? timeStamp;
+  final TransactionType? transferTransactionType;
+  final DateTime? timeStamp;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
+    final isExpense = (transferTransactionType ?? transactionType) == TransactionType.expense;
+    final accountNameDisplay = transactionType == TransactionType.transfer
+        ? "$accountName ➜ $destinationAccountName"
+        : "$accountName";
 
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-      leading: const CircleAvatar(
+      leading: CircleAvatar(
         radius: 18,
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(
+          int.parse(categoryColor ?? '0xFFFFFFFF'),
+        ),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ThemeText.listItemTitle(description ?? ''),
-          ThemeText.listItemSubTitle(accountName ?? ''),
+          ThemeText.listItemTitle(categoryName ?? ''),
+          ThemeText.listItemSubTitle(accountNameDisplay),
         ],
       ),
       trailing: FittedBox(
@@ -46,22 +62,21 @@ class TransactionListItem extends StatelessWidget {
             Row(
               children: [
                 ThemeText.listItemSubTitle(
-                  amount ?? '',
-                  color: transactionType == TransactionType.expense
-                      ? customTheme.danger
-                      : customTheme.success,
+                  doubleToCurrencyFormatter(
+                    currency: accountCurrency ?? "PHP",
+                    value: amount!,
+                  ),
+                  color: isExpense ? customTheme.danger : customTheme.success,
                 ),
                 Icon(
-                  transactionType == TransactionType.expense
-                      ? Icons.arrow_drop_down_rounded
-                      : Icons.arrow_drop_up_rounded,
-                  color: transactionType == TransactionType.expense
-                      ? customTheme.danger
-                      : customTheme.success,
+                  isExpense ? Icons.arrow_drop_down_rounded : Icons.arrow_drop_up_rounded,
+                  color: isExpense ? customTheme.danger : customTheme.success,
                 ),
               ],
             ),
-            ThemeText.listItemSubTitle(timeStamp ?? ''),
+            ThemeText.listItemSubTitle(
+              DateFormat('MMM dd, yyyy').format(timeStamp!),
+            ),
           ],
         ),
       ),

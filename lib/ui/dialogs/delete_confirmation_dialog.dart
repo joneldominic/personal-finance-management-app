@@ -21,9 +21,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      content: Text(
-        "Do you really want to delete account ${request.data} with all its transactions and related items.",
-      ),
+      content: Text(request.data),
       optionALabel: "NO",
       onTapOptionA: () => _handleAction(false),
       optionBLabel: "YES",

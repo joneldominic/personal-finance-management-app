@@ -4,6 +4,7 @@ import 'package:personal_finance_management_app/ui/components/account_thumbnail.
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 import 'package:personal_finance_management_app/ui/views/account/accounts_card/accounts_card_viewmodel.dart';
+import 'package:personal_finance_management_app/ui/views/main/main_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class AccountsCard extends StatelessWidget {
@@ -14,6 +15,7 @@ class AccountsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
+    final mainViewModel = getParentViewModel<MainViewModel>(context);
 
     return ViewModelBuilder<AccountsCardViewModel>.reactive(
       viewModelBuilder: () => AccountsCardViewModel(),
@@ -45,9 +47,9 @@ class AccountsCard extends StatelessWidget {
                   crossAxisSpacing: 10,
                   childAspectRatio: 2.22,
                 ),
-                itemCount: model.accounts.length + 1,
+                itemCount: mainViewModel.accounts.length + 1,
                 itemBuilder: (context, index) {
-                  if (index > model.accounts.length - 1) {
+                  if (index > mainViewModel.accounts.length - 1) {
                     return GestureDetector(
                       onTap: model.navigateToAccountDetail,
                       child: const AccountThumbnail(isAddAccount: true),
@@ -55,14 +57,14 @@ class AccountsCard extends StatelessWidget {
                   }
 
                   return AccountThumbnail(
-                    label: model.accounts[index].name,
+                    label: mainViewModel.accounts[index].name,
                     amount: doubleToCurrencyFormatter(
-                      currency: model.accounts[index].currency ?? "PHP",
-                      value: model.accounts[index].balance!,
+                      currency: mainViewModel.accounts[index].currency ?? "PHP",
+                      value: mainViewModel.accounts[index].balance!,
                     ),
                     color: Color(
                       int.parse(
-                        model.accounts[index].color!,
+                        mainViewModel.accounts[index].color!,
                       ),
                     ),
                   );

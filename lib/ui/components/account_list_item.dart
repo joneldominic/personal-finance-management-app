@@ -14,9 +14,9 @@ class AccountListItem extends StatelessWidget {
   }) : super(key: key);
 
   final String? accountName;
-  final Color? color;
+  final String? color;
   final String? currency;
-  final String? amount;
+  final double? amount;
   final void Function() onPressed;
 
   @override
@@ -27,7 +27,9 @@ class AccountListItem extends StatelessWidget {
       contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
       leading: CircleAvatar(
         radius: 18,
-        backgroundColor: color,
+        backgroundColor: Color(
+          int.parse(color!),
+        ),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,8 +37,9 @@ class AccountListItem extends StatelessWidget {
           ThemeText.listItemTitle(accountName ?? ''),
           ThemeText.listItemSubTitle(
             doubleToCurrencyFormatter(
-                currency: currency ?? "PHP",
-                value: double.parse(amount ?? '0')),
+              currency: currency ?? "PHP",
+              value: amount!,
+            ),
           ),
         ],
       ),

@@ -29,11 +29,12 @@ class Account {
 
   @override
   String toString() => 'Account('
+      'id: $id, '
       'name: $name, '
       'currency: $currency, '
       'balance: $balance, '
       'color: $color, '
       'isExcludedFromAnalysis: $isExcludedFromAnalysis, '
-      'isArchived: $isArchived, '
+      'isArchived: $isArchived'
       ')';
 }

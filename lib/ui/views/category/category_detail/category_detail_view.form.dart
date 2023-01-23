@@ -14,9 +14,9 @@ const String CategoryNatureValueKey = 'categoryNature';
 const String ColorValueKey = 'color';
 
 final Map<String, String> CategoryNatureValueToTitleMap = {
-  'None': 'None',
-  'Need': 'Need',
-  'Want': 'Want',
+  'none': 'None',
+  'need': 'Need',
+  'want': 'Want',
 };
 final Map<String, String> ColorValueToTitleMap = {
   '0xFFFF4081': '0xFFFF4081',
@@ -69,29 +69,24 @@ final Map<String, String> ColorValueToTitleMap = {
   '0xFF616161': '0xFF616161',
 };
 
-final Map<String, TextEditingController>
-    _CategoryDetailViewTextEditingControllers = {};
+final Map<String, TextEditingController> _CategoryDetailViewTextEditingControllers = {};
 
 final Map<String, FocusNode> _CategoryDetailViewFocusNodes = {};
 
-final Map<String, String? Function(String?)?>
-    _CategoryDetailViewTextValidations = {
+final Map<String, String? Function(String?)?> _CategoryDetailViewTextValidations = {
   CategoryNameValueKey: null,
 };
 
 mixin $CategoryDetailView on StatelessWidget {
   TextEditingController get categoryNameController =>
       _getFormTextEditingController(CategoryNameValueKey);
-  FocusNode get categoryNameFocusNode =>
-      _getFormFocusNode(CategoryNameValueKey);
+  FocusNode get categoryNameFocusNode => _getFormFocusNode(CategoryNameValueKey);
 
-  TextEditingController _getFormTextEditingController(String key,
-      {String? initialValue}) {
+  TextEditingController _getFormTextEditingController(String key, {String? initialValue}) {
     if (_CategoryDetailViewTextEditingControllers.containsKey(key)) {
       return _CategoryDetailViewTextEditingControllers[key]!;
     }
-    _CategoryDetailViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _CategoryDetailViewTextEditingControllers[key] = TextEditingController(text: initialValue);
     return _CategoryDetailViewTextEditingControllers[key]!;
   }
 
@@ -129,8 +124,7 @@ mixin $CategoryDetailView on StatelessWidget {
   }
 
   /// Updates the fieldsValidationMessages on the FormViewModel
-  void _updateValidationData(FormViewModel model) =>
-      model.setValidationMessages({
+  void _updateValidationData(FormViewModel model) => model.setValidationMessages({
         CategoryNameValueKey: _getValidationMessage(CategoryNameValueKey),
       });
 
@@ -160,40 +154,31 @@ mixin $CategoryDetailView on StatelessWidget {
 }
 
 extension ValueProperties on FormViewModel {
-  bool get isFormValid =>
-      this.fieldsValidationMessages.values.every((element) => element == null);
-  String? get categoryNameValue =>
-      this.formValueMap[CategoryNameValueKey] as String?;
-  String? get categoryNatureValue =>
-      this.formValueMap[CategoryNatureValueKey] as String?;
+  bool get isFormValid => this.fieldsValidationMessages.values.every((element) => element == null);
+  String? get categoryNameValue => this.formValueMap[CategoryNameValueKey] as String?;
+  String? get categoryNatureValue => this.formValueMap[CategoryNatureValueKey] as String?;
   String? get colorValue => this.formValueMap[ColorValueKey] as String?;
 
-  bool get hasCategoryName =>
-      this.formValueMap.containsKey(CategoryNameValueKey);
-  bool get hasCategoryNature =>
-      this.formValueMap.containsKey(CategoryNatureValueKey);
+  bool get hasCategoryName => this.formValueMap.containsKey(CategoryNameValueKey);
+  bool get hasCategoryNature => this.formValueMap.containsKey(CategoryNatureValueKey);
   bool get hasColor => this.formValueMap.containsKey(ColorValueKey);
 
   bool get hasCategoryNameValidationMessage =>
       this.fieldsValidationMessages[CategoryNameValueKey]?.isNotEmpty ?? false;
   bool get hasCategoryNatureValidationMessage =>
-      this.fieldsValidationMessages[CategoryNatureValueKey]?.isNotEmpty ??
-      false;
+      this.fieldsValidationMessages[CategoryNatureValueKey]?.isNotEmpty ?? false;
   bool get hasColorValidationMessage =>
       this.fieldsValidationMessages[ColorValueKey]?.isNotEmpty ?? false;
 
-  String? get categoryNameValidationMessage =>
-      this.fieldsValidationMessages[CategoryNameValueKey];
+  String? get categoryNameValidationMessage => this.fieldsValidationMessages[CategoryNameValueKey];
   String? get categoryNatureValidationMessage =>
       this.fieldsValidationMessages[CategoryNatureValueKey];
-  String? get colorValidationMessage =>
-      this.fieldsValidationMessages[ColorValueKey];
+  String? get colorValidationMessage => this.fieldsValidationMessages[ColorValueKey];
 }
 
 extension Methods on FormViewModel {
   void setCategoryNature(String categoryNature) {
-    this.setData(
-        this.formValueMap..addAll({CategoryNatureValueKey: categoryNature}));
+    this.setData(this.formValueMap..addAll({CategoryNatureValueKey: categoryNature}));
   }
 
   void setColor(String color) {

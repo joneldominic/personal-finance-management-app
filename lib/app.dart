@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:is_first_run/is_first_run.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
+import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
+import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/services/theme_service.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:stacked/stacked.dart';
@@ -37,11 +40,31 @@ class PersonalFinanceManagementApp extends StatelessWidget {
 }
 
 class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
+  final _logger = getLogger('PersonalFinanceManagementAppViewModel');
   final _themeService = locator<ThemeService>();
+  final _categoryService = locator<CategoryService>();
+
+  PersonalFinanceManagementAppViewModel() {
+    _logger.i('argument: NONE');
+    initDatabaseRecords();
+  }
+
+  void initDatabaseRecords() async {
+    _logger.i('argument: NONE');
+
+    bool isFirstRun = await IsFirstRun.isFirstRun();
+    if (isFirstRun) {
+      _logger.i("Initializing Database Records");
+
+      final defaultCategories = await _categoryService.initCategories();
+
+      if (defaultCategories.length == 2) return;
+      await IsFirstRun.reset();
+    }
+  }
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_themeService];
 
-  ThemeMode getThemeMode() =>
-      _themeService.isLightTheme ? ThemeMode.light : ThemeMode.dark;
+  ThemeMode getThemeMode() => _themeService.isLightTheme ? ThemeMode.light : ThemeMode.dark;
 }

@@ -197,8 +197,7 @@ extension AccountQueryWhere on QueryBuilder<Account, Account, QWhereClause> {
     });
   }
 
-  QueryBuilder<Account, Account, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Account, Account, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -206,8 +205,7 @@ extension AccountQueryWhere on QueryBuilder<Account, Account, QWhereClause> {
     });
   }
 
-  QueryBuilder<Account, Account, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Account, Account, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -232,8 +230,7 @@ extension AccountQueryWhere on QueryBuilder<Account, Account, QWhereClause> {
   }
 }
 
-extension AccountQueryFilter
-    on QueryBuilder<Account, Account, QFilterCondition> {
+extension AccountQueryFilter on QueryBuilder<Account, Account, QFilterCondition> {
   QueryBuilder<Account, Account, QAfterFilterCondition> balanceIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -416,8 +413,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> colorContains(
-      String value,
+  QueryBuilder<Account, Account, QAfterFilterCondition> colorContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -428,8 +424,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> colorMatches(
-      String pattern,
+  QueryBuilder<Account, Account, QAfterFilterCondition> colorMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -562,8 +557,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> currencyContains(
-      String value,
+  QueryBuilder<Account, Account, QAfterFilterCondition> currencyContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -574,8 +568,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> currencyMatches(
-      String pattern,
+  QueryBuilder<Account, Account, QAfterFilterCondition> currencyMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -672,8 +665,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> isArchivedEqualTo(
-      bool? value) {
+  QueryBuilder<Account, Account, QAfterFilterCondition> isArchivedEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isArchived',
@@ -682,8 +674,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition>
-      isExcludedFromAnalysisIsNull() {
+  QueryBuilder<Account, Account, QAfterFilterCondition> isExcludedFromAnalysisIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'isExcludedFromAnalysis',
@@ -691,8 +682,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition>
-      isExcludedFromAnalysisIsNotNull() {
+  QueryBuilder<Account, Account, QAfterFilterCondition> isExcludedFromAnalysisIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'isExcludedFromAnalysis',
@@ -700,8 +690,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition>
-      isExcludedFromAnalysisEqualTo(bool? value) {
+  QueryBuilder<Account, Account, QAfterFilterCondition> isExcludedFromAnalysisEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isExcludedFromAnalysis',
@@ -814,8 +803,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> nameContains(
-      String value,
+  QueryBuilder<Account, Account, QAfterFilterCondition> nameContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -826,8 +814,7 @@ extension AccountQueryFilter
     });
   }
 
-  QueryBuilder<Account, Account, QAfterFilterCondition> nameMatches(
-      String pattern,
+  QueryBuilder<Account, Account, QAfterFilterCondition> nameMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -857,11 +844,9 @@ extension AccountQueryFilter
   }
 }
 
-extension AccountQueryObject
-    on QueryBuilder<Account, Account, QFilterCondition> {}
+extension AccountQueryObject on QueryBuilder<Account, Account, QFilterCondition> {}
 
-extension AccountQueryLinks
-    on QueryBuilder<Account, Account, QFilterCondition> {}
+extension AccountQueryLinks on QueryBuilder<Account, Account, QFilterCondition> {}
 
 extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
   QueryBuilder<Account, Account, QAfterSortBy> sortByBalance() {
@@ -918,8 +903,7 @@ extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
     });
   }
 
-  QueryBuilder<Account, Account, QAfterSortBy>
-      sortByIsExcludedFromAnalysisDesc() {
+  QueryBuilder<Account, Account, QAfterSortBy> sortByIsExcludedFromAnalysisDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isExcludedFromAnalysis', Sort.desc);
     });
@@ -938,8 +922,7 @@ extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
   }
 }
 
-extension AccountQuerySortThenBy
-    on QueryBuilder<Account, Account, QSortThenBy> {
+extension AccountQuerySortThenBy on QueryBuilder<Account, Account, QSortThenBy> {
   QueryBuilder<Account, Account, QAfterSortBy> thenByBalance() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'balance', Sort.asc);
@@ -1006,8 +989,7 @@ extension AccountQuerySortThenBy
     });
   }
 
-  QueryBuilder<Account, Account, QAfterSortBy>
-      thenByIsExcludedFromAnalysisDesc() {
+  QueryBuilder<Account, Account, QAfterSortBy> thenByIsExcludedFromAnalysisDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isExcludedFromAnalysis', Sort.desc);
     });
@@ -1026,23 +1008,20 @@ extension AccountQuerySortThenBy
   }
 }
 
-extension AccountQueryWhereDistinct
-    on QueryBuilder<Account, Account, QDistinct> {
+extension AccountQueryWhereDistinct on QueryBuilder<Account, Account, QDistinct> {
   QueryBuilder<Account, Account, QDistinct> distinctByBalance() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'balance');
     });
   }
 
-  QueryBuilder<Account, Account, QDistinct> distinctByColor(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Account, Account, QDistinct> distinctByColor({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Account, Account, QDistinct> distinctByCurrency(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Account, Account, QDistinct> distinctByCurrency({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'currency', caseSensitive: caseSensitive);
     });
@@ -1060,16 +1039,14 @@ extension AccountQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Account, Account, QDistinct> distinctByName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Account, Account, QDistinct> distinctByName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension AccountQueryProperty
-    on QueryBuilder<Account, Account, QQueryProperty> {
+extension AccountQueryProperty on QueryBuilder<Account, Account, QQueryProperty> {
   QueryBuilder<Account, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
@@ -1100,8 +1077,7 @@ extension AccountQueryProperty
     });
   }
 
-  QueryBuilder<Account, bool?, QQueryOperations>
-      isExcludedFromAnalysisProperty() {
+  QueryBuilder<Account, bool?, QQueryOperations> isExcludedFromAnalysisProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isExcludedFromAnalysis');
     });

@@ -9,46 +9,42 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-const String AccountNameValueKey = 'accountName';
+const String AccountIdValueKey = 'accountId';
+const String DestinationAccountIdValueKey = 'destinationAccountId';
 const String TransactionTypeValueKey = 'transactionType';
 const String AmountValueKey = 'amount';
-const String CategoryValueKey = 'category';
+const String CategoryIdValueKey = 'categoryId';
 const String NotesValueKey = 'notes';
 
-final Map<String, String> AccountNameValueToTitleMap = {};
+final Map<String, String> AccountIdValueToTitleMap = {};
+final Map<String, String> DestinationAccountIdValueToTitleMap = {};
 final Map<String, String> TransactionTypeValueToTitleMap = {
   'income': 'Income',
   'expense': 'Expense',
   'transfer': 'Transfer',
 };
-final Map<String, String> CategoryValueToTitleMap = {};
+final Map<String, String> CategoryIdValueToTitleMap = {};
 
-final Map<String, TextEditingController>
-    _TransactionDetailViewTextEditingControllers = {};
+final Map<String, TextEditingController> _TransactionDetailViewTextEditingControllers = {};
 
 final Map<String, FocusNode> _TransactionDetailViewFocusNodes = {};
 
-final Map<String, String? Function(String?)?>
-    _TransactionDetailViewTextValidations = {
+final Map<String, String? Function(String?)?> _TransactionDetailViewTextValidations = {
   AmountValueKey: null,
   NotesValueKey: null,
 };
 
 mixin $TransactionDetailView on StatelessWidget {
-  TextEditingController get amountController =>
-      _getFormTextEditingController(AmountValueKey);
-  TextEditingController get notesController =>
-      _getFormTextEditingController(NotesValueKey);
+  TextEditingController get amountController => _getFormTextEditingController(AmountValueKey);
+  TextEditingController get notesController => _getFormTextEditingController(NotesValueKey);
   FocusNode get amountFocusNode => _getFormFocusNode(AmountValueKey);
   FocusNode get notesFocusNode => _getFormFocusNode(NotesValueKey);
 
-  TextEditingController _getFormTextEditingController(String key,
-      {String? initialValue}) {
+  TextEditingController _getFormTextEditingController(String key, {String? initialValue}) {
     if (_TransactionDetailViewTextEditingControllers.containsKey(key)) {
       return _TransactionDetailViewTextEditingControllers[key]!;
     }
-    _TransactionDetailViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _TransactionDetailViewTextEditingControllers[key] = TextEditingController(text: initialValue);
     return _TransactionDetailViewTextEditingControllers[key]!;
   }
 
@@ -88,8 +84,7 @@ mixin $TransactionDetailView on StatelessWidget {
   }
 
   /// Updates the fieldsValidationMessages on the FormViewModel
-  void _updateValidationData(FormViewModel model) =>
-      model.setValidationMessages({
+  void _updateValidationData(FormViewModel model) => model.setValidationMessages({
         AmountValueKey: _getValidationMessage(AmountValueKey),
         NotesValueKey: _getValidationMessage(NotesValueKey),
       });
@@ -98,8 +93,8 @@ mixin $TransactionDetailView on StatelessWidget {
   String? _getValidationMessage(String key) {
     final validatorForKey = _TransactionDetailViewTextValidations[key];
     if (validatorForKey == null) return null;
-    String? validationMessageForKey = validatorForKey(
-        _TransactionDetailViewTextEditingControllers[key]!.text);
+    String? validationMessageForKey =
+        validatorForKey(_TransactionDetailViewTextEditingControllers[key]!.text);
     return validationMessageForKey;
   }
 
@@ -107,8 +102,7 @@ mixin $TransactionDetailView on StatelessWidget {
   void disposeForm() {
     // The dispose function for a TextEditingController sets all listeners to null
 
-    for (var controller
-        in _TransactionDetailViewTextEditingControllers.values) {
+    for (var controller in _TransactionDetailViewTextEditingControllers.values) {
       controller.dispose();
     }
     for (var focusNode in _TransactionDetailViewFocusNodes.values) {
@@ -121,70 +115,72 @@ mixin $TransactionDetailView on StatelessWidget {
 }
 
 extension ValueProperties on FormViewModel {
-  bool get isFormValid =>
-      this.fieldsValidationMessages.values.every((element) => element == null);
-  String? get accountNameValue =>
-      this.formValueMap[AccountNameValueKey] as String?;
-  String? get transactionTypeValue =>
-      this.formValueMap[TransactionTypeValueKey] as String?;
+  bool get isFormValid => this.fieldsValidationMessages.values.every((element) => element == null);
+  String? get accountIdValue => this.formValueMap[AccountIdValueKey] as String?;
+  String? get destinationAccountIdValue =>
+      this.formValueMap[DestinationAccountIdValueKey] as String?;
+  String? get transactionTypeValue => this.formValueMap[TransactionTypeValueKey] as String?;
   String? get amountValue => this.formValueMap[AmountValueKey] as String?;
-  String? get categoryValue => this.formValueMap[CategoryValueKey] as String?;
+  String? get categoryIdValue => this.formValueMap[CategoryIdValueKey] as String?;
   String? get notesValue => this.formValueMap[NotesValueKey] as String?;
 
-  bool get hasAccountName => this.formValueMap.containsKey(AccountNameValueKey);
-  bool get hasTransactionType =>
-      this.formValueMap.containsKey(TransactionTypeValueKey);
+  bool get hasAccountId => this.formValueMap.containsKey(AccountIdValueKey);
+  bool get hasDestinationAccountId => this.formValueMap.containsKey(DestinationAccountIdValueKey);
+  bool get hasTransactionType => this.formValueMap.containsKey(TransactionTypeValueKey);
   bool get hasAmount => this.formValueMap.containsKey(AmountValueKey);
-  bool get hasCategory => this.formValueMap.containsKey(CategoryValueKey);
+  bool get hasCategoryId => this.formValueMap.containsKey(CategoryIdValueKey);
   bool get hasNotes => this.formValueMap.containsKey(NotesValueKey);
 
-  bool get hasAccountNameValidationMessage =>
-      this.fieldsValidationMessages[AccountNameValueKey]?.isNotEmpty ?? false;
+  bool get hasAccountIdValidationMessage =>
+      this.fieldsValidationMessages[AccountIdValueKey]?.isNotEmpty ?? false;
+  bool get hasDestinationAccountIdValidationMessage =>
+      this.fieldsValidationMessages[DestinationAccountIdValueKey]?.isNotEmpty ?? false;
   bool get hasTransactionTypeValidationMessage =>
-      this.fieldsValidationMessages[TransactionTypeValueKey]?.isNotEmpty ??
-      false;
+      this.fieldsValidationMessages[TransactionTypeValueKey]?.isNotEmpty ?? false;
   bool get hasAmountValidationMessage =>
       this.fieldsValidationMessages[AmountValueKey]?.isNotEmpty ?? false;
-  bool get hasCategoryValidationMessage =>
-      this.fieldsValidationMessages[CategoryValueKey]?.isNotEmpty ?? false;
+  bool get hasCategoryIdValidationMessage =>
+      this.fieldsValidationMessages[CategoryIdValueKey]?.isNotEmpty ?? false;
   bool get hasNotesValidationMessage =>
       this.fieldsValidationMessages[NotesValueKey]?.isNotEmpty ?? false;
 
-  String? get accountNameValidationMessage =>
-      this.fieldsValidationMessages[AccountNameValueKey];
+  String? get accountIdValidationMessage => this.fieldsValidationMessages[AccountIdValueKey];
+  String? get destinationAccountIdValidationMessage =>
+      this.fieldsValidationMessages[DestinationAccountIdValueKey];
   String? get transactionTypeValidationMessage =>
       this.fieldsValidationMessages[TransactionTypeValueKey];
-  String? get amountValidationMessage =>
-      this.fieldsValidationMessages[AmountValueKey];
-  String? get categoryValidationMessage =>
-      this.fieldsValidationMessages[CategoryValueKey];
-  String? get notesValidationMessage =>
-      this.fieldsValidationMessages[NotesValueKey];
+  String? get amountValidationMessage => this.fieldsValidationMessages[AmountValueKey];
+  String? get categoryIdValidationMessage => this.fieldsValidationMessages[CategoryIdValueKey];
+  String? get notesValidationMessage => this.fieldsValidationMessages[NotesValueKey];
 }
 
 extension Methods on FormViewModel {
-  void setAccountName(String accountName) {
-    this.setData(this.formValueMap..addAll({AccountNameValueKey: accountName}));
+  void setAccountId(String accountId) {
+    this.setData(this.formValueMap..addAll({AccountIdValueKey: accountId}));
+  }
+
+  void setDestinationAccountId(String destinationAccountId) {
+    this.setData(this.formValueMap..addAll({DestinationAccountIdValueKey: destinationAccountId}));
   }
 
   void setTransactionType(String transactionType) {
-    this.setData(
-        this.formValueMap..addAll({TransactionTypeValueKey: transactionType}));
+    this.setData(this.formValueMap..addAll({TransactionTypeValueKey: transactionType}));
   }
 
-  void setCategory(String category) {
-    this.setData(this.formValueMap..addAll({CategoryValueKey: category}));
+  void setCategoryId(String categoryId) {
+    this.setData(this.formValueMap..addAll({CategoryIdValueKey: categoryId}));
   }
 
-  setAccountNameValidationMessage(String? validationMessage) =>
-      this.fieldsValidationMessages[AccountNameValueKey] = validationMessage;
+  setAccountIdValidationMessage(String? validationMessage) =>
+      this.fieldsValidationMessages[AccountIdValueKey] = validationMessage;
+  setDestinationAccountIdValidationMessage(String? validationMessage) =>
+      this.fieldsValidationMessages[DestinationAccountIdValueKey] = validationMessage;
   setTransactionTypeValidationMessage(String? validationMessage) =>
-      this.fieldsValidationMessages[TransactionTypeValueKey] =
-          validationMessage;
+      this.fieldsValidationMessages[TransactionTypeValueKey] = validationMessage;
   setAmountValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[AmountValueKey] = validationMessage;
-  setCategoryValidationMessage(String? validationMessage) =>
-      this.fieldsValidationMessages[CategoryValueKey] = validationMessage;
+  setCategoryIdValidationMessage(String? validationMessage) =>
+      this.fieldsValidationMessages[CategoryIdValueKey] = validationMessage;
   setNotesValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[NotesValueKey] = validationMessage;
 }

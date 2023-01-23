@@ -68,22 +68,17 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       info: info ?? this.info,
       warning: warning ?? this.warning,
       danger: danger ?? this.danger,
-      scaffoldBackgroundColor:
-          scaffoldBackgroundColor ?? this.scaffoldBackgroundColor,
-      appBarBackgroundColor:
-          appBarBackgroundColor ?? this.appBarBackgroundColor,
+      scaffoldBackgroundColor: scaffoldBackgroundColor ?? this.scaffoldBackgroundColor,
+      appBarBackgroundColor: appBarBackgroundColor ?? this.appBarBackgroundColor,
       primaryAccent: primaryAccent ?? this.primaryAccent,
       primaryTextColor: primaryTextColor ?? this.primaryTextColor,
       customGreen: customGreen ?? this.customGreen,
       customGrey: customGrey ?? this.customGrey,
       customLightGrey: customLightGrey ?? this.customLightGrey,
-      contrastBackgroundColor:
-          contrastBackgroundColor ?? this.contrastBackgroundColor,
+      contrastBackgroundColor: contrastBackgroundColor ?? this.contrastBackgroundColor,
       activeControlColor: activeControlColor ?? this.activeControlColor,
-      activeSwitchTrackColor:
-          activeSwitchTrackColor ?? this.activeSwitchTrackColor,
-      avatarBackgroundColor:
-          avatarBackgroundColor ?? this.avatarBackgroundColor,
+      activeSwitchTrackColor: activeSwitchTrackColor ?? this.activeSwitchTrackColor,
+      avatarBackgroundColor: avatarBackgroundColor ?? this.avatarBackgroundColor,
       settingsIconColor: settingsIconColor ?? this.settingsIconColor,
       actionButtonColor: actionButtonColor ?? this.actionButtonColor,
       subTitleColor: subTitleColor ?? this.subTitleColor,
@@ -103,8 +98,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       danger: Color.lerp(danger, other.danger, t),
       scaffoldBackgroundColor:
           Color.lerp(scaffoldBackgroundColor, other.scaffoldBackgroundColor, t),
-      appBarBackgroundColor:
-          Color.lerp(appBarBackgroundColor, other.appBarBackgroundColor, t),
+      appBarBackgroundColor: Color.lerp(appBarBackgroundColor, other.appBarBackgroundColor, t),
       primaryAccent: Color.lerp(primaryAccent, other.primaryAccent, t),
       primaryTextColor: Color.lerp(primaryTextColor, other.primaryTextColor, t),
       customGreen: Color.lerp(customGreen, other.customGreen, t),
@@ -112,16 +106,11 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       customLightGrey: Color.lerp(customLightGrey, other.customLightGrey, t),
       contrastBackgroundColor:
           Color.lerp(contrastBackgroundColor, other.contrastBackgroundColor, t),
-      activeControlColor:
-          Color.lerp(activeControlColor, other.activeControlColor, t),
-      activeSwitchTrackColor:
-          Color.lerp(activeSwitchTrackColor, other.activeSwitchTrackColor, t),
-      avatarBackgroundColor:
-          Color.lerp(avatarBackgroundColor, other.avatarBackgroundColor, t),
-      settingsIconColor:
-          Color.lerp(settingsIconColor, other.settingsIconColor, t),
-      actionButtonColor:
-          Color.lerp(actionButtonColor, other.actionButtonColor, t),
+      activeControlColor: Color.lerp(activeControlColor, other.activeControlColor, t),
+      activeSwitchTrackColor: Color.lerp(activeSwitchTrackColor, other.activeSwitchTrackColor, t),
+      avatarBackgroundColor: Color.lerp(avatarBackgroundColor, other.avatarBackgroundColor, t),
+      settingsIconColor: Color.lerp(settingsIconColor, other.settingsIconColor, t),
+      actionButtonColor: Color.lerp(actionButtonColor, other.actionButtonColor, t),
       subTitleColor: Color.lerp(subTitleColor, other.subTitleColor, t),
     );
   }

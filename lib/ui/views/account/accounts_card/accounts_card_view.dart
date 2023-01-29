@@ -45,7 +45,7 @@ class AccountsCard extends StatelessWidget {
                   crossAxisCount: 3,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
-                  childAspectRatio: 2.22,
+                  childAspectRatio: 2.01,
                 ),
                 itemCount: mainViewModel.accounts.length + 1,
                 itemBuilder: (context, index) {

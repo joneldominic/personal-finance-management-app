@@ -6,6 +6,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/string_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
@@ -25,9 +26,6 @@ import 'package:uuid/uuid.dart';
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
-
-const transferCategoryIndex = 0;
-const undefinedCategoryIndex = 1;
 
 class TransactionDetailViewModel extends FormViewModel {
   final _logger = getLogger('TransactionDetailViewModel');
@@ -69,6 +67,9 @@ class TransactionDetailViewModel extends FormViewModel {
   List<Account> destinationAccounts = [];
   List<Category> categories = [];
   List<Category> filteredCategories = [];
+
+  int transferCategoryId = -1;
+  int undefinedCategoryId = -1;
 
   // TODO: Reload stream on account or category changes
 
@@ -116,8 +117,7 @@ class TransactionDetailViewModel extends FormViewModel {
     filterCategories();
     setCategoryId(
       categories.isNotEmpty
-          ? transaction?.category.value?.id.toString() ??
-              categories[undefinedCategoryIndex].id.toString()
+          ? transaction?.category.value?.id.toString() ?? undefinedCategoryId.toString()
           : '',
     ); // TODO: handle if category was already deleted
 
@@ -134,8 +134,14 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.i('accounts: ${accounts.itemsToString()}');
 
     categories = await _categoryService.getCategories();
-    filteredCategories = categories;
     _logger.i('categories: ${categories.itemsToString()}');
+
+    filteredCategories = categories;
+
+    transferCategoryId =
+        categories.firstWhereOrNull((c) => c.name == TRANSFER_CATEGORY_NAME)?.id ?? -1;
+    undefinedCategoryId =
+        categories.firstWhereOrNull((c) => c.name == UNDEFINED_CATEGORY_NAME)?.id ?? -1;
   }
 
   void initDateTimeFields(DateTime? dateTime) {
@@ -184,9 +190,9 @@ class TransactionDetailViewModel extends FormViewModel {
     if (transactionType == EnumToString.convertToString(TransactionType.transfer)) {
       destinationAccountFocusNode.requestFocus();
       filterDestinationAccount();
-      setCategoryId(categories[transferCategoryIndex].id.toString());
+      setCategoryId(transferCategoryId.toString());
     } else if (transactionTypeValue == EnumToString.convertToString(TransactionType.transfer)) {
-      setCategoryId(categories[undefinedCategoryIndex].id.toString());
+      setCategoryId(undefinedCategoryId.toString());
     }
 
     setTransactionType(transactionType);

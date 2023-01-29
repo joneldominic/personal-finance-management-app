@@ -1,6 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/dao/category_dao_impl.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/data/repositories/category_repository.dart';
@@ -15,14 +16,14 @@ class CategoryService with ReactiveServiceMixin {
 
     final categories = [
       Category(
-        name: "Transfer",
+        name: TRANSFER_CATEGORY_NAME,
         nature: CategoryNature.none,
         color: '0xFFFFFF00',
         isVisible: true,
         isDefault: true,
       ),
       Category(
-        name: "Undefined",
+        name: UNDEFINED_CATEGORY_NAME,
         nature: CategoryNature.none,
         color: '0xFF757575',
         isVisible: true,

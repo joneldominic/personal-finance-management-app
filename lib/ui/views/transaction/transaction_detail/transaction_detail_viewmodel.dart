@@ -70,6 +70,8 @@ class TransactionDetailViewModel extends FormViewModel {
   List<Category> categories = [];
   List<Category> filteredCategories = [];
 
+  // TODO: Reload stream on account or category changes
+
   void initForm({
     required Transaction? transaction,
     required TextEditingController amountController,
@@ -86,7 +88,9 @@ class TransactionDetailViewModel extends FormViewModel {
     filterDestinationAccount();
 
     setAccountId(
-      accounts.isNotEmpty ? transaction?.accountId.toString() ?? accounts[0].id.toString() : "",
+      accounts.isNotEmpty
+          ? transaction?.account.value?.id.toString() ?? accounts[0].id.toString()
+          : "",
     );
 
     setTransactionType(
@@ -96,12 +100,12 @@ class TransactionDetailViewModel extends FormViewModel {
     );
 
     if (transaction?.transactionType == TransactionType.transfer &&
-        transaction?.destinationAccountId != null) {
-      setDestinationAccountId(transaction!.destinationAccountId.toString());
+        transaction?.destinationAccount.value?.id != null) {
+      setDestinationAccountId(transaction!.destinationAccount.value!.id.toString());
     }
 
     // TODO: Handle if account was already deleted
-    Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.accountId);
+    Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.account.value?.id);
     currencyInputFormatter = CurrencyInputFormatter(
       symbol: accounts.isNotEmpty ? account?.currency ?? accounts[0].currency! : "PHP",
       allowNegative: false,
@@ -112,7 +116,8 @@ class TransactionDetailViewModel extends FormViewModel {
     filterCategories();
     setCategoryId(
       categories.isNotEmpty
-          ? transaction?.categoryId.toString() ?? categories[undefinedCategoryIndex].id.toString()
+          ? transaction?.category.value?.id.toString() ??
+              categories[undefinedCategoryIndex].id.toString()
           : '',
     ); // TODO: handle if category was already deleted
 
@@ -138,7 +143,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final DateTime now = dateTime ?? DateTime.now();
     final String date = DateFormat('MMM dd, yyyy').format(now);
-    final String time = DateFormat('hh:mm a').format(now);
+    final String time = DateFormat('hh:mm:ss a').format(now);
 
     dateController.text = date;
     timeController.text = time;
@@ -214,7 +219,7 @@ class TransactionDetailViewModel extends FormViewModel {
     );
 
     if (selectedTime != null) {
-      final String time = DateFormat('hh:mm a')
+      final String time = DateFormat('hh:mm:ss a')
           .format(DateTime(now.year, now.month, now.day, selectedTime.hour, selectedTime.minute));
       timeController.text = time;
     }
@@ -244,22 +249,33 @@ class TransactionDetailViewModel extends FormViewModel {
         ? amount.abs() * -1
         : amount.abs();
 
-    final date = DateFormat("MMM dd, yyyy - hh:mm a")
+    final date = DateFormat("MMM dd, yyyy - hh:mm:ss a")
         .parse("${dateController.text} - ${timeController.text}");
 
+    final tempAccount = accounts.firstWhereOrNull(
+      (a) => a.id == int.parse(accountIdValue!),
+    );
+
+    final tempDestAccount = currTransactionTypeIsTransfer
+        ? accounts.firstWhereOrNull(
+            (a) => a.id == int.parse(destinationAccountIdValue!),
+          )
+        : null;
+
+    final tempCategory = categories.firstWhereOrNull((c) => c.id == int.parse(categoryIdValue!));
+
     final newTransaction = Transaction(
-      accountId: int.parse(accountIdValue!),
-      destinationAccountId:
-          currTransactionTypeIsTransfer ? int.parse(destinationAccountIdValue!) : null,
       transactionType: EnumToString.fromString(
         TransactionType.values,
         transactionTypeValue!,
       ),
       amount: amount,
-      categoryId: int.parse(categoryIdValue!),
       date: date,
       notes: _notesController!.text,
-    );
+    )
+      ..account.value = tempAccount
+      ..destinationAccount.value = tempDestAccount
+      ..category.value = tempCategory;
 
     if (_transaction != null) {
       final oldTransactionTypeIsTransfer =

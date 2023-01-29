@@ -29,11 +29,12 @@ class TransactionListView extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               // TODO: Try simplifying this by passing the Transaction object
               return TransactionListItem(
-                categoryName: mainViewModel.transactions[index].categoryName,
-                categoryColor: mainViewModel.transactions[index].categoryColor,
-                accountName: mainViewModel.transactions[index].accountName,
-                destinationAccountName: mainViewModel.transactions[index].destinationAccountName,
-                accountCurrency: mainViewModel.transactions[index].accountCurrency,
+                categoryName: mainViewModel.transactions[index].category.value?.name,
+                categoryColor: mainViewModel.transactions[index].category.value?.color,
+                accountName: mainViewModel.transactions[index].account.value?.name,
+                destinationAccountName:
+                    mainViewModel.transactions[index].destinationAccount.value?.name,
+                accountCurrency: mainViewModel.transactions[index].account.value?.currency,
                 amount: mainViewModel.transactions[index].amount,
                 transactionType: mainViewModel.transactions[index].transactionType,
                 transferTransactionType: mainViewModel.transactions[index].transferTransactionType,

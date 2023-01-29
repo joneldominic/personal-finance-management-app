@@ -65,8 +65,6 @@ class TransactionDaoImpl extends TransactionDao {
 
     Isar isar = await _db;
 
-    // TODO: Implement transfer update logic
-
     final transactionCollection = isar.transactions;
     final updatedTransaction = await isar.writeTxn(() async {
       await transactionCollection.put(transaction);

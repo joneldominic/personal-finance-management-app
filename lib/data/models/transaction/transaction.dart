@@ -1,6 +1,8 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/data/models/category/category.dart';
 
 part 'transaction.g.dart';
 
@@ -8,80 +10,57 @@ part 'transaction.g.dart';
 class Transaction {
   Id id = Isar.autoIncrement;
 
-  int? accountId;
-
-  @ignore
-  String? accountName;
+  final account = IsarLink<Account>();
 
   @Enumerated(EnumType.name)
   TransactionType? transactionType;
 
-  int? destinationAccountId;
-
-  @ignore
-  String? destinationAccountName;
+  final destinationAccount = IsarLink<Account>();
 
   String? transferId;
-
-  @ignore
-  String? accountCurrency;
 
   double? amount;
 
   @Enumerated(EnumType.name)
   TransactionType? transferTransactionType;
 
-  int? categoryId;
-
-  @ignore
-  String? categoryName;
-
-  @ignore
-  String? categoryColor;
+  final category = IsarLink<Category>();
 
   DateTime? date;
 
   String? notes;
 
   Transaction({
-    required this.accountId,
     required this.transactionType,
-    this.destinationAccountId,
     this.transferId,
     this.transferTransactionType,
     required this.amount,
-    required this.categoryId,
     required this.date,
     required this.notes,
   });
 
-  Transaction.clone(Transaction transaction)
-      : this(
-          accountId: transaction.accountId,
-          transactionType: transaction.transactionType,
-          destinationAccountId: transaction.destinationAccountId,
-          transferId: transaction.transferId,
-          transferTransactionType: transaction.transferTransactionType,
-          amount: transaction.amount,
-          categoryId: transaction.categoryId,
-          date: transaction.date,
-          notes: transaction.notes,
-        );
+  Transaction.clone(Transaction transaction) {
+    account.value = transaction.account.value;
+    transactionType = transaction.transactionType;
+    destinationAccount.value = transaction.destinationAccount.value;
+    transferId = transaction.transferId;
+    amount = transaction.amount;
+    transferTransactionType = transaction.transferTransactionType;
+    category.value = transaction.category.value;
+    date = transaction.date;
+    notes = transaction.notes;
+  }
 
   @override
   String toString() => 'Transaction('
       'id: $id, '
-      'accountId: $accountId, '
-      'accountName: $accountName, '
+      'account: $account, '
+      'destinationAccount: $destinationAccount, '
       'transactionType: ${EnumToString.convertToString(transactionType)}, '
-      'destinationAccountId: $destinationAccountId, '
       'transferId: $transferId, '
       'transferTransactionType: $transferTransactionType, '
-      'accountCurrency: $accountCurrency, '
+      'category: $category, '
       'amount: $amount, '
-      'categoryId: $categoryId, '
-      'categoryName: $categoryName, '
-      'categoryColor: $categoryColor, '
       'date: $date, '
       'notes: $notes'
       ')';

@@ -131,7 +131,8 @@ P _categoryDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)]) as P;
+      return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)])
+          as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -200,7 +201,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     });
   }
 
-  QueryBuilder<Category, Category, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<Category, Category, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -208,7 +210,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     });
   }
 
-  QueryBuilder<Category, Category, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<Category, Category, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -233,7 +236,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
   }
 }
 
-extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterCondition> {
+extension CategoryQueryFilter
+    on QueryBuilder<Category, Category, QFilterCondition> {
   QueryBuilder<Category, Category, QAfterFilterCondition> colorIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -338,7 +342,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorContains(String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> colorContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -349,7 +354,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorMatches(String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> colorMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -446,7 +452,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(bool? value) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(
+      bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isDefault',
@@ -471,7 +478,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> isVisibleEqualTo(bool? value) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> isVisibleEqualTo(
+      bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isVisible',
@@ -584,7 +592,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -595,7 +604,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -728,7 +738,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> natureContains(String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> natureContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -739,7 +750,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> natureMatches(String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> natureMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -769,9 +781,11 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
   }
 }
 
-extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterCondition> {}
+extension CategoryQueryObject
+    on QueryBuilder<Category, Category, QFilterCondition> {}
 
-extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterCondition> {}
+extension CategoryQueryLinks
+    on QueryBuilder<Category, Category, QFilterCondition> {}
 
 extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
   QueryBuilder<Category, Category, QAfterSortBy> sortByColor() {
@@ -835,7 +849,8 @@ extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
   }
 }
 
-extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenBy> {
+extension CategoryQuerySortThenBy
+    on QueryBuilder<Category, Category, QSortThenBy> {
   QueryBuilder<Category, Category, QAfterSortBy> thenByColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'color', Sort.asc);
@@ -909,8 +924,10 @@ extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenB
   }
 }
 
-extension CategoryQueryWhereDistinct on QueryBuilder<Category, Category, QDistinct> {
-  QueryBuilder<Category, Category, QDistinct> distinctByColor({bool caseSensitive = true}) {
+extension CategoryQueryWhereDistinct
+    on QueryBuilder<Category, Category, QDistinct> {
+  QueryBuilder<Category, Category, QDistinct> distinctByColor(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
     });
@@ -928,20 +945,23 @@ extension CategoryQueryWhereDistinct on QueryBuilder<Category, Category, QDistin
     });
   }
 
-  QueryBuilder<Category, Category, QDistinct> distinctByName({bool caseSensitive = true}) {
+  QueryBuilder<Category, Category, QDistinct> distinctByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Category, Category, QDistinct> distinctByNature({bool caseSensitive = true}) {
+  QueryBuilder<Category, Category, QDistinct> distinctByNature(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nature', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension CategoryQueryProperty on QueryBuilder<Category, Category, QQueryProperty> {
+extension CategoryQueryProperty
+    on QueryBuilder<Category, Category, QQueryProperty> {
   QueryBuilder<Category, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');

@@ -151,7 +151,6 @@ class AccountDetailViewModel extends FormViewModel {
     }
 
     final deletedId = await _accountService.deleteAccount(_account!.id);
-    // TODO: Delete related transactions as well
 
     if (deletedId == -1) {
       _logger.e("Account Deletion Failed!");

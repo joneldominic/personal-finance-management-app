@@ -1,8 +1,10 @@
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/dao/category_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class CategoryDaoImpl extends CategoryDao {
   final _logger = getLogger('CategoryDaoImpl');
@@ -47,7 +49,22 @@ class CategoryDaoImpl extends CategoryDao {
     Isar isar = await _db;
 
     final categoryCollection = isar.categorys;
+    final transactionCollection = isar.transactions;
+
     final isDeleted = await isar.writeTxn(() async {
+      final category = await categoryCollection.get(id);
+      final undefinedCategory =
+          await categoryCollection.filter().nameEqualTo(UNDEFINED_CATEGORY_NAME).findFirst();
+
+      await category!.transactions.load();
+      final transactions = category.transactions.toList();
+
+      await Future.forEach(transactions, (Transaction t) async {
+        t.category.value = undefinedCategory;
+        await t.category.save();
+      });
+      await transactionCollection.putAll(transactions);
+
       return await categoryCollection.delete(id);
     });
 

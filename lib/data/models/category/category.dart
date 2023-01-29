@@ -1,6 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 part 'category.g.dart';
 
@@ -18,6 +19,9 @@ class Category {
   bool? isVisible;
 
   bool? isDefault;
+
+  @Backlink(to: 'category')
+  final transactions = IsarLinks<Transaction>();
 
   Category({
     required this.name,

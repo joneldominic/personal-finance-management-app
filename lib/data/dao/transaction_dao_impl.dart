@@ -82,6 +82,11 @@ class TransactionDaoImpl extends TransactionDao {
     final transactionCollection = isar.transactions;
     final updatedTransaction = await isar.writeTxn(() async {
       await transactionCollection.put(transaction);
+
+      await transaction.account.save();
+      await transaction.destinationAccount.save();
+      await transaction.category.save();
+
       return transaction;
     });
 

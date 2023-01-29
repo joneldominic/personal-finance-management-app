@@ -105,8 +105,6 @@ class CategoryDetailViewModel extends FormViewModel {
     }
 
     final deletedId = await _categoryService.deleteCategory(_category!.id);
-    // TODO: Handle transactions that uses the deleted category
-    // Option1: Add a default category: Undefined (Undeleteable)
 
     if (deletedId == -1) {
       _logger.e("Category Deletion Failed!");

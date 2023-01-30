@@ -59,6 +59,11 @@ class CategoryService with ReactiveServiceMixin {
     return _categoryRepository.getCategoryById(id);
   }
 
+  Future<Category> getCategoryByName(String name) {
+    _logger.i('argument: $name');
+    return _categoryRepository.getCategoryByName(name);
+  }
+
   Future<Category> updateCategory(Category category) {
     _logger.i('argument: $category');
     return _categoryRepository.updateCategory(category);

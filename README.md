@@ -28,3 +28,6 @@ samples, guidance on mobile development, and a full API reference.
 
 - Format all files with line length 100
   `flutter format . -l 100`
+
+- Run Build Runner + Format
+  `flutter pub run build_runner build --delete-conflicting-outputs && flutter format . -l 100`

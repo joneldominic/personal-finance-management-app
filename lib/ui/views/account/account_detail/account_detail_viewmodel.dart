@@ -4,10 +4,15 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/balance_update_type.dart';
 import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
+import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/string_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
+import 'package:personal_finance_management_app/services/category_service.dart';
+import 'package:personal_finance_management_app/services/transaction_service.dart';
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -20,6 +25,8 @@ class AccountDetailViewModel extends FormViewModel {
   final _logger = getLogger('AccountDetailViewModel');
   final _navigationService = locator<NavigationService>();
   final _accountService = locator<AccountService>();
+  final _transactionService = locator<TransactionService>();
+  final _categoryService = locator<CategoryService>();
   final _dialogService = locator<DialogService>();
   final _snackbarService = locator<SnackbarService>();
 
@@ -108,8 +115,7 @@ class AccountDetailViewModel extends FormViewModel {
       }
 
       if (response.confirmed) {
-        // TODO: Create a transaction record
-        _logger.e("Should create a transaction record");
+        await _saveTransaction(balanceDiff);
       }
 
       _logger.i("BalanceConfirmationDialog Closed");
@@ -134,6 +140,29 @@ class AccountDetailViewModel extends FormViewModel {
     }
 
     popCurrentView();
+  }
+
+  Future<void> _saveTransaction(String balanceDiff) async {
+    final balanceDiffAmount = parseAmountStringToDouble(balanceDiff);
+
+    final transactionType =
+        balanceDiffAmount > 0 ? TransactionType.income : TransactionType.expense;
+
+    final date = DateTime.now();
+
+    final undefinedCategory = await _categoryService.getCategoryByName(UNDEFINED_CATEGORY_NAME);
+
+    final newTransaction = Transaction(
+      transactionType: transactionType,
+      amount: balanceDiffAmount,
+      date: date,
+      notes: FROM_ACCOUNT_CHANGE_NOTE,
+    )
+      ..account.value = _account
+      ..category.value = undefinedCategory;
+
+    final savedTransaction = await _transactionService.createTransaction(newTransaction);
+    _logger.i('Transaction Saved Successfully: $savedTransaction');
   }
 
   void handleDeleteAccount() async {

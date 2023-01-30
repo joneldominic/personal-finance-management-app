@@ -92,6 +92,20 @@ class CategoryDaoImpl extends CategoryDao {
   }
 
   @override
+  Future<Category> getCategoryByName(String name) async {
+    _logger.i('argument: $name');
+
+    Isar isar = await _db;
+
+    final categoryCollection = isar.categorys;
+    final undefinedCategory = await isar.writeTxn(() async {
+      return await categoryCollection.filter().nameEqualTo(name).findFirst();
+    });
+
+    return undefinedCategory!;
+  }
+
+  @override
   Future<Category> updateCategory(Category category) async {
     _logger.i('argument: $category');
 

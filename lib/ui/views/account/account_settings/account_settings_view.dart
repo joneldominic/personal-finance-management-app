@@ -46,6 +46,8 @@ class AccountSettingsView extends StatelessWidget {
                   color: model.accounts[index].color!,
                   currency: model.accounts[index].currency,
                   amount: model.accounts[index].balance,
+                  // TODO: Make action item as order control
+                  // TODO: Navigation should be on tap
                   onPressed: () => model.navigateToAccountDetail(model.accounts[index]),
                 );
               },

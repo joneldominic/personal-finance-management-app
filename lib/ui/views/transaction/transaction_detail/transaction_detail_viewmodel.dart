@@ -72,6 +72,7 @@ class TransactionDetailViewModel extends FormViewModel {
   int undefinedCategoryId = -1;
 
   // TODO: Reload stream on account or category changes
+  // TODO: Improve linked props implementation
 
   void initForm({
     required Transaction? transaction,
@@ -105,7 +106,6 @@ class TransactionDetailViewModel extends FormViewModel {
       setDestinationAccountId(transaction!.destinationAccount.value!.id.toString());
     }
 
-    // TODO: Handle if account was already deleted
     Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.account.value?.id);
     currencyInputFormatter = CurrencyInputFormatter(
       symbol: accounts.isNotEmpty ? account?.currency ?? accounts[0].currency! : "PHP",
@@ -119,7 +119,7 @@ class TransactionDetailViewModel extends FormViewModel {
       categories.isNotEmpty
           ? transaction?.category.value?.id.toString() ?? undefinedCategoryId.toString()
           : '',
-    ); // TODO: handle if category was already deleted
+    );
 
     initDateTimeFields(transaction?.date);
 

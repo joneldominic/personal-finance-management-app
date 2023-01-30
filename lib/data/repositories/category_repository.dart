@@ -34,6 +34,11 @@ class CategoryRepository {
     return categoryDao.getCategoryById(id);
   }
 
+  Future<Category> getCategoryByName(String name) {
+    _logger.i('argument: $name');
+    return categoryDao.getCategoryByName(name);
+  }
+
   Future<Category> updateCategory(Category category) {
     _logger.i('argument: $category');
     return categoryDao.updateCategory(category);

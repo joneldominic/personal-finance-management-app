@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class AccountDaoImpl extends AccountDao {
   final _logger = getLogger('AccountDaoImpl');
@@ -68,7 +69,15 @@ class AccountDaoImpl extends AccountDao {
     Isar isar = await _db;
 
     final accountCollection = isar.accounts;
+    final transactionCollection = isar.transactions;
+
     final isDeleted = await isar.writeTxn(() async {
+      final account = await accountCollection.get(id);
+
+      await account!.transactions.load();
+      final transactionsIds = account.transactions.map((t) => t.id).toList();
+      await transactionCollection.deleteAll(transactionsIds);
+
       return await accountCollection.delete(id);
     });
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/transaction_dao.dart';
@@ -18,7 +20,12 @@ class TransactionDaoImpl extends TransactionDao {
     final transactionCollection = isar.transactions;
     final createdTransaction = await isar.writeTxn(() async {
       final id = await transactionCollection.put(transaction);
-      return await transactionCollection.get(id);
+
+      await transaction.account.save();
+      await transaction.category.save();
+
+      final savedTransaction = await transactionCollection.get(id);
+      return savedTransaction;
     });
 
     return createdTransaction!;
@@ -33,6 +40,13 @@ class TransactionDaoImpl extends TransactionDao {
     final transactionCollection = isar.transactions;
     final createdTransactions = await isar.writeTxn(() async {
       final ids = await transactionCollection.putAll(transactions);
+
+      await Future.forEach(transactions, (Transaction t) async {
+        await t.account.save();
+        await t.destinationAccount.save();
+        await t.category.save();
+      });
+
       return await transactionCollection.getAll(ids);
     });
 
@@ -65,11 +79,14 @@ class TransactionDaoImpl extends TransactionDao {
 
     Isar isar = await _db;
 
-    // TODO: Implement transfer update logic
-
     final transactionCollection = isar.transactions;
     final updatedTransaction = await isar.writeTxn(() async {
       await transactionCollection.put(transaction);
+
+      await transaction.account.save();
+      await transaction.destinationAccount.save();
+      await transaction.category.save();
+
       return transaction;
     });
 
@@ -108,8 +125,20 @@ class TransactionDaoImpl extends TransactionDao {
     Isar isar = await _db;
 
     final transactionCollection = isar.transactions;
-    Query<Transaction> transactionsQuery = transactionCollection.where().build();
+    Query<Transaction> transactionsQuery = transactionCollection.where().sortByDateDesc().build();
 
-    yield* transactionsQuery.watch(fireImmediately: true);
+    final transactionsStream = transactionsQuery.watch(fireImmediately: true);
+
+    StreamTransformer<List<Transaction>, List<Transaction>> loadDataTransformer =
+        StreamTransformer.fromHandlers(
+            handleData: (List<Transaction> transactions, EventSink sink) {
+      for (Transaction t in transactions) {
+        t.account.load();
+        t.category.load();
+      }
+      sink.add(transactions);
+    });
+
+    yield* transactionsStream.transform(loadDataTransformer);
   }
 }

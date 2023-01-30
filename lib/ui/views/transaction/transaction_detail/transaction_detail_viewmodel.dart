@@ -6,6 +6,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/string_helpers.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
@@ -25,9 +26,6 @@ import 'package:uuid/uuid.dart';
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
-
-const transferCategoryIndex = 0;
-const undefinedCategoryIndex = 1;
 
 class TransactionDetailViewModel extends FormViewModel {
   final _logger = getLogger('TransactionDetailViewModel');
@@ -70,6 +68,12 @@ class TransactionDetailViewModel extends FormViewModel {
   List<Category> categories = [];
   List<Category> filteredCategories = [];
 
+  int transferCategoryId = -1;
+  int undefinedCategoryId = -1;
+
+  // TODO: Reload stream on account or category changes
+  // TODO: Improve linked props implementation
+
   void initForm({
     required Transaction? transaction,
     required TextEditingController amountController,
@@ -86,7 +90,9 @@ class TransactionDetailViewModel extends FormViewModel {
     filterDestinationAccount();
 
     setAccountId(
-      accounts.isNotEmpty ? transaction?.accountId.toString() ?? accounts[0].id.toString() : "",
+      accounts.isNotEmpty
+          ? transaction?.account.value?.id.toString() ?? accounts[0].id.toString()
+          : "",
     );
 
     setTransactionType(
@@ -96,12 +102,11 @@ class TransactionDetailViewModel extends FormViewModel {
     );
 
     if (transaction?.transactionType == TransactionType.transfer &&
-        transaction?.destinationAccountId != null) {
-      setDestinationAccountId(transaction!.destinationAccountId.toString());
+        transaction?.destinationAccount.value?.id != null) {
+      setDestinationAccountId(transaction!.destinationAccount.value!.id.toString());
     }
 
-    // TODO: Handle if account was already deleted
-    Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.accountId);
+    Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.account.value?.id);
     currencyInputFormatter = CurrencyInputFormatter(
       symbol: accounts.isNotEmpty ? account?.currency ?? accounts[0].currency! : "PHP",
       allowNegative: false,
@@ -112,9 +117,9 @@ class TransactionDetailViewModel extends FormViewModel {
     filterCategories();
     setCategoryId(
       categories.isNotEmpty
-          ? transaction?.categoryId.toString() ?? categories[undefinedCategoryIndex].id.toString()
+          ? transaction?.category.value?.id.toString() ?? undefinedCategoryId.toString()
           : '',
-    ); // TODO: handle if category was already deleted
+    );
 
     initDateTimeFields(transaction?.date);
 
@@ -129,8 +134,14 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.i('accounts: ${accounts.itemsToString()}');
 
     categories = await _categoryService.getCategories();
-    filteredCategories = categories;
     _logger.i('categories: ${categories.itemsToString()}');
+
+    filteredCategories = categories;
+
+    transferCategoryId =
+        categories.firstWhereOrNull((c) => c.name == TRANSFER_CATEGORY_NAME)?.id ?? -1;
+    undefinedCategoryId =
+        categories.firstWhereOrNull((c) => c.name == UNDEFINED_CATEGORY_NAME)?.id ?? -1;
   }
 
   void initDateTimeFields(DateTime? dateTime) {
@@ -138,7 +149,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     final DateTime now = dateTime ?? DateTime.now();
     final String date = DateFormat('MMM dd, yyyy').format(now);
-    final String time = DateFormat('hh:mm a').format(now);
+    final String time = DateFormat('hh:mm:ss a').format(now);
 
     dateController.text = date;
     timeController.text = time;
@@ -179,9 +190,9 @@ class TransactionDetailViewModel extends FormViewModel {
     if (transactionType == EnumToString.convertToString(TransactionType.transfer)) {
       destinationAccountFocusNode.requestFocus();
       filterDestinationAccount();
-      setCategoryId(categories[transferCategoryIndex].id.toString());
+      setCategoryId(transferCategoryId.toString());
     } else if (transactionTypeValue == EnumToString.convertToString(TransactionType.transfer)) {
-      setCategoryId(categories[undefinedCategoryIndex].id.toString());
+      setCategoryId(undefinedCategoryId.toString());
     }
 
     setTransactionType(transactionType);
@@ -214,7 +225,7 @@ class TransactionDetailViewModel extends FormViewModel {
     );
 
     if (selectedTime != null) {
-      final String time = DateFormat('hh:mm a')
+      final String time = DateFormat('hh:mm:ss a')
           .format(DateTime(now.year, now.month, now.day, selectedTime.hour, selectedTime.minute));
       timeController.text = time;
     }
@@ -244,22 +255,33 @@ class TransactionDetailViewModel extends FormViewModel {
         ? amount.abs() * -1
         : amount.abs();
 
-    final date = DateFormat("MMM dd, yyyy - hh:mm a")
+    final date = DateFormat("MMM dd, yyyy - hh:mm:ss a")
         .parse("${dateController.text} - ${timeController.text}");
 
+    final tempAccount = accounts.firstWhereOrNull(
+      (a) => a.id == int.parse(accountIdValue!),
+    );
+
+    final tempDestAccount = currTransactionTypeIsTransfer
+        ? accounts.firstWhereOrNull(
+            (a) => a.id == int.parse(destinationAccountIdValue!),
+          )
+        : null;
+
+    final tempCategory = categories.firstWhereOrNull((c) => c.id == int.parse(categoryIdValue!));
+
     final newTransaction = Transaction(
-      accountId: int.parse(accountIdValue!),
-      destinationAccountId:
-          currTransactionTypeIsTransfer ? int.parse(destinationAccountIdValue!) : null,
       transactionType: EnumToString.fromString(
         TransactionType.values,
         transactionTypeValue!,
       ),
       amount: amount,
-      categoryId: int.parse(categoryIdValue!),
       date: date,
       notes: _notesController!.text,
-    );
+    )
+      ..account.value = tempAccount
+      ..destinationAccount.value = tempDestAccount
+      ..category.value = tempCategory;
 
     if (_transaction != null) {
       final oldTransactionTypeIsTransfer =

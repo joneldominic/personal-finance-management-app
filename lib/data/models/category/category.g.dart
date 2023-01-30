@@ -50,7 +50,15 @@ const CategorySchema = CollectionSchema(
   deserializeProp: _categoryDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'transactions': LinkSchema(
+      id: 4263648197618996247,
+      name: r'transactions',
+      target: r'Transaction',
+      single: false,
+      linkName: r'category',
+    )
+  },
   embeddedSchemas: {},
   getId: _categoryGetId,
   getLinks: _categoryGetLinks,
@@ -153,11 +161,12 @@ Id _categoryGetId(Category object) {
 }
 
 List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
-  return [];
+  return [object.transactions];
 }
 
 void _categoryAttach(IsarCollection<dynamic> col, Id id, Category object) {
   object.id = id;
+  object.transactions.attach(col, col.isar.collection<Transaction>(), r'transactions', id);
 }
 
 extension CategoryQueryWhereSort on QueryBuilder<Category, Category, QWhere> {
@@ -771,7 +780,60 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
 
 extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterCondition> {}
 
-extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterCondition> {}
+extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterCondition> {
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactions(FilterQuery<Transaction> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'transactions');
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', lower, includeLower, upper, includeUpper);
+    });
+  }
+}
 
 extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
   QueryBuilder<Category, Category, QAfterSortBy> sortByColor() {

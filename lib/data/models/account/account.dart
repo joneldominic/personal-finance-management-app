@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 part 'account.g.dart';
 
@@ -17,6 +18,9 @@ class Account {
   bool? isExcludedFromAnalysis;
 
   bool? isArchived;
+
+  @Backlink(to: 'account')
+  final transactions = IsarLinks<Transaction>();
 
   Account({
     required this.name,

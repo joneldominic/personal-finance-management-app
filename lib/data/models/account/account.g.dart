@@ -54,7 +54,15 @@ const AccountSchema = CollectionSchema(
   deserializeProp: _accountDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'transactions': LinkSchema(
+      id: 320079441438939175,
+      name: r'transactions',
+      target: r'Transaction',
+      single: false,
+      linkName: r'account',
+    )
+  },
   embeddedSchemas: {},
   getId: _accountGetId,
   getLinks: _accountGetLinks,
@@ -150,11 +158,12 @@ Id _accountGetId(Account object) {
 }
 
 List<IsarLinkBase<dynamic>> _accountGetLinks(Account object) {
-  return [];
+  return [object.transactions];
 }
 
 void _accountAttach(IsarCollection<dynamic> col, Id id, Account object) {
   object.id = id;
+  object.transactions.attach(col, col.isar.collection<Transaction>(), r'transactions', id);
 }
 
 extension AccountQueryWhereSort on QueryBuilder<Account, Account, QWhere> {
@@ -846,7 +855,60 @@ extension AccountQueryFilter on QueryBuilder<Account, Account, QFilterCondition>
 
 extension AccountQueryObject on QueryBuilder<Account, Account, QFilterCondition> {}
 
-extension AccountQueryLinks on QueryBuilder<Account, Account, QFilterCondition> {}
+extension AccountQueryLinks on QueryBuilder<Account, Account, QFilterCondition> {
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactions(FilterQuery<Transaction> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'transactions');
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactionsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactionsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactionsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactionsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactionsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> transactionsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'transactions', lower, includeLower, upper, includeUpper);
+    });
+  }
+}
 
 extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
   QueryBuilder<Account, Account, QAfterSortBy> sortByBalance() {

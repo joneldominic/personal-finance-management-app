@@ -17,49 +17,34 @@ const TransactionSchema = CollectionSchema(
   name: r'Transaction',
   id: 5320225499417954855,
   properties: {
-    r'accountId': PropertySchema(
-      id: 0,
-      name: r'accountId',
-      type: IsarType.long,
-    ),
     r'amount': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'amount',
       type: IsarType.double,
     ),
-    r'categoryId': PropertySchema(
-      id: 2,
-      name: r'categoryId',
-      type: IsarType.long,
-    ),
     r'date': PropertySchema(
-      id: 3,
+      id: 1,
       name: r'date',
       type: IsarType.dateTime,
     ),
-    r'destinationAccountId': PropertySchema(
-      id: 4,
-      name: r'destinationAccountId',
-      type: IsarType.long,
-    ),
     r'notes': PropertySchema(
-      id: 5,
+      id: 2,
       name: r'notes',
       type: IsarType.string,
     ),
     r'transactionType': PropertySchema(
-      id: 6,
+      id: 3,
       name: r'transactionType',
       type: IsarType.string,
       enumMap: _TransactiontransactionTypeEnumValueMap,
     ),
     r'transferId': PropertySchema(
-      id: 7,
+      id: 4,
       name: r'transferId',
       type: IsarType.string,
     ),
     r'transferTransactionType': PropertySchema(
-      id: 8,
+      id: 5,
       name: r'transferTransactionType',
       type: IsarType.string,
       enumMap: _TransactiontransferTransactionTypeEnumValueMap,
@@ -71,7 +56,26 @@ const TransactionSchema = CollectionSchema(
   deserializeProp: _transactionDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'account': LinkSchema(
+      id: -8467990729867616553,
+      name: r'account',
+      target: r'Account',
+      single: true,
+    ),
+    r'destinationAccount': LinkSchema(
+      id: 7420677348691740511,
+      name: r'destinationAccount',
+      target: r'Account',
+      single: true,
+    ),
+    r'category': LinkSchema(
+      id: 9039453146683828404,
+      name: r'category',
+      target: r'Category',
+      single: true,
+    )
+  },
   embeddedSchemas: {},
   getId: _transactionGetId,
   getLinks: _transactionGetLinks,
@@ -118,15 +122,12 @@ void _transactionSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.accountId);
-  writer.writeDouble(offsets[1], object.amount);
-  writer.writeLong(offsets[2], object.categoryId);
-  writer.writeDateTime(offsets[3], object.date);
-  writer.writeLong(offsets[4], object.destinationAccountId);
-  writer.writeString(offsets[5], object.notes);
-  writer.writeString(offsets[6], object.transactionType?.name);
-  writer.writeString(offsets[7], object.transferId);
-  writer.writeString(offsets[8], object.transferTransactionType?.name);
+  writer.writeDouble(offsets[0], object.amount);
+  writer.writeDateTime(offsets[1], object.date);
+  writer.writeString(offsets[2], object.notes);
+  writer.writeString(offsets[3], object.transactionType?.name);
+  writer.writeString(offsets[4], object.transferId);
+  writer.writeString(offsets[5], object.transferTransactionType?.name);
 }
 
 Transaction _transactionDeserialize(
@@ -136,16 +137,13 @@ Transaction _transactionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Transaction(
-    accountId: reader.readLongOrNull(offsets[0]),
-    amount: reader.readDoubleOrNull(offsets[1]),
-    categoryId: reader.readLongOrNull(offsets[2]),
-    date: reader.readDateTimeOrNull(offsets[3]),
-    destinationAccountId: reader.readLongOrNull(offsets[4]),
-    notes: reader.readStringOrNull(offsets[5]),
-    transactionType: _TransactiontransactionTypeValueEnumMap[reader.readStringOrNull(offsets[6])],
-    transferId: reader.readStringOrNull(offsets[7]),
+    amount: reader.readDoubleOrNull(offsets[0]),
+    date: reader.readDateTimeOrNull(offsets[1]),
+    notes: reader.readStringOrNull(offsets[2]),
+    transactionType: _TransactiontransactionTypeValueEnumMap[reader.readStringOrNull(offsets[3])],
+    transferId: reader.readStringOrNull(offsets[4]),
     transferTransactionType:
-        _TransactiontransferTransactionTypeValueEnumMap[reader.readStringOrNull(offsets[8])],
+        _TransactiontransferTransactionTypeValueEnumMap[reader.readStringOrNull(offsets[5])],
   );
   object.id = id;
   return object;
@@ -159,22 +157,16 @@ P _transactionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLongOrNull(offset)) as P;
-    case 1:
       return (reader.readDoubleOrNull(offset)) as P;
-    case 2:
-      return (reader.readLongOrNull(offset)) as P;
-    case 3:
+    case 1:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 4:
-      return (reader.readLongOrNull(offset)) as P;
-    case 5:
+    case 2:
       return (reader.readStringOrNull(offset)) as P;
-    case 6:
+    case 3:
       return (_TransactiontransactionTypeValueEnumMap[reader.readStringOrNull(offset)]) as P;
-    case 7:
+    case 4:
       return (reader.readStringOrNull(offset)) as P;
-    case 8:
+    case 5:
       return (_TransactiontransferTransactionTypeValueEnumMap[reader.readStringOrNull(offset)])
           as P;
     default:
@@ -208,11 +200,14 @@ Id _transactionGetId(Transaction object) {
 }
 
 List<IsarLinkBase<dynamic>> _transactionGetLinks(Transaction object) {
-  return [];
+  return [object.account, object.destinationAccount, object.category];
 }
 
 void _transactionAttach(IsarCollection<dynamic> col, Id id, Transaction object) {
   object.id = id;
+  object.account.attach(col, col.isar.collection<Account>(), r'account', id);
+  object.destinationAccount.attach(col, col.isar.collection<Account>(), r'destinationAccount', id);
+  object.category.attach(col, col.isar.collection<Category>(), r'category', id);
 }
 
 extension TransactionQueryWhereSort on QueryBuilder<Transaction, Transaction, QWhere> {
@@ -291,74 +286,6 @@ extension TransactionQueryWhere on QueryBuilder<Transaction, Transaction, QWhere
 }
 
 extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilterCondition> {
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'accountId',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'accountId',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIdEqualTo(int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accountId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accountId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accountId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accountId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> amountIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -437,74 +364,6 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'categoryId',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'categoryId',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIdEqualTo(int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'categoryId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'categoryId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'categoryId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'categoryId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> dateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -565,75 +424,6 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'date',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'destinationAccountId',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'destinationAccountId',
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIdEqualTo(
-      int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'destinationAccountId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'destinationAccountId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'destinationAccountId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'destinationAccountId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1278,21 +1068,46 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
 
 extension TransactionQueryObject on QueryBuilder<Transaction, Transaction, QFilterCondition> {}
 
-extension TransactionQueryLinks on QueryBuilder<Transaction, Transaction, QFilterCondition> {}
+extension TransactionQueryLinks on QueryBuilder<Transaction, Transaction, QFilterCondition> {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> account(FilterQuery<Account> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'account');
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'account', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccount(
+      FilterQuery<Account> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'destinationAccount');
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'destinationAccount', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> category(FilterQuery<Category> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'category');
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'category', 0, true, 0, true);
+    });
+  }
+}
 
 extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSortBy> {
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByAccountId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'accountId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByAccountIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'accountId', Sort.desc);
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
@@ -1305,18 +1120,6 @@ extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSort
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByCategoryId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'categoryId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByCategoryIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'categoryId', Sort.desc);
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -1326,18 +1129,6 @@ extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSort
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByDestinationAccountId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'destinationAccountId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByDestinationAccountIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'destinationAccountId', Sort.desc);
     });
   }
 
@@ -1391,18 +1182,6 @@ extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSort
 }
 
 extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, QSortThenBy> {
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByAccountId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'accountId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByAccountIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'accountId', Sort.desc);
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
@@ -1415,18 +1194,6 @@ extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, Q
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByCategoryId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'categoryId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByCategoryIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'categoryId', Sort.desc);
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -1436,18 +1203,6 @@ extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, Q
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByDestinationAccountId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'destinationAccountId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByDestinationAccountIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'destinationAccountId', Sort.desc);
     });
   }
 
@@ -1513,33 +1268,15 @@ extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, Q
 }
 
 extension TransactionQueryWhereDistinct on QueryBuilder<Transaction, Transaction, QDistinct> {
-  QueryBuilder<Transaction, Transaction, QDistinct> distinctByAccountId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'accountId');
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'amount');
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QDistinct> distinctByCategoryId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'categoryId');
-    });
-  }
-
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
-    });
-  }
-
-  QueryBuilder<Transaction, Transaction, QDistinct> distinctByDestinationAccountId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'destinationAccountId');
     });
   }
 
@@ -1578,33 +1315,15 @@ extension TransactionQueryProperty on QueryBuilder<Transaction, Transaction, QQu
     });
   }
 
-  QueryBuilder<Transaction, int?, QQueryOperations> accountIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'accountId');
-    });
-  }
-
   QueryBuilder<Transaction, double?, QQueryOperations> amountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'amount');
     });
   }
 
-  QueryBuilder<Transaction, int?, QQueryOperations> categoryIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'categoryId');
-    });
-  }
-
   QueryBuilder<Transaction, DateTime?, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
-    });
-  }
-
-  QueryBuilder<Transaction, int?, QQueryOperations> destinationAccountIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'destinationAccountId');
     });
   }
 

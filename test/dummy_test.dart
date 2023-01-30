@@ -9,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Dummy Test', (WidgetTester tester) async {
-
     // Dummy Test
     expect(find.text('Jonel'), findsNothing);
   });

@@ -19,7 +19,7 @@ class RecentTransactionsView extends StatelessWidget {
 
     // TODO: Add filter (ex. Last 30 Days)
 
-    // TODO: Implement action button - choose timeframe
+    // TODO: Implement action button - choose time-frame
 
     return ViewModelBuilder<RecentTransactionsViewModel>.reactive(
       viewModelBuilder: () => RecentTransactionsViewModel(),
@@ -54,11 +54,11 @@ class RecentTransactionsView extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final transaction = mainViewModel.recentTransactions[index];
                   return TransactionListItem(
-                    categoryName: transaction.categoryName,
-                    categoryColor: transaction.categoryColor,
-                    accountName: transaction.accountName,
-                    destinationAccountName: transaction.destinationAccountName,
-                    accountCurrency: transaction.accountCurrency,
+                    categoryName: transaction.category.value?.name,
+                    categoryColor: transaction.category.value?.color,
+                    accountName: transaction.account.value?.name,
+                    destinationAccountName: transaction.destinationAccount.value?.name,
+                    accountCurrency: transaction.account.value?.currency,
                     amount: transaction.amount,
                     transactionType: transaction.transactionType,
                     transferTransactionType: transaction.transferTransactionType,

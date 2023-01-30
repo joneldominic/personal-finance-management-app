@@ -139,8 +139,7 @@ P _categoryDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)])
-          as P;
+      return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)]) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -167,8 +166,7 @@ List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
 
 void _categoryAttach(IsarCollection<dynamic> col, Id id, Category object) {
   object.id = id;
-  object.transactions
-      .attach(col, col.isar.collection<Transaction>(), r'transactions', id);
+  object.transactions.attach(col, col.isar.collection<Transaction>(), r'transactions', id);
 }
 
 extension CategoryQueryWhereSort on QueryBuilder<Category, Category, QWhere> {
@@ -211,8 +209,7 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     });
   }
 
-  QueryBuilder<Category, Category, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Category, Category, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -220,8 +217,7 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     });
   }
 
-  QueryBuilder<Category, Category, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Category, Category, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -246,8 +242,7 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
   }
 }
 
-extension CategoryQueryFilter
-    on QueryBuilder<Category, Category, QFilterCondition> {
+extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterCondition> {
   QueryBuilder<Category, Category, QAfterFilterCondition> colorIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -352,8 +347,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorContains(
-      String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> colorContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -364,8 +358,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorMatches(
-      String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> colorMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -462,8 +455,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(
-      bool? value) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isDefault',
@@ -488,8 +480,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> isVisibleEqualTo(
-      bool? value) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> isVisibleEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isVisible',
@@ -602,8 +593,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(
-      String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -614,8 +604,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(
-      String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -748,8 +737,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> natureContains(
-      String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> natureContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -760,8 +748,7 @@ extension CategoryQueryFilter
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> natureMatches(
-      String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> natureMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -791,41 +778,34 @@ extension CategoryQueryFilter
   }
 }
 
-extension CategoryQueryObject
-    on QueryBuilder<Category, Category, QFilterCondition> {}
+extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterCondition> {}
 
-extension CategoryQueryLinks
-    on QueryBuilder<Category, Category, QFilterCondition> {
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactions(
-      FilterQuery<Transaction> q) {
+extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterCondition> {
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactions(FilterQuery<Transaction> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'transactions');
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition>
-      transactionsLengthEqualTo(int length) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', length, true, length, true);
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition>
-      transactionsIsEmpty() {
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition>
-      transactionsIsNotEmpty() {
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, false, 999999, true);
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition>
-      transactionsLengthLessThan(
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthLessThan(
     int length, {
     bool include = false,
   }) {
@@ -834,8 +814,7 @@ extension CategoryQueryLinks
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition>
-      transactionsLengthGreaterThan(
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthGreaterThan(
     int length, {
     bool include = false,
   }) {
@@ -844,16 +823,14 @@ extension CategoryQueryLinks
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition>
-      transactionsLengthBetween(
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(
-          r'transactions', lower, includeLower, upper, includeUpper);
+      return query.linkLength(r'transactions', lower, includeLower, upper, includeUpper);
     });
   }
 }
@@ -920,8 +897,7 @@ extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
   }
 }
 
-extension CategoryQuerySortThenBy
-    on QueryBuilder<Category, Category, QSortThenBy> {
+extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenBy> {
   QueryBuilder<Category, Category, QAfterSortBy> thenByColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'color', Sort.asc);
@@ -995,10 +971,8 @@ extension CategoryQuerySortThenBy
   }
 }
 
-extension CategoryQueryWhereDistinct
-    on QueryBuilder<Category, Category, QDistinct> {
-  QueryBuilder<Category, Category, QDistinct> distinctByColor(
-      {bool caseSensitive = true}) {
+extension CategoryQueryWhereDistinct on QueryBuilder<Category, Category, QDistinct> {
+  QueryBuilder<Category, Category, QDistinct> distinctByColor({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
     });
@@ -1016,23 +990,20 @@ extension CategoryQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Category, Category, QDistinct> distinctByName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Category, Category, QDistinct> distinctByName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Category, Category, QDistinct> distinctByNature(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Category, Category, QDistinct> distinctByNature({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nature', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension CategoryQueryProperty
-    on QueryBuilder<Category, Category, QQueryProperty> {
+extension CategoryQueryProperty on QueryBuilder<Category, Category, QQueryProperty> {
   QueryBuilder<Category, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');

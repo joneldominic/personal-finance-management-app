@@ -82,13 +82,10 @@
   </ol>
 </details>
 
-<br/>
 
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project (TODO)
-
----
 
 <br/>
 
@@ -104,7 +101,6 @@
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id gravida ante. Suspendisse enim nunc, tempus at molestie sed, rutrum et mi. Curabitur eget tellus quis arcu laoreet lobortis eget sit amet diam. Vivamus pulvinar vulputate nunc. Vestibulum eleifend ligula nec aliquam tincidunt. Donec fermentum auctor dolor eu efficitur. Ut commodo orci libero, eget commodo enim ultricies ac. Nunc eu risus feugiat, porta enim non, vulputate nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi semper volutpat tellus, et consectetur enim semper at. Phasellus tristique et nibh vel suscipit. Morbi vitae faucibus tellus. Aenean in viverra augue, a tincidunt dui. Maecenas non velit vitae ante fermentum faucibus eu ut tellus. Donec mollis, dui id sodales facilisis, metus turpis mollis urna, vel laoreet nisl justo quis nisl.
 </p>
 
-<br/>
 
 <!-- GETTING STARTED -->
 
@@ -138,8 +134,6 @@ This is an example of how to list things you need to use the software and how to
    const API_KEY = "ENTER YOUR API";
    ```
 
-<br/>
-
 <!-- USAGE EXAMPLES -->
 
 ## Usage (TODO)
@@ -147,8 +141,6 @@ This is an example of how to list things you need to use the software and how to
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
-
-<br/>
 
 <!-- ROADMAP -->
 
@@ -160,8 +152,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
   - [ ] Nested Feature
 
 See the [open issues](https://github.com/joneldominic/personal-finance-management-app/issues) for a full list of proposed features (and known issues).
-
-<br/>
 
 <!-- CONTRIBUTING -->
 
@@ -178,15 +168,11 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<br/>
-
 <!-- LICENSE -->
 
 ## License
 
 Distributed under the GPL-3.0 License. See `LICENSE.txt` for more information.
-
-<br/>
 
 <!-- CONTACT -->
 
@@ -196,7 +182,6 @@ Jonel Dominic Tapang - [@dom_brave](https://twitter.com/dom_brave) - joneldomini
 
 Project Link: [https://github.com/joneldominic/personal-finance-management-app](https://github.com/joneldominic/personal-finance-management-app)
 
-<br/>
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
@@ -204,11 +189,6 @@ Project Link: [https://github.com/joneldominic/personal-finance-management-app](
 - [Stacked](https://pub.dev/packages/stacked) 
 - [Isar Database](https://isar.dev/)
 - [Othneildrew's Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-
-
-
-
-<br/><br/>
 
 # Development Quick Guide
 

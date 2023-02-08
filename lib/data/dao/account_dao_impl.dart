@@ -6,6 +6,14 @@ import 'package:personal_finance_management_app/data/models/account/account.dart
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class AccountDaoImpl extends AccountDao {
+  static final AccountDaoImpl _accountDaoImpl = AccountDaoImpl._internal();
+
+  factory AccountDaoImpl() {
+    return _accountDaoImpl;
+  }
+
+  AccountDaoImpl._internal();
+
   final _logger = getLogger('AccountDaoImpl');
 
   Future<Isar> get _db async => await IsarDatabase.instance.database;

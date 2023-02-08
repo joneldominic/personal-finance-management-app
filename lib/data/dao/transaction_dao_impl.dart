@@ -9,14 +9,20 @@ import 'package:personal_finance_management_app/data/models/category/category.da
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class TransactionDaoImpl extends TransactionDao {
+  static final TransactionDaoImpl _transactionDaoImpl = TransactionDaoImpl._internal();
+
+  factory TransactionDaoImpl() {
+    return _transactionDaoImpl;
+  }
+
+  TransactionDaoImpl._internal() {
+    _setUpWatchers();
+  }
+
   final _logger = getLogger('TransactionDaoImpl');
   final _transactionStreamController = StreamController<List<Transaction>>.broadcast();
 
   Future<Isar> get _db async => await IsarDatabase.instance.database;
-
-  TransactionDaoImpl() {
-    _setUpWatchers();
-  }
 
   void _setUpWatchers() async {
     Isar isar = await _db;

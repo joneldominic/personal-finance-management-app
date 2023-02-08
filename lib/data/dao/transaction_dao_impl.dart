@@ -101,7 +101,11 @@ class TransactionDaoImpl extends TransactionDao {
       return transactionCollection.get(id);
     });
 
-    return transaction!;
+    transaction!.account.load();
+    transaction.category.load();
+    transaction.destinationAccount.load();
+
+    return transaction;
   }
 
   @override
@@ -117,6 +121,11 @@ class TransactionDaoImpl extends TransactionDao {
     for (Transaction t in transactions) {
       t.account.load();
       t.category.load();
+      t.destinationAccount.load();
+    }
+
+    return transactions;
+  }
 
   @override
   Future<List<Transaction>> getTransactionsByTransferId(String id) async {

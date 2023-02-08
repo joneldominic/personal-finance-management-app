@@ -34,11 +34,17 @@ class AccountDaoImpl extends AccountDao {
   }
 
   @override
-  Future<Account> getAccountById(Id id) {
+  Future<Account> getAccountById(Id id) async {
     _logger.i('argument: $id');
 
-    // TODO: implement getAccountById
-    throw UnimplementedError();
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final account = await isar.writeTxn(() async {
+      return await accountCollection.get(id);
+    });
+
+    return account!;
   }
 
   @override

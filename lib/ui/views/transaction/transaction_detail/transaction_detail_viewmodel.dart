@@ -329,7 +329,7 @@ class TransactionDetailViewModel extends FormViewModel {
     newTransaction.transferTransactionType = TransactionType.income;
     pairTransaction.transferTransactionType = TransactionType.expense;
 
-    return await _transactionService.createTransactions([newTransaction, pairTransaction]);
+    return await _transactionService.createPairTransaction([newTransaction, pairTransaction]);
   }
 
   void handleDeleteTransaction() async {

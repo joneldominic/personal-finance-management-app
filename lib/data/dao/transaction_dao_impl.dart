@@ -88,10 +88,14 @@ class TransactionDaoImpl extends TransactionDao {
   Future<Transaction> getTransactionById(Id id) async {
     _logger.i('argument: $id');
 
-    // ignore: unused_local_variable
     Isar isar = await _db;
 
-    return Future.error("");
+    final transactionCollection = isar.transactions;
+    final transaction = await isar.writeTxn(() async {
+      return transactionCollection.get(id);
+    });
+
+    return transaction!;
   }
 
   @override

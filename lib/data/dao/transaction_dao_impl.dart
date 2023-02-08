@@ -128,14 +128,14 @@ class TransactionDaoImpl extends TransactionDao {
   }
 
   @override
-  Future<List<Transaction>> getTransactionsByTransferId(String id) async {
-    _logger.i('argument: $id');
+  Future<List<Transaction>> getTransactionsByTransferId(String transferId) async {
+    _logger.i('argument: $transferId');
 
     Isar isar = await _db;
 
     final transactionCollection = isar.transactions;
     List<Transaction> transactions =
-        await transactionCollection.filter().transferIdEqualTo(id).build().findAll();
+        await transactionCollection.filter().transferIdEqualTo(transferId).build().findAll();
 
     for (Transaction t in transactions) {
       t.account.load();

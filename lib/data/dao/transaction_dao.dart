@@ -6,6 +6,7 @@ abstract class TransactionDao {
   Future<List<Transaction>> createTransactions(List<Transaction> transactions);
   Future<Transaction> getTransactionById(Id id);
   Future<List<Transaction>> getTransactions();
+  Future<List<Transaction>> getTransactionsByTransferId(String id);
   Future<Transaction> updateTransaction(Transaction transaction);
   Future<Id> deleteTransaction(Id id);
   Future<int> deleteTransactionsByTransferId(String transferId);

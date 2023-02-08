@@ -117,6 +117,21 @@ class TransactionDaoImpl extends TransactionDao {
     for (Transaction t in transactions) {
       t.account.load();
       t.category.load();
+
+  @override
+  Future<List<Transaction>> getTransactionsByTransferId(String id) async {
+    _logger.i('argument: $id');
+
+    Isar isar = await _db;
+
+    final transactionCollection = isar.transactions;
+    List<Transaction> transactions =
+        await transactionCollection.filter().transferIdEqualTo(id).build().findAll();
+
+    for (Transaction t in transactions) {
+      t.account.load();
+      t.category.load();
+      t.destinationAccount.load();
     }
 
     return transactions;

@@ -7,6 +7,14 @@ import 'package:personal_finance_management_app/data/models/category/category.da
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class CategoryDaoImpl extends CategoryDao {
+  static final CategoryDaoImpl _categoryDaoImpl = CategoryDaoImpl._internal();
+
+  factory CategoryDaoImpl() {
+    return _categoryDaoImpl;
+  }
+
+  CategoryDaoImpl._internal();
+
   final _logger = getLogger('CategoryDaoImpl');
 
   Future<Isar> get _db async => await IsarDatabase.instance.database;

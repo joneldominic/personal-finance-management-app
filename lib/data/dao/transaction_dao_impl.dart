@@ -4,12 +4,49 @@ import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/transaction_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class TransactionDaoImpl extends TransactionDao {
+  static final TransactionDaoImpl _transactionDaoImpl = TransactionDaoImpl._internal();
+
+  factory TransactionDaoImpl() {
+    return _transactionDaoImpl;
+  }
+
+  TransactionDaoImpl._internal() {
+    _setUpWatchers();
+  }
+
   final _logger = getLogger('TransactionDaoImpl');
+  final _transactionStreamController = StreamController<List<Transaction>>.broadcast();
 
   Future<Isar> get _db async => await IsarDatabase.instance.database;
+
+  void _setUpWatchers() async {
+    Isar isar = await _db;
+
+    final transactionCollection = isar.transactions;
+    final accountsCollection = isar.accounts;
+    final categoriesCollection = isar.categorys;
+
+    final transactionsStream = transactionCollection.watchLazy(fireImmediately: true);
+    final accountsStream = accountsCollection.watchLazy(fireImmediately: true);
+    final categoriesStream = categoriesCollection.watchLazy(fireImmediately: true);
+
+    transactionsStream.listen((_) async {
+      _transactionStreamController.sink.add(await getTransactions());
+    });
+
+    accountsStream.listen((_) async {
+      _transactionStreamController.sink.add(await getTransactions());
+    });
+
+    categoriesStream.listen((_) async {
+      _transactionStreamController.sink.add(await getTransactions());
+    });
+  }
 
   @override
   Future<Transaction> createTransaction(Transaction transaction) async {
@@ -57,20 +94,56 @@ class TransactionDaoImpl extends TransactionDao {
   Future<Transaction> getTransactionById(Id id) async {
     _logger.i('argument: $id');
 
-    // ignore: unused_local_variable
     Isar isar = await _db;
 
-    return Future.error("");
+    final transactionCollection = isar.transactions;
+    final transaction = await isar.writeTxn(() async {
+      return transactionCollection.get(id);
+    });
+
+    transaction!.account.load();
+    transaction.category.load();
+    transaction.destinationAccount.load();
+
+    return transaction;
   }
 
   @override
   Future<List<Transaction>> getTransactions() async {
     _logger.i('argument: NONE');
 
-    // ignore: unused_local_variable
     Isar isar = await _db;
 
-    return Future.error("");
+    final transactionCollection = isar.transactions;
+    List<Transaction> transactions =
+        await transactionCollection.where().sortByDateDesc().build().findAll();
+
+    for (Transaction t in transactions) {
+      t.account.load();
+      t.category.load();
+      t.destinationAccount.load();
+    }
+
+    return transactions;
+  }
+
+  @override
+  Future<List<Transaction>> getTransactionsByTransferId(String transferId) async {
+    _logger.i('argument: $transferId');
+
+    Isar isar = await _db;
+
+    final transactionCollection = isar.transactions;
+    List<Transaction> transactions =
+        await transactionCollection.filter().transferIdEqualTo(transferId).build().findAll();
+
+    for (Transaction t in transactions) {
+      t.account.load();
+      t.category.load();
+      t.destinationAccount.load();
+    }
+
+    return transactions;
   }
 
   @override
@@ -122,23 +195,11 @@ class TransactionDaoImpl extends TransactionDao {
   @override
   Stream<List<Transaction>> transactionCollectionStream() async* {
     _logger.i('argument: NONE');
-    Isar isar = await _db;
+    yield* _transactionStreamController.stream;
+  }
 
-    final transactionCollection = isar.transactions;
-    Query<Transaction> transactionsQuery = transactionCollection.where().sortByDateDesc().build();
-
-    final transactionsStream = transactionsQuery.watch(fireImmediately: true);
-
-    StreamTransformer<List<Transaction>, List<Transaction>> loadDataTransformer =
-        StreamTransformer.fromHandlers(
-            handleData: (List<Transaction> transactions, EventSink sink) {
-      for (Transaction t in transactions) {
-        t.account.load();
-        t.category.load();
-      }
-      sink.add(transactions);
-    });
-
-    yield* transactionsStream.transform(loadDataTransformer);
+  void dispose() {
+    _logger.i('Disposing TransactionDaoImpl');
+    _transactionStreamController.close();
   }
 }

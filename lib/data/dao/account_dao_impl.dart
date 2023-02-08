@@ -6,6 +6,14 @@ import 'package:personal_finance_management_app/data/models/account/account.dart
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
 class AccountDaoImpl extends AccountDao {
+  static final AccountDaoImpl _accountDaoImpl = AccountDaoImpl._internal();
+
+  factory AccountDaoImpl() {
+    return _accountDaoImpl;
+  }
+
+  AccountDaoImpl._internal();
+
   final _logger = getLogger('AccountDaoImpl');
 
   Future<Isar> get _db async => await IsarDatabase.instance.database;
@@ -26,11 +34,17 @@ class AccountDaoImpl extends AccountDao {
   }
 
   @override
-  Future<Account> getAccountById(Id id) {
+  Future<Account> getAccountById(Id id) async {
     _logger.i('argument: $id');
 
-    // TODO: implement getAccountById
-    throw UnimplementedError();
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final account = await isar.writeTxn(() async {
+      return await accountCollection.get(id);
+    });
+
+    return account!;
   }
 
   @override
@@ -70,6 +84,10 @@ class AccountDaoImpl extends AccountDao {
 
     final accountCollection = isar.accounts;
     final transactionCollection = isar.transactions;
+
+    // TODO: Handle transactions with deleted destination account
+    // TODO: Probably convert retain the expense pair only and convert the transaction type as expense with undefined category
+    // TODO: Or maybe just delete pair???
 
     final isDeleted = await isar.writeTxn(() async {
       final account = await accountCollection.get(id);

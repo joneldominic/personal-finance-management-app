@@ -83,7 +83,7 @@ class MainView extends StatelessWidget {
       case 2:
         return const CustomAppBar(title: Text("Settings"));
       default:
-        throw NullThrownError();
+        throw ArgumentError();
     }
   }
 
@@ -96,7 +96,7 @@ class MainView extends StatelessWidget {
       case 2:
         return const SettingsView();
       default:
-        throw NullThrownError();
+        throw ArgumentError();
     }
   }
 

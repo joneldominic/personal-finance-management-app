@@ -85,6 +85,10 @@ class AccountDaoImpl extends AccountDao {
     final accountCollection = isar.accounts;
     final transactionCollection = isar.transactions;
 
+    // TODO: Handle transactions with deleted destination account
+    // TODO: Probably convert retain the expense pair only and convert the transaction type as expense with undefined category
+    // TODO: Or maybe just delete pair???
+
     final isDeleted = await isar.writeTxn(() async {
       final account = await accountCollection.get(id);
 

@@ -87,7 +87,7 @@ class TransactionRepository {
         destinationAccount.balance = destinationAccount.balance! + transaction.amount!.abs();
         break;
       default:
-        throw FallThroughError();
+        throw TypeError();
     }
 
     await accountDao.updateAccount(account);
@@ -115,7 +115,7 @@ class TransactionRepository {
         destinationAccount.balance = destinationAccount.balance! - oldTransaction.amount!.abs();
         break;
       default:
-        throw FallThroughError();
+        throw TypeError();
     }
 
     await accountDao.updateAccount(account);

@@ -14,7 +14,6 @@ class TransactionListItem extends StatelessWidget {
   }) : super(key: key);
 
   final Transaction transaction;
-
   final void Function()? onTap;
 
   // TODO: On Transfer make bold for target account

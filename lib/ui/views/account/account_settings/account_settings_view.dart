@@ -41,14 +41,12 @@ class AccountSettingsView extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: model.accounts.length,
               itemBuilder: (BuildContext context, int index) {
+                final account = model.accounts[index];
                 return AccountListItem(
-                  accountName: model.accounts[index].name,
-                  color: model.accounts[index].color!,
-                  currency: model.accounts[index].currency,
-                  amount: model.accounts[index].balance,
+                  account: account,
                   // TODO: Make action item as order control
                   // TODO: Navigation should be on tap
-                  onPressed: () => model.navigateToAccountDetail(model.accounts[index]),
+                  onPressed: () => model.navigateToAccountDetail(account),
                 );
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),

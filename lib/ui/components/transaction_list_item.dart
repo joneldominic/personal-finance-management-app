@@ -25,12 +25,12 @@ class TransactionListItem extends StatelessWidget {
     final isExpense = (transaction.transferTransactionType ?? transaction.transactionType) ==
         TransactionType.expense;
 
-    final account = transaction.account.value!;
+    final account = transaction.account.value;
     final destinationAccountName = transaction.destinationAccount.value?.name;
-    final category = transaction.category.value!;
+    final category = transaction.category.value;
     final accountNameDisplay = transaction.transactionType == TransactionType.transfer
-        ? "${account.name} ➜ $destinationAccountName"
-        : "${account.name}";
+        ? "${account?.name} ➜ $destinationAccountName"
+        : "${account?.name}";
 
     return ListTile(
       onTap: onTap,
@@ -38,13 +38,13 @@ class TransactionListItem extends StatelessWidget {
       leading: CircleAvatar(
         radius: 18,
         backgroundColor: Color(
-          int.parse(category.color ?? '0xFFFFFFFF'),
+          int.parse(category?.color ?? '0xFFFFFFFF'),
         ),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ThemeText.listItemTitle(category.name ?? ''),
+          ThemeText.listItemTitle(category?.name ?? ''),
           ThemeText.listItemSubTitle(accountNameDisplay),
         ],
       ),
@@ -56,7 +56,7 @@ class TransactionListItem extends StatelessWidget {
               children: [
                 ThemeText.listItemSubTitle(
                   doubleToCurrencyFormatter(
-                    currency: account.currency ?? "PHP",
+                    currency: account?.currency ?? "PHP",
                     value: transaction.amount!,
                   ),
                   color: isExpense ? customTheme.danger : customTheme.success,

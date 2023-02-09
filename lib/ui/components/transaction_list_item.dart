@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
+import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
@@ -16,21 +17,15 @@ class TransactionListItem extends StatelessWidget {
   final Transaction transaction;
   final void Function()? onTap;
 
-  // TODO: On Transfer make bold for target account
-
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    final isExpense = (transaction.transferTransactionType ?? transaction.transactionType) ==
-        TransactionType.expense;
-
     final account = transaction.account.value;
     final destinationAccountName = transaction.destinationAccount.value?.name;
     final category = transaction.category.value;
-    final accountNameDisplay = transaction.transactionType == TransactionType.transfer
-        ? "${account?.name} ➜ $destinationAccountName"
-        : "${account?.name}";
+    final isExpense = (transaction.transferTransactionType ?? transaction.transactionType) ==
+        TransactionType.expense;
 
     return ListTile(
       onTap: onTap,
@@ -45,7 +40,11 @@ class TransactionListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ThemeText.listItemTitle(category?.name ?? ''),
-          ThemeText.listItemSubTitle(accountNameDisplay),
+          _buildAccountName(
+            accountName: account?.name,
+            distAccountName: destinationAccountName,
+            isExpense: isExpense,
+          ),
         ],
       ),
       trailing: FittedBox(
@@ -72,6 +71,31 @@ class TransactionListItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildAccountName({
+    required String? accountName,
+    required String? distAccountName,
+    required bool isExpense,
+  }) {
+    final isBold = distAccountName != null && isExpense;
+
+    return Text.rich(
+      TextSpan(
+        style: listItemSubTitleStyle,
+        children: <TextSpan>[
+          TextSpan(
+              text: accountName,
+              style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.w500)),
+          if (distAccountName != null) ...[
+            const TextSpan(text: " ➜ "),
+            TextSpan(
+                text: distAccountName,
+                style: TextStyle(fontWeight: isBold ? FontWeight.w500 : FontWeight.bold)),
+          ]
+        ],
       ),
     );
   }

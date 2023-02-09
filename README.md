@@ -64,7 +64,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project (TODO)</a>
+      <a href="#about-the-project">About The Project</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started (TODO)</a>
@@ -85,20 +85,19 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project (TODO)
+## About The Project
 
 <br/>
 
-<div align="center" style="display: flex; justify-content: space-around">
-  <img src="images/home-screen-light.png" alt="Home Screen (Light)"/></a>
-  <img src="images/home-screen-dark.png" alt="Home Screen (Dark)"/></a>
-</div>
+Light Mode            |  Dark Mode
+:-------------------------:|:-------------------------:
+![Light Mode](images/home-screen-light.png?raw=true "Light Mode ") | ![Dark Mode](images/home-screen-dark.png?raw=true "Dark Mode")
 
 <br/>
 
 <!-- TODO: Add actual description here -->
 <p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id gravida ante. Suspendisse enim nunc, tempus at molestie sed, rutrum et mi. Curabitur eget tellus quis arcu laoreet lobortis eget sit amet diam. Vivamus pulvinar vulputate nunc. Vestibulum eleifend ligula nec aliquam tincidunt. Donec fermentum auctor dolor eu efficitur. Ut commodo orci libero, eget commodo enim ultricies ac. Nunc eu risus feugiat, porta enim non, vulputate nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi semper volutpat tellus, et consectetur enim semper at. Phasellus tristique et nibh vel suscipit. Morbi vitae faucibus tellus. Aenean in viverra augue, a tincidunt dui. Maecenas non velit vitae ante fermentum faucibus eu ut tellus. Donec mollis, dui id sodales facilisis, metus turpis mollis urna, vel laoreet nisl justo quis nisl.
+  An open-source, free budgeting app inspired by the popular app, <a href="https://budgetbakers.com/">Wallet</a>. Designed to provide an easy-to-use solution for managing personal finances. The app allows users to categorize expenses, set budgets, and track spending, as well as reach savings goals. With a user-friendly interface, this app is perfect for individuals looking to take control of their finances. In the future, features inspired by other popular apps like <a href="https://www.splitwise.com/">Splitwise</a> and <a href="https://www.budgetwithbuckets.com/">Buckets</a> will be integrated to further enhance the user experience. Contribute to the project and help shape the future of budgeting.
 </p>
 
 

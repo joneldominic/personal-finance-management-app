@@ -66,16 +66,10 @@
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started (TODO)</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites (TODO)</a></li>
-        <li><a href="#installation">Installation (TODO)</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage (TODO)</a></li>
-    <li><a href="#roadmap">Roadmap (TODO)</a></li>
-    <li><a href="#contributing">Contributing (TODO)</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -95,7 +89,6 @@ Light Mode            |  Dark Mode
 
 <br/>
 
-<!-- TODO: Add actual description here -->
 <p>
   An open-source, free budgeting app inspired by the popular app, <a href="https://budgetbakers.com/">Wallet</a>. Designed to provide an easy-to-use solution for managing personal finances. The app allows users to categorize expenses, set budgets, and track spending, as well as reach savings goals. With a user-friendly interface, this app is perfect for individuals looking to take control of their finances. In the future, features inspired by other popular apps like <a href="https://www.splitwise.com/">Splitwise</a> and <a href="https://www.budgetwithbuckets.com/">Buckets</a> will be integrated to further enhance the user experience. Contribute to the project and help shape the future of budgeting.
 </p>
@@ -103,68 +96,61 @@ Light Mode            |  Dark Mode
 
 <!-- GETTING STARTED -->
 
-## Getting Started (TODO)
+## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites (TODO)
-
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation (TODO)
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Install or upgrade to the latest version of Flutter. Follow these installation [guides](https://docs.flutter.dev/get-started/install).
+2. Clone the repo:
    ```sh
    git clone https://github.com/joneldominic/personal-finance-management-app.git
    ```
-3. Install NPM packages
+3. Install dependencies:
    ```sh
-   npm install
+   flutter pub get 
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+4. Run build_runner to generate necessary files:
+   ```sh
+   flutter pub run build_runner build --delete-conflicting-outputs && flutter format . -l 100
    ```
 
 <!-- USAGE EXAMPLES -->
 
-## Usage (TODO)
+## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+_Video tutorials will be added soon._
 
 <!-- ROADMAP -->
 
-## Roadmap (TODO)
+## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
+- [ ] Minimum Viable Product
+  - [x] Dark/Light Theme
+  - [x] Track transactions
+  - [x] Sync account balance with transactions
+  - [x] Categorize transactions
+  - [ ] Track Cashflow
+- [ ] [Buckets](https://www.budgetwithbuckets.com/) features
+  - [ ] TODO
+- [ ] [Splitwise](https://www.splitwise.com/) features
+  - [ ] TODO
 
 See the [open issues](https://github.com/joneldominic/personal-finance-management-app/issues) for a full list of proposed features (and known issues).
 
+More details can also be found on this [Github Project](https://github.com/users/joneldominic/projects/1).
+
 <!-- CONTRIBUTING -->
 
-## Contributing (TODO)
+## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Don't forget to give the project a star! Thanks you.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+1. [Create an issue](https://github.com/joneldominic/personal-finance-management-app/issues/new)
+2. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/{issue#}-issue-title`)
+3. Commit your Changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the Branch (`git push origin feature/{issue#}-issue-title`)
 5. Open a Pull Request
 
 <!-- LICENSE -->

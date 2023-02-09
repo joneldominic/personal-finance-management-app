@@ -71,9 +71,6 @@ class TransactionDetailViewModel extends FormViewModel {
   int transferCategoryId = -1;
   int undefinedCategoryId = -1;
 
-  // TODO: Reload stream on account or category changes
-  // TODO: Improve linked props implementation
-
   void initForm({
     required Transaction? transaction,
     required TextEditingController amountController,

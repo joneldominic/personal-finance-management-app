@@ -54,15 +54,7 @@ class RecentTransactionsView extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final transaction = mainViewModel.recentTransactions[index];
                   return TransactionListItem(
-                    categoryName: transaction.category.value?.name,
-                    categoryColor: transaction.category.value?.color,
-                    accountName: transaction.account.value?.name,
-                    destinationAccountName: transaction.destinationAccount.value?.name,
-                    accountCurrency: transaction.account.value?.currency,
-                    amount: transaction.amount,
-                    transactionType: transaction.transactionType,
-                    transferTransactionType: transaction.transferTransactionType,
-                    timeStamp: transaction.date,
+                    transaction: transaction,
                     onTap: () {}, // TODO: Handle on edit/view
                   );
                 },

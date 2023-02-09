@@ -40,15 +40,10 @@ class CategoryListView extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: model.categories.length,
               itemBuilder: (BuildContext context, int index) {
+                final category = model.categories[index];
                 return CategoryListItem(
-                  categoryName: model.categories[index].name!,
-                  categoryNature: model.categories[index].nature!,
-                  color: Color(
-                    int.parse(model.categories[index].color!),
-                  ),
-                  onPressed: () => model.navigateToCategoryDetail(
-                    model.categories[index],
-                  ),
+                  category: category,
+                  onPressed: () => model.navigateToCategoryDetail(category),
                 );
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),

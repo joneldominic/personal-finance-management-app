@@ -55,7 +55,7 @@ class RecentTransactionsView extends StatelessWidget {
                   final transaction = mainViewModel.recentTransactions[index];
                   return TransactionListItem(
                     transaction: transaction,
-                    onTap: () {}, // TODO: Handle on edit/view
+                    onTap: () => model.navigateToTransactionDetailEditMode(transaction),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) => const Divider(),

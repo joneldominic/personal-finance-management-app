@@ -107,7 +107,7 @@ Light Mode            |  Dark Mode
    ```sh
    flutter pub get 
    ```
-4. Run build_runner to generate necessary files:
+4. Run build_runner to generate necessary files (Note: Override formatting as well to avoid unnecessary commit changes):
    ```sh
    flutter pub run build_runner build --delete-conflicting-outputs && flutter format . -l 100
    ```

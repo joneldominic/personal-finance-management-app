@@ -171,6 +171,7 @@ Project Link: [https://github.com/joneldominic/personal-finance-management-app](
 
 ## Acknowledgments
 
+- [Flutter](https://flutter.dev/)
 - [Stacked](https://pub.dev/packages/stacked) 
 - [Isar Database](https://isar.dev/)
 - [Othneildrew's Best-README-Template](https://github.com/othneildrew/Best-README-Template)

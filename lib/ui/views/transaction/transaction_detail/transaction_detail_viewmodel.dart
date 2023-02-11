@@ -368,7 +368,6 @@ class TransactionDetailViewModel extends FormViewModel {
       destinationAccounts = accounts;
     }
 
-    // TODO: Make sure transfer can be done to the same currency only
     destinationAccounts =
         accounts.where((acc) => acc.id != int.parse(accountIdValue ?? '-1')).toList();
   }

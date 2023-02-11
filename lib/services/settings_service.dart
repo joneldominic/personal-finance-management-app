@@ -8,13 +8,11 @@ class SettingsService with ReactiveServiceMixin {
   final _logger = getLogger('SettingsService');
   final _settingsRepository = SettingsRepository(settingsDao: SettingsDaoImpl());
 
-  late Stream<Settings?> _settingsStream;
-
   SettingsService() {
     listenToReactiveValues([_isLightTheme]);
 
-    _settingsStream = _settingsRepository.watchSettings();
-    _settingsStream.listen((settings) {
+    final settingsStream = _settingsRepository.watchSettings();
+    settingsStream.listen((settings) {
       _isLightTheme.value = settings == null ? true : settings.isLightTheme!;
     });
   }

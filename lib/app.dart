@@ -3,6 +3,7 @@ import 'package:is_first_run/is_first_run.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
+import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/services/theme_service.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -43,6 +44,7 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
   final _logger = getLogger('PersonalFinanceManagementAppViewModel');
   final _themeService = locator<ThemeService>();
   final _categoryService = locator<CategoryService>();
+  final _accountService = locator<AccountService>();
 
   PersonalFinanceManagementAppViewModel() {
     _logger.i('argument: NONE');
@@ -57,8 +59,9 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
       _logger.i("Initializing Database Records");
 
       final defaultCategories = await _categoryService.initCategories();
+      final defaultAccount = await _accountService.initAccount();
 
-      if (defaultCategories.length == 2) return;
+      if (defaultCategories.length == 2 && defaultAccount != null) return;
       await IsFirstRun.reset();
     }
   }

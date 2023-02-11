@@ -4,6 +4,7 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
+import 'package:personal_finance_management_app/data/models/settings/settings.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 
@@ -36,6 +37,7 @@ class IsarDatabase {
         AccountSchema,
         TransactionSchema,
         CategorySchema,
+        SettingsSchema,
       ],
       directory: appDocumentDir.path,
       inspector: true,

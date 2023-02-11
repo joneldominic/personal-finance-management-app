@@ -4,3 +4,6 @@
 const TRANSFER_CATEGORY_NAME = "Transfer";
 const UNDEFINED_CATEGORY_NAME = "Undefined";
 const FROM_ACCOUNT_CHANGE_NOTE = "From Account Change";
+
+/// Accounts Related Constants
+const DEFAULT_ACCOUNT_NAME = "Cash";

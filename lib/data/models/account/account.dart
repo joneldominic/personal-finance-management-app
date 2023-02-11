@@ -19,6 +19,8 @@ class Account {
 
   bool? isArchived;
 
+  bool? isDefault;
+
   @Backlink(to: 'account')
   final transactions = IsarLinks<Transaction>();
 
@@ -29,6 +31,7 @@ class Account {
     required this.color,
     required this.isExcludedFromAnalysis,
     required this.isArchived,
+    this.isDefault = false,
   });
 
   @override

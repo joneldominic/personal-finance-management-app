@@ -90,11 +90,22 @@ class AccountDetailViewModel extends FormViewModel {
   void handleSaveAccount() async {
     _logger.i('argument: NONE');
 
-    if (_accountNameController!.text.trim().isEmpty) {
+    final newAccountName = _accountNameController!.text;
+
+    if (newAccountName.trim().isEmpty) {
       _logger.w("Account name cannot be empty");
       setAccountNameValidationMessage("Please fill-in account name");
       handleShowSnackbar(message: accountNameValidationMessage!);
       notifyListeners();
+      return;
+    }
+
+    final accounts = await _accountService.getAccounts();
+    final isExistingAccountName =
+        accounts.any((acc) => acc.name!.toLowerCase() == newAccountName.toLowerCase());
+    if (isExistingAccountName) {
+      _logger.i("Account with this name already exists");
+      handleShowSnackbar(message: "Account with this name already exists.");
       return;
     }
 
@@ -122,7 +133,7 @@ class AccountDetailViewModel extends FormViewModel {
     }
 
     final newAccount = Account(
-      name: _accountNameController!.text,
+      name: newAccountName,
       currency: currencyValue,
       balance: balance,
       color: colorValue,

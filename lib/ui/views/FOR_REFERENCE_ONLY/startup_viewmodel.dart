@@ -1,7 +1,7 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
-import 'package:personal_finance_management_app/services/theme_service.dart';
+import 'package:personal_finance_management_app/services/settings_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,7 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class StartUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _themeService = locator<ThemeService>();
+  final _settingsService = locator<SettingsService>();
   final _logger = getLogger("StartUpViewModel");
 
   // Info Log - on every public function call with the following format: (functionName | arguments: test)
@@ -32,13 +32,13 @@ class StartUpViewModel extends BaseViewModel {
   }
 
   bool getThemeMode() {
-    _logger.i(_themeService.isLightTheme);
-    return _themeService.isLightTheme;
+    _logger.i(_settingsService.isLightTheme);
+    return _settingsService.isLightTheme;
   }
 
   void toggleTheme(bool _) {
-    _themeService.toggleTheme();
-    title = _themeService.isLightTheme ? "Light" : "Dark";
+    _settingsService.toggleTheme();
+    title = _settingsService.isLightTheme ? "Light" : "Dark";
     notifyListeners();
   }
 }

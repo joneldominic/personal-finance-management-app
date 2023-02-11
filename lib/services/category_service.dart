@@ -18,14 +18,14 @@ class CategoryService with ReactiveServiceMixin {
       Category(
         name: TRANSFER_CATEGORY_NAME,
         nature: CategoryNature.none,
-        color: '0xFFFFFF00',
+        color: TRANSFER_CATEGORY_COLOR,
         isVisible: true,
         isDefault: true,
       ),
       Category(
         name: UNDEFINED_CATEGORY_NAME,
         nature: CategoryNature.none,
-        color: '0xFF757575',
+        color: UNDEFINED_CATEGORY_COLOR,
         isVisible: true,
         isDefault: true,
       )

@@ -55,7 +55,7 @@ class TransactionListItem extends StatelessWidget {
               children: [
                 ThemeText.listItemSubTitle(
                   doubleToCurrencyFormatter(
-                    currency: account?.currency ?? "PHP",
+                    currency: account?.currency ?? "₱",
                     value: transaction.amount!,
                   ),
                   color: isExpense ? customTheme.danger : customTheme.success,

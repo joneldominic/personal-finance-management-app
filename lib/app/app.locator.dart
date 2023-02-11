@@ -12,7 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../services/account_service.dart';
 import '../services/category_service.dart';
-import '../services/theme_service.dart';
+import '../services/settings_service.dart';
 import '../services/transaction_service.dart';
 
 final locator = StackedLocator.instance;
@@ -25,7 +25,7 @@ Future<void> setupLocator({String? environment, EnvironmentFilter? environmentFi
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => SnackbarService());
-  locator.registerLazySingleton(() => ThemeService());
+  locator.registerLazySingleton(() => SettingsService());
   locator.registerLazySingleton(() => AccountService());
   locator.registerLazySingleton(() => TransactionService());
   locator.registerLazySingleton(() => CategoryService());

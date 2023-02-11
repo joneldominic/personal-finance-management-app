@@ -15,7 +15,7 @@ const String BalanceValueKey = 'balance';
 const String ColorValueKey = 'color';
 
 final Map<String, String> CurrencyValueToTitleMap = {
-  'PHP': 'PHP',
+  '₱': '₱',
 };
 final Map<String, String> ColorValueToTitleMap = {
   '0xFFFF4081': '0xFFFF4081',

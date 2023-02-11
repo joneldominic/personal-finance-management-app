@@ -5,7 +5,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:personal_finance_management_app/services/category_service.dart';
-import 'package:personal_finance_management_app/services/theme_service.dart';
+import 'package:personal_finance_management_app/services/settings_service.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -42,7 +42,7 @@ class PersonalFinanceManagementApp extends StatelessWidget {
 
 class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
   final _logger = getLogger('PersonalFinanceManagementAppViewModel');
-  final _themeService = locator<ThemeService>();
+  final _settingsService = locator<SettingsService>();
   final _categoryService = locator<CategoryService>();
   final _accountService = locator<AccountService>();
 
@@ -60,6 +60,7 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
 
       final defaultCategories = await _categoryService.initCategories();
       final defaultAccount = await _accountService.initAccount();
+      await _settingsService.initSettings();
 
       if (defaultCategories.length == 2 && defaultAccount != null) return;
       await IsFirstRun.reset();
@@ -67,7 +68,7 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_themeService];
+  List<ReactiveServiceMixin> get reactiveServices => [_settingsService];
 
-  ThemeMode getThemeMode() => _themeService.isLightTheme ? ThemeMode.light : ThemeMode.dark;
+  ThemeMode getThemeMode() => _settingsService.isLightTheme ? ThemeMode.light : ThemeMode.dark;
 }

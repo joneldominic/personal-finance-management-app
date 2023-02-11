@@ -59,7 +59,7 @@ class AccountsCard extends StatelessWidget {
                   return AccountThumbnail(
                     label: mainViewModel.accounts[index].name,
                     amount: doubleToCurrencyFormatter(
-                      currency: mainViewModel.accounts[index].currency ?? "PHP",
+                      currency: mainViewModel.accounts[index].currency ?? "₱",
                       value: mainViewModel.accounts[index].balance!,
                     ),
                     color: Color(

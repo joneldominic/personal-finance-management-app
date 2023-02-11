@@ -32,7 +32,7 @@ class AccountListItem extends StatelessWidget {
           ThemeText.listItemTitle(account.name ?? ''),
           ThemeText.listItemSubTitle(
             doubleToCurrencyFormatter(
-              currency: account.currency ?? "PHP",
+              currency: account.currency ?? "₱",
               value: account.balance!,
             ),
           ),

@@ -106,7 +106,7 @@ class MainView extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          Text("PHP 160,120.00",
+          Text("₱ 160,120.00",
               style: TextStyle(
                 fontSize: 16,
               )),

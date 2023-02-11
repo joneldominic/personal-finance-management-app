@@ -16,8 +16,8 @@ class AccountService with ReactiveServiceMixin {
     final defaultAccount = Account(
       name: DEFAULT_ACCOUNT_NAME,
       balance: 0,
-      color: "0xFF76FF03",
-      currency: "PHP",
+      color: DEFAULT_ACCOUNT_COLOR,
+      currency: DEFAULT_ACCOUNT_CURRENCY,
       isArchived: false,
       isExcludedFromAnalysis: false,
       isDefault: true,

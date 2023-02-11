@@ -1,7 +1,7 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
-import 'package:personal_finance_management_app/services/theme_service.dart';
+import 'package:personal_finance_management_app/services/settings_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,17 +11,17 @@ import 'package:stacked_services/stacked_services.dart';
 
 class SettingsViewModel extends BaseViewModel {
   final _logger = getLogger('SettingsViewModel');
-  final _themeService = locator<ThemeService>();
+  final _settingsService = locator<SettingsService>();
   final _navigationService = locator<NavigationService>();
 
   bool getIsThemeModeIsDark() {
     _logger.i('argument: NONE');
-    return _themeService.isDarkTheme;
+    return !_settingsService.isLightTheme;
   }
 
   void toggleTheme(bool value) {
     _logger.i('argument: $value');
-    _themeService.toggleTheme();
+    _settingsService.toggleTheme();
     notifyListeners();
   }
 

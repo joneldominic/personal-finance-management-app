@@ -12,7 +12,7 @@ class ConditionalAsyncWrapper extends StatelessWidget {
   final bool isLoading;
   final Widget child;
 
-  final showFallback;
+  final bool showFallback;
   final Widget? fallback;
 
   @override

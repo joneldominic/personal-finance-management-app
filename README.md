@@ -137,6 +137,8 @@ See the [open issues](https://github.com/joneldominic/personal-finance-managemen
 
 More details can also be found on this [Github Project](https://github.com/users/joneldominic/projects/1).
 
+For the design, check this [Figma file](https://www.figma.com/file/Xf0d1yWHngbCS9hI8qwtmB/Personal-Finance-Management-App?node-id=0%3A1&t=EmtBy7v9VOo2sDlI-1).
+
 <!-- CONTRIBUTING -->
 
 ## Contributing

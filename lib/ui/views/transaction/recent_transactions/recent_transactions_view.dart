@@ -45,7 +45,7 @@ class RecentTransactionsView extends StatelessWidget {
               ),
             ),
             ConditionalAsyncWrapper(
-              isLoading: !mainViewModel.streamDataReady,
+              isLoading: !mainViewModel.transactionsReady,
               showFallback: mainViewModel.transactions.isEmpty,
               fallback: Center(
                 child: ThemeText.listItemTitle(

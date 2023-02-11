@@ -22,7 +22,7 @@ class TransactionListView extends StatelessWidget {
       builder: (context, model, child) => Container(
         color: customTheme.contrastBackgroundColor,
         child: ConditionalAsyncWrapper(
-          isLoading: !mainViewModel.streamDataReady,
+          isLoading: !mainViewModel.transactionsReady,
           showFallback: mainViewModel.transactions.isEmpty,
           fallback: Center(
             child: ThemeText.listItemTitle(

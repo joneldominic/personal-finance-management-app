@@ -43,8 +43,6 @@ class AccountSettingsView extends StatelessWidget {
                 final account = model.accounts[index];
                 return AccountListItem(
                   account: account,
-                  // TODO: Make action item as order control
-                  // TODO: Navigation should be on tap
                   onPressed: () => model.navigateToAccountDetail(account),
                 );
               },

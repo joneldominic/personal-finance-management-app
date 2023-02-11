@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
+import 'package:personal_finance_management_app/data/models/cashflow/cashflow.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
+import 'package:personal_finance_management_app/ui/views/main/main_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
 class CashFlowCard extends StatelessWidget {
   const CashFlowCard({
@@ -12,6 +17,11 @@ class CashFlowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
+    final mainViewModel = getParentViewModel<MainViewModel>(context);
+
+    final cashFlow =
+        mainViewModel.cashFlowReady ? mainViewModel.cashFlow : CashFlow(id: CASH_FLOW_ID);
+    final isPositiveFlow = cashFlow.net! >= 0;
 
     return Card(
       margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -41,17 +51,20 @@ class CashFlowCard extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'PHP 9,057.92',
+                    doubleToCurrencyFormatter(
+                      currency: "₱",
+                      value: cashFlow.net!,
+                    ),
                     style: TextStyle(
                       fontSize: 18,
-                      color: customTheme.success,
+                      color: isPositiveFlow ? customTheme.customGreen : Colors.red,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Icon(
-                    Icons.arrow_drop_up_rounded,
+                    isPositiveFlow ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
                     size: 32,
-                    color: customTheme.success,
+                    color: isPositiveFlow ? customTheme.customGreen : Colors.red,
                   )
                 ],
               ),
@@ -63,15 +76,21 @@ class CashFlowCard extends StatelessWidget {
                   _buildCashFlowBar(
                     customTheme,
                     TransactionType.income,
-                    "PHP 49,125.51",
-                    1.0,
+                    doubleToCurrencyFormatter(
+                      currency: "₱",
+                      value: cashFlow.income!,
+                    ),
+                    cashFlow.incomePercentage!,
                   ),
                   verticalSpaceSmall,
                   _buildCashFlowBar(
                     customTheme,
                     TransactionType.expense,
-                    "-PHP 40,067.59",
-                    0.8,
+                    doubleToCurrencyFormatter(
+                      currency: "₱",
+                      value: cashFlow.expenses!,
+                    ),
+                    cashFlow.expensesPercentage!,
                   ),
                 ],
               ),

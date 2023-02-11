@@ -1,4 +1,5 @@
 import 'package:personal_finance_management_app/services/account_service.dart';
+import 'package:personal_finance_management_app/services/cashflow_service.dart';
 import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/services/settings_service.dart';
 import 'package:personal_finance_management_app/services/transaction_service.dart';
@@ -26,6 +27,7 @@ import 'package:stacked_services/stacked_services.dart';
   LazySingleton(classType: AccountService),
   LazySingleton(classType: TransactionService),
   LazySingleton(classType: CategoryService),
+  LazySingleton(classType: CashFlowService),
 ], logger: StackedLogger())
 class AppSetup {
   /** Serves no purpose besides having an annotation attached to it */

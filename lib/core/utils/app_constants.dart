@@ -14,3 +14,6 @@ const DEFAULT_ACCOUNT_CURRENCY = "₱";
 
 /// Settings Related Constants
 const SETTINGS_ID = 1;
+
+/// CashFlow Related Constants
+const CASH_FLOW_ID = 1;

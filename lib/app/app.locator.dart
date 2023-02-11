@@ -11,6 +11,7 @@ import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../services/account_service.dart';
+import '../services/cashflow_service.dart';
 import '../services/category_service.dart';
 import '../services/settings_service.dart';
 import '../services/transaction_service.dart';
@@ -29,4 +30,5 @@ Future<void> setupLocator({String? environment, EnvironmentFilter? environmentFi
   locator.registerLazySingleton(() => AccountService());
   locator.registerLazySingleton(() => TransactionService());
   locator.registerLazySingleton(() => CategoryService());
+  locator.registerLazySingleton(() => CashFlowService());
 }

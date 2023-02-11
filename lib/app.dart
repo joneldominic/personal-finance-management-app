@@ -4,6 +4,7 @@ import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
 import 'package:personal_finance_management_app/services/account_service.dart';
+import 'package:personal_finance_management_app/services/cashflow_service.dart';
 import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/services/settings_service.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
@@ -45,6 +46,7 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
   final _settingsService = locator<SettingsService>();
   final _categoryService = locator<CategoryService>();
   final _accountService = locator<AccountService>();
+  final _cashFlowService = locator<CashFlowService>();
 
   PersonalFinanceManagementAppViewModel() {
     _logger.i('argument: NONE');
@@ -61,6 +63,7 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
       final defaultCategories = await _categoryService.initCategories();
       final defaultAccount = await _accountService.initAccount();
       await _settingsService.initSettings();
+      await _cashFlowService.initCashFlow();
 
       if (defaultCategories.length == 2 && defaultAccount != null) return;
       await IsFirstRun.reset();

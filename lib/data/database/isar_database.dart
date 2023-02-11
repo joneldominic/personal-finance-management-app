@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/data/models/cashflow/cashflow.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/data/models/settings/settings.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
@@ -38,6 +39,7 @@ class IsarDatabase {
         TransactionSchema,
         CategorySchema,
         SettingsSchema,
+        CashFlowSchema,
       ],
       directory: appDocumentDir.path,
       inspector: true,

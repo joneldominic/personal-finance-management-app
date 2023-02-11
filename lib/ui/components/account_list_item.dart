@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 
 class AccountListItem extends StatelessWidget {
   const AccountListItem({
     Key? key,
-    this.accountName,
-    this.color,
-    this.currency,
-    this.amount,
+    required this.account,
     required this.onPressed,
   }) : super(key: key);
 
-  final String? accountName;
-  final String? color;
-  final String? currency;
-  final double? amount;
+  final Account account;
   final void Function() onPressed;
 
   @override
@@ -28,17 +23,17 @@ class AccountListItem extends StatelessWidget {
       leading: CircleAvatar(
         radius: 18,
         backgroundColor: Color(
-          int.parse(color!),
+          int.parse(account.color!),
         ),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ThemeText.listItemTitle(accountName ?? ''),
+          ThemeText.listItemTitle(account.name ?? ''),
           ThemeText.listItemSubTitle(
             doubleToCurrencyFormatter(
-              currency: currency ?? "PHP",
-              value: amount!,
+              currency: account.currency ?? "PHP",
+              value: account.balance!,
             ),
           ),
         ],

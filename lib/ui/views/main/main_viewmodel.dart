@@ -40,17 +40,6 @@ class MainViewModel extends MultipleStreamViewModel {
   bool get transactionsReady => dataReady(_transactionStreamKey);
   List<Transaction> get transactions => dataMap![_transactionStreamKey] ?? [];
 
-  bool get streamDataReady => accountsReady && transactionsReady;
-
-  List<Transaction> get recentTransactions {
-    final endIndex = transactions.isEmpty
-        ? 0
-        : transactions.length < 5
-            ? transactions.length - 1
-            : 5;
-    return transactions.sublist(0, endIndex);
-  }
-
   void navigateToTransactionDetail() {
     _logger.i('argument: NONE');
     _navigationService.navigateToTransactionDetailView();

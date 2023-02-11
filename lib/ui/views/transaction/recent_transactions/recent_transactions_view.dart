@@ -45,25 +45,24 @@ class RecentTransactionsView extends StatelessWidget {
               ),
             ),
             ConditionalAsyncWrapper(
-              isLoading: !mainViewModel.streamDataReady,
+              isLoading: !mainViewModel.transactionsReady,
+              showFallback: mainViewModel.transactions.isEmpty,
+              fallback: Center(
+                child: ThemeText.listItemTitle(
+                  "No transaction available",
+                  color: customTheme.subTitleColor,
+                ),
+              ),
               child: ListView.separated(
                 shrinkWrap: true,
                 padding: const EdgeInsets.fromLTRB(7, 10, 7, 0),
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: mainViewModel.recentTransactions.length,
+                itemCount: mainViewModel.transactions.take(5).length,
                 itemBuilder: (BuildContext context, int index) {
-                  final transaction = mainViewModel.recentTransactions[index];
+                  final transaction = mainViewModel.transactions[index];
                   return TransactionListItem(
-                    categoryName: transaction.category.value?.name,
-                    categoryColor: transaction.category.value?.color,
-                    accountName: transaction.account.value?.name,
-                    destinationAccountName: transaction.destinationAccount.value?.name,
-                    accountCurrency: transaction.account.value?.currency,
-                    amount: transaction.amount,
-                    transactionType: transaction.transactionType,
-                    transferTransactionType: transaction.transferTransactionType,
-                    timeStamp: transaction.date,
-                    onTap: () {}, // TODO: Handle on edit/view
+                    transaction: transaction,
+                    onTap: () => model.navigateToTransactionDetailEditMode(transaction),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) => const Divider(),

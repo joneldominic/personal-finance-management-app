@@ -7,3 +7,6 @@ const FROM_ACCOUNT_CHANGE_NOTE = "From Account Change";
 
 /// Accounts Related Constants
 const DEFAULT_ACCOUNT_NAME = "Cash";
+
+/// Settings Related Constants
+const SETTINGS_ID = 1;

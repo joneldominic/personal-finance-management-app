@@ -36,7 +36,6 @@ class AccountSettingsView extends StatelessWidget {
           child: ConditionalAsyncWrapper(
             isLoading: model.isBusy,
             child: ListView.separated(
-              // TODO: Add handling for empty list
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
               physics: const BouncingScrollPhysics(),
               itemCount: model.accounts.length,

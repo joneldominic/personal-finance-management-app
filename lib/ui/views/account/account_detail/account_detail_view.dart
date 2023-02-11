@@ -41,6 +41,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final isAddAccount = account == null;
+    final isDefaultAccount = account?.isDefault ?? false;
     final appBarTitle = isAddAccount ? "New Account" : "Edit Account";
     final actionButtonTooltip = isAddAccount ? "Save New Account" : "Save Changes";
     final balanceFieldLabel = isAddAccount ? "Initial Balance" : "Balance";
@@ -64,7 +65,7 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
             onPressed: model.popCurrentView,
           ),
           actions: [
-            if (!isAddAccount) ...[
+            if (!isAddAccount && !isDefaultAccount) ...[
               IconButton(
                 icon: const Icon(Icons.delete_rounded),
                 tooltip: actionButtonTooltip,
@@ -87,8 +88,10 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
               children: [
                 TextField(
                   key: const ValueKey(AccountNameValueKey),
+                  enabled: !isDefaultAccount,
                   decoration: InputDecoration(
                     labelText: 'Account Name',
+                    suffixIcon: isDefaultAccount ? const Icon(Icons.lock_rounded) : null,
                     errorText: model.hasAccountNameValidationMessage
                         ? model.accountNameValidationMessage
                         : null,

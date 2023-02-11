@@ -16,6 +16,8 @@ import 'package:personal_finance_management_app/services/transaction_service.dar
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.
@@ -90,11 +92,22 @@ class AccountDetailViewModel extends FormViewModel {
   void handleSaveAccount() async {
     _logger.i('argument: NONE');
 
-    if (_accountNameController!.text.trim().isEmpty) {
+    final newAccountName = _accountNameController!.text;
+
+    if (newAccountName.trim().isEmpty) {
       _logger.w("Account name cannot be empty");
       setAccountNameValidationMessage("Please fill-in account name");
       handleShowSnackbar(message: accountNameValidationMessage!);
       notifyListeners();
+      return;
+    }
+
+    final accounts = await _accountService.getAccounts();
+    final isExistingAccountName =
+        accounts.any((acc) => acc.name!.toLowerCase() == newAccountName.toLowerCase());
+    if (isExistingAccountName) {
+      _logger.i("Account with this name already exists");
+      handleShowSnackbar(message: "Account with this name already exists.");
       return;
     }
 
@@ -122,7 +135,7 @@ class AccountDetailViewModel extends FormViewModel {
     }
 
     final newAccount = Account(
-      name: _accountNameController!.text,
+      name: newAccountName,
       currency: currencyValue,
       balance: balance,
       color: colorValue,

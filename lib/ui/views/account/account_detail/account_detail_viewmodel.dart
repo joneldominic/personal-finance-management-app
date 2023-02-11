@@ -16,8 +16,6 @@ import 'package:personal_finance_management_app/services/transaction_service.dar
 import 'package:personal_finance_management_app/ui/views/account/account_detail/account_detail_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-// ignore: depend_on_referenced_packages
-import 'package:collection/collection.dart';
 
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.

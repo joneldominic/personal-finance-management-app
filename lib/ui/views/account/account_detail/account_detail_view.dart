@@ -98,23 +98,24 @@ class AccountDetailView extends StatelessWidget with $AccountDetailView {
                   ),
                   controller: accountNameController,
                 ),
-                DropdownButtonFormField(
-                  key: const ValueKey(CurrencyValueKey),
-                  decoration: const InputDecoration(
-                    labelText: 'Currency',
-                  ),
-                  value: model.currencyValue,
-                  items: CurrencyValueToTitleMap.keys
-                      .map(
-                        (value) => DropdownMenuItem<String>(
-                          key: ValueKey('$value key'),
-                          value: value,
-                          child: Text(CurrencyValueToTitleMap[value]!),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (String? value) => model.setAccountCurrency(value!),
-                ),
+                // NOTE: PHP currency is only supported as of the moment.
+                // DropdownButtonFormField(
+                //   key: const ValueKey(CurrencyValueKey),
+                //   decoration: const InputDecoration(
+                //     labelText: 'Currency',
+                //   ),
+                //   value: model.currencyValue,
+                //   items: CurrencyValueToTitleMap.keys
+                //       .map(
+                //         (value) => DropdownMenuItem<String>(
+                //           key: ValueKey('$value key'),
+                //           value: value,
+                //           child: Text(CurrencyValueToTitleMap[value]!),
+                //         ),
+                //       )
+                //       .toList(),
+                //   onChanged: (String? value) => model.setAccountCurrency(value!),
+                // ),
                 TextField(
                   key: const ValueKey(BalanceValueKey),
                   decoration: InputDecoration(

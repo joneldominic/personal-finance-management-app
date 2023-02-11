@@ -200,6 +200,7 @@ const List<StaticDropdownItem> currencyStaticDropdownItems = [
     title: '₱',
     value: '₱',
   ),
+  // NOTE: PHP currency is only supported as of the moment.
   // StaticDropdownItem(
   //   title: 'USD',
   //   value: 'USD',

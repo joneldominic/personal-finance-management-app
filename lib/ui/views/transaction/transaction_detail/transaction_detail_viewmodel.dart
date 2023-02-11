@@ -312,8 +312,6 @@ class TransactionDetailViewModel extends FormViewModel {
       }
     }
 
-    // TODO: Adjust balance as well
-
     popCurrentView();
   }
 

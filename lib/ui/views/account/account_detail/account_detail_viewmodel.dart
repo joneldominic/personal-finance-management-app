@@ -101,8 +101,9 @@ class AccountDetailViewModel extends FormViewModel {
     }
 
     final accounts = await _accountService.getAccounts();
-    final isExistingAccountName =
-        accounts.any((acc) => acc.name!.toLowerCase() == newAccountName.toLowerCase());
+    final isExistingAccountName = accounts.any(
+      (acc) => acc.id != _account?.id && acc.name!.toLowerCase() == newAccountName.toLowerCase(),
+    );
     if (isExistingAccountName) {
       _logger.i("Account with this name already exists");
       handleShowSnackbar(message: "Account with this name already exists.");

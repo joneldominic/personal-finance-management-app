@@ -85,30 +85,6 @@ class AccountDaoImpl extends AccountDao {
     final accountCollection = isar.accounts;
     final transactionCollection = isar.transactions;
 
-    // TODO: Handle transactions with deleted destination account
-    // TODO: Probably convert/retain the expense pair only and convert the transaction type as expense with undefined category
-    // TODO: Or maybe just delete pair???
-    // TODO: Wallet Budget Backers Approach
-    /* 
-      Created Account: Cash = 0 Balance
-      Created Account: BPI = 20,000 Balance
-
-      Add transfer transaction from BPI -> Cash (5,000)
-        Transactions 
-          BPI -> Cash (-5,000)      BPI Transaction
-          BPI -> Cash (5,000)       Cash Transaction
-
-      Delete Account: BPI (Source)
-        Transaction
-          Outside of Wallet -> Cash (5,000)
-
-      or
-
-      Delete Account: Cash (Destination)
-        Transaction
-          BPI -> Outside of Wallet (-5,000)
-     */
-
     final isDeleted = await isar.writeTxn(() async {
       final account = await accountCollection.get(id);
 

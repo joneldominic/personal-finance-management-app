@@ -16,7 +16,6 @@ const String ColorValueKey = 'color';
 
 final Map<String, String> CurrencyValueToTitleMap = {
   'PHP': 'PHP',
-  'USD': 'USD',
 };
 final Map<String, String> ColorValueToTitleMap = {
   '0xFFFF4081': '0xFFFF4081',

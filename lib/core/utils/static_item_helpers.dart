@@ -200,10 +200,10 @@ const List<StaticDropdownItem> currencyStaticDropdownItems = [
     title: 'PHP',
     value: 'PHP',
   ),
-  StaticDropdownItem(
-    title: 'USD',
-    value: 'USD',
-  ),
+  // StaticDropdownItem(
+  //   title: 'USD',
+  //   value: 'USD',
+  // ),
 ];
 
 const List<StaticDropdownItem> transactionTypeStaticDropdownItems = [

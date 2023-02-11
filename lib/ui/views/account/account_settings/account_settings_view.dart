@@ -36,7 +36,6 @@ class AccountSettingsView extends StatelessWidget {
           child: ConditionalAsyncWrapper(
             isLoading: model.isBusy,
             child: ListView.separated(
-              // TODO: Add handling for empty list
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 90),
               physics: const BouncingScrollPhysics(),
               itemCount: model.accounts.length,
@@ -44,8 +43,6 @@ class AccountSettingsView extends StatelessWidget {
                 final account = model.accounts[index];
                 return AccountListItem(
                   account: account,
-                  // TODO: Make action item as order control
-                  // TODO: Navigation should be on tap
                   onPressed: () => model.navigateToAccountDetail(account),
                 );
               },

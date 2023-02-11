@@ -312,8 +312,6 @@ class TransactionDetailViewModel extends FormViewModel {
       }
     }
 
-    // TODO: Adjust balance as well
-
     popCurrentView();
   }
 
@@ -370,15 +368,13 @@ class TransactionDetailViewModel extends FormViewModel {
       destinationAccounts = accounts;
     }
 
-    // TODO: Make sure transfer can be done to the same currency only
     destinationAccounts =
         accounts.where((acc) => acc.id != int.parse(accountIdValue ?? '-1')).toList();
   }
 
   void filterCategories() {
     if (transactionTypeValue != EnumToString.convertToString(TransactionType.transfer)) {
-      // Exclude TRANSFER category when transaction type is not transfer
-      filteredCategories = categories.sublist(1);
+      filteredCategories = categories.where((c) => c.id != transferCategoryId).toList();
     } else {
       filteredCategories = categories;
     }

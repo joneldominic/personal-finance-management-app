@@ -17,10 +17,6 @@ class RecentTransactionsView extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
     final mainViewModel = getParentViewModel<MainViewModel>(context);
 
-    // TODO: Add filter (ex. Last 30 Days)
-
-    // TODO: Implement action button - choose time-frame
-
     return ViewModelBuilder<RecentTransactionsViewModel>.reactive(
       viewModelBuilder: () => RecentTransactionsViewModel(),
       builder: (context, model, child) => Card(

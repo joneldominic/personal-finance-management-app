@@ -37,13 +37,18 @@ const AccountSchema = CollectionSchema(
       name: r'isArchived',
       type: IsarType.bool,
     ),
-    r'isExcludedFromAnalysis': PropertySchema(
+    r'isDefault': PropertySchema(
       id: 4,
+      name: r'isDefault',
+      type: IsarType.bool,
+    ),
+    r'isExcludedFromAnalysis': PropertySchema(
+      id: 5,
       name: r'isExcludedFromAnalysis',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'name',
       type: IsarType.string,
     )
@@ -107,8 +112,9 @@ void _accountSerialize(
   writer.writeString(offsets[1], object.color);
   writer.writeString(offsets[2], object.currency);
   writer.writeBool(offsets[3], object.isArchived);
-  writer.writeBool(offsets[4], object.isExcludedFromAnalysis);
-  writer.writeString(offsets[5], object.name);
+  writer.writeBool(offsets[4], object.isDefault);
+  writer.writeBool(offsets[5], object.isExcludedFromAnalysis);
+  writer.writeString(offsets[6], object.name);
 }
 
 Account _accountDeserialize(
@@ -122,8 +128,9 @@ Account _accountDeserialize(
     color: reader.readStringOrNull(offsets[1]),
     currency: reader.readStringOrNull(offsets[2]),
     isArchived: reader.readBoolOrNull(offsets[3]),
-    isExcludedFromAnalysis: reader.readBoolOrNull(offsets[4]),
-    name: reader.readStringOrNull(offsets[5]),
+    isDefault: reader.readBoolOrNull(offsets[4]),
+    isExcludedFromAnalysis: reader.readBoolOrNull(offsets[5]),
+    name: reader.readStringOrNull(offsets[6]),
   );
   object.id = id;
   return object;
@@ -147,6 +154,8 @@ P _accountDeserializeProp<P>(
     case 4:
       return (reader.readBoolOrNull(offset)) as P;
     case 5:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 6:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -683,6 +692,31 @@ extension AccountQueryFilter on QueryBuilder<Account, Account, QFilterCondition>
     });
   }
 
+  QueryBuilder<Account, Account, QAfterFilterCondition> isDefaultIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isDefault',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> isDefaultIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isDefault',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> isDefaultEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isDefault',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterFilterCondition> isExcludedFromAnalysisIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -959,6 +993,18 @@ extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
     });
   }
 
+  QueryBuilder<Account, Account, QAfterSortBy> sortByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterSortBy> sortByIsExcludedFromAnalysis() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isExcludedFromAnalysis', Sort.asc);
@@ -1045,6 +1091,18 @@ extension AccountQuerySortThenBy on QueryBuilder<Account, Account, QSortThenBy> 
     });
   }
 
+  QueryBuilder<Account, Account, QAfterSortBy> thenByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByIsDefaultDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDefault', Sort.desc);
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterSortBy> thenByIsExcludedFromAnalysis() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isExcludedFromAnalysis', Sort.asc);
@@ -1095,6 +1153,12 @@ extension AccountQueryWhereDistinct on QueryBuilder<Account, Account, QDistinct>
     });
   }
 
+  QueryBuilder<Account, Account, QDistinct> distinctByIsDefault() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isDefault');
+    });
+  }
+
   QueryBuilder<Account, Account, QDistinct> distinctByIsExcludedFromAnalysis() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isExcludedFromAnalysis');
@@ -1136,6 +1200,12 @@ extension AccountQueryProperty on QueryBuilder<Account, Account, QQueryProperty>
   QueryBuilder<Account, bool?, QQueryOperations> isArchivedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isArchived');
+    });
+  }
+
+  QueryBuilder<Account, bool?, QQueryOperations> isDefaultProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isDefault');
     });
   }
 

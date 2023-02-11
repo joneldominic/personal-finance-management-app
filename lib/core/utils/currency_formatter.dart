@@ -25,7 +25,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
   CurrencyInputFormatter({
     this.decimalPlaces = 2,
     this.allowNegative = true,
-    this.symbol = "PHP",
+    this.symbol = "₱",
   }) : _formatter = NumberFormat.currency(
           decimalDigits: decimalPlaces,
           locale: 'en_PH',

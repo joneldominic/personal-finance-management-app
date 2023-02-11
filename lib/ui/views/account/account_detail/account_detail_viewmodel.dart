@@ -55,9 +55,9 @@ class AccountDetailViewModel extends FormViewModel {
     _accountNameController = accountNameController;
     accountNameController.text = account?.name ?? '';
 
-    setCurrency(account?.currency ?? 'PHP');
+    setCurrency(account?.currency ?? '₱');
 
-    currencyInputFormatter = CurrencyInputFormatter(symbol: account?.currency ?? "PHP");
+    currencyInputFormatter = CurrencyInputFormatter(symbol: account?.currency ?? "₱");
     _balanceController = balanceController;
     balanceController.text = currencyInputFormatter!.reformat(account?.balance.toString() ?? '0');
 
@@ -115,7 +115,7 @@ class AccountDetailViewModel extends FormViewModel {
     if (_account != null && _account!.balance != balance) {
       _logger.i("Showing BalanceConfirmationDialog");
       final balanceDiff = doubleToCurrencyFormatter(
-        currency: _account!.currency ?? "PHP",
+        currency: _account!.currency ?? "₱",
         value: (_account!.balance! - balance) * -1,
       );
       final response = await _dialogService.showCustomDialog(

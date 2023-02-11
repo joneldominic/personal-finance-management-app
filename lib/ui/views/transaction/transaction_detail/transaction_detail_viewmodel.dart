@@ -45,7 +45,7 @@ class TransactionDetailViewModel extends FormViewModel {
   final FocusNode destinationAccountFocusNode = FocusNode();
 
   CurrencyInputFormatter currencyInputFormatter = CurrencyInputFormatter(
-    symbol: "PHP",
+    symbol: "₱",
     allowNegative: false,
   );
   TextEditingController? _amountController;
@@ -105,7 +105,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     Account? account = accounts.firstWhereOrNull((acc) => acc.id == transaction?.account.value?.id);
     currencyInputFormatter = CurrencyInputFormatter(
-      symbol: accounts.isNotEmpty ? account?.currency ?? accounts[0].currency! : "PHP",
+      symbol: accounts.isNotEmpty ? account?.currency ?? accounts[0].currency! : "₱",
       allowNegative: false,
     );
     _amountController = amountController;

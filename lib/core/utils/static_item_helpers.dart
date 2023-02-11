@@ -197,8 +197,8 @@ const List<StaticDropdownItem> colorStaticDropdownItems = [
 
 const List<StaticDropdownItem> currencyStaticDropdownItems = [
   StaticDropdownItem(
-    title: 'PHP',
-    value: 'PHP',
+    title: '₱',
+    value: '₱',
   ),
   // StaticDropdownItem(
   //   title: 'USD',

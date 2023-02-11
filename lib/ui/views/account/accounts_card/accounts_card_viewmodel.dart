@@ -12,8 +12,6 @@ class AccountsCardViewModel extends BaseViewModel {
   final _logger = getLogger('AccountsCardViewModel');
   final _navigationService = locator<NavigationService>();
 
-  // TODO: Implement show specific balance and transactions on click
-
   void navigateToAccountSettings() {
     _logger.i('argument: NONE');
     _navigationService.navigateToAccountSettingsView();

@@ -374,8 +374,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
   void filterCategories() {
     if (transactionTypeValue != EnumToString.convertToString(TransactionType.transfer)) {
-      // Exclude TRANSFER category when transaction type is not transfer
-      filteredCategories = categories.sublist(1);
+      filteredCategories = categories.where((c) => c.id != transferCategoryId).toList();
     } else {
       filteredCategories = categories;
     }

@@ -193,6 +193,19 @@ class TransactionDaoImpl extends TransactionDao {
   }
 
   @override
+  Future<int> deleteTransactions(List<int> ids) async {
+    _logger.i('argument: $ids');
+
+    Isar isar = await _db;
+    final transactionCollection = isar.transactions;
+    final deleteCount = await isar.writeTxn(() async {
+      return await transactionCollection.deleteAll(ids);
+    });
+
+    return deleteCount;
+  }
+
+  @override
   Stream<List<Transaction>> transactionCollectionStream() async* {
     _logger.i('argument: NONE');
     yield* _transactionStreamController.stream;

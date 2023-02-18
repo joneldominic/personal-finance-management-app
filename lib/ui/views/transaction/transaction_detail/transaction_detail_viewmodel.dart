@@ -42,6 +42,7 @@ class TransactionDetailViewModel extends FormViewModel {
   final TextEditingController timeController = TextEditingController();
 
   final FocusNode amountFieldFocusNode = FocusNode();
+  final FocusNode accountFocusNode = FocusNode();
   final FocusNode destinationAccountFocusNode = FocusNode();
 
   CurrencyInputFormatter currencyInputFormatter = CurrencyInputFormatter(
@@ -62,6 +63,9 @@ class TransactionDetailViewModel extends FormViewModel {
 
   bool get disableCategoryField =>
       transactionTypeValue == EnumToString.convertToString(TransactionType.transfer);
+
+  String? get destinationAccountId =>
+      destinationAccountIdValue == "" ? null : destinationAccountIdValue;
 
   List<Account> accounts = [];
   List<Account> destinationAccounts = [];
@@ -84,13 +88,11 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.e(transaction);
 
     await initData();
-    filterDestinationAccount();
 
-    setAccountId(
-      accounts.isNotEmpty
-          ? transaction?.account.value?.id.toString() ?? accounts[0].id.toString()
-          : "",
-    );
+    if (accounts.isNotEmpty && (transaction == null || transaction.account.value != null)) {
+      setAccountId(transaction?.account.value?.id.toString() ?? accounts[0].id.toString());
+    }
+    filterDestinationAccount();
 
     setTransactionType(
       EnumToString.convertToString(
@@ -112,11 +114,9 @@ class TransactionDetailViewModel extends FormViewModel {
     amountController.text = currencyInputFormatter.reformat(transaction?.amount.toString() ?? '0');
 
     filterCategories();
-    setCategoryId(
-      categories.isNotEmpty
-          ? transaction?.category.value?.id.toString() ?? undefinedCategoryId.toString()
-          : '',
-    );
+    if (categories.isNotEmpty) {
+      setCategoryId(transaction?.category.value?.id.toString() ?? undefinedCategoryId.toString());
+    }
 
     initDateTimeFields(transaction?.date);
 
@@ -162,7 +162,7 @@ class TransactionDetailViewModel extends FormViewModel {
 
     if (accountId == destinationAccountIdValue) {
       filterDestinationAccount(shouldFilter: false);
-      setDestinationAccountId(accountIdValue!);
+      setDestinationAccountId(accountIdValue ?? "");
     }
 
     setAccountId(accountId);
@@ -236,7 +236,14 @@ class TransactionDetailViewModel extends FormViewModel {
     final currTransactionTypeIsTransfer =
         transactionTypeValue == EnumToString.convertToString(TransactionType.transfer);
 
-    if (currTransactionTypeIsTransfer && destinationAccountIdValue == null) {
+    if ((accountIdValue == null || accountIdValue == "")) {
+      accountFocusNode.requestFocus();
+      handleShowSnackbar(message: "Please select an account");
+      return;
+    }
+
+    if (currTransactionTypeIsTransfer &&
+        (destinationAccountIdValue == null || destinationAccountIdValue == "")) {
       destinationAccountFocusNode.requestFocus();
       handleShowSnackbar(message: "Please select transfer destination account");
       return;

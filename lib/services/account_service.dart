@@ -2,13 +2,17 @@ import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao_impl.dart';
+import 'package:personal_finance_management_app/data/dao/transaction_dao_impl.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/repositories/account_repository.dart';
 import 'package:stacked/stacked.dart';
 
 class AccountService with ReactiveServiceMixin {
   final _logger = getLogger('AccountService');
-  final _accountRepository = AccountRepository(accountDao: AccountDaoImpl());
+  final _accountRepository = AccountRepository(
+    accountDao: AccountDaoImpl(),
+    transactionDao: TransactionDaoImpl(),
+  );
 
   Future<Account?> initAccount() {
     _logger.i('argument: NONE');

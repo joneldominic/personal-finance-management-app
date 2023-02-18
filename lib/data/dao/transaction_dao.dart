@@ -10,5 +10,6 @@ abstract class TransactionDao {
   Future<Transaction> updateTransaction(Transaction transaction);
   Future<Id> deleteTransaction(Id id);
   Future<int> deleteTransactionsByTransferId(String transferId);
+  Future<int> deleteTransactions(List<int> ids);
   Stream<List<Transaction>> transactionCollectionStream();
 }

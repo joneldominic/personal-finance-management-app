@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
@@ -43,32 +44,36 @@ class CashFlowDaoImpl extends CashFlowDao {
       return difference.inDays < cashFlow.daysCount!;
     });
 
-    double incomeAcc = 0;
-    double expensesAcc = 0;
+    Decimal incomeAcc = Decimal.zero;
+    Decimal expensesAcc = Decimal.zero;
 
     for (Transaction t in filteredTransactions) {
-      final isExpense = (t.transferTransactionType ?? t.transactionType) == TransactionType.expense;
-      if (isExpense) {
-        expensesAcc += t.amount!;
+      if (t.transactionType == TransactionType.transfer) {
         continue;
       }
 
-      incomeAcc += t.amount!;
+      if (t.transactionType == TransactionType.expense) {
+        expensesAcc += t.dAmount;
+        continue;
+      }
+
+      incomeAcc += t.dAmount;
     }
 
-    double tempExpenseAccAbs = expensesAcc.abs();
-    double tempNet = incomeAcc - tempExpenseAccAbs;
-    double percentageDiff =
-        1 - ((incomeAcc - tempExpenseAccAbs).abs() / ((incomeAcc + tempExpenseAccAbs) / 2));
+    double tempExpenseAccAbs = expensesAcc.toDouble().abs();
+    double percentageDiff = 1 -
+        ((incomeAcc.toDouble() - tempExpenseAccAbs).abs() /
+            ((incomeAcc.toDouble() + tempExpenseAccAbs) / 2));
+    Decimal tempNet = incomeAcc - expensesAcc;
 
-    cashFlow.net = tempNet;
-    cashFlow.income = incomeAcc;
-    cashFlow.expenses = expensesAcc;
+    cashFlow.net = tempNet.toDouble();
+    cashFlow.income = incomeAcc.toDouble();
+    cashFlow.expenses = expensesAcc.toDouble();
 
-    if (tempNet == 0) {
+    if (tempNet.toDouble() == 0) {
       cashFlow.incomePercentage = 0;
       cashFlow.expensesPercentage = 0;
-    } else if (tempNet > 0) {
+    } else if (tempNet.toDouble() > 0) {
       cashFlow.incomePercentage = 1.0;
       cashFlow.expensesPercentage = percentageDiff;
     } else {

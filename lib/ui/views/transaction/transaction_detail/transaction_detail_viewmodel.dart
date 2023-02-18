@@ -88,11 +88,11 @@ class TransactionDetailViewModel extends FormViewModel {
     _logger.e(transaction);
 
     await initData();
-    filterDestinationAccount();
 
     if (accounts.isNotEmpty && (transaction == null || transaction.account.value != null)) {
       setAccountId(transaction?.account.value?.id.toString() ?? accounts[0].id.toString());
     }
+    filterDestinationAccount();
 
     setTransactionType(
       EnumToString.convertToString(

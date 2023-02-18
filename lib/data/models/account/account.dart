@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
@@ -33,6 +34,9 @@ class Account {
     required this.isArchived,
     this.isDefault = false,
   });
+
+  @ignore
+  Decimal get dBalance => balance != null ? Decimal.parse(balance.toString()) : Decimal.zero;
 
   @override
   String toString() => 'Account('

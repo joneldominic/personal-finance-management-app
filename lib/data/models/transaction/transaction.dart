@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
@@ -50,6 +51,12 @@ class Transaction {
     date = transaction.date;
     notes = transaction.notes;
   }
+
+  @ignore
+  Decimal get dAmount => amount != null ? Decimal.parse(amount.toString()) : Decimal.zero;
+
+  @ignore
+  Decimal get dAmountAbs => amount != null ? Decimal.parse(amount!.abs().toString()) : Decimal.zero;
 
   @override
   String toString() => 'Transaction('

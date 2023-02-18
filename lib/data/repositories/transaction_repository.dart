@@ -77,14 +77,15 @@ class TransactionRepository {
     switch (transaction.transactionType) {
       case TransactionType.income:
       case TransactionType.expense:
-        account.balance = account.balance! + transaction.amount!;
+        account.balance = (account.dBalance + transaction.dAmount).toDouble();
         break;
       case TransactionType.transfer:
         await transaction.destinationAccount.load();
         destinationAccount = transaction.destinationAccount.value!;
 
-        account.balance = account.balance! - transaction.amount!.abs();
-        destinationAccount.balance = destinationAccount.balance! + transaction.amount!.abs();
+        account.balance = (account.dBalance - transaction.dAmountAbs).toDouble();
+        destinationAccount.balance =
+            (destinationAccount.dBalance + transaction.dAmountAbs).toDouble();
         break;
       default:
         throw TypeError();
@@ -103,16 +104,17 @@ class TransactionRepository {
 
     switch (oldTransaction.transactionType) {
       case TransactionType.income:
-        account.balance = account.balance! - oldTransaction.amount!;
+        account.balance = (account.dBalance - oldTransaction.dAmount).toDouble();
         break;
       case TransactionType.expense:
-        account.balance = account.balance! + oldTransaction.amount!.abs();
+        account.balance = (account.dBalance + oldTransaction.dAmountAbs).toDouble();
         break;
       case TransactionType.transfer:
         destinationAccount = oldTransaction.destinationAccount.value!;
 
-        account.balance = account.balance! + oldTransaction.amount!.abs();
-        destinationAccount.balance = destinationAccount.balance! - oldTransaction.amount!.abs();
+        account.balance = (account.dBalance + oldTransaction.dAmountAbs).toDouble();
+        destinationAccount.balance =
+            (destinationAccount.dBalance - oldTransaction.dAmountAbs).toDouble();
         break;
       default:
         throw TypeError();

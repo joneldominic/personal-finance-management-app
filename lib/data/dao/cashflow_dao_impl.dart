@@ -64,7 +64,7 @@ class CashFlowDaoImpl extends CashFlowDao {
     double percentageDiff = 1 -
         ((incomeAcc.toDouble() - tempExpenseAccAbs).abs() /
             ((incomeAcc.toDouble() + tempExpenseAccAbs) / 2));
-    Decimal tempNet = incomeAcc - expensesAcc;
+    Decimal tempNet = incomeAcc - Decimal.parse(tempExpenseAccAbs.toString());
 
     cashFlow.net = tempNet.toDouble();
     cashFlow.income = incomeAcc.toDouble();

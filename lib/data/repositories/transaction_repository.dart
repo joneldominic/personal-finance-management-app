@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';

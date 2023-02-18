@@ -52,6 +52,11 @@ class TransactionRepository {
     _logger.i('argument: $transferId');
 
     final transactionsPair = await transactionDao.getTransactionsByTransferId(transferId);
+
+    if (transactionsPair.length == 1) {
+      return 1;
+    }
+
     await undoOldTransaction(transactionsPair[0].id);
     return transactionDao.deleteTransactionsByTransferId(transferId);
   }

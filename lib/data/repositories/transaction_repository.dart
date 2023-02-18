@@ -99,28 +99,39 @@ class TransactionRepository {
 
   Future<void> undoOldTransaction(Id id) async {
     final oldTransaction = await transactionDao.getTransactionById(id);
-    final account = oldTransaction.account.value!;
+    final account = oldTransaction.account.value;
     Account? destinationAccount;
 
     switch (oldTransaction.transactionType) {
       case TransactionType.income:
-        account.balance = (account.dBalance - oldTransaction.dAmount).toDouble();
+        if (account != null) {
+          account.balance = (account.dBalance - oldTransaction.dAmount).toDouble();
+        }
         break;
       case TransactionType.expense:
-        account.balance = (account.dBalance + oldTransaction.dAmountAbs).toDouble();
+        if (account != null) {
+          account.balance = (account.dBalance + oldTransaction.dAmountAbs).toDouble();
+        }
         break;
       case TransactionType.transfer:
-        destinationAccount = oldTransaction.destinationAccount.value!;
+        if (account != null) {
+          account.balance = (account.dBalance + oldTransaction.dAmountAbs).toDouble();
+        }
 
-        account.balance = (account.dBalance + oldTransaction.dAmountAbs).toDouble();
-        destinationAccount.balance =
-            (destinationAccount.dBalance - oldTransaction.dAmountAbs).toDouble();
+        destinationAccount = oldTransaction.destinationAccount.value;
+        if (destinationAccount != null) {
+          destinationAccount.balance =
+              (destinationAccount.dBalance - oldTransaction.dAmountAbs).toDouble();
+        }
         break;
       default:
         throw TypeError();
     }
 
-    await accountDao.updateAccount(account);
+    if (account != null) {
+      await accountDao.updateAccount(account);
+    }
+
     if (destinationAccount != null) {
       await accountDao.updateAccount(destinationAccount);
     }

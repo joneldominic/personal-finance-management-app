@@ -108,6 +108,7 @@ class TransactionDetailView extends StatelessWidget with $TransactionDetailView 
                         ),
                       )
                       .toList(),
+                  focusNode: model.accountFocusNode,
                   onChanged: (String? value) => model.handleAccountChange(value!),
                 ),
                 DropdownButtonFormField(
@@ -131,7 +132,7 @@ class TransactionDetailView extends StatelessWidget with $TransactionDetailView 
                     EnumToString.convertToString(TransactionType.transfer)) ...[
                   DropdownButtonFormField(
                     key: const ValueKey(DestinationAccountIdValueKey),
-                    value: model.destinationAccountIdValue,
+                    value: model.destinationAccountId,
                     decoration: InputDecoration(
                       label: const Text("Destination Account"),
                       errorText:

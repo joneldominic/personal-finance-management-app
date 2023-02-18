@@ -22,7 +22,10 @@ class TransactionListItem extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final account = transaction.account.value;
-    final destinationAccountName = transaction.destinationAccount.value?.name;
+    final sourceAccountName = account?.name ?? '(Deleted Account)';
+    final destinationAccountName = transaction.transferTransactionType != null
+        ? transaction.destinationAccount.value?.name ?? '(Deleted Account)'
+        : null;
     final category = transaction.category.value;
     final isExpense = (transaction.transferTransactionType ?? transaction.transactionType) ==
         TransactionType.expense;
@@ -41,7 +44,7 @@ class TransactionListItem extends StatelessWidget {
         children: [
           ThemeText.listItemTitle(category?.name ?? ''),
           _buildAccountName(
-            accountName: account?.name,
+            accountName: sourceAccountName,
             distAccountName: destinationAccountName,
             isExpense: isExpense,
           ),

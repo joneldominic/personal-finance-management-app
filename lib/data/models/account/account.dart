@@ -25,6 +25,9 @@ class Account {
   @Backlink(to: 'account')
   final transactions = IsarLinks<Transaction>();
 
+  @Backlink(to: 'destinationAccount')
+  final destTransactions = IsarLinks<Transaction>();
+
   Account({
     required this.name,
     required this.currency,

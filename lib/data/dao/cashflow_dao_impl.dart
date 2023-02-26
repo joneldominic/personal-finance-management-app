@@ -81,8 +81,6 @@ class CashFlowDaoImpl extends CashFlowDao {
       cashFlow.expensesPercentage = 1.0;
     }
 
-    // TODO: Still have some issue when transferring (where accounts are negative)
-
     await updateCashFlow(cashFlow);
   }
 

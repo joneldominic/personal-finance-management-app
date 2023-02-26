@@ -3,6 +3,7 @@ import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/components/custom_floating_action_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/views/appbar/home/home_app_bar_view.dart';
 import 'package:personal_finance_management_app/ui/views/home/home_view.dart';
 import 'package:personal_finance_management_app/ui/views/settings/settings_view.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_view.dart';
@@ -79,7 +80,7 @@ class MainView extends StatelessWidget {
       case 0:
         return const CustomAppBar(title: Text("Transactions"));
       case 1:
-        return _buildHomeAppBar();
+        return const HomeAppBarView();
       case 2:
         return const CustomAppBar(title: Text("Settings"));
       default:
@@ -98,31 +99,5 @@ class MainView extends StatelessWidget {
       default:
         throw ArgumentError();
     }
-  }
-
-  CustomAppBar _buildHomeAppBar() {
-    return CustomAppBar(
-      automaticallyImplyLeading: false,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text("₱ 160,120.00",
-              style: TextStyle(
-                fontSize: 16,
-              )),
-          Text("Overall Balance",
-              style: TextStyle(
-                fontSize: 12,
-              )),
-        ],
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.person_rounded),
-          tooltip: 'Go to Profile',
-          onPressed: () {},
-        ),
-      ],
-    );
   }
 }

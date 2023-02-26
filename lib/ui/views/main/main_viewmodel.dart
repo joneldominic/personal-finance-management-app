@@ -48,6 +48,8 @@ class MainViewModel extends MultipleStreamViewModel {
   bool get cashFlowReady => dataReady(_cashflowStreamKey);
   CashFlow get cashFlow => dataMap![_cashflowStreamKey] ?? CashFlow(id: CASH_FLOW_ID);
 
+  List<Account> get selectedAccounts => dataMap![_accountStreamKey] ?? [];
+
   void navigateToTransactionDetail() {
     _logger.i('argument: NONE');
     _navigationService.navigateToTransactionDetailView();

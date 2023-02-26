@@ -21,7 +21,6 @@ class CashFlowCard extends StatelessWidget {
 
     final cashFlow =
         mainViewModel.cashFlowReady ? mainViewModel.cashFlow : CashFlow(id: CASH_FLOW_ID);
-    final isPositiveFlow = cashFlow.net! >= 0;
 
     return Card(
       margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -50,22 +49,7 @@ class CashFlowCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Row(
                 children: [
-                  Text(
-                    doubleToCurrencyFormatter(
-                      currency: "₱",
-                      value: cashFlow.net!,
-                    ),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: isPositiveFlow ? customTheme.customGreen : Colors.red,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Icon(
-                    isPositiveFlow ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
-                    size: 32,
-                    color: isPositiveFlow ? customTheme.customGreen : Colors.red,
-                  )
+                  _buildAmountDisplay(customTheme, cashFlow),
                 ],
               ),
             ),
@@ -99,6 +83,42 @@ class CashFlowCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildAmountDisplay(
+    CustomTheme customTheme,
+    CashFlow cashFlow,
+  ) {
+    final isPositive = cashFlow.net! > 0;
+    final color = cashFlow.net == 0
+        ? Colors.grey
+        : isPositive
+            ? customTheme.customGreen
+            : Colors.red;
+    final icon = cashFlow.net == 0
+        ? Icons.horizontal_rule_rounded
+        : isPositive
+            ? Icons.arrow_drop_up_rounded
+            : Icons.arrow_drop_down_rounded;
+
+    return Row(children: [
+      Text(
+        doubleToCurrencyFormatter(
+          currency: "₱",
+          value: cashFlow.net!,
+        ),
+        style: TextStyle(
+          fontSize: 18,
+          color: color,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      Icon(
+        icon,
+        size: 32,
+        color: color,
+      )
+    ]);
   }
 
   Column _buildCashFlowBar(

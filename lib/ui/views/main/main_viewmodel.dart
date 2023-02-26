@@ -48,6 +48,7 @@ class MainViewModel extends MultipleStreamViewModel {
   bool get cashFlowReady => dataReady(_cashflowStreamKey);
   CashFlow get cashFlow => dataMap![_cashflowStreamKey] ?? CashFlow(id: CASH_FLOW_ID);
 
+  // TODO: Make this dynamic based on the selected accounts in card view
   List<Account> get selectedAccounts => dataMap![_accountStreamKey] ?? [];
 
   void navigateToTransactionDetail() {

@@ -47,8 +47,13 @@ const AccountSchema = CollectionSchema(
       name: r'isExcludedFromAnalysis',
       type: IsarType.bool,
     ),
-    r'name': PropertySchema(
+    r'isSelected': PropertySchema(
       id: 6,
+      name: r'isSelected',
+      type: IsarType.bool,
+    ),
+    r'name': PropertySchema(
+      id: 7,
       name: r'name',
       type: IsarType.string,
     )
@@ -121,7 +126,8 @@ void _accountSerialize(
   writer.writeBool(offsets[3], object.isArchived);
   writer.writeBool(offsets[4], object.isDefault);
   writer.writeBool(offsets[5], object.isExcludedFromAnalysis);
-  writer.writeString(offsets[6], object.name);
+  writer.writeBool(offsets[6], object.isSelected);
+  writer.writeString(offsets[7], object.name);
 }
 
 Account _accountDeserialize(
@@ -137,7 +143,8 @@ Account _accountDeserialize(
     isArchived: reader.readBoolOrNull(offsets[3]),
     isDefault: reader.readBoolOrNull(offsets[4]),
     isExcludedFromAnalysis: reader.readBoolOrNull(offsets[5]),
-    name: reader.readStringOrNull(offsets[6]),
+    isSelected: reader.readBoolOrNull(offsets[6]),
+    name: reader.readStringOrNull(offsets[7]),
   );
   object.id = id;
   return object;
@@ -163,6 +170,8 @@ P _accountDeserializeProp<P>(
     case 5:
       return (reader.readBoolOrNull(offset)) as P;
     case 6:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 7:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -750,6 +759,31 @@ extension AccountQueryFilter on QueryBuilder<Account, Account, QFilterCondition>
     });
   }
 
+  QueryBuilder<Account, Account, QAfterFilterCondition> isSelectedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isSelected',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> isSelectedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isSelected',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> isSelectedEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isSelected',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterFilterCondition> nameIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1079,6 +1113,18 @@ extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
     });
   }
 
+  QueryBuilder<Account, Account, QAfterSortBy> sortByIsSelected() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSelected', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByIsSelectedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSelected', Sort.desc);
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1177,6 +1223,18 @@ extension AccountQuerySortThenBy on QueryBuilder<Account, Account, QSortThenBy> 
     });
   }
 
+  QueryBuilder<Account, Account, QAfterSortBy> thenByIsSelected() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSelected', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByIsSelectedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSelected', Sort.desc);
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1227,6 +1285,12 @@ extension AccountQueryWhereDistinct on QueryBuilder<Account, Account, QDistinct>
     });
   }
 
+  QueryBuilder<Account, Account, QDistinct> distinctByIsSelected() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isSelected');
+    });
+  }
+
   QueryBuilder<Account, Account, QDistinct> distinctByName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
@@ -1274,6 +1338,12 @@ extension AccountQueryProperty on QueryBuilder<Account, Account, QQueryProperty>
   QueryBuilder<Account, bool?, QQueryOperations> isExcludedFromAnalysisProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isExcludedFromAnalysis');
+    });
+  }
+
+  QueryBuilder<Account, bool?, QQueryOperations> isSelectedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isSelected');
     });
   }
 

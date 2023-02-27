@@ -61,6 +61,20 @@ class AccountDaoImpl extends AccountDao {
   }
 
   @override
+  Future<List<Account>> getSelectedAccounts() async {
+    _logger.i('argument: NONE');
+
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final selectedAccounts = await isar.writeTxn(() async {
+      return await accountCollection.filter().isSelectedEqualTo(true).findAll();
+    });
+
+    return selectedAccounts;
+  }
+
+  @override
   Future<Account> updateAccount(Account account) async {
     _logger.i('argument: $account');
 
@@ -73,6 +87,49 @@ class AccountDaoImpl extends AccountDao {
     });
 
     return updatedAccount;
+  }
+
+  @override
+  Future<Account> singleSelectAccount(Account account) async {
+    _logger.i('argument: $account');
+
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final selectedAccount = await isar.writeTxn(() async {
+      final selectedAccounts = await accountCollection.filter().isSelectedEqualTo(true).findAll();
+      for (Account a in selectedAccounts) {
+        a.isSelected = false;
+      }
+      await accountCollection.putAll(selectedAccounts);
+
+      account.isSelected = true;
+      await accountCollection.put(account);
+
+      return account;
+    });
+
+    return selectedAccount;
+  }
+
+  @override
+  Future<List<Account>> selectAllAccounts() async {
+    _logger.i('argument: NONE');
+
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final selectedAccounts = await isar.writeTxn(() async {
+      final accounts = await accountCollection.where().findAll();
+      for (Account a in accounts) {
+        a.isSelected = true;
+      }
+
+      await accountCollection.putAll(accounts);
+      return accounts;
+    });
+
+    return selectedAccounts;
   }
 
   @override

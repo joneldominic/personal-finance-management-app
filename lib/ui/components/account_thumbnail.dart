@@ -8,24 +8,32 @@ class AccountThumbnail extends StatelessWidget {
     this.amount,
     this.color,
     this.isAddAccount = false,
+    required this.onTap,
+    this.onLongPress,
   }) : super(key: key);
 
   final String? label;
   final String? amount;
   final Color? color;
   final bool isAddAccount;
+  final void Function() onTap;
+  final void Function()? onLongPress;
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: isAddAccount ? customTheme.primaryAccent : color,
+    return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Ink(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: isAddAccount ? customTheme.primaryAccent : color,
+        ),
+        child: _buildChild(),
       ),
-      child: _buildChild(),
     );
   }
 

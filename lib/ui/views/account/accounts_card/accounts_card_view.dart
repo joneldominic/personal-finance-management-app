@@ -50,27 +50,61 @@ class AccountsCard extends StatelessWidget {
                 itemCount: mainViewModel.accounts.length + 1,
                 itemBuilder: (context, index) {
                   if (index > mainViewModel.accounts.length - 1) {
-                    return GestureDetector(
+                    return AccountThumbnail(
+                      isAddAccount: true,
                       onTap: model.navigateToAccountDetail,
-                      child: const AccountThumbnail(isAddAccount: true),
                     );
                   }
 
+                  final account = mainViewModel.accounts[index];
+
+                  // TODO: Refactor property: use Account object instead
                   return AccountThumbnail(
-                    label: mainViewModel.accounts[index].name,
+                    onTap: () => model.selectAccount(account),
+                    onLongPress: () => model.multiSelectAccount(account),
+                    label: account.name,
                     amount: doubleToCurrencyFormatter(
-                      currency: mainViewModel.accounts[index].currency ?? "₱",
-                      value: mainViewModel.accounts[index].balance!,
+                      currency: account.currency ?? "₱",
+                      value: account.balance!,
                     ),
-                    color: Color(
-                      int.parse(
-                        mainViewModel.accounts[index].color!,
-                      ),
-                    ),
+                    color: account.isSelected!
+                        ? Color(
+                            int.parse(
+                              account.color!,
+                            ),
+                          )
+                        : Colors.grey,
                   );
                 },
               ),
             ),
+            if (model.isFiltered) ...[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () => model.clearFilter(),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: ThemeText.listItemSubTitle(
+                              'CLEAR FILTER',
+                              color: customTheme.primaryAccent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ]
           ],
         ),
       ),

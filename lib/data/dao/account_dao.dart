@@ -11,4 +11,5 @@ abstract class AccountDao {
   Future<List<Account>> selectAllAccounts();
   Future<Id> deleteAccount(Id id);
   Stream<List<Account>> accountCollectionStream();
+  Stream<double> accountBalanceStream();
 }

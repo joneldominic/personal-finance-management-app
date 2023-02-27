@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/extensions/list_extension.dart';
 
 class AccountDaoImpl extends AccountDao {
   static final AccountDaoImpl _accountDaoImpl = AccountDaoImpl._internal();
@@ -11,11 +14,29 @@ class AccountDaoImpl extends AccountDao {
     return _accountDaoImpl;
   }
 
-  AccountDaoImpl._internal();
+  AccountDaoImpl._internal() {
+    _setUpWatchers();
+  }
 
   final _logger = getLogger('AccountDaoImpl');
 
+  final _accountBalanceStreamController = StreamController<double>.broadcast();
+
   Future<Isar> get _db async => await IsarDatabase.instance.database;
+
+  void _setUpWatchers() async {
+    Isar isar = await _db;
+
+    final accountsCollection = isar.accounts;
+    final accountsStream = accountsCollection.watchLazy(fireImmediately: true);
+
+    accountsStream.listen((_) async {
+      final selectedAccount = await getSelectedAccounts();
+
+      final sum = selectedAccount.sumBy((account) => account.balance!);
+      _accountBalanceStreamController.sink.add(sum.toDouble());
+    });
+  }
 
   @override
   Future<Account> createAccount(Account account) async {
@@ -157,5 +178,16 @@ class AccountDaoImpl extends AccountDao {
     Query<Account> accountsQuery = accountCollection.where().build();
 
     yield* accountsQuery.watch(fireImmediately: true);
+  }
+
+  @override
+  Stream<double> accountBalanceStream() async* {
+    _logger.i('argument: NONE');
+    yield* _accountBalanceStreamController.stream;
+  }
+
+  void dispose() {
+    _logger.i('Disposing AccountDaoImpl');
+    _accountBalanceStreamController.close();
   }
 }

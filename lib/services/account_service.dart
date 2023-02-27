@@ -64,4 +64,9 @@ class AccountService with ReactiveServiceMixin {
     _logger.i('argument: NONE');
     yield* _accountRepository.accountCollectionStream();
   }
+
+  Stream<double> accountBalanceStream() async* {
+    _logger.i('argument: NONE');
+    yield* _accountRepository.accountBalanceStream();
+  }
 }

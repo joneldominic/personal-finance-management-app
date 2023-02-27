@@ -92,4 +92,9 @@ class AccountRepository {
     _logger.i('argument: NONE');
     yield* accountDao.accountCollectionStream();
   }
+
+  Stream<double> accountBalanceStream() async* {
+    _logger.i('argument: NONE');
+    yield* accountDao.accountBalanceStream();
+  }
 }

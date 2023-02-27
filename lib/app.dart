@@ -51,6 +51,7 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
   PersonalFinanceManagementAppViewModel() {
     _logger.i('argument: NONE');
     initDatabaseRecords();
+    initApp();
   }
 
   void initDatabaseRecords() async {
@@ -68,6 +69,10 @@ class PersonalFinanceManagementAppViewModel extends ReactiveViewModel {
       if (defaultCategories.length == 2 && defaultAccount != null) return;
       await IsFirstRun.reset();
     }
+  }
+
+  void initApp() {
+    _accountService.selectAllAccounts();
   }
 
   @override

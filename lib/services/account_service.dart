@@ -40,6 +40,16 @@ class AccountService with ReactiveServiceMixin {
     return _accountRepository.updateAccount(account);
   }
 
+  Future<Account> selectAccount(Account account, {bool multi = false}) async {
+    _logger.i('argument: $account, {multi: $multi}');
+    return _accountRepository.selectAccount(account, multi: multi);
+  }
+
+  Future<List<Account>> selectAllAccounts() {
+    _logger.i('argument: NONE');
+    return _accountRepository.selectAllAccounts();
+  }
+
   Future<Id> deleteAccount(Id id) async {
     _logger.i('argument: $id');
     return _accountRepository.deleteAccount(id);

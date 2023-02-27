@@ -25,14 +25,14 @@ class HomeAppBarView extends StatelessWidget with PreferredSizeWidget {
                 Text(
                   doubleToCurrencyFormatter(
                     currency: "₱",
-                    value: model.calculateTotalBalance(mainViewModel.selectedAccounts),
+                    value: model.accountBalance,
                   ),
                   style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
                 const Text(
-                  "Overall Balance",
+                  "Total Balance",
                   style: TextStyle(
                     fontSize: 12,
                   ),

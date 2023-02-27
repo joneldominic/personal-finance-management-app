@@ -19,6 +19,9 @@ class AccountsCard extends StatelessWidget {
 
     return ViewModelBuilder<AccountsCardViewModel>.reactive(
       viewModelBuilder: () => AccountsCardViewModel(),
+      onModelReady: (model) {
+        model.clearFilter();
+      },
       builder: (context, model, child) => Card(
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         child: Column(

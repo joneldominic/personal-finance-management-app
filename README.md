@@ -197,3 +197,6 @@ Project Link: [https://github.com/joneldominic/personal-finance-management-app](
 
 - Run Build Runner + Format
   `flutter pub run build_runner build --delete-conflicting-outputs && flutter format . -l 100`
+  
+## Other Tools
+- [Custom Icon Generator](https://www.fluttericon.com/)

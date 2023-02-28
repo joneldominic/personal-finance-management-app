@@ -123,7 +123,7 @@ class CashFlowDaoImpl extends CashFlowDao {
       return await cashFlowCollection.get(id);
     });
 
-    return cashFlow!;
+    return cashFlow;
   }
 
   @override

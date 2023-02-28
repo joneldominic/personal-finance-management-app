@@ -41,8 +41,8 @@ class RecentTransactionsView extends StatelessWidget {
               ),
             ),
             ConditionalAsyncWrapper(
-              isLoading: !mainViewModel.transactionsReady,
-              showFallback: mainViewModel.transactions.isEmpty,
+              isLoading: !model.recentTransactionsReady,
+              showFallback: model.recentTransactions.isEmpty,
               fallback: Center(
                 child: ThemeText.listItemTitle(
                   "No transaction available",
@@ -53,9 +53,9 @@ class RecentTransactionsView extends StatelessWidget {
                 shrinkWrap: true,
                 padding: const EdgeInsets.fromLTRB(7, 10, 7, 0),
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: mainViewModel.transactions.take(5).length,
+                itemCount: model.recentTransactions.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final transaction = mainViewModel.transactions[index];
+                  final transaction = model.recentTransactions[index];
                   return TransactionListItem(
                     transaction: transaction,
                     onTap: () => model.navigateToTransactionDetailEditMode(transaction),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/views/appbar/home/home_app_bar_viewmodel.dart';
-import 'package:personal_finance_management_app/ui/views/main/main_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeAppBarView extends StatelessWidget with PreferredSizeWidget {
@@ -12,8 +11,6 @@ class HomeAppBarView extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainViewModel = getParentViewModel<MainViewModel>(context);
-
     return ViewModelBuilder<HomeAppBarViewModel>.reactive(
         viewModelBuilder: () => HomeAppBarViewModel(),
         builder: (context, model, child) {

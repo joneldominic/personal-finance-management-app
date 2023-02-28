@@ -9,6 +9,7 @@ const String _accountBalanceStreamKey = 'account-balance-stream';
 // It does this by making use of the services
 
 class HomeAppBarViewModel extends MultipleStreamViewModel {
+  // ignore: unused_field
   final _logger = getLogger('HomeAppBarViewModel');
   final _accountService = locator<AccountService>();
 

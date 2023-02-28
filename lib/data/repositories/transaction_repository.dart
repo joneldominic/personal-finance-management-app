@@ -71,6 +71,11 @@ class TransactionRepository {
     yield* transactionDao.transactionCollectionStream();
   }
 
+  Stream<List<Transaction>> recentTransactionCollectionStream() async* {
+    _logger.i('argument: NONE');
+    yield* transactionDao.recentTransactionCollectionStream();
+  }
+
   /// Helper functions
   /// **********************************************************************************************
 

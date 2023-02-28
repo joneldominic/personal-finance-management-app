@@ -48,4 +48,9 @@ class TransactionService with ReactiveServiceMixin {
     _logger.i('argument: NONE');
     yield* _transactionRepository.transactionCollectionStream();
   }
+
+  Stream<List<Transaction>> recentTransactionCollectionStream() async* {
+    _logger.i('argument: NONE');
+    yield* _transactionRepository.recentTransactionCollectionStream();
+  }
 }

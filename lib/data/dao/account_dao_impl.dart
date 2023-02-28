@@ -28,12 +28,11 @@ class AccountDaoImpl extends AccountDao {
     Isar isar = await _db;
 
     final accountsCollection = isar.accounts;
-    final accountsStream = accountsCollection.watchLazy(fireImmediately: true);
+    final selectedAccountsStream =
+        accountsCollection.filter().isSelectedEqualTo(true).build().watch(fireImmediately: true);
 
-    accountsStream.listen((_) async {
-      final selectedAccount = await getSelectedAccounts();
-
-      final sum = selectedAccount.sumBy((account) => account.balance!);
+    selectedAccountsStream.listen((selectedAccounts) async {
+      final sum = selectedAccounts.sumBy((account) => account.balance!);
       _accountBalanceStreamController.sink.add(sum.toDouble());
     });
   }

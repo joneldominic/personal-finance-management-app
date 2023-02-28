@@ -60,23 +60,10 @@ class AccountsCard extends StatelessWidget {
                   }
 
                   final account = mainViewModel.accounts[index];
-
-                  // TODO: Refactor property: use Account object instead
                   return AccountThumbnail(
+                    account: account,
                     onTap: () => model.selectAccount(account),
                     onLongPress: () => model.multiSelectAccount(account),
-                    label: account.name,
-                    amount: doubleToCurrencyFormatter(
-                      currency: account.currency ?? "₱",
-                      value: account.balance!,
-                    ),
-                    color: account.isSelected!
-                        ? Color(
-                            int.parse(
-                              account.color!,
-                            ),
-                          )
-                        : Colors.grey,
                   );
                 },
               ),

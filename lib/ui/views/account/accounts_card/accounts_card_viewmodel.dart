@@ -31,7 +31,7 @@ class AccountsCardViewModel extends BaseViewModel {
   }
 
   void selectAccount(Account account) {
-    _logger.e('argument: $account');
+    _logger.i('argument: $account');
 
     _isFiltered = true;
     notifyListeners();
@@ -40,7 +40,7 @@ class AccountsCardViewModel extends BaseViewModel {
   }
 
   void multiSelectAccount(Account account) {
-    _logger.e('argument: $account');
+    _logger.i('argument: $account');
 
     _isMultiSelect = true;
     _isFiltered = true;

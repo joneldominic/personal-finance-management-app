@@ -1,18 +1,23 @@
+import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
-import 'package:personal_finance_management_app/data/models/account/account.dart';
-import 'package:personal_finance_management_app/extensions/list_extension.dart';
+import 'package:personal_finance_management_app/services/account_service.dart';
 import 'package:stacked/stacked.dart';
 
+const String _accountBalanceStreamKey = 'account-balance-stream';
 // ViewModel: Manages the state of the View,
 // business logic, and any other logic as required from user interaction.
 // It does this by making use of the services
 
-class HomeAppBarViewModel extends BaseViewModel {
+class HomeAppBarViewModel extends MultipleStreamViewModel {
+  // ignore: unused_field
   final _logger = getLogger('HomeAppBarViewModel');
+  final _accountService = locator<AccountService>();
 
-  double calculateTotalBalance(List<Account> accounts) {
-    _logger.i('argument: $accounts');
-    final sum = accounts.sumBy((account) => account.balance!);
-    return sum.toDouble();
-  }
+  @override
+  Map<String, StreamData> get streamsMap => {
+        _accountBalanceStreamKey: StreamData<double>(_accountService.accountBalanceStream()),
+      };
+
+  bool get accountBalanceReady => dataReady(_accountBalanceStreamKey);
+  double get accountBalance => dataMap![_accountBalanceStreamKey] ?? 0;
 }

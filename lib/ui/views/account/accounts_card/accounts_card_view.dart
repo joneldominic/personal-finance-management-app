@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/components/account_thumbnail.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
@@ -19,6 +18,9 @@ class AccountsCard extends StatelessWidget {
 
     return ViewModelBuilder<AccountsCardViewModel>.reactive(
       viewModelBuilder: () => AccountsCardViewModel(),
+      onModelReady: (model) {
+        model.clearFilter();
+      },
       builder: (context, model, child) => Card(
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         child: Column(
@@ -50,27 +52,48 @@ class AccountsCard extends StatelessWidget {
                 itemCount: mainViewModel.accounts.length + 1,
                 itemBuilder: (context, index) {
                   if (index > mainViewModel.accounts.length - 1) {
-                    return GestureDetector(
+                    return AccountThumbnail(
+                      isAddAccount: true,
                       onTap: model.navigateToAccountDetail,
-                      child: const AccountThumbnail(isAddAccount: true),
                     );
                   }
 
+                  final account = mainViewModel.accounts[index];
                   return AccountThumbnail(
-                    label: mainViewModel.accounts[index].name,
-                    amount: doubleToCurrencyFormatter(
-                      currency: mainViewModel.accounts[index].currency ?? "₱",
-                      value: mainViewModel.accounts[index].balance!,
-                    ),
-                    color: Color(
-                      int.parse(
-                        mainViewModel.accounts[index].color!,
-                      ),
-                    ),
+                    account: account,
+                    onTap: () => model.selectAccount(account),
+                    onLongPress: () => model.multiSelectAccount(account),
                   );
                 },
               ),
             ),
+            if (model.isFiltered) ...[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () => model.clearFilter(),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: ThemeText.listItemSubTitle(
+                              'CLEAR FILTER',
+                              color: customTheme.primaryAccent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ]
           ],
         ),
       ),

@@ -22,6 +22,8 @@ class Account {
 
   bool? isDefault;
 
+  bool? isSelected;
+
   @Backlink(to: 'account')
   final transactions = IsarLinks<Transaction>();
 
@@ -36,6 +38,7 @@ class Account {
     required this.isExcludedFromAnalysis,
     required this.isArchived,
     this.isDefault = false,
+    this.isSelected = true,
   });
 
   @ignore

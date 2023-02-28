@@ -1,35 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 
 class AccountThumbnail extends StatelessWidget {
   const AccountThumbnail({
     Key? key,
-    this.label,
-    this.amount,
-    this.color,
+    this.account,
     this.isAddAccount = false,
+    required this.onTap,
+    this.onLongPress,
   }) : super(key: key);
 
-  final String? label;
-  final String? amount;
-  final Color? color;
+  final Account? account;
   final bool isAddAccount;
+  final void Function() onTap;
+  final void Function()? onLongPress;
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: isAddAccount ? customTheme.primaryAccent : color,
+    final color = account != null && account!.isSelected!
+        ? Color(
+            int.parse(
+              account!.color!,
+            ),
+          )
+        : Colors.grey;
+
+    return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Ink(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: isAddAccount ? customTheme.primaryAccent : color,
+        ),
+        child: _buildChild(),
       ),
-      child: _buildChild(),
     );
   }
 
   Column _buildChild() {
+    final amount = doubleToCurrencyFormatter(
+      currency: account?.currency ?? "₱",
+      value: account?.balance ?? 0,
+    );
+
     List<Widget> children = isAddAccount
         ? [
             Row(
@@ -52,7 +71,7 @@ class AccountThumbnail extends StatelessWidget {
           ]
         : [
             Text(
-              label ?? "",
+              account?.name ?? "",
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Colors.white,
@@ -61,7 +80,7 @@ class AccountThumbnail extends StatelessWidget {
               ),
             ),
             Text(
-              amount ?? "",
+              amount,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Colors.white,

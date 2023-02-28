@@ -20,7 +20,9 @@ class TransactionDaoImpl extends TransactionDao {
   }
 
   final _logger = getLogger('TransactionDaoImpl');
+
   final _transactionStreamController = StreamController<List<Transaction>>.broadcast();
+  final _recentTransactionStreamController = StreamController<List<Transaction>>.broadcast();
 
   Future<Isar> get _db async => await IsarDatabase.instance.database;
 
@@ -37,14 +39,17 @@ class TransactionDaoImpl extends TransactionDao {
 
     transactionsStream.listen((_) async {
       _transactionStreamController.sink.add(await getTransactions());
+      _recentTransactionStreamController.sink.add(await getRecentTransactions());
     });
 
     accountsStream.listen((_) async {
       _transactionStreamController.sink.add(await getTransactions());
+      _recentTransactionStreamController.sink.add(await getRecentTransactions());
     });
 
     categoriesStream.listen((_) async {
       _transactionStreamController.sink.add(await getTransactions());
+      _recentTransactionStreamController.sink.add(await getRecentTransactions());
     });
   }
 
@@ -125,6 +130,23 @@ class TransactionDaoImpl extends TransactionDao {
     }
 
     return transactions;
+  }
+
+  @override
+  Future<List<Transaction>> getRecentTransactions() async {
+    _logger.i('argument: NONE');
+    final transactions = await getTransactions();
+
+    final filteredTransactions = transactions.where((t) {
+      t.account.loadSync();
+      final isAccountSelected = t.account.value?.isSelected ?? false;
+
+      return isAccountSelected;
+    });
+
+    final recentTransactions = filteredTransactions.take(5).toList();
+
+    return Future.value(recentTransactions);
   }
 
   @override
@@ -209,6 +231,12 @@ class TransactionDaoImpl extends TransactionDao {
   Stream<List<Transaction>> transactionCollectionStream() async* {
     _logger.i('argument: NONE');
     yield* _transactionStreamController.stream;
+  }
+
+  @override
+  Stream<List<Transaction>> recentTransactionCollectionStream() async* {
+    _logger.i('argument: NONE');
+    yield* _recentTransactionStreamController.stream;
   }
 
   void dispose() {

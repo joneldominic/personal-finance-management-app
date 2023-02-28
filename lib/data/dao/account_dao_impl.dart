@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+import 'package:personal_finance_management_app/extensions/list_extension.dart';
 
 class AccountDaoImpl extends AccountDao {
   static final AccountDaoImpl _accountDaoImpl = AccountDaoImpl._internal();
@@ -11,11 +14,28 @@ class AccountDaoImpl extends AccountDao {
     return _accountDaoImpl;
   }
 
-  AccountDaoImpl._internal();
+  AccountDaoImpl._internal() {
+    _setUpWatchers();
+  }
 
   final _logger = getLogger('AccountDaoImpl');
 
+  final _accountBalanceStreamController = StreamController<double>.broadcast();
+
   Future<Isar> get _db async => await IsarDatabase.instance.database;
+
+  void _setUpWatchers() async {
+    Isar isar = await _db;
+
+    final accountsCollection = isar.accounts;
+    final selectedAccountsStream =
+        accountsCollection.filter().isSelectedEqualTo(true).build().watch(fireImmediately: true);
+
+    selectedAccountsStream.listen((selectedAccounts) async {
+      final sum = selectedAccounts.sumBy((account) => account.balance!);
+      _accountBalanceStreamController.sink.add(sum.toDouble());
+    });
+  }
 
   @override
   Future<Account> createAccount(Account account) async {
@@ -61,6 +81,20 @@ class AccountDaoImpl extends AccountDao {
   }
 
   @override
+  Future<List<Account>> getSelectedAccounts() async {
+    _logger.i('argument: NONE');
+
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final selectedAccounts = await isar.writeTxn(() async {
+      return await accountCollection.filter().isSelectedEqualTo(true).findAll();
+    });
+
+    return selectedAccounts;
+  }
+
+  @override
   Future<Account> updateAccount(Account account) async {
     _logger.i('argument: $account');
 
@@ -73,6 +107,49 @@ class AccountDaoImpl extends AccountDao {
     });
 
     return updatedAccount;
+  }
+
+  @override
+  Future<Account> singleSelectAccount(Account account) async {
+    _logger.i('argument: $account');
+
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final selectedAccount = await isar.writeTxn(() async {
+      final selectedAccounts = await accountCollection.filter().isSelectedEqualTo(true).findAll();
+      for (Account a in selectedAccounts) {
+        a.isSelected = false;
+      }
+      await accountCollection.putAll(selectedAccounts);
+
+      account.isSelected = true;
+      await accountCollection.put(account);
+
+      return account;
+    });
+
+    return selectedAccount;
+  }
+
+  @override
+  Future<List<Account>> selectAllAccounts() async {
+    _logger.i('argument: NONE');
+
+    Isar isar = await _db;
+
+    final accountCollection = isar.accounts;
+    final selectedAccounts = await isar.writeTxn(() async {
+      final accounts = await accountCollection.where().findAll();
+      for (Account a in accounts) {
+        a.isSelected = true;
+      }
+
+      await accountCollection.putAll(accounts);
+      return accounts;
+    });
+
+    return selectedAccounts;
   }
 
   @override
@@ -100,5 +177,16 @@ class AccountDaoImpl extends AccountDao {
     Query<Account> accountsQuery = accountCollection.where().build();
 
     yield* accountsQuery.watch(fireImmediately: true);
+  }
+
+  @override
+  Stream<double> accountBalanceStream() async* {
+    _logger.i('argument: NONE');
+    yield* _accountBalanceStreamController.stream;
+  }
+
+  void dispose() {
+    _logger.i('Disposing AccountDaoImpl');
+    _accountBalanceStreamController.close();
   }
 }

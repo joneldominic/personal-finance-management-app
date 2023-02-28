@@ -5,6 +5,7 @@ import 'package:personal_finance_management_app/core/enums/transaction_type.dart
 import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/dao/cashflow_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/cashflow/cashflow.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 
@@ -27,9 +28,17 @@ class CashFlowDaoImpl extends CashFlowDao {
     Isar isar = await _db;
 
     final transactionCollection = isar.transactions;
+    final accountsCollection = isar.accounts;
 
     final transactionsStream = transactionCollection.where().sortByDateDesc().build().watch();
+    final accountsStream = accountsCollection.watchLazy(fireImmediately: true);
+
     transactionsStream.listen((transactions) async {
+      syncCashFlow(transactions);
+    });
+
+    accountsStream.listen((_) {
+      final transactions = transactionCollection.where().findAllSync();
       syncCashFlow(transactions);
     });
   }
@@ -41,7 +50,11 @@ class CashFlowDaoImpl extends CashFlowDao {
     final now = DateTime.now();
     final filteredTransactions = transactions.where((t) {
       final difference = now.difference(t.date!);
-      return difference.inDays < cashFlow.daysCount!;
+
+      t.account.loadSync();
+      final isAccountSelected = t.account.value?.isSelected ?? false;
+
+      return (difference.inDays < cashFlow.daysCount! && isAccountSelected);
     });
 
     Decimal incomeAcc = Decimal.zero;
@@ -110,7 +123,7 @@ class CashFlowDaoImpl extends CashFlowDao {
       return await cashFlowCollection.get(id);
     });
 
-    return cashFlow!;
+    return cashFlow;
   }
 
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/ui/components/account_thumbnail.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';

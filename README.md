@@ -127,7 +127,8 @@ _Video tutorials will be added soon._
   - [x] Track transactions
   - [x] Sync account balance with transactions
   - [x] Categorize transactions
-  - [ ] Track Cashflow
+  - [x] Track Cashflow
+  - [ ] Hardening; Code Clean-up / Refactors; Some Improvements
 - [ ] [Buckets](https://www.budgetwithbuckets.com/) features
   - [ ] TODO
 - [ ] [Splitwise](https://www.splitwise.com/) features

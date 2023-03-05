@@ -1,5 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
@@ -25,7 +26,9 @@ class CategoryDetailViewModel extends FormViewModel {
   Category? _category;
 
   TextEditingController? _categoryNameController;
+
   bool categoryIsVisible = true;
+  IconData? categoryIconData;
 
   void initForm({
     required Category? category,
@@ -47,6 +50,19 @@ class CategoryDetailViewModel extends FormViewModel {
     setColor(category?.color ?? '0xFF00B0FF');
 
     categoryIsVisible = category?.isVisible ?? true;
+  }
+
+  void pickIcon(BuildContext context) async {
+    _logger.i('argument: $context');
+
+    IconData? selectedIcon =
+        await FlutterIconPicker.showIconPicker(context, iconPackModes: [IconPack.fontAwesomeIcons]);
+    _logger.i('selectedIconCodePoint: $selectedIcon');
+
+    if (selectedIcon != null) {
+      categoryIconData = selectedIcon;
+      notifyListeners();
+    }
   }
 
   void setCategoryVisibility(bool isVisible) {

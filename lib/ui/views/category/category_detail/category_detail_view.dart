@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
@@ -83,6 +84,13 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
             child: Column(
               children: [
+                verticalSpaceSmallPlus,
+                _buildIconField(
+                  customTheme: customTheme,
+                  iconData: model.categoryIconData,
+                  onTap: () => model.pickIcon(context),
+                ),
+                verticalSpaceSmall,
                 TextField(
                   key: const ValueKey(CategoryNameValueKey),
                   enabled: !isDefaultCategory,
@@ -132,6 +140,46 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildIconField({
+    required CustomTheme customTheme,
+    required IconData? iconData,
+    required void Function() onTap,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: 60,
+          width: 60,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              CircleAvatar(
+                backgroundColor: customTheme.activeControlColor,
+                foregroundColor: Colors.white,
+                child: Icon(
+                  iconData ?? UNDEFINED_ICON,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: InkWell(
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  highlightColor: Colors.transparent,
+                  onTap: onTap,
+                  child: const Icon(
+                    Icons.change_circle_rounded,
+                    size: 20,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 

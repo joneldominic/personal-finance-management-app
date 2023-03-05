@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/widgets.dart';
+
 /// Transactions Related Constants
 const TRANSFER_CATEGORY_NAME = "Transfer";
 const TRANSFER_CATEGORY_COLOR = '0xFFFFFF00';
@@ -17,3 +19,17 @@ const SETTINGS_ID = 1;
 
 /// CashFlow Related Constants
 const CASH_FLOW_ID = 1;
+
+/// Icons Related Constants
+const UNDEFINED_ICON = IconData(
+  61529,
+  fontFamily: "FontAwesomeRegular",
+  fontPackage: "font_awesome_flutter",
+  matchTextDirection: false,
+);
+const TRANSFER_ICON = IconData(
+  61676,
+  fontFamily: "FontAwesomeSolid",
+  fontPackage: "font_awesome_flutter",
+  matchTextDirection: false,
+);

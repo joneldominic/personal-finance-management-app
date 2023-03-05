@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
@@ -29,15 +30,20 @@ class TransactionListItem extends StatelessWidget {
     final category = transaction.category.value;
     final isExpense = (transaction.transferTransactionType ?? transaction.transactionType) ==
         TransactionType.expense;
+    final iconColor = account != null
+        ? Color(
+            int.parse(account.color!),
+          )
+        : customTheme.iconBackgroundColor!;
 
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
       leading: CircleAvatar(
-        radius: 18,
-        backgroundColor: Color(
-          int.parse(category?.color ?? '0xFFFFFFFF'),
-        ),
+        radius: 20,
+        backgroundColor: iconColor,
+        foregroundColor: customTheme.iconForegroundColor,
+        child: Icon(category?.categoryIcon?.iconData ?? UNDEFINED_ICON),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

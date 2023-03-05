@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/static_item_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_viewmodel.dart';
@@ -21,10 +21,6 @@ import 'package:stacked/stacked_annotations.dart';
   FormDropdownField(
     name: 'categoryNature',
     items: categoryNatureStaticDropdownItems,
-  ),
-  FormDropdownField(
-    name: 'color',
-    items: colorStaticDropdownItems,
   ),
 ])
 class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
@@ -83,6 +79,14 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
             child: Column(
               children: [
+                verticalSpaceSmallPlus,
+                _buildIconField(
+                  customTheme: customTheme,
+                  iconData: model.categoryIconData,
+                  isDisabled: isDefaultCategory,
+                  onTap: () => model.pickIcon(context),
+                ),
+                verticalSpaceSmall,
                 TextField(
                   key: const ValueKey(CategoryNameValueKey),
                   enabled: !isDefaultCategory,
@@ -112,12 +116,6 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
                       .toList(),
                   onChanged: (String? value) => model.setCategoryNature(value!),
                 ),
-                CustomColorPicker(
-                  key: const ValueKey(ColorValueKey),
-                  value: model.colorValue,
-                  colorValueToTitleMap: ColorValueToTitleMap,
-                  onPressed: (String? value) => model.setColor(value!),
-                ),
                 if (!isDefaultCategory) ...[
                   verticalSpaceSmallPlus,
                   _buildSwitchListTile(
@@ -132,6 +130,58 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildIconField({
+    required CustomTheme customTheme,
+    required IconData? iconData,
+    required bool isDisabled,
+    required void Function() onTap,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: 60,
+          width: 60,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              CircleAvatar(
+                backgroundColor: customTheme.activeControlColor,
+                foregroundColor: Colors.white,
+                child: Icon(
+                  iconData ?? UNDEFINED_ICON,
+                ),
+              ),
+              if (!isDisabled) ...[
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: InkWell(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    highlightColor: Colors.transparent,
+                    onTap: !isDisabled ? onTap : null,
+                    child: Container(
+                      height: 20.0,
+                      width: 20.0,
+                      decoration: BoxDecoration(
+                        color: customTheme.contrastBackgroundColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        color: customTheme.actionButtonColor,
+                        Icons.change_circle_rounded,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                )
+              ]
+            ],
+          ),
+        ),
+      ],
     );
   }
 

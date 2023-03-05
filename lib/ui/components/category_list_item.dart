@@ -1,6 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
@@ -22,8 +23,10 @@ class CategoryListItem extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
       leading: CircleAvatar(
-        radius: 18,
-        backgroundColor: Color(int.parse(category.color!)),
+        radius: 20,
+        backgroundColor: customTheme.iconBackgroundColor,
+        foregroundColor: customTheme.iconForegroundColor,
+        child: Icon(category.categoryIcon?.iconData ?? UNDEFINED_ICON),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

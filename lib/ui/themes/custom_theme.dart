@@ -21,6 +21,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     required this.settingsIconColor,
     required this.actionButtonColor,
     required this.subTitleColor,
+    required this.iconForegroundColor,
+    required this.iconBackgroundColor,
   });
 
   final Color? success;
@@ -41,6 +43,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
   final Color? settingsIconColor;
   final Color? actionButtonColor;
   final Color? subTitleColor;
+  final Color? iconForegroundColor;
+  final Color? iconBackgroundColor;
 
   @override
   CustomTheme copyWith({
@@ -62,6 +66,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     Color? settingsIconColor,
     Color? actionButtonColor,
     Color? subTitleColor,
+    Color? iconForegroundColor,
+    Color? iconBackgroundColor,
   }) {
     return CustomTheme(
       success: success ?? this.success,
@@ -82,6 +88,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       settingsIconColor: settingsIconColor ?? this.settingsIconColor,
       actionButtonColor: actionButtonColor ?? this.actionButtonColor,
       subTitleColor: subTitleColor ?? this.subTitleColor,
+      iconForegroundColor: iconForegroundColor ?? this.iconForegroundColor,
+      iconBackgroundColor: iconBackgroundColor ?? this.iconBackgroundColor,
     );
   }
 
@@ -112,6 +120,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       settingsIconColor: Color.lerp(settingsIconColor, other.settingsIconColor, t),
       actionButtonColor: Color.lerp(actionButtonColor, other.actionButtonColor, t),
       subTitleColor: Color.lerp(subTitleColor, other.subTitleColor, t),
+      iconForegroundColor: Color.lerp(iconForegroundColor, other.iconForegroundColor, t),
+      iconBackgroundColor: Color.lerp(iconBackgroundColor, other.iconBackgroundColor, t),
     );
   }
 
@@ -135,6 +145,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
       'settingsIconColor: $settingsIconColor, '
       'actionButtonColor: $actionButtonColor, '
       'subTitleColor: $subTitleColor, '
+      'iconForegroundColor: $iconForegroundColor, '
+      'iconBackgroundColor: $iconBackgroundColor, '
       ')';
 
   /// ****************************************************************
@@ -159,6 +171,8 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     settingsIconColor: Color(0xff4285F4),
     actionButtonColor: Color(0xff333333),
     subTitleColor: Color(0xff6a6a6a),
+    iconForegroundColor: Colors.white,
+    iconBackgroundColor: Colors.blue,
   );
 
   /// ****************************************************************
@@ -183,5 +197,7 @@ class CustomTheme extends ThemeExtension<CustomTheme> {
     settingsIconColor: Color(0xff4285F4),
     actionButtonColor: Colors.white,
     subTitleColor: Color(0xffc0c0c0),
+    iconForegroundColor: Colors.white,
+    iconBackgroundColor: Color(0xff333333),
   );
 }

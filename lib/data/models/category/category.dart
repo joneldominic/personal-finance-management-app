@@ -19,7 +19,7 @@ class Category {
 
   bool? isDefault;
 
-  CategoryIconData? categoryIconData;
+  CategoryIcon? categoryIcon;
 
   @Backlink(to: 'category')
   final transactions = IsarLinks<Transaction>();
@@ -27,7 +27,7 @@ class Category {
   Category({
     required this.name,
     required this.nature,
-    required this.categoryIconData,
+    required this.categoryIcon,
     required this.isVisible,
     this.isDefault = false,
   });
@@ -37,27 +37,27 @@ class Category {
       'id: $id, '
       'name: $name, '
       'categoryNature: ${EnumToString.convertToString(nature)}, '
-      'categoryIconData: $categoryIconData, '
+      'categoryIcon: $categoryIcon, '
       'isVisible: $isVisible, '
       'isDefault: $isDefault'
       ')';
 }
 
 @embedded
-class CategoryIconData {
+class CategoryIcon {
   final int codePoint;
   final String? fontFamily;
   final String? fontPackage;
   final bool matchTextDirection;
 
-  const CategoryIconData({
+  const CategoryIcon({
     this.codePoint = 0,
     this.fontFamily = '',
     this.fontPackage = '',
     this.matchTextDirection = false,
   });
 
-  CategoryIconData.fromIconData(IconData iconData)
+  CategoryIcon.fromIconData(IconData iconData)
       : codePoint = iconData.codePoint,
         fontFamily = iconData.fontFamily,
         fontPackage = iconData.fontPackage,
@@ -72,7 +72,7 @@ class CategoryIconData {
       );
 
   @override
-  String toString() => 'CategoryIconData('
+  String toString() => 'CategoryIcon('
       'codePoint: $codePoint, '
       'fontFamily: $fontFamily, '
       'fontPackage: $fontPackage, '

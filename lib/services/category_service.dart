@@ -18,14 +18,14 @@ class CategoryService with ReactiveServiceMixin {
       Category(
         name: TRANSFER_CATEGORY_NAME,
         nature: CategoryNature.none,
-        categoryIconData: CategoryIconData.fromIconData(TRANSFER_ICON),
+        categoryIcon: CategoryIcon.fromIconData(TRANSFER_ICON),
         isVisible: true,
         isDefault: true,
       ),
       Category(
         name: UNDEFINED_CATEGORY_NAME,
         nature: CategoryNature.none,
-        categoryIconData: CategoryIconData.fromIconData(UNDEFINED_ICON),
+        categoryIcon: CategoryIcon.fromIconData(UNDEFINED_ICON),
         isVisible: true,
         isDefault: true,
       )

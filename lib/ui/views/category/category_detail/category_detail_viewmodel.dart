@@ -48,7 +48,7 @@ class CategoryDetailViewModel extends FormViewModel {
       category != null ? EnumToString.convertToString(category.nature) : 'none',
     );
 
-    categoryIconData = category?.categoryIconData?.iconData ?? UNDEFINED_ICON;
+    categoryIconData = category?.categoryIcon?.iconData ?? UNDEFINED_ICON;
 
     categoryIsVisible = category?.isVisible ?? true;
   }
@@ -89,7 +89,7 @@ class CategoryDetailViewModel extends FormViewModel {
         CategoryNature.values,
         categoryNatureValue!,
       ),
-      categoryIconData: CategoryIconData.fromIconData(categoryIconData!),
+      categoryIcon: CategoryIcon.fromIconData(categoryIconData!),
       isVisible: categoryIsVisible,
     );
 

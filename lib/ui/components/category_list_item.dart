@@ -24,7 +24,7 @@ class CategoryListItem extends StatelessWidget {
       contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
       leading: CircleAvatar(
         radius: 18,
-        child: Icon(category.categoryIconData?.iconData ?? UNDEFINED_ICON),
+        child: Icon(category.categoryIcon?.iconData ?? UNDEFINED_ICON),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

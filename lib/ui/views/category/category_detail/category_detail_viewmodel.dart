@@ -6,6 +6,7 @@ import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/category_nature.dart';
 import 'package:personal_finance_management_app/core/enums/dialog_type.dart';
 import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/services/category_service.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_view.form.dart';
@@ -48,6 +49,7 @@ class CategoryDetailViewModel extends FormViewModel {
     );
 
     setColor(category?.color ?? '0xFF00B0FF');
+    categoryIconData = category?.categoryIconData?.iconData ?? UNDEFINED_ICON;
 
     categoryIsVisible = category?.isVisible ?? true;
   }
@@ -89,6 +91,7 @@ class CategoryDetailViewModel extends FormViewModel {
         categoryNatureValue!,
       ),
       color: colorValue,
+      categoryIconData: CategoryIconData.fromIconData(categoryIconData!),
       isVisible: categoryIsVisible,
     );
 

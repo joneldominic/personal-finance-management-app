@@ -4,7 +4,6 @@ import 'package:personal_finance_management_app/core/utils/static_item_helpers.d
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/category/category.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
-import 'package:personal_finance_management_app/ui/components/custom_color_picker.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_view.form.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_viewmodel.dart';
@@ -88,6 +87,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
                 _buildIconField(
                   customTheme: customTheme,
                   iconData: model.categoryIconData,
+                  isDisabled: isDefaultCategory,
                   onTap: () => model.pickIcon(context),
                 ),
                 verticalSpaceSmall,
@@ -146,6 +146,7 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
   Widget _buildIconField({
     required CustomTheme customTheme,
     required IconData? iconData,
+    required bool isDisabled,
     required void Function() onTap,
   }) {
     return Row(
@@ -164,18 +165,29 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
                   iconData ?? UNDEFINED_ICON,
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: InkWell(
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  highlightColor: Colors.transparent,
-                  onTap: onTap,
-                  child: const Icon(
-                    Icons.change_circle_rounded,
-                    size: 20,
+              if (!isDisabled) ...[
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: InkWell(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    highlightColor: Colors.transparent,
+                    onTap: !isDisabled ? onTap : null,
+                    child: Container(
+                      height: 20.0,
+                      width: 20.0,
+                      decoration: BoxDecoration(
+                        color: customTheme.contrastBackgroundColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        color: customTheme.actionButtonColor,
+                        Icons.change_circle_rounded,
+                        size: 20,
+                      ),
+                    ),
                   ),
-                ),
-              )
+                )
+              ]
             ],
           ),
         ),

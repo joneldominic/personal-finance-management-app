@@ -17,28 +17,34 @@ const CategorySchema = CollectionSchema(
   name: r'Category',
   id: 5751694338128944171,
   properties: {
-    r'color': PropertySchema(
+    r'categoryIconData': PropertySchema(
       id: 0,
+      name: r'categoryIconData',
+      type: IsarType.object,
+      target: r'CategoryIconData',
+    ),
+    r'color': PropertySchema(
+      id: 1,
       name: r'color',
       type: IsarType.string,
     ),
     r'isDefault': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'isDefault',
       type: IsarType.bool,
     ),
     r'isVisible': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'isVisible',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'name',
       type: IsarType.string,
     ),
     r'nature': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'nature',
       type: IsarType.string,
       enumMap: _CategorynatureEnumValueMap,
@@ -59,7 +65,7 @@ const CategorySchema = CollectionSchema(
       linkName: r'category',
     )
   },
-  embeddedSchemas: {},
+  embeddedSchemas: {r'CategoryIconData': CategoryIconDataSchema},
   getId: _categoryGetId,
   getLinks: _categoryGetLinks,
   attach: _categoryAttach,
@@ -72,6 +78,13 @@ int _categoryEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.categoryIconData;
+    if (value != null) {
+      bytesCount +=
+          3 + CategoryIconDataSchema.estimateSize(value, allOffsets[CategoryIconData]!, allOffsets);
+    }
+  }
   {
     final value = object.color;
     if (value != null) {
@@ -99,11 +112,17 @@ void _categorySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.color);
-  writer.writeBool(offsets[1], object.isDefault);
-  writer.writeBool(offsets[2], object.isVisible);
-  writer.writeString(offsets[3], object.name);
-  writer.writeString(offsets[4], object.nature?.name);
+  writer.writeObject<CategoryIconData>(
+    offsets[0],
+    allOffsets,
+    CategoryIconDataSchema.serialize,
+    object.categoryIconData,
+  );
+  writer.writeString(offsets[1], object.color);
+  writer.writeBool(offsets[2], object.isDefault);
+  writer.writeBool(offsets[3], object.isVisible);
+  writer.writeString(offsets[4], object.name);
+  writer.writeString(offsets[5], object.nature?.name);
 }
 
 Category _categoryDeserialize(
@@ -113,11 +132,16 @@ Category _categoryDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Category(
-    color: reader.readStringOrNull(offsets[0]),
-    isDefault: reader.readBoolOrNull(offsets[1]),
-    isVisible: reader.readBoolOrNull(offsets[2]),
-    name: reader.readStringOrNull(offsets[3]),
-    nature: _CategorynatureValueEnumMap[reader.readStringOrNull(offsets[4])],
+    categoryIconData: reader.readObjectOrNull<CategoryIconData>(
+      offsets[0],
+      CategoryIconDataSchema.deserialize,
+      allOffsets,
+    ),
+    color: reader.readStringOrNull(offsets[1]),
+    isDefault: reader.readBoolOrNull(offsets[2]),
+    isVisible: reader.readBoolOrNull(offsets[3]),
+    name: reader.readStringOrNull(offsets[4]),
+    nature: _CategorynatureValueEnumMap[reader.readStringOrNull(offsets[5])],
   );
   object.id = id;
   return object;
@@ -131,14 +155,20 @@ P _categoryDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readObjectOrNull<CategoryIconData>(
+        offset,
+        CategoryIconDataSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 1:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 2:
       return (reader.readBoolOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 4:
+      return (reader.readStringOrNull(offset)) as P;
+    case 5:
       return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)]) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -243,6 +273,22 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
 }
 
 extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterCondition> {
+  QueryBuilder<Category, Category, QAfterFilterCondition> categoryIconDataIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'categoryIconData',
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> categoryIconDataIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'categoryIconData',
+      ));
+    });
+  }
+
   QueryBuilder<Category, Category, QAfterFilterCondition> colorIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -778,7 +824,14 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
   }
 }
 
-extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterCondition> {}
+extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterCondition> {
+  QueryBuilder<Category, Category, QAfterFilterCondition> categoryIconData(
+      FilterQuery<CategoryIconData> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'categoryIconData');
+    });
+  }
+}
 
 extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterCondition> {
   QueryBuilder<Category, Category, QAfterFilterCondition> transactions(FilterQuery<Transaction> q) {
@@ -1010,6 +1063,12 @@ extension CategoryQueryProperty on QueryBuilder<Category, Category, QQueryProper
     });
   }
 
+  QueryBuilder<Category, CategoryIconData?, QQueryOperations> categoryIconDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'categoryIconData');
+    });
+  }
+
   QueryBuilder<Category, String?, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
@@ -1040,3 +1099,470 @@ extension CategoryQueryProperty on QueryBuilder<Category, Category, QQueryProper
     });
   }
 }
+
+// **************************************************************************
+// IsarEmbeddedGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+
+const CategoryIconDataSchema = Schema(
+  name: r'CategoryIconData',
+  id: 2157458390613762193,
+  properties: {
+    r'codePoint': PropertySchema(
+      id: 0,
+      name: r'codePoint',
+      type: IsarType.long,
+    ),
+    r'fontFamily': PropertySchema(
+      id: 1,
+      name: r'fontFamily',
+      type: IsarType.string,
+    ),
+    r'fontPackage': PropertySchema(
+      id: 2,
+      name: r'fontPackage',
+      type: IsarType.string,
+    ),
+    r'matchTextDirection': PropertySchema(
+      id: 3,
+      name: r'matchTextDirection',
+      type: IsarType.bool,
+    )
+  },
+  estimateSize: _categoryIconDataEstimateSize,
+  serialize: _categoryIconDataSerialize,
+  deserialize: _categoryIconDataDeserialize,
+  deserializeProp: _categoryIconDataDeserializeProp,
+);
+
+int _categoryIconDataEstimateSize(
+  CategoryIconData object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  {
+    final value = object.fontFamily;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.fontPackage;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  return bytesCount;
+}
+
+void _categoryIconDataSerialize(
+  CategoryIconData object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeLong(offsets[0], object.codePoint);
+  writer.writeString(offsets[1], object.fontFamily);
+  writer.writeString(offsets[2], object.fontPackage);
+  writer.writeBool(offsets[3], object.matchTextDirection);
+}
+
+CategoryIconData _categoryIconDataDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = CategoryIconData(
+    codePoint: reader.readLongOrNull(offsets[0]) ?? 0,
+    fontFamily: reader.readStringOrNull(offsets[1]),
+    fontPackage: reader.readStringOrNull(offsets[2]),
+    matchTextDirection: reader.readBoolOrNull(offsets[3]) ?? false,
+  );
+  return object;
+}
+
+P _categoryIconDataDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readLongOrNull(offset) ?? 0) as P;
+    case 1:
+      return (reader.readStringOrNull(offset)) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
+    case 3:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension CategoryIconDataQueryFilter
+    on QueryBuilder<CategoryIconData, CategoryIconData, QFilterCondition> {
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> codePointEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'codePoint',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> codePointGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'codePoint',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> codePointLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'codePoint',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> codePointBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'codePoint',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'fontFamily',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'fontFamily',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fontFamily',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'fontFamily',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'fontFamily',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'fontFamily',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'fontFamily',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'fontFamily',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'fontFamily',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'fontFamily',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fontFamily',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontFamilyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'fontFamily',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'fontPackage',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'fontPackage',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fontPackage',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'fontPackage',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'fontPackage',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'fontPackage',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'fontPackage',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'fontPackage',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'fontPackage',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'fontPackage',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fontPackage',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> fontPackageIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'fontPackage',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryIconData, CategoryIconData, QAfterFilterCondition> matchTextDirectionEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'matchTextDirection',
+        value: value,
+      ));
+    });
+  }
+}
+
+extension CategoryIconDataQueryObject
+    on QueryBuilder<CategoryIconData, CategoryIconData, QFilterCondition> {}

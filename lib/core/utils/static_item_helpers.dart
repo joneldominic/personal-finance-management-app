@@ -49,10 +49,11 @@ const List<StaticDropdownItem> colorStaticDropdownItems = [
     title: '0xFFFF6D00',
     value: '0xFFFF6D00',
   ),
-  StaticDropdownItem(
-    title: '0xFFFFD740',
-    value: '0xFFFFD740',
-  ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFFFD740',
+  //   value: '0xFFFFD740',
+  // ),
   StaticDropdownItem(
     title: '0xFFFFC400',
     value: '0xFFFFC400',
@@ -61,34 +62,39 @@ const List<StaticDropdownItem> colorStaticDropdownItems = [
     title: '0xFFFFAB00',
     value: '0xFFFFAB00',
   ),
-  StaticDropdownItem(
-    title: '0xFFFFFF00',
-    value: '0xFFFFFF00',
-  ),
-  StaticDropdownItem(
-    title: '0xFFFFEA00',
-    value: '0xFFFFEA00',
-  ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFFFFF00',
+  //   value: '0xFFFFFF00',
+  // ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFFFEA00',
+  //   value: '0xFFFFEA00',
+  // ),
   StaticDropdownItem(
     title: '0xFFFFD600',
     value: '0xFFFFD600',
   ),
-  StaticDropdownItem(
-    title: '0xFFEEFF41',
-    value: '0xFFEEFF41',
-  ),
-  StaticDropdownItem(
-    title: '0xFFC6FF00',
-    value: '0xFFC6FF00',
-  ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFEEFF41',
+  //   value: '0xFFEEFF41',
+  // ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFC6FF00',
+  //   value: '0xFFC6FF00',
+  // ),
   StaticDropdownItem(
     title: '0xFFAEEA00',
     value: '0xFFAEEA00',
   ),
-  StaticDropdownItem(
-    title: '0xFFB2FF59',
-    value: '0xFFB2FF59',
-  ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFB2FF59',
+  //   value: '0xFFB2FF59',
+  // ),
   StaticDropdownItem(
     title: '0xFF76FF03',
     value: '0xFF76FF03',
@@ -181,10 +187,11 @@ const List<StaticDropdownItem> colorStaticDropdownItems = [
     title: '0xFF6D4C41',
     value: '0xFF6D4C41',
   ),
-  StaticDropdownItem(
-    title: '0xFFBDBDBD',
-    value: '0xFFBDBDBD',
-  ),
+  // INFO: Low contrast with white
+  // StaticDropdownItem(
+  //   title: '0xFFBDBDBD',
+  //   value: '0xFFBDBDBD',
+  // ),
   StaticDropdownItem(
     title: '0xFF757575',
     value: '0xFF757575',

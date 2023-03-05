@@ -15,8 +15,6 @@ class Category {
   @Enumerated(EnumType.name)
   CategoryNature? nature;
 
-  String? color;
-
   bool? isVisible;
 
   bool? isDefault;
@@ -29,7 +27,6 @@ class Category {
   Category({
     required this.name,
     required this.nature,
-    required this.color,
     required this.categoryIconData,
     required this.isVisible,
     this.isDefault = false,
@@ -40,7 +37,6 @@ class Category {
       'id: $id, '
       'name: $name, '
       'categoryNature: ${EnumToString.convertToString(nature)}, '
-      'color: $color, '
       'categoryIconData: $categoryIconData, '
       'isVisible: $isVisible, '
       'isDefault: $isDefault'

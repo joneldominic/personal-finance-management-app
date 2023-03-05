@@ -4,9 +4,7 @@ import 'package:flutter/widgets.dart';
 
 /// Transactions Related Constants
 const TRANSFER_CATEGORY_NAME = "Transfer";
-const TRANSFER_CATEGORY_COLOR = '0xFFFFFF00';
 const UNDEFINED_CATEGORY_NAME = "Undefined";
-const UNDEFINED_CATEGORY_COLOR = '0xFF757575';
 const FROM_ACCOUNT_CHANGE_NOTE = "From Account Change";
 
 /// Accounts Related Constants

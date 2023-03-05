@@ -23,28 +23,23 @@ const CategorySchema = CollectionSchema(
       type: IsarType.object,
       target: r'CategoryIconData',
     ),
-    r'color': PropertySchema(
-      id: 1,
-      name: r'color',
-      type: IsarType.string,
-    ),
     r'isDefault': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'isDefault',
       type: IsarType.bool,
     ),
     r'isVisible': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'isVisible',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'name',
       type: IsarType.string,
     ),
     r'nature': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'nature',
       type: IsarType.string,
       enumMap: _CategorynatureEnumValueMap,
@@ -86,12 +81,6 @@ int _categoryEstimateSize(
     }
   }
   {
-    final value = object.color;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.name;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -118,11 +107,10 @@ void _categorySerialize(
     CategoryIconDataSchema.serialize,
     object.categoryIconData,
   );
-  writer.writeString(offsets[1], object.color);
-  writer.writeBool(offsets[2], object.isDefault);
-  writer.writeBool(offsets[3], object.isVisible);
-  writer.writeString(offsets[4], object.name);
-  writer.writeString(offsets[5], object.nature?.name);
+  writer.writeBool(offsets[1], object.isDefault);
+  writer.writeBool(offsets[2], object.isVisible);
+  writer.writeString(offsets[3], object.name);
+  writer.writeString(offsets[4], object.nature?.name);
 }
 
 Category _categoryDeserialize(
@@ -137,11 +125,10 @@ Category _categoryDeserialize(
       CategoryIconDataSchema.deserialize,
       allOffsets,
     ),
-    color: reader.readStringOrNull(offsets[1]),
-    isDefault: reader.readBoolOrNull(offsets[2]),
-    isVisible: reader.readBoolOrNull(offsets[3]),
-    name: reader.readStringOrNull(offsets[4]),
-    nature: _CategorynatureValueEnumMap[reader.readStringOrNull(offsets[5])],
+    isDefault: reader.readBoolOrNull(offsets[1]),
+    isVisible: reader.readBoolOrNull(offsets[2]),
+    name: reader.readStringOrNull(offsets[3]),
+    nature: _CategorynatureValueEnumMap[reader.readStringOrNull(offsets[4])],
   );
   object.id = id;
   return object;
@@ -161,14 +148,12 @@ P _categoryDeserializeProp<P>(
         allOffsets,
       )) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 2:
       return (reader.readBoolOrNull(offset)) as P;
     case 3:
-      return (reader.readBoolOrNull(offset)) as P;
-    case 4:
       return (reader.readStringOrNull(offset)) as P;
-    case 5:
+    case 4:
       return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)]) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -285,150 +270,6 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'categoryIconData',
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'color',
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'color',
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'color',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'color',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'color',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterFilterCondition> colorIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'color',
-        value: '',
       ));
     });
   }
@@ -889,18 +730,6 @@ extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterConditio
 }
 
 extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
-  QueryBuilder<Category, Category, QAfterSortBy> sortByColor() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'color', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterSortBy> sortByColorDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'color', Sort.desc);
-    });
-  }
-
   QueryBuilder<Category, Category, QAfterSortBy> sortByIsDefault() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDefault', Sort.asc);
@@ -951,18 +780,6 @@ extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
 }
 
 extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenBy> {
-  QueryBuilder<Category, Category, QAfterSortBy> thenByColor() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'color', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Category, Category, QAfterSortBy> thenByColorDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'color', Sort.desc);
-    });
-  }
-
   QueryBuilder<Category, Category, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1025,12 +842,6 @@ extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenB
 }
 
 extension CategoryQueryWhereDistinct on QueryBuilder<Category, Category, QDistinct> {
-  QueryBuilder<Category, Category, QDistinct> distinctByColor({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<Category, Category, QDistinct> distinctByIsDefault() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDefault');
@@ -1066,12 +877,6 @@ extension CategoryQueryProperty on QueryBuilder<Category, Category, QQueryProper
   QueryBuilder<Category, CategoryIconData?, QQueryOperations> categoryIconDataProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'categoryIconData');
-    });
-  }
-
-  QueryBuilder<Category, String?, QQueryOperations> colorProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'color');
     });
   }
 

@@ -22,10 +22,6 @@ import 'package:stacked/stacked_annotations.dart';
     name: 'categoryNature',
     items: categoryNatureStaticDropdownItems,
   ),
-  FormDropdownField(
-    name: 'color',
-    items: colorStaticDropdownItems,
-  ),
 ])
 class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
   CategoryDetailView({
@@ -119,12 +115,6 @@ class CategoryDetailView extends StatelessWidget with $CategoryDetailView {
                       )
                       .toList(),
                   onChanged: (String? value) => model.setCategoryNature(value!),
-                ),
-                CustomColorPicker(
-                  key: const ValueKey(ColorValueKey),
-                  value: model.colorValue,
-                  colorValueToTitleMap: ColorValueToTitleMap,
-                  onPressed: (String? value) => model.setColor(value!),
                 ),
                 if (!isDefaultCategory) ...[
                   verticalSpaceSmallPlus,

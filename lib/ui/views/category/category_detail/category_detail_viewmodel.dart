@@ -48,7 +48,6 @@ class CategoryDetailViewModel extends FormViewModel {
       category != null ? EnumToString.convertToString(category.nature) : 'none',
     );
 
-    setColor(category?.color ?? '0xFF00B0FF');
     categoryIconData = category?.categoryIconData?.iconData ?? UNDEFINED_ICON;
 
     categoryIsVisible = category?.isVisible ?? true;
@@ -90,7 +89,6 @@ class CategoryDetailViewModel extends FormViewModel {
         CategoryNature.values,
         categoryNatureValue!,
       ),
-      color: colorValue,
       categoryIconData: CategoryIconData.fromIconData(categoryIconData!),
       isVisible: categoryIsVisible,
     );

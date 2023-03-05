@@ -4,6 +4,7 @@ import 'package:personal_finance_management_app/core/enums/transaction_type.dart
 import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
@@ -23,18 +24,20 @@ class TransactionListItem extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     final account = transaction.account.value;
+    final destinationAccount = transaction.destinationAccount.value;
     final sourceAccountName = account?.name ?? '(Deleted Account)';
     final destinationAccountName = transaction.transferTransactionType != null
-        ? transaction.destinationAccount.value?.name ?? '(Deleted Account)'
+        ? destinationAccount?.name ?? '(Deleted Account)'
         : null;
     final category = transaction.category.value;
     final isExpense = (transaction.transferTransactionType ?? transaction.transactionType) ==
         TransactionType.expense;
-    final iconColor = account != null
-        ? Color(
-            int.parse(account.color!),
-          )
-        : customTheme.iconBackgroundColor!;
+    final iconColor = _getIconColor(
+      customTheme: customTheme,
+      sourceAccount: account,
+      destinationAccount: destinationAccount,
+      transferTransactionType: transaction.transferTransactionType,
+    );
 
     return ListTile(
       onTap: onTap,
@@ -107,5 +110,21 @@ class TransactionListItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getIconColor({
+    required CustomTheme customTheme,
+    required Account? sourceAccount,
+    required Account? destinationAccount,
+    required TransactionType? transferTransactionType,
+  }) {
+    final account =
+        transferTransactionType == TransactionType.income ? destinationAccount : sourceAccount;
+
+    return account != null
+        ? Color(
+            int.parse(account.color!),
+          )
+        : customTheme.iconBackgroundColor!;
   }
 }

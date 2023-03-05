@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
 import 'package:personal_finance_management_app/data/dao/transaction_dao.dart';
 import 'package:personal_finance_management_app/data/database/isar_database.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
@@ -139,7 +140,13 @@ class TransactionDaoImpl extends TransactionDao {
 
     final filteredTransactions = transactions.where((t) {
       t.account.loadSync();
-      final isAccountSelected = t.account.value?.isSelected ?? false;
+      t.destinationAccount.loadSync();
+
+      final account = t.transferTransactionType == TransactionType.income
+          ? t.destinationAccount.value
+          : t.account.value;
+
+      final isAccountSelected = account?.isSelected ?? false;
 
       return isAccountSelected;
     });

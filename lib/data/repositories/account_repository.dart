@@ -4,6 +4,8 @@ import 'package:personal_finance_management_app/core/enums/transaction_type.dart
 import 'package:personal_finance_management_app/data/dao/account_dao.dart';
 import 'package:personal_finance_management_app/data/dao/transaction_dao.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 class AccountRepository {
   final _logger = getLogger('AccountRepository');
@@ -86,6 +88,13 @@ class AccountRepository {
   Future<List<Account>> getAccounts() {
     _logger.i('argument: NONE');
     return accountDao.getAccounts();
+  }
+
+  Future<Account?> getFirstSelectedAccount() async {
+    _logger.i('argument: NONE');
+
+    final selectedAccounts = await accountDao.getSelectedAccounts();
+    return selectedAccounts.firstOrNull;
   }
 
   Stream<List<Account>> accountCollectionStream() async* {

@@ -66,7 +66,6 @@ class BaseDialog extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 50,
         padding: const EdgeInsets.all(8),
         child: Center(
           child: ThemeText.listItemSubTitle(

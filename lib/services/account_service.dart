@@ -60,6 +60,11 @@ class AccountService with ReactiveServiceMixin {
     return _accountRepository.getAccounts();
   }
 
+  Future<Account?> getFirstSelectedAccount() {
+    _logger.i('argument: NONE');
+    return _accountRepository.getFirstSelectedAccount();
+  }
+
   Stream<List<Account>> accountCollectionStream() async* {
     _logger.i('argument: NONE');
     yield* _accountRepository.accountCollectionStream();

@@ -16,6 +16,9 @@ class AccountsCard extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
     final mainViewModel = getParentViewModel<MainViewModel>(context);
 
+    final isSingleAccountSelected =
+        mainViewModel.accounts.where((acc) => acc.isSelected!).length == 1;
+
     return ViewModelBuilder<AccountsCardViewModel>.reactive(
       viewModelBuilder: () => AccountsCardViewModel(),
       onModelReady: (model) {
@@ -69,22 +72,26 @@ class AccountsCard extends StatelessWidget {
             ),
             if (model.isFiltered) ...[
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
-                          onTap: () => model.clearFilter(),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 8,
-                            ),
-                            child: ThemeText.listItemSubTitle(
-                              'CLEAR FILTER',
-                              color: customTheme.primaryAccent,
+                        if (isSingleAccountSelected) ...[
+                          _buildTextButton(
+                            theme: customTheme,
+                            onTap: () => model.handUpdateBalance(),
+                            title: 'UPDATE BALANCE',
+                          ),
+                        ],
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: _buildTextButton(
+                              theme: customTheme,
+                              onTap: () => model.clearFilter(),
+                              title: 'CLEAR FILTER',
                             ),
                           ),
                         ),
@@ -95,6 +102,26 @@ class AccountsCard extends StatelessWidget {
               ),
             ]
           ],
+        ),
+      ),
+    );
+  }
+
+  InkWell _buildTextButton({
+    required CustomTheme theme,
+    required String title,
+    required void Function() onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 5,
+          vertical: 8,
+        ),
+        child: ThemeText.listItemSubTitle(
+          title,
+          color: theme.primaryAccent,
         ),
       ),
     );

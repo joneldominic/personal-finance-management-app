@@ -90,7 +90,8 @@ class TransactionDetailViewModel extends FormViewModel {
     await initData();
 
     if (accounts.isNotEmpty && (transaction == null || transaction.account.value != null)) {
-      setAccountId(transaction?.account.value?.id.toString() ?? accounts[0].id.toString());
+      final selectedAccount = (await _accountService.getFirstSelectedAccount()) ?? accounts[0];
+      setAccountId(transaction?.account.value?.id.toString() ?? selectedAccount.id.toString());
     }
     filterDestinationAccount();
 

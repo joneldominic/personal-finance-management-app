@@ -1,7 +1,9 @@
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao_impl.dart';
+import 'package:personal_finance_management_app/data/dao/category_dao_impl.dart';
 import 'package:personal_finance_management_app/data/dao/transaction_dao_impl.dart';
+import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
 import 'package:personal_finance_management_app/data/repositories/transaction_repository.dart';
 import 'package:stacked/stacked.dart';
@@ -11,6 +13,7 @@ class TransactionService with ReactiveServiceMixin {
   final _transactionRepository = TransactionRepository(
     transactionDao: TransactionDaoImpl(),
     accountDao: AccountDaoImpl(),
+    categoryDao: CategoryDaoImpl(),
   );
 
   Future<Transaction> createTransaction(Transaction transaction) async {
@@ -22,6 +25,14 @@ class TransactionService with ReactiveServiceMixin {
     _logger.i('argument: $transactions');
     if (transactions.length != 2) throw ArgumentError();
     return _transactionRepository.createPairTransaction(transactions);
+  }
+
+  Future<Transaction> createTransactionFromAccountBalanceDiff(
+    Account? account,
+    String balanceDiff,
+  ) {
+    _logger.i('argument: $account, $balanceDiff');
+    return _transactionRepository.createTransactionFromAccountBalanceDiff(account, balanceDiff);
   }
 
   Future<Transaction> updateTransaction(Transaction transaction) async {

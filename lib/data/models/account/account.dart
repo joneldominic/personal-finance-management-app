@@ -41,6 +41,17 @@ class Account {
     this.isSelected = true,
   });
 
+  Account.clone(Account account) {
+    name = account.name;
+    currency = account.currency;
+    balance = account.balance;
+    color = account.color;
+    isExcludedFromAnalysis = account.isExcludedFromAnalysis;
+    isArchived = account.isArchived;
+    isDefault = account.isDefault;
+    isSelected = account.isSelected;
+  }
+
   @ignore
   Decimal get dBalance => balance != null ? Decimal.parse(balance.toString()) : Decimal.zero;
 

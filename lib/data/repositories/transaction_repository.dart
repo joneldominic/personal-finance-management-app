@@ -1,7 +1,10 @@
 import 'package:isar/isar.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
+import 'package:personal_finance_management_app/core/utils/string_helpers.dart';
 import 'package:personal_finance_management_app/data/dao/account_dao.dart';
+import 'package:personal_finance_management_app/data/dao/category_dao.dart';
 import 'package:personal_finance_management_app/data/dao/transaction_dao.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/transaction/transaction.dart';
@@ -10,8 +13,13 @@ class TransactionRepository {
   final _logger = getLogger('CategoryRepository');
   final TransactionDao transactionDao;
   final AccountDao accountDao;
+  final CategoryDao categoryDao;
 
-  TransactionRepository({required this.transactionDao, required this.accountDao});
+  TransactionRepository({
+    required this.transactionDao,
+    required this.accountDao,
+    required this.categoryDao,
+  });
 
   Future<Transaction> createTransaction(Transaction transaction) async {
     _logger.i('argument: $transaction');
@@ -29,6 +37,31 @@ class TransactionRepository {
     await updateAccountBalance(transactions[0]);
 
     return newTransactions;
+  }
+
+  Future<Transaction> createTransactionFromAccountBalanceDiff(
+    Account? account,
+    String balanceDiff,
+  ) async {
+    final balanceDiffAmount = parseAmountStringToDouble(balanceDiff);
+
+    final transactionType =
+        balanceDiffAmount > 0 ? TransactionType.income : TransactionType.expense;
+
+    final date = DateTime.now();
+
+    final undefinedCategory = await categoryDao.getCategoryByName(UNDEFINED_CATEGORY_NAME);
+
+    final newTransaction = Transaction(
+      transactionType: transactionType,
+      amount: balanceDiffAmount,
+      date: date,
+      notes: FROM_ACCOUNT_CHANGE_NOTE,
+    )
+      ..account.value = account
+      ..category.value = undefinedCategory;
+
+    return await transactionDao.createTransaction(newTransaction);
   }
 
   Future<Transaction> updateTransaction(Transaction transaction) async {

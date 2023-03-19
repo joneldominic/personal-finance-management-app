@@ -72,7 +72,7 @@ class AccountsCard extends StatelessWidget {
             ),
             if (model.isFiltered) ...[
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                 child: Column(
                   children: [
                     Row(
@@ -81,7 +81,7 @@ class AccountsCard extends StatelessWidget {
                         if (isSingleAccountSelected) ...[
                           _buildTextButton(
                             theme: customTheme,
-                            onTap: () => {},
+                            onTap: () => model.handUpdateBalance(),
                             title: 'UPDATE BALANCE',
                           ),
                         ],

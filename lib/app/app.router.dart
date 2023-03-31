@@ -53,8 +53,11 @@ class StackedRouter extends RouterBase {
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     MainView: (data) {
+      var args = data.getArgs<MainViewArguments>(
+        orElse: () => MainViewArguments(),
+      );
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => const MainView(),
+        builder: (context) => MainView(key: args.key),
         settings: data,
       );
     },
@@ -113,6 +116,12 @@ class StackedRouter extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
+/// MainView arguments holder class
+class MainViewArguments {
+  final Key? key;
+  MainViewArguments({this.key});
+}
+
 /// AccountDetailView arguments holder class
 class AccountDetailViewArguments {
   final Key? key;
@@ -140,13 +149,16 @@ class CategoryDetailViewArguments {
 
 extension NavigatorStateExtension on NavigationService {
   Future<dynamic> navigateToMainView({
+    Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
   }) async {
     return navigateTo(
       Routes.mainView,
+      arguments: MainViewArguments(key: key),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,
@@ -158,7 +170,8 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
   }) async {
     return navigateTo(
       Routes.accountSettingsView,
@@ -175,7 +188,8 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
   }) async {
     return navigateTo(
       Routes.accountDetailView,
@@ -193,11 +207,13 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
   }) async {
     return navigateTo(
       Routes.transactionDetailView,
-      arguments: TransactionDetailViewArguments(key: key, transaction: transaction),
+      arguments:
+          TransactionDetailViewArguments(key: key, transaction: transaction),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,
@@ -209,7 +225,8 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
   }) async {
     return navigateTo(
       Routes.categoryListView,
@@ -226,7 +243,8 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
   }) async {
     return navigateTo(
       Routes.categoryDetailView,

@@ -111,6 +111,18 @@ Light Mode            |  Dark Mode
    ```sh
    flutter pub run build_runner build --delete-conflicting-outputs && flutter format . -l 100
    ```
+5. Troubleshooting:
+   - if getting errors when building try
+   ```sh
+   flutter pub upgrade
+   ```
+   - if getting errors when trying to build release apk with "flutter build apk --release" try
+   ```sh
+   flutter build apk --release --no-tree-shake-icons
+   ```
+   - if you're getting "missing whatsap icons" when trying to runn the app, it could be because the newest flutter version is incompatible, if so, you need to downgrade your flutter version to an older build and try again. Version 3.3 was tested and works as intended.
+  
+
 
 <!-- USAGE EXAMPLES -->
 

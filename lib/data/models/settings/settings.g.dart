@@ -34,7 +34,7 @@ const SettingsSchema = CollectionSchema(
   getId: _settingsGetId,
   getLinks: _settingsGetLinks,
   attach: _settingsAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _settingsEstimateSize(
@@ -134,7 +134,8 @@ extension SettingsQueryWhere on QueryBuilder<Settings, Settings, QWhereClause> {
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<Settings, Settings, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -142,7 +143,8 @@ extension SettingsQueryWhere on QueryBuilder<Settings, Settings, QWhereClause> {
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<Settings, Settings, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -167,7 +169,8 @@ extension SettingsQueryWhere on QueryBuilder<Settings, Settings, QWhereClause> {
   }
 }
 
-extension SettingsQueryFilter on QueryBuilder<Settings, Settings, QFilterCondition> {
+extension SettingsQueryFilter
+    on QueryBuilder<Settings, Settings, QFilterCondition> {
   QueryBuilder<Settings, Settings, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -244,7 +247,8 @@ extension SettingsQueryFilter on QueryBuilder<Settings, Settings, QFilterConditi
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterFilterCondition> isLightThemeIsNotNull() {
+  QueryBuilder<Settings, Settings, QAfterFilterCondition>
+      isLightThemeIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'isLightTheme',
@@ -252,7 +256,8 @@ extension SettingsQueryFilter on QueryBuilder<Settings, Settings, QFilterConditi
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterFilterCondition> isLightThemeEqualTo(bool? value) {
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> isLightThemeEqualTo(
+      bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isLightTheme',
@@ -262,9 +267,11 @@ extension SettingsQueryFilter on QueryBuilder<Settings, Settings, QFilterConditi
   }
 }
 
-extension SettingsQueryObject on QueryBuilder<Settings, Settings, QFilterCondition> {}
+extension SettingsQueryObject
+    on QueryBuilder<Settings, Settings, QFilterCondition> {}
 
-extension SettingsQueryLinks on QueryBuilder<Settings, Settings, QFilterCondition> {}
+extension SettingsQueryLinks
+    on QueryBuilder<Settings, Settings, QFilterCondition> {}
 
 extension SettingsQuerySortBy on QueryBuilder<Settings, Settings, QSortBy> {
   QueryBuilder<Settings, Settings, QAfterSortBy> sortByIsLightTheme() {
@@ -280,7 +287,8 @@ extension SettingsQuerySortBy on QueryBuilder<Settings, Settings, QSortBy> {
   }
 }
 
-extension SettingsQuerySortThenBy on QueryBuilder<Settings, Settings, QSortThenBy> {
+extension SettingsQuerySortThenBy
+    on QueryBuilder<Settings, Settings, QSortThenBy> {
   QueryBuilder<Settings, Settings, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -306,7 +314,8 @@ extension SettingsQuerySortThenBy on QueryBuilder<Settings, Settings, QSortThenB
   }
 }
 
-extension SettingsQueryWhereDistinct on QueryBuilder<Settings, Settings, QDistinct> {
+extension SettingsQueryWhereDistinct
+    on QueryBuilder<Settings, Settings, QDistinct> {
   QueryBuilder<Settings, Settings, QDistinct> distinctByIsLightTheme() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isLightTheme');
@@ -314,7 +323,8 @@ extension SettingsQueryWhereDistinct on QueryBuilder<Settings, Settings, QDistin
   }
 }
 
-extension SettingsQueryProperty on QueryBuilder<Settings, Settings, QQueryProperty> {
+extension SettingsQueryProperty
+    on QueryBuilder<Settings, Settings, QQueryProperty> {
   QueryBuilder<Settings, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');

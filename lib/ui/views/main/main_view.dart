@@ -18,7 +18,8 @@ import 'main_viewmodel.dart';
 // it's just a UI representation.
 
 class MainView extends StatelessWidget {
-  const MainView({Key? key}) : super(key: key);
+  // ignore: prefer_const_constructors_in_immutables
+  MainView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +92,11 @@ class MainView extends StatelessWidget {
   Widget _getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return const TransactionListView();
+        return TransactionListView();
       case 1:
-        return const HomeView();
+        return HomeView();
       case 2:
-        return const SettingsView();
+        return SettingsView();
       default:
         throw ArgumentError();
     }

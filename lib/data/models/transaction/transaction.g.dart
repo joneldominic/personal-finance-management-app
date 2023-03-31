@@ -80,7 +80,7 @@ const TransactionSchema = CollectionSchema(
   getId: _transactionGetId,
   getLinks: _transactionGetLinks,
   attach: _transactionAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _transactionEstimateSize(
@@ -140,10 +140,11 @@ Transaction _transactionDeserialize(
     amount: reader.readDoubleOrNull(offsets[0]),
     date: reader.readDateTimeOrNull(offsets[1]),
     notes: reader.readStringOrNull(offsets[2]),
-    transactionType: _TransactiontransactionTypeValueEnumMap[reader.readStringOrNull(offsets[3])],
+    transactionType: _TransactiontransactionTypeValueEnumMap[
+        reader.readStringOrNull(offsets[3])],
     transferId: reader.readStringOrNull(offsets[4]),
-    transferTransactionType:
-        _TransactiontransferTransactionTypeValueEnumMap[reader.readStringOrNull(offsets[5])],
+    transferTransactionType: _TransactiontransferTransactionTypeValueEnumMap[
+        reader.readStringOrNull(offsets[5])],
   );
   object.id = id;
   return object;
@@ -163,12 +164,13 @@ P _transactionDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (_TransactiontransactionTypeValueEnumMap[reader.readStringOrNull(offset)]) as P;
+      return (_TransactiontransactionTypeValueEnumMap[
+          reader.readStringOrNull(offset)]) as P;
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (_TransactiontransferTransactionTypeValueEnumMap[reader.readStringOrNull(offset)])
-          as P;
+      return (_TransactiontransferTransactionTypeValueEnumMap[
+          reader.readStringOrNull(offset)]) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -203,14 +205,17 @@ List<IsarLinkBase<dynamic>> _transactionGetLinks(Transaction object) {
   return [object.account, object.destinationAccount, object.category];
 }
 
-void _transactionAttach(IsarCollection<dynamic> col, Id id, Transaction object) {
+void _transactionAttach(
+    IsarCollection<dynamic> col, Id id, Transaction object) {
   object.id = id;
   object.account.attach(col, col.isar.collection<Account>(), r'account', id);
-  object.destinationAccount.attach(col, col.isar.collection<Account>(), r'destinationAccount', id);
+  object.destinationAccount
+      .attach(col, col.isar.collection<Account>(), r'destinationAccount', id);
   object.category.attach(col, col.isar.collection<Category>(), r'category', id);
 }
 
-extension TransactionQueryWhereSort on QueryBuilder<Transaction, Transaction, QWhere> {
+extension TransactionQueryWhereSort
+    on QueryBuilder<Transaction, Transaction, QWhere> {
   QueryBuilder<Transaction, Transaction, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
@@ -218,7 +223,8 @@ extension TransactionQueryWhereSort on QueryBuilder<Transaction, Transaction, QW
   }
 }
 
-extension TransactionQueryWhere on QueryBuilder<Transaction, Transaction, QWhereClause> {
+extension TransactionQueryWhere
+    on QueryBuilder<Transaction, Transaction, QWhereClause> {
   QueryBuilder<Transaction, Transaction, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
@@ -228,7 +234,8 @@ extension TransactionQueryWhere on QueryBuilder<Transaction, Transaction, QWhere
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<Transaction, Transaction, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -285,7 +292,8 @@ extension TransactionQueryWhere on QueryBuilder<Transaction, Transaction, QWhere
   }
 }
 
-extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilterCondition> {
+extension TransactionQueryFilter
+    on QueryBuilder<Transaction, Transaction, QFilterCondition> {
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> amountIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -294,7 +302,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> amountIsNotNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      amountIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'amount',
@@ -315,7 +324,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> amountGreaterThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      amountGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -372,7 +382,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> dateIsNotNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      dateIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'date',
@@ -380,7 +391,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> dateEqualTo(DateTime? value) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> dateEqualTo(
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'date',
@@ -432,7 +444,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -492,7 +505,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesIsNotNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      notesIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'notes',
@@ -513,7 +527,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesGreaterThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      notesGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -588,7 +603,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesContains(String value,
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -599,7 +615,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesMatches(String pattern,
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -619,7 +636,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> notesIsNotEmpty() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      notesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'notes',
@@ -628,7 +646,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeIsNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'transactionType',
@@ -636,7 +655,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeIsNotNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'transactionType',
@@ -644,7 +664,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeEqualTo(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeEqualTo(
     TransactionType? value, {
     bool caseSensitive = true,
   }) {
@@ -657,7 +678,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeGreaterThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeGreaterThan(
     TransactionType? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -672,7 +694,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeLessThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeLessThan(
     TransactionType? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -687,7 +710,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeBetween(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeBetween(
     TransactionType? lower,
     TransactionType? upper, {
     bool includeLower = true,
@@ -706,7 +730,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeStartsWith(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -719,7 +744,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeEndsWith(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -732,9 +758,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'transactionType',
@@ -744,9 +769,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'transactionType',
@@ -756,7 +780,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeIsEmpty() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'transactionType',
@@ -765,7 +790,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transactionTypeIsNotEmpty() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transactionTypeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'transactionType',
@@ -774,7 +800,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdIsNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'transferId',
@@ -782,7 +809,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdIsNotNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'transferId',
@@ -790,7 +818,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdEqualTo(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -803,7 +832,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdGreaterThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -818,7 +848,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdLessThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -833,7 +864,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdBetween(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -852,7 +884,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdStartsWith(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -865,7 +898,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdEndsWith(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -878,8 +912,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'transferId',
@@ -889,8 +923,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'transferId',
@@ -900,7 +934,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdIsEmpty() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'transferId',
@@ -909,7 +944,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferIdIsNotEmpty() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'transferId',
@@ -918,7 +954,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeIsNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'transferTransactionType',
@@ -926,7 +963,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeIsNotNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'transferTransactionType',
@@ -934,7 +972,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeEqualTo(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeEqualTo(
     TransactionType? value, {
     bool caseSensitive = true,
   }) {
@@ -947,7 +986,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeGreaterThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeGreaterThan(
     TransactionType? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -962,7 +1002,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeLessThan(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeLessThan(
     TransactionType? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -977,7 +1018,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeBetween(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeBetween(
     TransactionType? lower,
     TransactionType? upper, {
     bool includeLower = true,
@@ -996,7 +1038,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeStartsWith(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1009,7 +1052,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeEndsWith(
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1022,9 +1066,9 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeContains(String value,
+          {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'transferTransactionType',
@@ -1034,9 +1078,9 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeMatches(String pattern,
+          {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'transferTransactionType',
@@ -1046,7 +1090,8 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> transferTransactionTypeIsEmpty() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      transferTransactionTypeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'transferTransactionType',
@@ -1066,48 +1111,56 @@ extension TransactionQueryFilter on QueryBuilder<Transaction, Transaction, QFilt
   }
 }
 
-extension TransactionQueryObject on QueryBuilder<Transaction, Transaction, QFilterCondition> {}
+extension TransactionQueryObject
+    on QueryBuilder<Transaction, Transaction, QFilterCondition> {}
 
-extension TransactionQueryLinks on QueryBuilder<Transaction, Transaction, QFilterCondition> {
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> account(FilterQuery<Account> q) {
+extension TransactionQueryLinks
+    on QueryBuilder<Transaction, Transaction, QFilterCondition> {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> account(
+      FilterQuery<Account> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'account');
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> accountIsNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      accountIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'account', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccount(
-      FilterQuery<Account> q) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccount(FilterQuery<Account> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'destinationAccount');
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> destinationAccountIsNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      destinationAccountIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'destinationAccount', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> category(FilterQuery<Category> q) {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> category(
+      FilterQuery<Category> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'category');
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> categoryIsNull() {
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      categoryIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'category', 0, true, 0, true);
     });
   }
 }
 
-extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSortBy> {
+extension TransactionQuerySortBy
+    on QueryBuilder<Transaction, Transaction, QSortBy> {
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
@@ -1150,7 +1203,8 @@ extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSort
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByTransactionTypeDesc() {
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      sortByTransactionTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transactionType', Sort.desc);
     });
@@ -1168,20 +1222,23 @@ extension TransactionQuerySortBy on QueryBuilder<Transaction, Transaction, QSort
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByTransferTransactionType() {
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      sortByTransferTransactionType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferTransactionType', Sort.asc);
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByTransferTransactionTypeDesc() {
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      sortByTransferTransactionTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferTransactionType', Sort.desc);
     });
   }
 }
 
-extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, QSortThenBy> {
+extension TransactionQuerySortThenBy
+    on QueryBuilder<Transaction, Transaction, QSortThenBy> {
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
@@ -1236,7 +1293,8 @@ extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, Q
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByTransactionTypeDesc() {
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      thenByTransactionTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transactionType', Sort.desc);
     });
@@ -1254,20 +1312,23 @@ extension TransactionQuerySortThenBy on QueryBuilder<Transaction, Transaction, Q
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByTransferTransactionType() {
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      thenByTransferTransactionType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferTransactionType', Sort.asc);
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByTransferTransactionTypeDesc() {
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      thenByTransferTransactionTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferTransactionType', Sort.desc);
     });
   }
 }
 
-extension TransactionQueryWhereDistinct on QueryBuilder<Transaction, Transaction, QDistinct> {
+extension TransactionQueryWhereDistinct
+    on QueryBuilder<Transaction, Transaction, QDistinct> {
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'amount');
@@ -1280,7 +1341,8 @@ extension TransactionQueryWhereDistinct on QueryBuilder<Transaction, Transaction
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QDistinct> distinctByNotes({bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByNotes(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'notes', caseSensitive: caseSensitive);
     });
@@ -1289,7 +1351,8 @@ extension TransactionQueryWhereDistinct on QueryBuilder<Transaction, Transaction
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByTransactionType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'transactionType', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'transactionType',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -1300,15 +1363,17 @@ extension TransactionQueryWhereDistinct on QueryBuilder<Transaction, Transaction
     });
   }
 
-  QueryBuilder<Transaction, Transaction, QDistinct> distinctByTransferTransactionType(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Transaction, Transaction, QDistinct>
+      distinctByTransferTransactionType({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'transferTransactionType', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'transferTransactionType',
+          caseSensitive: caseSensitive);
     });
   }
 }
 
-extension TransactionQueryProperty on QueryBuilder<Transaction, Transaction, QQueryProperty> {
+extension TransactionQueryProperty
+    on QueryBuilder<Transaction, Transaction, QQueryProperty> {
   QueryBuilder<Transaction, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
@@ -1333,7 +1398,8 @@ extension TransactionQueryProperty on QueryBuilder<Transaction, Transaction, QQu
     });
   }
 
-  QueryBuilder<Transaction, TransactionType?, QQueryOperations> transactionTypeProperty() {
+  QueryBuilder<Transaction, TransactionType?, QQueryOperations>
+      transactionTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'transactionType');
     });
@@ -1345,7 +1411,8 @@ extension TransactionQueryProperty on QueryBuilder<Transaction, Transaction, QQu
     });
   }
 
-  QueryBuilder<Transaction, TransactionType?, QQueryOperations> transferTransactionTypeProperty() {
+  QueryBuilder<Transaction, TransactionType?, QQueryOperations>
+      transferTransactionTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'transferTransactionType');
     });

@@ -61,11 +61,13 @@ final Map<String, String> ColorValueToTitleMap = {
   '0xFF616161': '0xFF616161',
 };
 
-final Map<String, TextEditingController> _AccountDetailViewTextEditingControllers = {};
+final Map<String, TextEditingController>
+    _AccountDetailViewTextEditingControllers = {};
 
 final Map<String, FocusNode> _AccountDetailViewFocusNodes = {};
 
-final Map<String, String? Function(String?)?> _AccountDetailViewTextValidations = {
+final Map<String, String? Function(String?)?>
+    _AccountDetailViewTextValidations = {
   AccountNameValueKey: null,
   BalanceValueKey: null,
 };
@@ -73,15 +75,18 @@ final Map<String, String? Function(String?)?> _AccountDetailViewTextValidations 
 mixin $AccountDetailView on StatelessWidget {
   TextEditingController get accountNameController =>
       _getFormTextEditingController(AccountNameValueKey);
-  TextEditingController get balanceController => _getFormTextEditingController(BalanceValueKey);
+  TextEditingController get balanceController =>
+      _getFormTextEditingController(BalanceValueKey);
   FocusNode get accountNameFocusNode => _getFormFocusNode(AccountNameValueKey);
   FocusNode get balanceFocusNode => _getFormFocusNode(BalanceValueKey);
 
-  TextEditingController _getFormTextEditingController(String key, {String? initialValue}) {
+  TextEditingController _getFormTextEditingController(String key,
+      {String? initialValue}) {
     if (_AccountDetailViewTextEditingControllers.containsKey(key)) {
       return _AccountDetailViewTextEditingControllers[key]!;
     }
-    _AccountDetailViewTextEditingControllers[key] = TextEditingController(text: initialValue);
+    _AccountDetailViewTextEditingControllers[key] =
+        TextEditingController(text: initialValue);
     return _AccountDetailViewTextEditingControllers[key]!;
   }
 
@@ -121,7 +126,8 @@ mixin $AccountDetailView on StatelessWidget {
   }
 
   /// Updates the fieldsValidationMessages on the FormViewModel
-  void _updateValidationData(FormViewModel model) => model.setValidationMessages({
+  void _updateValidationData(FormViewModel model) =>
+      model.setValidationMessages({
         AccountNameValueKey: _getValidationMessage(AccountNameValueKey),
         BalanceValueKey: _getValidationMessage(BalanceValueKey),
       });
@@ -152,8 +158,10 @@ mixin $AccountDetailView on StatelessWidget {
 }
 
 extension ValueProperties on FormViewModel {
-  bool get isFormValid => this.fieldsValidationMessages.values.every((element) => element == null);
-  String? get accountNameValue => this.formValueMap[AccountNameValueKey] as String?;
+  bool get isFormValid =>
+      this.fieldsValidationMessages.values.every((element) => element == null);
+  String? get accountNameValue =>
+      this.formValueMap[AccountNameValueKey] as String?;
   String? get currencyValue => this.formValueMap[CurrencyValueKey] as String?;
   String? get balanceValue => this.formValueMap[BalanceValueKey] as String?;
   String? get colorValue => this.formValueMap[ColorValueKey] as String?;
@@ -172,10 +180,14 @@ extension ValueProperties on FormViewModel {
   bool get hasColorValidationMessage =>
       this.fieldsValidationMessages[ColorValueKey]?.isNotEmpty ?? false;
 
-  String? get accountNameValidationMessage => this.fieldsValidationMessages[AccountNameValueKey];
-  String? get currencyValidationMessage => this.fieldsValidationMessages[CurrencyValueKey];
-  String? get balanceValidationMessage => this.fieldsValidationMessages[BalanceValueKey];
-  String? get colorValidationMessage => this.fieldsValidationMessages[ColorValueKey];
+  String? get accountNameValidationMessage =>
+      this.fieldsValidationMessages[AccountNameValueKey];
+  String? get currencyValidationMessage =>
+      this.fieldsValidationMessages[CurrencyValueKey];
+  String? get balanceValidationMessage =>
+      this.fieldsValidationMessages[BalanceValueKey];
+  String? get colorValidationMessage =>
+      this.fieldsValidationMessages[ColorValueKey];
 }
 
 extension Methods on FormViewModel {

@@ -64,7 +64,7 @@ const CategorySchema = CollectionSchema(
   getId: _categoryGetId,
   getLinks: _categoryGetLinks,
   attach: _categoryAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _categoryEstimateSize(
@@ -76,8 +76,9 @@ int _categoryEstimateSize(
   {
     final value = object.categoryIcon;
     if (value != null) {
-      bytesCount +=
-          3 + CategoryIconSchema.estimateSize(value, allOffsets[CategoryIcon]!, allOffsets);
+      bytesCount += 3 +
+          CategoryIconSchema.estimateSize(
+              value, allOffsets[CategoryIcon]!, allOffsets);
     }
   }
   {
@@ -154,7 +155,8 @@ P _categoryDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)]) as P;
+      return (_CategorynatureValueEnumMap[reader.readStringOrNull(offset)])
+          as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -181,7 +183,8 @@ List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
 
 void _categoryAttach(IsarCollection<dynamic> col, Id id, Category object) {
   object.id = id;
-  object.transactions.attach(col, col.isar.collection<Transaction>(), r'transactions', id);
+  object.transactions
+      .attach(col, col.isar.collection<Transaction>(), r'transactions', id);
 }
 
 extension CategoryQueryWhereSort on QueryBuilder<Category, Category, QWhere> {
@@ -224,7 +227,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     });
   }
 
-  QueryBuilder<Category, Category, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<Category, Category, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -232,7 +236,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
     });
   }
 
-  QueryBuilder<Category, Category, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<Category, Category, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -257,7 +262,8 @@ extension CategoryQueryWhere on QueryBuilder<Category, Category, QWhereClause> {
   }
 }
 
-extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterCondition> {
+extension CategoryQueryFilter
+    on QueryBuilder<Category, Category, QFilterCondition> {
   QueryBuilder<Category, Category, QAfterFilterCondition> categoryIconIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -266,7 +272,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> categoryIconIsNotNull() {
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      categoryIconIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'categoryIcon',
@@ -342,7 +349,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(bool? value) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> isDefaultEqualTo(
+      bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isDefault',
@@ -367,7 +375,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> isVisibleEqualTo(bool? value) {
+  QueryBuilder<Category, Category, QAfterFilterCondition> isVisibleEqualTo(
+      bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isVisible',
@@ -480,7 +489,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -491,7 +501,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -624,7 +635,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> natureContains(String value,
+  QueryBuilder<Category, Category, QAfterFilterCondition> natureContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -635,7 +647,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> natureMatches(String pattern,
+  QueryBuilder<Category, Category, QAfterFilterCondition> natureMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -665,7 +678,8 @@ extension CategoryQueryFilter on QueryBuilder<Category, Category, QFilterConditi
   }
 }
 
-extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterCondition> {
+extension CategoryQueryObject
+    on QueryBuilder<Category, Category, QFilterCondition> {
   QueryBuilder<Category, Category, QAfterFilterCondition> categoryIcon(
       FilterQuery<CategoryIcon> q) {
     return QueryBuilder.apply(this, (query) {
@@ -674,32 +688,38 @@ extension CategoryQueryObject on QueryBuilder<Category, Category, QFilterConditi
   }
 }
 
-extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterCondition> {
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactions(FilterQuery<Transaction> q) {
+extension CategoryQueryLinks
+    on QueryBuilder<Category, Category, QFilterCondition> {
+  QueryBuilder<Category, Category, QAfterFilterCondition> transactions(
+      FilterQuery<Transaction> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'transactions');
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthEqualTo(int length) {
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      transactionsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', length, true, length, true);
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsIsEmpty() {
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      transactionsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsIsNotEmpty() {
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      transactionsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, false, 999999, true);
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthLessThan(
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      transactionsLengthLessThan(
     int length, {
     bool include = false,
   }) {
@@ -708,7 +728,8 @@ extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterConditio
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthGreaterThan(
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      transactionsLengthGreaterThan(
     int length, {
     bool include = false,
   }) {
@@ -717,14 +738,16 @@ extension CategoryQueryLinks on QueryBuilder<Category, Category, QFilterConditio
     });
   }
 
-  QueryBuilder<Category, Category, QAfterFilterCondition> transactionsLengthBetween(
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      transactionsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'transactions', lower, includeLower, upper, includeUpper);
+      return query.linkLength(
+          r'transactions', lower, includeLower, upper, includeUpper);
     });
   }
 }
@@ -779,7 +802,8 @@ extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
   }
 }
 
-extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenBy> {
+extension CategoryQuerySortThenBy
+    on QueryBuilder<Category, Category, QSortThenBy> {
   QueryBuilder<Category, Category, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -841,7 +865,8 @@ extension CategoryQuerySortThenBy on QueryBuilder<Category, Category, QSortThenB
   }
 }
 
-extension CategoryQueryWhereDistinct on QueryBuilder<Category, Category, QDistinct> {
+extension CategoryQueryWhereDistinct
+    on QueryBuilder<Category, Category, QDistinct> {
   QueryBuilder<Category, Category, QDistinct> distinctByIsDefault() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDefault');
@@ -854,27 +879,31 @@ extension CategoryQueryWhereDistinct on QueryBuilder<Category, Category, QDistin
     });
   }
 
-  QueryBuilder<Category, Category, QDistinct> distinctByName({bool caseSensitive = true}) {
+  QueryBuilder<Category, Category, QDistinct> distinctByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Category, Category, QDistinct> distinctByNature({bool caseSensitive = true}) {
+  QueryBuilder<Category, Category, QDistinct> distinctByNature(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nature', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension CategoryQueryProperty on QueryBuilder<Category, Category, QQueryProperty> {
+extension CategoryQueryProperty
+    on QueryBuilder<Category, Category, QQueryProperty> {
   QueryBuilder<Category, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Category, CategoryIcon?, QQueryOperations> categoryIconProperty() {
+  QueryBuilder<Category, CategoryIcon?, QQueryOperations>
+      categoryIconProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'categoryIcon');
     });
@@ -1011,8 +1040,10 @@ P _categoryIconDeserializeProp<P>(
   }
 }
 
-extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QFilterCondition> {
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> codePointEqualTo(int value) {
+extension CategoryIconQueryFilter
+    on QueryBuilder<CategoryIcon, CategoryIcon, QFilterCondition> {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      codePointEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'codePoint',
@@ -1021,7 +1052,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> codePointGreaterThan(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      codePointGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -1034,7 +1066,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> codePointLessThan(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      codePointLessThan(
     int value, {
     bool include = false,
   }) {
@@ -1047,7 +1080,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> codePointBetween(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      codePointBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1064,7 +1098,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyIsNull() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'fontFamily',
@@ -1072,7 +1107,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyIsNotNull() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'fontFamily',
@@ -1080,7 +1116,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyEqualTo(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1093,7 +1130,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyGreaterThan(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1108,7 +1146,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyLessThan(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1123,7 +1162,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyBetween(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1142,7 +1182,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyStartsWith(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1155,7 +1196,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyEndsWith(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1168,8 +1210,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'fontFamily',
@@ -1179,8 +1221,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'fontFamily',
@@ -1190,7 +1232,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyIsEmpty() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'fontFamily',
@@ -1199,7 +1242,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontFamilyIsNotEmpty() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontFamilyIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'fontFamily',
@@ -1208,7 +1252,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageIsNull() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'fontPackage',
@@ -1216,7 +1261,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageIsNotNull() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'fontPackage',
@@ -1224,7 +1270,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageEqualTo(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1237,7 +1284,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageGreaterThan(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1252,7 +1300,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageLessThan(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1267,7 +1316,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageBetween(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1286,7 +1336,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageStartsWith(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1299,7 +1350,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageEndsWith(
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1312,8 +1364,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'fontPackage',
@@ -1323,8 +1375,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'fontPackage',
@@ -1334,7 +1386,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageIsEmpty() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'fontPackage',
@@ -1343,7 +1396,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> fontPackageIsNotEmpty() {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      fontPackageIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'fontPackage',
@@ -1352,8 +1406,8 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
     });
   }
 
-  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition> matchTextDirectionEqualTo(
-      bool value) {
+  QueryBuilder<CategoryIcon, CategoryIcon, QAfterFilterCondition>
+      matchTextDirectionEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'matchTextDirection',
@@ -1363,4 +1417,5 @@ extension CategoryIconQueryFilter on QueryBuilder<CategoryIcon, CategoryIcon, QF
   }
 }
 
-extension CategoryIconQueryObject on QueryBuilder<CategoryIcon, CategoryIcon, QFilterCondition> {}
+extension CategoryIconQueryObject
+    on QueryBuilder<CategoryIcon, CategoryIcon, QFilterCondition> {}

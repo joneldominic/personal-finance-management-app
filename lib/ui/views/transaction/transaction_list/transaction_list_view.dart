@@ -7,44 +7,82 @@ import 'package:personal_finance_management_app/ui/views/main/main_viewmodel.dar
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_list/transaction_list_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+// ignore: must_be_immutable
 class TransactionListView extends StatelessWidget {
-  const TransactionListView({
+  TransactionListView({
     Key? key,
   }) : super(key: key);
+
+  static const snackBarDuration = Duration(seconds: 2);
+
+  final snackBar = const SnackBar(
+    content: Text(
+      "Press Back again to quit the app",
+      textAlign: TextAlign.center,
+    ),
+    duration: snackBarDuration,
+  );
+
+  DateTime backButtonPressTime = DateTime.utc(1989, DateTime.november, 9);
 
   @override
   Widget build(BuildContext context) {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
     final mainViewModel = getParentViewModel<MainViewModel>(context);
 
-    return ViewModelBuilder<TransactionListViewModel>.reactive(
-      viewModelBuilder: () => TransactionListViewModel(),
-      builder: (context, model, child) => Container(
-        color: customTheme.contrastBackgroundColor,
-        child: ConditionalAsyncWrapper(
-          isLoading: !mainViewModel.transactionsReady,
-          showFallback: mainViewModel.transactions.isEmpty,
-          fallback: Center(
-            child: ThemeText.listItemTitle(
-              "No transaction available",
-              color: customTheme.subTitleColor,
+    return Scaffold(
+      body: Builder(
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () => handleWillPop(context),
+            child: ViewModelBuilder<TransactionListViewModel>.reactive(
+              viewModelBuilder: () => TransactionListViewModel(),
+              builder: (context, model, child) => Container(
+                color: customTheme.contrastBackgroundColor,
+                child: ConditionalAsyncWrapper(
+                  isLoading: !mainViewModel.transactionsReady,
+                  showFallback: mainViewModel.transactions.isEmpty,
+                  fallback: Center(
+                    child: ThemeText.listItemTitle(
+                      "No transaction available",
+                      color: customTheme.subTitleColor,
+                    ),
+                  ),
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: mainViewModel.transactions.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final transaction = mainViewModel.transactions[index];
+                      return TransactionListItem(
+                        transaction: transaction,
+                        onTap: () => model.navigateToTransactionDetailEditMode(transaction),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  ),
+                ),
+              ),
             ),
-          ),
-          child: ListView.separated(
-            padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
-            physics: const BouncingScrollPhysics(),
-            itemCount: mainViewModel.transactions.length,
-            itemBuilder: (BuildContext context, int index) {
-              final transaction = mainViewModel.transactions[index];
-              return TransactionListItem(
-                transaction: transaction,
-                onTap: () => model.navigateToTransactionDetailEditMode(transaction),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
-          ),
-        ),
+          );
+        },
       ),
     );
+  }
+
+  final GlobalKey<ScaffoldMessengerState> snackbarKey = GlobalKey<ScaffoldMessengerState>();
+
+  Future<bool> handleWillPop(BuildContext context) async {
+    final now = DateTime.now();
+    final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
+        now.difference(backButtonPressTime) > snackBarDuration;
+
+    if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
+      backButtonPressTime = now;
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return false;
+    }
+
+    return true;
   }
 }

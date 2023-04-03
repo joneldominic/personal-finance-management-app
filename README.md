@@ -120,7 +120,7 @@ Light Mode            |  Dark Mode
    ```sh
    flutter build apk --release --no-tree-shake-icons
    ```
-   - if you're getting "missing whatsap icons" when trying to runn the app, it could be because the newest flutter version is incompatible, if so, you need to downgrade your flutter version to an older build and try again. Version 3.3 was tested and works as intended.
+   - if you're getting "missing whatsapp icons" when trying to run the app, it could be because the newest flutter version is incompatible, if so, you need to downgrade your flutter version to an older build and try again. Version 3.3 was tested and works as intended.
   
 
 

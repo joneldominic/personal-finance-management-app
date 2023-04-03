@@ -26,6 +26,7 @@ class MainView extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     const int defaultViewIndex = 1;
+    MainViewModel mainViewModel = MainViewModel();
 
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
@@ -33,26 +34,29 @@ class MainView extends StatelessWidget {
       initialiseSpecialViewModelsOnce: true,
       fireOnModelReadyOnce: true,
       builder: (context, model, child) {
-        return Scaffold(
-          floatingActionButton: Visibility(
-            visible: model.currentIndex != 2,
-            child: CustomFloatingActionButton(
-              icon: const Icon(Icons.add_rounded),
-              label: "Add Transaction",
-              onPressed: model.navigateToTransactionDetail,
+        return WillPopScope(
+          onWillPop: () => mainViewModel.handleWillPop(context),
+          child: Scaffold(
+            floatingActionButton: Visibility(
+              visible: model.currentIndex != 2,
+              child: CustomFloatingActionButton(
+                icon: const Icon(Icons.add_rounded),
+                label: "Add Transaction",
+                onPressed: model.navigateToTransactionDetail,
+              ),
             ),
-          ),
-          appBar: _getAppBarForIndex(model.currentIndex),
-          body: _getViewForIndex(model.currentIndex),
-          bottomNavigationBar: BottomNavigationBar(
-            items: _getBottomNavItems(customTheme),
-            currentIndex: model.currentIndex,
-            selectedItemColor: customTheme.primaryAccent,
-            unselectedItemColor: Colors.white,
-            backgroundColor: customTheme.appBarBackgroundColor,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            onTap: model.setIndex,
+            appBar: _getAppBarForIndex(model.currentIndex),
+            body: _getViewForIndex(model.currentIndex),
+            bottomNavigationBar: BottomNavigationBar(
+              items: _getBottomNavItems(customTheme),
+              currentIndex: model.currentIndex,
+              selectedItemColor: customTheme.primaryAccent,
+              unselectedItemColor: Colors.white,
+              backgroundColor: customTheme.appBarBackgroundColor,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              onTap: model.setIndex,
+            ),
           ),
         );
       },
@@ -92,11 +96,11 @@ class MainView extends StatelessWidget {
   Widget _getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return TransactionListView();
+        return const TransactionListView();
       case 1:
-        return HomeView();
+        return const HomeView();
       case 2:
-        return SettingsView();
+        return const SettingsView();
       default:
         throw ArgumentError();
     }

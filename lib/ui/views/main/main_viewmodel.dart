@@ -10,6 +10,7 @@ import 'package:personal_finance_management_app/services/cashflow_service.dart';
 import 'package:personal_finance_management_app/services/transaction_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter/material.dart';
 
 const String _accountStreamKey = 'account-stream';
 const String _transactionStreamKey = 'transaction-stream';
@@ -51,5 +52,34 @@ class MainViewModel extends MultipleStreamViewModel {
   void navigateToTransactionDetail() {
     _logger.i('argument: NONE');
     _navigationService.navigateToTransactionDetailView();
+  }
+
+  // The logic of the Back button quitting confirmation
+  static const snackBarDuration = Duration(seconds: 2);
+
+  final snackBar = const SnackBar(
+    content: Text(
+      "Press Back again to quit the app",
+      textAlign: TextAlign.center,
+    ),
+    duration: snackBarDuration,
+  );
+
+  DateTime backButtonPressTime = DateTime.utc(1989, DateTime.november, 9);
+
+  final GlobalKey<ScaffoldMessengerState> snackbarKey = GlobalKey<ScaffoldMessengerState>();
+
+  Future<bool> handleWillPop(BuildContext context) async {
+    final now = DateTime.now();
+    final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
+        now.difference(backButtonPressTime) > snackBarDuration;
+
+    if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
+      backButtonPressTime = now;
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return false;
+    }
+
+    return true;
   }
 }

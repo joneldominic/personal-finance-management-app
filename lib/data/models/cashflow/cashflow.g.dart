@@ -179,8 +179,7 @@ extension CashFlowQueryWhere on QueryBuilder<CashFlow, CashFlow, QWhereClause> {
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<CashFlow, CashFlow, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -188,8 +187,7 @@ extension CashFlowQueryWhere on QueryBuilder<CashFlow, CashFlow, QWhereClause> {
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<CashFlow, CashFlow, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -214,8 +212,7 @@ extension CashFlowQueryWhere on QueryBuilder<CashFlow, CashFlow, QWhereClause> {
   }
 }
 
-extension CashFlowQueryFilter
-    on QueryBuilder<CashFlow, CashFlow, QFilterCondition> {
+extension CashFlowQueryFilter on QueryBuilder<CashFlow, CashFlow, QFilterCondition> {
   QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> daysCountIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -232,8 +229,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> daysCountEqualTo(
-      int? value) {
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> daysCountEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'daysCount',
@@ -363,8 +359,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      expensesPercentageIsNull() {
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> expensesPercentageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'expensesPercentage',
@@ -372,8 +367,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      expensesPercentageIsNotNull() {
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> expensesPercentageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'expensesPercentage',
@@ -381,8 +375,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      expensesPercentageEqualTo(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> expensesPercentageEqualTo(
     double? value, {
     double epsilon = Query.epsilon,
   }) {
@@ -395,8 +388,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      expensesPercentageGreaterThan(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> expensesPercentageGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -411,8 +403,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      expensesPercentageLessThan(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> expensesPercentageLessThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -427,8 +418,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      expensesPercentageBetween(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> expensesPercentageBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -593,8 +583,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      incomePercentageIsNull() {
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> incomePercentageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'incomePercentage',
@@ -602,8 +591,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      incomePercentageIsNotNull() {
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> incomePercentageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'incomePercentage',
@@ -611,8 +599,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      incomePercentageEqualTo(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> incomePercentageEqualTo(
     double? value, {
     double epsilon = Query.epsilon,
   }) {
@@ -625,8 +612,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      incomePercentageGreaterThan(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> incomePercentageGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -641,8 +627,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      incomePercentageLessThan(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> incomePercentageLessThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -657,8 +642,7 @@ extension CashFlowQueryFilter
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition>
-      incomePercentageBetween(
+  QueryBuilder<CashFlow, CashFlow, QAfterFilterCondition> incomePercentageBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -756,11 +740,9 @@ extension CashFlowQueryFilter
   }
 }
 
-extension CashFlowQueryObject
-    on QueryBuilder<CashFlow, CashFlow, QFilterCondition> {}
+extension CashFlowQueryObject on QueryBuilder<CashFlow, CashFlow, QFilterCondition> {}
 
-extension CashFlowQueryLinks
-    on QueryBuilder<CashFlow, CashFlow, QFilterCondition> {}
+extension CashFlowQueryLinks on QueryBuilder<CashFlow, CashFlow, QFilterCondition> {}
 
 extension CashFlowQuerySortBy on QueryBuilder<CashFlow, CashFlow, QSortBy> {
   QueryBuilder<CashFlow, CashFlow, QAfterSortBy> sortByDaysCount() {
@@ -793,8 +775,7 @@ extension CashFlowQuerySortBy on QueryBuilder<CashFlow, CashFlow, QSortBy> {
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterSortBy>
-      sortByExpensesPercentageDesc() {
+  QueryBuilder<CashFlow, CashFlow, QAfterSortBy> sortByExpensesPercentageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'expensesPercentage', Sort.desc);
     });
@@ -837,8 +818,7 @@ extension CashFlowQuerySortBy on QueryBuilder<CashFlow, CashFlow, QSortBy> {
   }
 }
 
-extension CashFlowQuerySortThenBy
-    on QueryBuilder<CashFlow, CashFlow, QSortThenBy> {
+extension CashFlowQuerySortThenBy on QueryBuilder<CashFlow, CashFlow, QSortThenBy> {
   QueryBuilder<CashFlow, CashFlow, QAfterSortBy> thenByDaysCount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'daysCount', Sort.asc);
@@ -869,8 +849,7 @@ extension CashFlowQuerySortThenBy
     });
   }
 
-  QueryBuilder<CashFlow, CashFlow, QAfterSortBy>
-      thenByExpensesPercentageDesc() {
+  QueryBuilder<CashFlow, CashFlow, QAfterSortBy> thenByExpensesPercentageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'expensesPercentage', Sort.desc);
     });
@@ -925,8 +904,7 @@ extension CashFlowQuerySortThenBy
   }
 }
 
-extension CashFlowQueryWhereDistinct
-    on QueryBuilder<CashFlow, CashFlow, QDistinct> {
+extension CashFlowQueryWhereDistinct on QueryBuilder<CashFlow, CashFlow, QDistinct> {
   QueryBuilder<CashFlow, CashFlow, QDistinct> distinctByDaysCount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'daysCount');
@@ -964,8 +942,7 @@ extension CashFlowQueryWhereDistinct
   }
 }
 
-extension CashFlowQueryProperty
-    on QueryBuilder<CashFlow, CashFlow, QQueryProperty> {
+extension CashFlowQueryProperty on QueryBuilder<CashFlow, CashFlow, QQueryProperty> {
   QueryBuilder<CashFlow, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
@@ -984,8 +961,7 @@ extension CashFlowQueryProperty
     });
   }
 
-  QueryBuilder<CashFlow, double?, QQueryOperations>
-      expensesPercentageProperty() {
+  QueryBuilder<CashFlow, double?, QQueryOperations> expensesPercentageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'expensesPercentage');
     });

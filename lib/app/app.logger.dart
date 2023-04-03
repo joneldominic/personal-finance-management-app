@@ -33,14 +33,12 @@ class SimpleLogPrinter extends LogPrinter {
     var emoji = PrettyPrinter.levelEmojis[event.level];
     var methodName = _getMethodName();
 
-    var methodNameSection =
-        printCallingFunctionName && methodName != null ? ' | $methodName ' : '';
+    var methodNameSection = printCallingFunctionName && methodName != null ? ' | $methodName ' : '';
     var stackLog = event.stackTrace.toString();
     var output =
         '$emoji $className$methodNameSection - ${event.message}${printCallStack ? '\nSTACKTRACE:\n$stackLog' : ''}';
 
-    if (exludeLogsFromClasses
-            .any((excludeClass) => className == excludeClass) ||
+    if (exludeLogsFromClasses.any((excludeClass) => className == excludeClass) ||
         (showOnlyClass != null && className != showOnlyClass)) return [];
 
     final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
@@ -65,12 +63,10 @@ class SimpleLogPrinter extends LogPrinter {
       final formattedStacktrace = _formatStackTrace(currentStack, 3);
       if (kIsWeb) {
         final classNameParts = _splitClassNameWords(className);
-        return _findMostMatchedTrace(formattedStacktrace!, classNameParts)
-            .split(' ')
-            .last;
+        return _findMostMatchedTrace(formattedStacktrace!, classNameParts).split(' ').last;
       } else {
-        final realFirstLine = formattedStacktrace
-            ?.firstWhere((line) => line.contains(className), orElse: () => "");
+        final realFirstLine =
+            formattedStacktrace?.firstWhere((line) => line.contains(className), orElse: () => "");
 
         final methodName = realFirstLine?.replaceAll('$className.', '');
         return methodName;
@@ -82,21 +78,15 @@ class SimpleLogPrinter extends LogPrinter {
   }
 
   List<String> _splitClassNameWords(String className) {
-    return className
-        .split(RegExp(r"(?=[A-Z])"))
-        .map((e) => e.toLowerCase())
-        .toList();
+    return className.split(RegExp(r"(?=[A-Z])")).map((e) => e.toLowerCase()).toList();
   }
 
   /// When the faulty word exists in the begging this method will not be very usefull
-  String _findMostMatchedTrace(
-      List<String> stackTraces, List<String> keyWords) {
-    String match = stackTraces.firstWhere(
-        (trace) => _doesTraceContainsAllKeywords(trace, keyWords),
+  String _findMostMatchedTrace(List<String> stackTraces, List<String> keyWords) {
+    String match = stackTraces.firstWhere((trace) => _doesTraceContainsAllKeywords(trace, keyWords),
         orElse: () => '');
     if (match.isEmpty) {
-      match = _findMostMatchedTrace(
-          stackTraces, keyWords.sublist(0, keyWords.length - 1));
+      match = _findMostMatchedTrace(stackTraces, keyWords.sublist(0, keyWords.length - 1));
     }
     return match;
   }

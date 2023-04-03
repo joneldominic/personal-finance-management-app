@@ -153,8 +153,7 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
   }) async {
     return navigateTo(
       Routes.mainView,
@@ -170,8 +169,7 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
   }) async {
     return navigateTo(
       Routes.accountSettingsView,
@@ -188,8 +186,7 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
   }) async {
     return navigateTo(
       Routes.accountDetailView,
@@ -207,13 +204,11 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
   }) async {
     return navigateTo(
       Routes.transactionDetailView,
-      arguments:
-          TransactionDetailViewArguments(key: key, transaction: transaction),
+      arguments: TransactionDetailViewArguments(key: key, transaction: transaction),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,
@@ -225,8 +220,7 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
   }) async {
     return navigateTo(
       Routes.categoryListView,
@@ -243,8 +237,7 @@ extension NavigatorStateExtension on NavigationService {
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
   }) async {
     return navigateTo(
       Routes.categoryDetailView,

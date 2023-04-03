@@ -17,11 +17,9 @@ import '../services/transaction_service.dart';
 
 final locator = StackedLocator.instance;
 
-Future<void> setupLocator(
-    {String? environment, EnvironmentFilter? environmentFilter}) async {
+Future<void> setupLocator({String? environment, EnvironmentFilter? environmentFilter}) async {
 // Register environments
-  locator.registerEnvironment(
-      environment: environment, environmentFilter: environmentFilter);
+  locator.registerEnvironment(environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());

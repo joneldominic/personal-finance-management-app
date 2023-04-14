@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
+import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/models/account/account.dart';
 import 'package:personal_finance_management_app/data/models/cashflow/cashflow.dart';
@@ -24,9 +26,12 @@ class MainViewModel extends MultipleStreamViewModel {
   final _accountService = locator<AccountService>();
   final _transactionService = locator<TransactionService>();
   final _cashFlowService = locator<CashFlowService>();
+  final _snackbarService = locator<SnackbarService>();
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
+
+  DateTime? backButtonPressTime;
 
   void setIndex(int value) {
     _currentIndex = value;
@@ -51,5 +56,29 @@ class MainViewModel extends MultipleStreamViewModel {
   void navigateToTransactionDetail() {
     _logger.i('argument: NONE');
     _navigationService.navigateToTransactionDetailView();
+  }
+
+  Future<bool> handleWillPop() {
+    _logger.i('argument: NONE');
+    final now = DateTime.now();
+    const duration = Duration(seconds: 2);
+
+    final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
+        backButtonPressTime == null || now.difference(backButtonPressTime!) > duration;
+
+    _logger.e(
+        'backButtonHasNotBeenPressedOrSnackBarHasBeenClosed: $backButtonHasNotBeenPressedOrSnackBarHasBeenClosed');
+    if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
+      backButtonPressTime = now;
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.main,
+        message: "Press Back again to quit the app",
+        duration: duration,
+        onTap: () {},
+      );
+      return Future.value(false);
+    }
+
+    return Future.value(true);
   }
 }

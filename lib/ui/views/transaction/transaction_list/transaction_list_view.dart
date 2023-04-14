@@ -21,27 +21,30 @@ class TransactionListView extends StatelessWidget {
       viewModelBuilder: () => TransactionListViewModel(),
       builder: (context, model, child) => Container(
         color: customTheme.contrastBackgroundColor,
-        child: ConditionalAsyncWrapper(
-          isLoading: !mainViewModel.transactionsReady,
-          showFallback: mainViewModel.transactions.isEmpty,
-          fallback: Center(
-            child: ThemeText.listItemTitle(
-              "No transaction available",
-              color: customTheme.subTitleColor,
+        child: WillPopScope(
+          onWillPop: () => mainViewModel.handleWillPop(),
+          child: ConditionalAsyncWrapper(
+            isLoading: !mainViewModel.transactionsReady,
+            showFallback: mainViewModel.transactions.isEmpty,
+            fallback: Center(
+              child: ThemeText.listItemTitle(
+                "No transaction available",
+                color: customTheme.subTitleColor,
+              ),
             ),
-          ),
-          child: ListView.separated(
-            padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
-            physics: const BouncingScrollPhysics(),
-            itemCount: mainViewModel.transactions.length,
-            itemBuilder: (BuildContext context, int index) {
-              final transaction = mainViewModel.transactions[index];
-              return TransactionListItem(
-                transaction: transaction,
-                onTap: () => model.navigateToTransactionDetailEditMode(transaction),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(7, 10, 7, 90),
+              physics: const BouncingScrollPhysics(),
+              itemCount: mainViewModel.transactions.length,
+              itemBuilder: (BuildContext context, int index) {
+                final transaction = mainViewModel.transactions[index];
+                return TransactionListItem(
+                  transaction: transaction,
+                  onTap: () => model.navigateToTransactionDetailEditMode(transaction),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) => const Divider(),
+            ),
           ),
         ),
       ),

@@ -58,9 +58,13 @@ class MainViewModel extends MultipleStreamViewModel {
   static const snackBarDuration = Duration(seconds: 2);
 
   final snackBar = const SnackBar(
+    backgroundColor: Color(0xFF303030),
     content: Text(
       "Press Back again to quit the app",
       textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Colors.white,
+      ),
     ),
     duration: snackBarDuration,
   );

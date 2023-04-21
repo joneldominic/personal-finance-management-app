@@ -26,7 +26,6 @@ class MainView extends StatelessWidget {
     final customTheme = Theme.of(context).extension<CustomTheme>()!;
 
     const int defaultViewIndex = 1;
-    MainViewModel mainViewModel = MainViewModel();
 
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
@@ -35,7 +34,7 @@ class MainView extends StatelessWidget {
       fireOnModelReadyOnce: true,
       builder: (context, model, child) {
         return WillPopScope(
-          onWillPop: () => mainViewModel.handleWillPop(context),
+          onWillPop: () => model.handleWillPop(context),
           child: Scaffold(
             floatingActionButton: Visibility(
               visible: model.currentIndex != 2,

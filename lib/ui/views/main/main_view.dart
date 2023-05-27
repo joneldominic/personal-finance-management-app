@@ -42,7 +42,10 @@ class MainView extends StatelessWidget {
             ),
           ),
           appBar: _getAppBarForIndex(model.currentIndex),
-          body: _getViewForIndex(model.currentIndex),
+          body: WillPopScope(
+            child: _getViewForIndex(model.currentIndex),
+            onWillPop: () => model.handleWillPop(),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             items: _getBottomNavItems(customTheme),
             currentIndex: model.currentIndex,

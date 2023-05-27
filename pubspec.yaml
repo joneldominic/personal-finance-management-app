@@ -73,9 +73,15 @@ dev_dependencies:
   # Isar Dependencies
   isar_generator: ^3.0.0
 
-  # Custom Dependencies
-  # freezed: ^2.0.3+1
+  # Launcher Icon Dependencies
+  flutter_launcher_icons: ^0.11.0
 
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  adaptive_icon_foreground: "assets/images/icon_foreground.png"
+  adaptive_icon_background: "#fcc44c" 
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

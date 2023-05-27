@@ -11,6 +11,7 @@ void setupSnackbarUi() {
     config: SnackbarConfig(
       borderRadius: 5,
       margin: const EdgeInsets.all(10),
+      instantInit: true,
     ),
   );
 }

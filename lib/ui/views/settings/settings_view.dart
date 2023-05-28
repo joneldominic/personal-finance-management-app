@@ -109,7 +109,7 @@ class SettingsView extends StatelessWidget {
                         _buildListTile(
                           iconData: Icons.info_rounded,
                           title: 'About',
-                          onPressed: () {},
+                          onPressed: () => model.navigateToAbout(),
                           theme: customTheme,
                         ),
                       ],

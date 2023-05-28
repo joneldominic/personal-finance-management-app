@@ -34,4 +34,9 @@ class SettingsViewModel extends BaseViewModel {
     _logger.i('argument: NONE');
     _navigationService.navigateToCategoryListView();
   }
+
+  void navigateToProfile() {
+    _logger.i('argument: NONE');
+    _navigationService.navigateToProfileView();
+  }
 }

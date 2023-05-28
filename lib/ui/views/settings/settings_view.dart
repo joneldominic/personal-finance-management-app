@@ -42,12 +42,12 @@ class SettingsView extends StatelessWidget {
                             ),
                           ),
                           title: const ThemeText.heading4(
-                            "Jonel Dominic Tapang",
+                            "Guest User",
                           ),
                           trailing: IconButton(
                             iconSize: 28,
                             color: customTheme.actionButtonColor,
-                            onPressed: () {},
+                            onPressed: () => model.navigateToProfile(),
                             icon: const Icon(Icons.chevron_right_rounded),
                           ),
                         ),

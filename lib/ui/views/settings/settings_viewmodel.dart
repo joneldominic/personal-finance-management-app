@@ -1,6 +1,7 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
 import 'package:personal_finance_management_app/app/app.router.dart';
+import 'package:personal_finance_management_app/core/enums/snackbar_type.dart';
 import 'package:personal_finance_management_app/services/settings_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,6 +14,7 @@ class SettingsViewModel extends BaseViewModel {
   final _logger = getLogger('SettingsViewModel');
   final _settingsService = locator<SettingsService>();
   final _navigationService = locator<NavigationService>();
+  final _snackbarService = locator<SnackbarService>();
 
   bool getIsThemeModeIsDark() {
     _logger.i('argument: NONE');
@@ -38,5 +40,16 @@ class SettingsViewModel extends BaseViewModel {
   void navigateToProfile() {
     _logger.i('argument: NONE');
     _navigationService.navigateToProfileView();
+  }
+
+  void navigateToNotifications() {
+    _logger.i('argument: NONE');
+
+    _snackbarService.showCustomSnackBar(
+      variant: SnackbarType.main,
+      message: "Feature coming soon! Stay tuned for updates.",
+      duration: const Duration(seconds: 2),
+      onTap: () {},
+    );
   }
 }

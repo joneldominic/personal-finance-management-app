@@ -71,7 +71,7 @@ class SettingsView extends StatelessWidget {
                         _buildListTile(
                           iconData: Icons.notification_important_rounded,
                           title: 'Notifications',
-                          onPressed: () {},
+                          onPressed: () => model.navigateToNotifications(),
                           theme: customTheme,
                         ),
                       ],

@@ -36,13 +36,14 @@ class HomeAppBarView extends StatelessWidget with PreferredSizeWidget {
                 ),
               ],
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.person_rounded),
-                tooltip: 'Go to Profile',
-                onPressed: () {},
-              ),
-            ],
+            // INFO: Issue #71
+            // actions: <Widget>[
+            //   IconButton(
+            //     icon: const Icon(Icons.person_rounded),
+            //     tooltip: 'Go to Profile',
+            //     onPressed: () {},
+            //   ),
+            // ],
           );
         });
   }

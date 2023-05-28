@@ -4,10 +4,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/joneldominic/personal-finance-management-app">
-    <img src="images/logo-placeholder-image.png" alt="Logo" height="200">
+    <img src="images/logo.png" alt="Logo" height="200">
   </a>
 
-<h3 align="center">Personal Finance Management App</h3>
+<h2 align="center">Finance Buddy</h2>
 
   <p align="center">
     An open source budget / expense tracker app.

@@ -19,6 +19,7 @@ import '../ui/views/account/account_settings/account_settings_view.dart';
 import '../ui/views/category/category_detail/category_detail_view.dart';
 import '../ui/views/category/category_list/category_list_view.dart';
 import '../ui/views/main/main_view.dart';
+import '../ui/views/profile/profile_view.dart';
 import '../ui/views/transaction/transaction_detail/transaction_detail_view.dart';
 
 class Routes {
@@ -28,6 +29,7 @@ class Routes {
   static const String transactionDetailView = '/transaction-detail-view';
   static const String categoryListView = '/category-list-view';
   static const String categoryDetailView = '/category-detail-view';
+  static const String profileView = '/profile-view';
   static const all = <String>{
     mainView,
     accountSettingsView,
@@ -35,6 +37,7 @@ class Routes {
     transactionDetailView,
     categoryListView,
     categoryDetailView,
+    profileView,
   };
 }
 
@@ -48,6 +51,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.transactionDetailView, page: TransactionDetailView),
     RouteDef(Routes.categoryListView, page: CategoryListView),
     RouteDef(Routes.categoryDetailView, page: CategoryDetailView),
+    RouteDef(Routes.profileView, page: ProfileView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -103,6 +107,12 @@ class StackedRouter extends RouterBase {
           key: args.key,
           category: args.category,
         ),
+        settings: data,
+      );
+    },
+    ProfileView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ProfileView(),
         settings: data,
       );
     },
@@ -231,6 +241,21 @@ extension NavigatorStateExtension on NavigationService {
     return navigateTo(
       Routes.categoryDetailView,
       arguments: CategoryDetailViewArguments(key: key, category: category),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToProfileView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transition,
+  }) async {
+    return navigateTo(
+      Routes.profileView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

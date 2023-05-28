@@ -8,6 +8,7 @@ import 'package:personal_finance_management_app/ui/views/account/account_setting
 import 'package:personal_finance_management_app/ui/views/category/category_detail/category_detail_view.dart';
 import 'package:personal_finance_management_app/ui/views/category/category_list/category_list_view.dart';
 import 'package:personal_finance_management_app/ui/views/main/main_view.dart';
+import 'package:personal_finance_management_app/ui/views/profile/profile_view.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/transaction_detail/transaction_detail_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -19,6 +20,7 @@ import 'package:stacked_services/stacked_services.dart';
   MaterialRoute(page: TransactionDetailView),
   CupertinoRoute(page: CategoryListView),
   MaterialRoute(page: CategoryDetailView),
+  MaterialRoute(page: ProfileView),
 ], dependencies: [
   LazySingleton(classType: NavigationService),
   LazySingleton(classType: DialogService),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
@@ -68,7 +69,7 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Image(
-              image: AssetImage("assets/images/google.png"),
+              image: GOOGLE_LOGO_ASSET_IMAGE,
               height: 22.0,
             ),
             horizontalSpaceSmall,

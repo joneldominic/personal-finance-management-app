@@ -81,6 +81,21 @@ class AboutView extends StatelessWidget {
                     ),
                   ],
                 ),
+                verticalSpaceVeryTiny,
+                _buildCard(
+                  children: [
+                    _buildListTile(
+                      icon: Icon(
+                        CustomIcons.license,
+                        size: 23,
+                        color: customTheme.primaryTextColor,
+                      ),
+                      title: 'License',
+                      onPressed: () => model.onViewLicense(),
+                      theme: customTheme,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

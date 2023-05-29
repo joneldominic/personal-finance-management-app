@@ -49,6 +49,17 @@ class AboutViewModel extends BaseViewModel {
     );
   }
 
+  void onViewLicense() {
+    _logger.i('argument: NONE');
+
+    _snackbarService.showCustomSnackBar(
+      variant: SnackbarType.main,
+      message: "Feature coming soon! Stay tuned for updates.",
+      duration: const Duration(seconds: 2),
+      onTap: () {},
+    );
+  }
+
   void _openLink(Uri uri) async {
     try {
       await launchUrl(uri);

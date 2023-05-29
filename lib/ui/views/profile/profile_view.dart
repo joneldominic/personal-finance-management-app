@@ -20,31 +20,44 @@ class ProfileView extends StatelessWidget {
         appBar: const CustomAppBar(
           title: Text("User Profile"),
         ),
-        backgroundColor: customTheme.contrastBackgroundColor,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              verticalSpaceMediumPlus,
-              Center(
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: customTheme.appBarBackgroundColor,
-                  child: const Icon(
-                    Icons.person_rounded,
-                    size: 30,
-                    color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 20,
+                    ),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: customTheme.appBarBackgroundColor,
+                            child: const Icon(
+                              Icons.person_rounded,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        verticalSpaceSmall,
+                        const Text(
+                          "Guest User",
+                          style: cardTitleStyle,
+                        ),
+                        verticalSpaceLarge,
+                        _buildGoogleSignInButton(onPressed: () => model.handleSignInGoogle())
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              verticalSpaceSmall,
-              const Text(
-                "Guest User",
-                style: cardTitleStyle,
-              ),
-              verticalSpaceLarge,
-              _buildGoogleSignInButton(onPressed: () => model.handleSignInGoogle())
-            ],
+              ],
+            ),
           ),
         ),
       ),

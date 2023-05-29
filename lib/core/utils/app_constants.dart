@@ -31,3 +31,7 @@ const TRANSFER_ICON = IconData(
   fontPackage: "font_awesome_flutter",
   matchTextDirection: false,
 );
+
+/// Asset Constants
+const GOOGLE_LOGO_ASSET_IMAGE = AssetImage("assets/images/google.png");
+const APP_LOGO_ASSET_IMAGE = AssetImage("assets/images/logo.png");

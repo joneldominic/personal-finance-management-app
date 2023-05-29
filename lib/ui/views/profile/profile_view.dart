@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
@@ -19,31 +20,44 @@ class ProfileView extends StatelessWidget {
         appBar: const CustomAppBar(
           title: Text("User Profile"),
         ),
-        backgroundColor: customTheme.contrastBackgroundColor,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              verticalSpaceMediumPlus,
-              Center(
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: customTheme.appBarBackgroundColor,
-                  child: const Icon(
-                    Icons.person_rounded,
-                    size: 30,
-                    color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 20,
+                    ),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: customTheme.appBarBackgroundColor,
+                            child: const Icon(
+                              Icons.person_rounded,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        verticalSpaceSmall,
+                        const Text(
+                          "Guest User",
+                          style: cardTitleStyle,
+                        ),
+                        verticalSpaceLarge,
+                        _buildGoogleSignInButton(onPressed: () => model.handleSignInGoogle())
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              verticalSpaceSmall,
-              const Text(
-                "Guest User",
-                style: cardTitleStyle,
-              ),
-              verticalSpaceLarge,
-              _buildGoogleSignInButton(onPressed: () => model.handleSignInGoogle())
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -68,7 +82,7 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Image(
-              image: AssetImage("assets/images/google.png"),
+              image: GOOGLE_LOGO_ASSET_IMAGE,
               height: 22.0,
             ),
             horizontalSpaceSmall,

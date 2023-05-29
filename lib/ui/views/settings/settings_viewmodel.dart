@@ -52,4 +52,9 @@ class SettingsViewModel extends BaseViewModel {
       onTap: () {},
     );
   }
+
+  void navigateToAbout() {
+    _logger.i('argument: NONE');
+    _navigationService.navigateToAboutView();
+  }
 }

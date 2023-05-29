@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/joneldominic/personal-finance-management-app">
-    <img src="images/logo.png" alt="Logo" height="200">
+    <img src="assets/images/logo.png" alt="Logo" height="200">
   </a>
 
 <h2 align="center">Finance Buddy</h2>

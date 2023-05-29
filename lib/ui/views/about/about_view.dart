@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/assets/custom_icons.dart';
 import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/text_style_helpers.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/ui/components/custom_app_bar.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
+import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 import 'package:personal_finance_management_app/ui/views/about/about_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -52,8 +54,33 @@ class AboutView extends StatelessWidget {
                   "Version $appVersion",
                   style: cardSubTitleStyle,
                 ),
-                verticalSpaceRegular,
+                verticalSpaceMediumPlus,
                 _buildAboutContent(model: model, customTheme: customTheme),
+                verticalSpaceVeryTiny,
+                _buildCard(
+                  children: [
+                    _buildListTile(
+                      icon: Icon(
+                        CustomIcons.github_square,
+                        size: 23,
+                        color: customTheme.primaryTextColor,
+                      ),
+                      title: 'Github Repository',
+                      onPressed: () => model.onOpenGithubRepo(),
+                      theme: customTheme,
+                    ),
+                    _buildListTile(
+                      icon: const Icon(
+                        CustomIcons.star,
+                        size: 20,
+                        color: Color(0xffffa500),
+                      ),
+                      title: 'Rate App',
+                      onPressed: () => model.onRateApp(),
+                      theme: customTheme,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -130,9 +157,33 @@ class AboutView extends StatelessWidget {
   }
 }
 
+ListTile _buildListTile({
+  required CustomTheme theme,
+  required Icon icon,
+  required String title,
+  required void Function() onPressed,
+}) {
+  return ListTile(
+    dense: true,
+    minLeadingWidth: 30,
+    contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+    leading: SizedBox(
+      width: 40,
+      child: icon,
+    ),
+    title: ThemeText.listItemTitle(title),
+    trailing: IconButton(
+      iconSize: 28,
+      color: theme.actionButtonColor,
+      onPressed: onPressed,
+      icon: const Icon(Icons.chevron_right_rounded),
+    ),
+  );
+}
+
 Widget _buildCard({required List<Widget> children}) {
   return Card(
-    margin: const EdgeInsets.all(10),
+    margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
     child: Padding(
       padding: const EdgeInsets.all(10),
       child: Column(

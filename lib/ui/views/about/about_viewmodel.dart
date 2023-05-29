@@ -25,9 +25,31 @@ class AboutViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void onTapLink(Uri uri) async {
+  void onTapLink(Uri uri) {
     _logger.i('argument: $uri');
+    _openLink(uri);
+  }
 
+  void onOpenGithubRepo() {
+    _logger.i('argument: NONE');
+
+    // TODO: Get value from ENV
+    const githubURL = 'https://github.com/joneldominic/personal-finance-management-app';
+    _openLink(Uri.parse(githubURL));
+  }
+
+  void onRateApp() {
+    _logger.i('argument: NONE');
+
+    _snackbarService.showCustomSnackBar(
+      variant: SnackbarType.main,
+      message: "Feature coming soon! Stay tuned for updates.",
+      duration: const Duration(seconds: 2),
+      onTap: () {},
+    );
+  }
+
+  void _openLink(Uri uri) async {
     try {
       await launchUrl(uri);
       _logger.i('Link Opened: $uri');

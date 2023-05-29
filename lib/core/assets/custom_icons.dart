@@ -12,6 +12,10 @@
 ///       - asset: fonts/CustomIcons.ttf
 ///
 ///
+/// * Linearicons Free, Copyright (C) Linearicons.com
+///         Author:    Perxis
+///         License:   CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+///         Homepage:  https://linearicons.com
 /// * Font Awesome 5, Copyright (C) 2016 by Dave Gandy
 ///         Author:    Dave Gandy
 ///         License:   SIL (https://github.com/FortAwesome/Font-Awesome/blob/master/LICENSE.txt)
@@ -29,6 +33,7 @@ class CustomIcons {
 
   static const IconData transactions =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData license = IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData star = IconData(0xf005, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData github_square =
       IconData(0xf092, fontFamily: _kFontFam, fontPackage: _kFontPkg);

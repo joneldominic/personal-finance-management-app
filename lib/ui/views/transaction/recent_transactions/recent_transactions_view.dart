@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/enums/time_period.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/ui/components/conditional_async_wrapper.dart';
+import 'package:personal_finance_management_app/ui/components/generic_pop_up_menu_button.dart';
 import 'package:personal_finance_management_app/ui/components/transaction_list_item.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
@@ -33,11 +36,12 @@ class RecentTransactionsView extends StatelessWidget {
                   ThemeText.cardSubTitle('Last 30 Days'),
                 ],
               ),
-              trailing: IconButton(
-                icon: const Icon(Icons.more_vert_rounded),
-                iconSize: 20,
-                color: customTheme.actionButtonColor,
-                onPressed: () {},
+              trailing: GenericPopupMenuButton<TimePeriod>(
+                items: TIME_PERIOD_MENU_ITEMS_SHORT,
+                onItemSelected: (TimePeriod selectedValue) {
+                  // TODO: Handle the selected value
+                  print('Selected value: $selectedValue');
+                },
               ),
             ),
             ConditionalAsyncWrapper(

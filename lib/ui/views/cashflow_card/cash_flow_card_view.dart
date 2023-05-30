@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:personal_finance_management_app/core/enums/time_period.dart';
 import 'package:personal_finance_management_app/core/enums/transaction_type.dart';
+import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/core/utils/currency_formatter.dart';
 import 'package:personal_finance_management_app/core/utils/ui_helpers.dart';
 import 'package:personal_finance_management_app/data/models/cashflow/cashflow.dart';
+import 'package:personal_finance_management_app/ui/components/generic_pop_up_menu_button.dart';
 import 'package:personal_finance_management_app/ui/themes/custom_theme.dart';
 import 'package:personal_finance_management_app/ui/themes/theme_text.dart';
 import 'package:personal_finance_management_app/ui/views/cashflow_card/cash_flow_card_viewmodel.dart';
@@ -36,11 +39,12 @@ class CashFlowCardView extends StatelessWidget {
                       ThemeText.cardSubTitle('Last 30 Days'),
                     ],
                   ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.more_vert_rounded),
-                    iconSize: 20,
-                    color: customTheme.actionButtonColor,
-                    onPressed: () {},
+                  trailing: GenericPopupMenuButton<TimePeriod>(
+                    items: TIME_PERIOD_MENU_ITEMS_LONG,
+                    onItemSelected: (TimePeriod selectedValue) {
+                      // TODO: Handle the selected value
+                      print('Selected value: $selectedValue');
+                    },
                   ),
                 ),
                 Padding(

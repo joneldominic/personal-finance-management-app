@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_finance_management_app/ui/components/cash_flow_card.dart';
+import 'package:personal_finance_management_app/ui/views/cashflow_card/cash_flow_card_view.dart';
 import 'package:personal_finance_management_app/ui/views/transaction/recent_transactions/recent_transactions_view.dart';
 import 'package:personal_finance_management_app/ui/views/account/accounts_card/accounts_card_view.dart';
 
@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
         child: Column(
           children: const [
             AccountsCard(),
-            CashFlowCard(),
+            CashFlowCardView(),
             RecentTransactionsView(),
           ],
         ),

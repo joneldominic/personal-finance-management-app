@@ -16,6 +16,11 @@ class CashFlowRepository {
     return cashFlowDao.createCashFlow(cashflow);
   }
 
+  Future<CashFlow> updateCashFlowDaysCount(CashFlow cashFlow) async {
+    _logger.i('argument: $cashFlow');
+    return cashFlowDao.updateCashFlowDaysCount(cashFlow);
+  }
+
   Stream<CashFlow?> watchCashFlow() async* {
     _logger.i('argument: NONE');
     yield* cashFlowDao.watchCashFlowById(CASH_FLOW_ID);

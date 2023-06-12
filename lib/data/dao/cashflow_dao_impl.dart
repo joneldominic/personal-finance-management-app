@@ -43,9 +43,9 @@ class CashFlowDaoImpl extends CashFlowDao {
     });
   }
 
-  void syncCashFlow(List<Transaction> transactions) async {
-    final cashFlow = await getCashFlowById(CASH_FLOW_ID);
-    if (cashFlow == null) return;
+  Future<CashFlow?> syncCashFlow(List<Transaction> transactions, {CashFlow? cashFlow}) async {
+    final tempCashFlow = cashFlow ?? await getCashFlowById(CASH_FLOW_ID);
+    if (tempCashFlow == null) return null;
 
     final now = DateTime.now();
     final filteredTransactions = transactions.where((t) {
@@ -54,7 +54,7 @@ class CashFlowDaoImpl extends CashFlowDao {
       t.account.loadSync();
       final isAccountSelected = t.account.value?.isSelected ?? false;
 
-      return (difference.inDays < cashFlow.daysCount! && isAccountSelected);
+      return (difference.inDays < tempCashFlow.daysCount! && isAccountSelected);
     });
 
     Decimal incomeAcc = Decimal.zero;
@@ -79,22 +79,22 @@ class CashFlowDaoImpl extends CashFlowDao {
             ((incomeAcc.toDouble() + tempExpenseAccAbs) / 2));
     Decimal tempNet = incomeAcc - Decimal.parse(tempExpenseAccAbs.toString());
 
-    cashFlow.net = tempNet.toDouble();
-    cashFlow.income = incomeAcc.toDouble();
-    cashFlow.expenses = expensesAcc.toDouble();
+    tempCashFlow.net = tempNet.toDouble();
+    tempCashFlow.income = incomeAcc.toDouble();
+    tempCashFlow.expenses = expensesAcc.toDouble();
 
     if (tempNet.toDouble() == 0) {
-      cashFlow.incomePercentage = 0;
-      cashFlow.expensesPercentage = 0;
+      tempCashFlow.incomePercentage = 0;
+      tempCashFlow.expensesPercentage = 0;
     } else if (tempNet.toDouble() > 0) {
-      cashFlow.incomePercentage = 1.0;
-      cashFlow.expensesPercentage = percentageDiff;
+      tempCashFlow.incomePercentage = 1.0;
+      tempCashFlow.expensesPercentage = percentageDiff;
     } else {
-      cashFlow.incomePercentage = percentageDiff;
-      cashFlow.expensesPercentage = 1.0;
+      tempCashFlow.incomePercentage = percentageDiff;
+      tempCashFlow.expensesPercentage = 1.0;
     }
 
-    await updateCashFlow(cashFlow);
+    return updateCashFlow(tempCashFlow);
   }
 
   @override

@@ -5,5 +5,6 @@ abstract class CashFlowDao {
   Future<CashFlow> createCashFlow(CashFlow cashFlow);
   Future<CashFlow?> getCashFlowById(Id id);
   Future<CashFlow> updateCashFlow(CashFlow cashFlow);
+  Future<CashFlow> updateCashFlowDaysCount(CashFlow cashFlow);
   Stream<CashFlow?> watchCashFlowById(Id id);
 }

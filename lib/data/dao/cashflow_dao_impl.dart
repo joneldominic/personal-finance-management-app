@@ -142,6 +142,21 @@ class CashFlowDaoImpl extends CashFlowDao {
   }
 
   @override
+  Future<CashFlow> updateCashFlowDaysCount(CashFlow cashFlow) async {
+    _logger.i('argument: $cashFlow');
+
+    Isar isar = await _db;
+
+    final transactionCollection = isar.transactions;
+    final cashFlowCollection = isar.cashFlows;
+
+    final transactions = transactionCollection.where().findAllSync();
+    final updatedCashFlow = await syncCashFlow(transactions, cashFlow: cashFlow);
+
+    return updatedCashFlow!;
+  }
+
+  @override
   Stream<CashFlow?> watchCashFlowById(Id id) async* {
     _logger.i('argument: $id');
 

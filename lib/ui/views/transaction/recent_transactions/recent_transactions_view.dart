@@ -33,15 +33,7 @@ class RecentTransactionsView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   ThemeText.cardTitle("Recent Transactions"),
-                  ThemeText.cardSubTitle('Last 30 Days'),
                 ],
-              ),
-              trailing: GenericPopupMenuButton<TimePeriod>(
-                items: TIME_PERIOD_MENU_ITEMS_SHORT,
-                onItemSelected: (TimePeriod selectedValue) {
-                  // TODO: Handle the selected value
-                  print('Selected value: $selectedValue');
-                },
               ),
             ),
             ConditionalAsyncWrapper(
@@ -55,7 +47,7 @@ class RecentTransactionsView extends StatelessWidget {
               ),
               child: ListView.separated(
                 shrinkWrap: true,
-                padding: const EdgeInsets.fromLTRB(7, 10, 7, 0),
+                padding: const EdgeInsets.fromLTRB(7, 0, 7, 0),
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: model.recentTransactions.length,
                 itemBuilder: (BuildContext context, int index) {

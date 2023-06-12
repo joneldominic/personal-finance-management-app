@@ -1,5 +1,6 @@
 import 'package:personal_finance_management_app/app/app.locator.dart';
 import 'package:personal_finance_management_app/app/app.logger.dart';
+import 'package:personal_finance_management_app/core/enums/time_period.dart';
 import 'package:personal_finance_management_app/core/utils/app_constants.dart';
 import 'package:personal_finance_management_app/data/models/cashflow/cashflow.dart';
 import 'package:personal_finance_management_app/services/cashflow_service.dart';
@@ -23,5 +24,12 @@ class CashFlowCardViewModel extends StreamViewModel<CashFlow?> {
     _logger.i('argument: ${data.toString()}');
     cashFlow = data ?? CashFlow(id: CASH_FLOW_ID);
     notifyListeners();
+  }
+
+  void onSelectTimePeriod(TimePeriod timePeriod) {
+    _logger.i('argument: $timePeriod');
+
+    cashFlow.daysCount = timePeriod.days;
+    _cashFlowService.updateCashFlowDaysCount(cashFlow);
   }
 }

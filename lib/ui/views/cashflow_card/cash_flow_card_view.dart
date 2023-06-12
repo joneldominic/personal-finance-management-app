@@ -34,17 +34,16 @@ class CashFlowCardView extends StatelessWidget {
                   contentPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      ThemeText.cardTitle("Cash Flow"),
-                      ThemeText.cardSubTitle('Last 30 Days'),
+                    children: [
+                      const ThemeText.cardTitle("Cash Flow"),
+                      ThemeText.cardSubTitle(TimePeriodHelper.getTitleByDaysCount(
+                        model.cashFlow.daysCount!,
+                      )),
                     ],
                   ),
                   trailing: GenericPopupMenuButton<TimePeriod>(
                     items: TIME_PERIOD_MENU_ITEMS_LONG,
-                    onItemSelected: (TimePeriod selectedValue) {
-                      // TODO: Handle the selected value
-                      print('Selected value: $selectedValue');
-                    },
+                    onItemSelected: model.onSelectTimePeriod,
                   ),
                 ),
                 Padding(

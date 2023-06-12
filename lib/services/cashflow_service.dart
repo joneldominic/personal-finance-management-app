@@ -13,6 +13,11 @@ class CashFlowService with ReactiveServiceMixin {
     return _cashFlowRepository.initCashFlow();
   }
 
+  Future<CashFlow> updateCashFlowDaysCount(CashFlow cashFlow) async {
+    _logger.i('argument: $cashFlow');
+    return _cashFlowRepository.updateCashFlowDaysCount(cashFlow);
+  }
+
   Stream<CashFlow?> watchCashFlow() async* {
     _logger.i('argument: NONE');
     yield* _cashFlowRepository.watchCashFlow();
